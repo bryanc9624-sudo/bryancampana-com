@@ -280,6 +280,49 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — Cargo's image ORDER and caption pairing recovered from the archive.
+
+Worth recording because it is not guessable and it nearly went wrong. Oscuro's six captions
+appear on the archived page in one order, the six scan files sort in a second order, and the
+order Bryan actually published them in is a third. The real pairing was recovered by
+matching each caption's `media-item` hash to its file in the Cargo page state:
+
+| slot | scan | caption |
+|---|---|---|
+| 01 | Scans-07-29-2019-142225 | the place I call home |
+| 02 | Scans-07-29-2019-142204 | a higher power |
+| 03 | Scans-07-29-2019-142149 | inner strength |
+| 04 | Scans-07-29-2019-142220 | agent of order |
+| 05 | Scans-07-29-2019-142209 | a path best traveled alone |
+| 06 | Scans-07-29-2019-141635 | gender |
+
+Assigning captions in filename order would have put five of the six on the wrong
+photograph. The mapping is written into `src/content/projects/oscuro.md` as a comment, and
+the captions are already in `images:` in that order, so a correct export pairs itself.
+
+Photopolymer Letterpress's four-image order is recorded the same way in its own file. Its
+Drive folder holds a fifth photograph Cargo never showed — Bryan's call whether it ships.
+
+`archive/cargo/raw-*.html` still holds the published order for every project. Read it before
+importing images for anything else.
+
+
+### 2026-09-07 — `cover.<ext>` is a card-only image. **Code decision.**
+
+A file named `cover.jpg` / `cover.png` in a project's asset folder is used as the card image
+and excluded from that project's gallery. No `cover:` frontmatter line needed. Precedence:
+an explicit `cover:` field, then `cover.*`, then the first image.
+
+This mirrors what Bryan already did on Cargo, where several projects had a hand-made square
+thumbnail (`Oscuro-Thumb.png`, `letterpress-thumb.png`) that was never shown inside the
+project. It matters because the card frame is 3:2 landscape: Letterpress's photographs are
+1179x2096 phone shots, and cropping 9:16 into 3:2 throws away most of the image.
+
+Verified by adding a `cover.jpg` to two-of-hearts: the card switched to it, the project page
+stayed at two figures, then it was removed. Not a design decision — Design and Figma still
+owns what the card looks like.
+
+
 ### 2026-09-07 — Body text is Sans, not Serif. **Bryan's call, made in Code and Deploy.**
 
 `--font-body` was `var(--font-serif)`; it is now `var(--font-sans)` (IBM Plex Sans Variable).

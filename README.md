@@ -140,6 +140,12 @@ device the smallest one that fits — 2400px sources ship as roughly 15KB to a p
 unless `cover` says otherwise. A `cover` naming a file that does not exist fails the build
 and lists what is available.
 
+**A card-only image**: name a file `cover.jpg` (or `cover.png`) and it becomes the card
+image *and is left out of the project's own gallery* — no `cover:` line needed. Use this
+when the card wants a different crop from anything in the set. It matters most for tall
+portrait work: the card frame is 3:2 landscape, so a 9:16 phone photograph cropped into it
+loses most of the picture, and a square or landscape crop made for the card fixes that.
+
 **Captions** (photography pages) come from an `images` list, matched by position:
 
 ```yaml

@@ -10,7 +10,7 @@ designQuestion: null
 medium: null
 prints: null
 dimensions: null
-cover: null
+cover: null                     # or drop a cover.jpg in the folder — card-only, see README
 draft: true                  # start hidden; set false when ready to publish
 featured: false
 order: 15
