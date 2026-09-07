@@ -280,6 +280,44 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ---
 
+
+## Current palette — THIS TABLE WINS
+
+**Read this before touching a colour anywhere.** Entries in the Settled log are dated
+decisions and several have been superseded; this table is the resolved state. When a colour
+changes, update it **here** in the same commit as the entry that changes it.
+
+It exists because dark has no second check. Light is verifiable against Figma by eye; **dark
+lives only in this table and in `tokens.css`**, so if the two disagree there is nothing to
+catch it. `tokens.css` names this section as its source of truth for the dark block.
+
+| Token | Light | Dark | Figma variable | Notes |
+|---|---|---|---|---|
+| `--color-bg` | `#FFFFFF` | `#0F0C0F` | `color/bg` | Ground. Dark is near-neutral, chroma 0.006, so it does not fight the photography |
+| `--color-fg` | `#361A38` | `#FFFFFF` | `color/fg` | Text. **Never bind a rule to this** |
+| `--color-muted` | `#75617A` | `#C9BFCD` | `color/muted` | Diluted ink. Dark is tinted deliberately — see below |
+| `--color-line` | `#361A38` | `#E5E5E5` | `color/line` | Rules only, and the only token a rule may reference |
+| `--color-placeholder` | `#F0F0F0` | `#1E1C1F` | `color/placeholder` | Unworked paper |
+| `--color-focus` | `#9600DD` | `#DD51FF` | `color/focus` | Containment ring |
+| `--color-accent` | `#9600DD` | `#DD51FF` | `color/accent` | The charge. Same value as focus, deliberately |
+
+**Two principles that set the dark values, so future ones are derived rather than picked:**
+
+1. **A rule holds the same contrast ratio against its ground in both modes.** 15.42:1 light,
+   15.44:1 dark. This is why `--color-line` is not simply `--color-fg` in dark.
+2. **Muted is tuned for equal *perceived* separation, not equal measured ratio** — gap to ink
+   2.75 light, 1.78 dark. A dark surround exaggerates lightness differences.
+
+**A trap worth knowing:** anything *derived* from the dark ground comes out neutral, because
+that ground sits at chroma 0.006. Diluting white toward it gives r−g = 1. Dark values that
+should read as part of the violet system have to be tinted on purpose.
+
+**Superseded tables:** the dark column in "Colour VALUES settled" (2026-09-07) was correct when
+written and is now stale for `line` and `muted`. Treat that entry as the record of *why* the
+system exists, not of what the values are.
+
+---
+
 ## Settled
 
 ### 2026-09-07 — Muted is retuned, and the current nav item gains a weight cue. **Bryan's call. Applied in Figma.**
@@ -1061,7 +1099,7 @@ Both variable descriptions in Figma carry the derivation so the values are not "
 per 1000px em = **0.08em**, roughly 1.4px at 17px body text. Not currently applied.
 
 
-### 2026-09-07 — Colour VALUES settled. **Bryan's call. In Figma. Ready to implement.**
+### 2026-09-07 — Colour VALUES settled. **Bryan's call.** *(VALUES PARTLY SUPERSEDED — see "Current palette — THIS TABLE WINS" above. `line` and `muted` have both moved in each mode. The reasoning below stands; the numbers do not.)*
 
 Chosen on a live bench against his own photographs, every pair contrast-checked. The system
 these fill is the entry "Colour SYSTEM agreed" below; nothing about the structure changed.
