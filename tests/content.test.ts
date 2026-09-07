@@ -45,4 +45,12 @@ describe('project content', () => {
       if (fm.featured === 'true') expect(fm.category, `${f}`).toBe('design')
     }
   })
+
+  it('gives every featured project a body', () => {
+    for (const f of files()) {
+      if (frontmatter(f).featured !== 'true') continue
+      const body = readFileSync(join(DIR, f), 'utf8').split('---').slice(2).join('---').trim()
+      expect(body.length, `${f} body`).toBeGreaterThan(200)
+    }
+  })
 })

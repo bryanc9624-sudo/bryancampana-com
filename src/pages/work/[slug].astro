@@ -1,0 +1,71 @@
+---
+// src/pages/work/[slug].astro
+import { getCollection, render } from 'astro:content'
+import Base from '../../layouts/Base.astro'
+import Placeholder from '../../components/Placeholder.astro'
+
+export async function getStaticPaths() {
+  const featured = (await getCollection('projects')).filter(p => p.data.featured)
+  return featured.map(p => ({ params: { slug: p.id }, props: { project: p } }))
+}
+
+const { project } = Astro.props
+const d = project.data
+const { Content } = await render(project)
+
+const facts = [
+  ['Role', d.role],
+  ['Year', d.year ? String(d.year) : null],
+  ['Category', d.category],
+].filter(([, v]) => v) as [string, string][]
+---
+<Base title={`${d.title} — Bryan Campana`} description={d.scope}>
+  <article class="case">
+    <header class="case__head">
+      <p class="case__eyebrow"><a href="/work">Work</a></p>
+      <h1>{d.title}</h1>
+      <p class="case__scope">{d.scope}</p>
+      {d.designQuestion && <p class="case__question">{d.designQuestion}</p>}
+    </header>
+
+    <Placeholder aspect="16/9" label={`${d.title} — hero image placeholder`} />
+
+    {facts.length > 0 && (
+      <dl class="case__facts">
+        {facts.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+      </dl>
+    )}
+
+    <div class="case__body"><Content /></div>
+
+    <Placeholder aspect="3/2" label={`${d.title} — supporting image placeholder`} />
+
+    <p class="case__back"><a href="/work">&larr; All work</a></p>
+  </article>
+</Base>
+
+<style>
+  .case { display: flex; flex-direction: column; gap: var(--space-5); }
+  .case__head { margin-top: var(--space-6); }
+  .case__eyebrow {
+    margin: 0 0 var(--space-3); font-size: var(--size-sm);
+    text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-muted);
+  }
+  .case h1 { font-size: var(--size-2xl); margin-bottom: var(--space-3); }
+  .case__scope { font-size: var(--size-lg); max-width: var(--measure-prose); margin: 0; }
+  .case__question {
+    margin: var(--space-3) 0 0; color: var(--color-muted);
+    font-style: italic; max-width: var(--measure-prose);
+  }
+  .case__facts {
+    display: flex; flex-wrap: wrap; gap: var(--space-5);
+    margin: 0; padding-block: var(--space-4);
+    border-block: 1px solid var(--color-line);
+  }
+  .case__facts dt {
+    font-size: var(--size-xs); text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--color-muted);
+  }
+  .case__facts dd { margin: var(--space-1) 0 0; }
+  .case__back { margin: 0; }
+</style>
