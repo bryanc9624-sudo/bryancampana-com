@@ -6,7 +6,7 @@ interface Props { project: CollectionEntry<'projects'> }
 const { project } = Astro.props
 const d = project.data
 const href = d.featured ? `/work/${project.id}` : undefined
-const meta = [d.role, d.year].filter(Boolean).join(' · ')
+const meta = d.year ? String(d.year) : ''
 ---
 <article class="card">
   {href

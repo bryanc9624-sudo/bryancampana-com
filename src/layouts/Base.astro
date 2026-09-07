@@ -3,8 +3,8 @@
 import '../styles/base.css'
 import SiteHeader from '../components/SiteHeader.astro'
 import SiteFooter from '../components/SiteFooter.astro'
-interface Props { title: string; description?: string; noindex?: boolean }
-const { title, description = 'Portfolio of Bryan Campana.', noindex = false } = Astro.props
+interface Props { title: string; description?: string; noindex?: boolean; wide?: boolean }
+const { title, description = 'Portfolio of Bryan Campana.', noindex = false, wide = false } = Astro.props
 ---
 <!doctype html>
 <html lang="en">
@@ -22,7 +22,7 @@ const { title, description = 'Portfolio of Bryan Campana.', noindex = false } = 
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <SiteHeader />
-    <main id="main" class="page" tabindex="-1"><slot /></main>
+    <main id="main" class={wide ? 'page page--wide' : 'page'} tabindex="-1"><slot /></main>
     <SiteFooter />
   </body>
 </html>

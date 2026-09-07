@@ -37,7 +37,8 @@
   --radius-md: 0;
 
   --measure-prose: 68ch;
-  --page-max: 1200px;
+  --page-max: 1440px;
+  --page-max-wide: 1600px;
   --page-pad: var(--space-4);
 
   /* Breakpoints: 40rem (2-up) and 64rem (3-up). These two values are the only

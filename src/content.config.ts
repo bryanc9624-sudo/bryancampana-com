@@ -13,6 +13,10 @@ const projects = defineCollection({
     featured: z.boolean().default(false),
     order: z.number().default(0),
     aspect: z.string().default('3/2'),
+    images: z.array(z.object({
+      aspect: z.string().default('3/2'),
+      caption: z.string().optional(),
+    })).default([]),
   }),
 })
 
