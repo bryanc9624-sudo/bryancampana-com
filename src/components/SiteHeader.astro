@@ -6,7 +6,7 @@ const links = [
 ]
 const path = Astro.url.pathname
 ---
-<header class="page site-header">
+<header class="site-header">
   <a href="/" class="site-header__name">Bryan Campana</a>
   <nav aria-label="Primary">
     <ul>
@@ -15,23 +15,45 @@ const path = Astro.url.pathname
           <a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}</a>
         </li>
       ))}
+      {/* Contact is an action, not a location, so it never takes aria-current and stays
+          muted on every page. Moved up from the footer 2026-09-07: people do not reach
+          the bottom of the page. */}
+      <li><a href="mailto:bryanc9624@gmail.com">Contact</a></li>
     </ul>
   </nav>
 </header>
 
 <style>
+  /* Full bleed, not `.page`. The chrome is the edge of the page, so it spans the viewport
+     and pads its contents in from the window edge. Previously this carried `.page`
+     (--page-max, 1440) while project pages render at --page-max-wide (1600), so on a wide
+     screen the header was 80px narrower per side than the work it framed. */
   .site-header {
-    display: flex; justify-content: space-between; align-items: baseline;
-    gap: var(--space-4); padding-block: var(--space-4);
+    display: flex; align-items: baseline;
+    justify-content: flex-start; gap: var(--space-6);
+    padding-block: var(--space-4); padding-inline: var(--page-pad);
     /* Ink, not hairline: the header rule marks the end of the site chrome, not a break
        within the content. Settled 2026-09-07, "Horizontal rules get a hierarchy". */
     border-bottom: 1px solid var(--color-fg);
   }
-  .site-header__name { font-weight: var(--weight-semibold); text-decoration: none; }
+  /* Serif because the name is identity, not navigation. --font-display, not --font-serif:
+     the token carries the role. Size is the inherited --size-base — it shares a line with
+     the nav and must not step up. Weight, not size, is what separates it. */
+  .site-header__name {
+    font-family: var(--font-display); font-weight: var(--weight-semibold);
+    text-decoration: none;
+  }
   ul { display: flex; gap: var(--space-4); list-style: none; margin: 0; padding: 0; }
 
   /* Spec §8: aria-current was set but had no visual treatment. Figma shows the
      active nav item at --color-fg and inactive at --color-muted. */
   nav a { color: var(--color-muted); }
   nav a[aria-current='page'] { color: var(--color-fg); }
+
+  /* At 390px there is 342px of content. Wordmark 133 + 64 gap + nav 194 overflows by
+     ~49px, and closing the gap puts the name against "Work" as one run of text. So it
+     stacks: name, then nav, both flush left. */
+  @media (max-width: 39.999rem) {
+    .site-header { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+  }
 </style>
