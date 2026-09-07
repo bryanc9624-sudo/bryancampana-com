@@ -3,7 +3,7 @@ title: TogetherEffect
 year: 2023
 completed: "May 2023"
 discipline: "Brand Identity"
-keywords: [Brand Identity]
+keywords: ["Identity"]
 scope: Identity and custom wordmark for a Brooklyn DJ collective.
 designQuestion: null
 medium: null

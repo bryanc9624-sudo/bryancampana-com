@@ -3,7 +3,7 @@ title: 590 Madison Ave
 year: 2025
 completed: "May 2025"
 discipline: "ADA Signage Design"
-keywords: [ADA Signage Design]
+keywords: ["Signage"]
 scope: ADA and wayfinding package for an amenity floor. Materials drawn from the interior architecture.
 designQuestion: null
 medium: null

@@ -3,7 +3,7 @@ title: "re:semblance"
 year: 2021
 completed: "June 2021"
 discipline: "Exhibition Design"
-keywords: [Exhibition Design]
+keywords: ["Identity"]
 scope: A group exhibition about the appearance of reality.
 designQuestion: null
 medium: null

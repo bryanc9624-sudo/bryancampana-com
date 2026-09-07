@@ -6,14 +6,14 @@ import ProjectCard from '../../components/ProjectCard.astro'
 const all = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order)
 
 // Chips are derived from the union of every project's keywords — add a keyword to a
-// content file and a chip appears. Nothing here is hardcoded.
+// content file and a filter link appears. Nothing here is hardcoded.
 const keywords = [...new Set(all.flatMap(p => p.data.keywords))].sort()
 
 // Radio id needs to be a valid, stable token; the keyword itself may contain spaces.
 const slug = (k: string) => k.toLowerCase().replace(/[^a-z0-9]+/g, '-')
 
 // One pair of rules per keyword, generated from the same derived list that renders the
-// chips. Adding a keyword to any content file produces both a chip and its rule — there
+// links. Adding a keyword to any content file produces both a link and its rule — there
 // is nothing to keep in sync by hand. `~=` matches one word in the space-separated
 // data-keywords list, so a project with several keywords appears under each.
 const filterCss = keywords.map(k => `
@@ -29,12 +29,12 @@ const filterCss = keywords.map(k => `
        view is not linkable and does not survive a refresh. -->
   <form class="filter" aria-label="Filter work by keyword">
     <input type="radio" name="kw" id="kw-all" value="all" checked />
-    <label class="chip" for="kw-all">All <span class="chip__count">{all.length}</span></label>
+    <label class="filterlink" for="kw-all">All<sup class="filterlink__count">{all.length}</sup></label>
     {keywords.map(k => (
       <>
         <input type="radio" name="kw" id={`kw-${slug(k)}`} value={slug(k)} />
-        <label class="chip" for={`kw-${slug(k)}`}>
-          {k} <span class="chip__count">{all.filter(p => p.data.keywords.includes(k)).length}</span>
+        <label class="filterlink" for={`kw-${slug(k)}`}>
+          {k}<sup class="filterlink__count">{all.filter(p => p.data.keywords.includes(k)).length}</sup>
         </label>
       </>
     ))}
@@ -51,25 +51,38 @@ const filterCss = keywords.map(k => `
   h1 { font-size: var(--size-2xl); margin-block: var(--space-6) var(--space-4); }
 
   .filter {
-    display: flex; flex-wrap: wrap; gap: var(--space-2);
+    display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-4);
     margin-bottom: var(--space-5); padding-bottom: var(--space-4);
     border-bottom: 1px solid var(--color-line);
   }
   .filter input { position: absolute; opacity: 0; pointer-events: none; }
 
-  .chip {
-    display: inline-flex; align-items: baseline; gap: var(--space-1);
-    padding: var(--space-2) var(--space-3);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-sm);
+  /* FilterLink, per Figma 2026-09-07. Chips are gone: border, padding and radius
+     removed. They were the only rectangles on the site and read as heavy chrome
+     against a design that is otherwise hairlines and type. */
+  .filterlink {
     color: var(--color-muted);
-    font-size: var(--size-sm);
-    background: var(--color-bg);
+    font-size: var(--size-base);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-body);
     cursor: pointer;
   }
-  .chip__count { font-size: var(--size-xs); }
-  .filter input:checked + .chip { border-color: var(--color-fg); color: var(--color-fg); }
-  .filter input:focus-visible + .chip { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+  .filterlink__count {
+    margin-left: 0.15em;
+    font-size: var(--size-xs);
+    font-weight: var(--weight-regular);
+    color: var(--color-muted);
+    vertical-align: super;
+    line-height: 0;
+  }
+  /* Two cues, not one: weight and colour both change, so the selected state survives
+     for anyone who cannot distinguish the hue. --color-accent is what this token marks. */
+  .filter input:checked + .filterlink {
+    color: var(--color-accent);
+    font-weight: var(--weight-semibold);
+  }
+  .filter input:checked + .filterlink .filterlink__count { color: var(--color-accent); }
+  .filter input:focus-visible + .filterlink { outline: 2px solid var(--color-focus); outline-offset: 3px; }
 </style>
 
 <style is:global set:html={`

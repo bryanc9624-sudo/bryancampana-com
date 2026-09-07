@@ -79,25 +79,27 @@ neither chat plans against them:
 
 ## Open decisions — Design and Figma owns these
 
-- [x] ~~**Dark mode inconsistent with the light palette.**~~ **ANSWERED 2026-09-07.** The six
-      values were published the same day in Settled, "Colour VALUES settled" — that entry has
-      a two-column table. Repeated here so there is no hunting:
-      `bg #0F0C0F` · `fg #FFFFFF` · `muted #A4A4A4` · `line #2D2A2D` ·
-      `placeholder #1E1C1F` · `focus #DD51FF` · `accent #DD51FF`.
-      Correct on the cause, with one detail off: the constraint is not Starter — the file is
-      on **Professional**. Figma still cannot express dark, because this collection's two
-      modes are a *breakpoint* axis (Desktop/Mobile), not a theme one. A theme axis would need
-      its own collection. The ledger table is the source of truth for dark.
-- [x] ~~**What does `color/accent` mark?**~~ **ANSWERED 2026-09-07.** It is **the charge** —
-      the energised state in Bryan's paper / ink / charge system. Apply it to exactly three
-      things, and nothing else:
-      1. **Link hover** — the text colour on `:hover`, with the underline following it.
-      2. **Focus ring** — the `:focus-visible` outline. It is the containment ring, which is
-         why `--color-focus` holds the same value; keep them as separate tokens even so, in
-         case focus ever needs to diverge for visibility.
-      3. **The selected keyword filter** — replacing `--color-fg` on the active label.
-      It is deliberately **not** used for links at rest, body text, borders, or any fill.
-      Rest state is ink; only energised things carry the charge.
+- [x] **DONE — dark palette applied 2026-09-07.** The values were already settled in
+      "Colour VALUES settled" and Code and Deploy had missed them, reporting the item as
+      open against a stale list. Now implemented from that table: bg #0F0C0F, fg #FFFFFF,
+      muted #A4A4A4, line #2D2A2D, placeholder #1E1C1F, focus and accent #DD51FF.
+      Contrast re-verified independently and matches the design chat's figures to two
+      decimal places. Original: **Dark mode is now inconsistent with the light palette.** The light palette went
+      plum on 2026-09-07 (`fg #361a38`, `muted #7e6f7e`, `line #d4cad4`, `focus #9600dd`)
+      but the dark palette in `tokens.css` is still the original neutral greys
+      (`#101010 / #f2f2f2 / #a0a0a0 / #2a2a2a`), so a visitor whose system is set to dark
+      sees an unrelated colour scheme. Figma cannot express this — its two variable modes
+      are Desktop and Mobile, and Figma Starter allows no more — so dark values have to be
+      stated directly. Code and Deploy will not invent them. Six values needed:
+      bg, fg, muted, line, placeholder, focus.
+- [x] **RESOLVED — `color/accent` marks the selected filter link.** The FilterLink
+      decision answered it: "when the colour system lands, the selected label takes
+      --color-accent in place of --color-fg". The colour system has landed, so it is
+      applied there and nowhere else. If accent should mark anything further, say what.
+      Original question: **What did `color/accent` mark?** New in Figma 2026-09-07, `#9600dd`, identical to
+      `color/focus`. Added to `tokens.css` as `--color-accent` so it stays in sync, but
+      applied to nothing — Figma does not say what it is for, and choosing would be a
+      design decision. Name the elements and it gets applied.
 
 - [ ] **Video facade — visual treatment.** The mechanism is built and working; the
       appearance is not designed. Currently a neutral placeholder: the project's first
@@ -109,7 +111,7 @@ neither chat plans against them:
       have no dedicated poster frame. Currently reusing the first project photograph, and
       two of the three have no photographs at all, so they show a grey box.
 
-- [ ] **Filter control: chips reverted to text links.** Bryan is reverting the bordered
+- [x] **DONE — filter control is now text links.** Implemented 2026-09-07. Original: **Filter control: chips reverted to text links.** Bryan is reverting the bordered
       chip treatment in favour of the text-link option (2026-09-07). **This is a code
       change, not only a Figma one** — `/work` currently renders `.chip` with a border,
       padding and a `--color-fg` border on the checked state. Text links need different
@@ -120,7 +122,7 @@ neither chat plans against them:
       text links wrap far more compactly than bordered chips, which is what pushed the
       first project ~700px down at 390px.
 
-- [ ] **Filter chip overflow on mobile.** 8 keywords wrap to 5 rows at 390px, pushing the
+- [x] **RESOLVED — filter overflow.** Text links plus six keywords put the filter at 94px on a 390px viewport with the first project 334px down, against roughly 700px with chips. Original: **Filter chip overflow on mobile.** 8 keywords wrap to 5 rows at 390px, pushing the
       first project roughly 700px down the page — a wall of chips before any work. The
       reference Bryan supplied had a `(More)` affordance for exactly this; it is not yet
       designed. Counts are implemented and live. Code and Deploy will build whatever is
@@ -200,6 +202,23 @@ when something needs the other chats' attention; a clean audit is not recorded h
 ---
 
 ## Settled
+
+### 2026-09-07 — "Droplet" — a reserved shape motif. Named, not applied.
+
+Vocabulary so both chats mean the same thing. **The droplet** is three rounded corners with
+one square. **The nib corner** is the square one, and it goes **top-left** — it is where the
+pen touched down and the ink ran right and down, which is also how the page reads. It is also
+the corner that touches the grid, so keeping it square holds the image to its column and row.
+
+**Currently applied to nothing, deliberately.** Considered for the project card images and
+rejected: Bryan's photography is architectural — right angles, window grids, stone — and a
+rounded frame fights that content. There is also a threshold problem, in that a radius small
+enough not to crop the composition is too small to read as intentional.
+
+**Do not introduce an element in order to use it.** If a real button ever appears in the
+design, the droplet is its shape. Until then it stays a named idea. `radius/sm` and
+`radius/md` remain 0 and radius is no longer an open decision.
+
 
 ### 2026-09-07 — Radius stays 0, derived from the typeface. **Measured, not defaulted.**
 
