@@ -282,6 +282,52 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — Figma realigned to the rule token. **Design and Figma confirms Code and Deploy's solution.**
+
+Checked `715147d` against the file. **Aligned, and their version is better than the spec I handed
+them.** Recording the correction here so the ledger does not keep my worse answer.
+
+**What I got wrong.** My transfer spec said: point every rule at `--color-fg`, and treat
+`--color-line` as orphaned — I even offered to delete it. Both halves were wrong for one reason.
+`--color-fg` means *the colour of text*. A rule bound to it asserts that a rule is text-coloured,
+which is true in light and false in dark, and leaves nowhere to say so. The next rule anyone added
+would have inherited that silently. I diagnosed the dark-mode problem as **brightness**; it was a
+**missing semantic slot**. Same symptom, worse diagnosis.
+
+`--color-line` already names that slot exactly, so reviving it is right and my "unused token" flag
+was a misread of what the token was for.
+
+**Their principle, adopted:** *a rule holds the same contrast ratio against its ground in both
+modes.* Verified independently here rather than taken on trust — all three figures reproduce:
+
+| | Value | On ground | Ratio |
+|---|---|---|---|
+| Light | `#361A38` | `#FFFFFF` | **15.42:1** |
+| Dark, before | `#FFFFFF` | `#0F0C0F` | **19.45:1** — a quarter hotter, what Bryan saw |
+| Dark, now | `#E5E5E5` | `#0F0C0F` | **15.44:1** |
+
+**Figma changes made to match — the visual result is unchanged; the bindings were wrong.**
+
+I had bound the rules to `color/fg`. In light both tokens are `#361A38`, so Figma *rendered*
+correctly by coincidence while encoding the exact mistake the code now forbids — anyone editing
+`color/fg` would have dragged the rules with it.
+
+1. **`color/line` set to `#361A38`** in both modes, from `#D4CAD4`.
+2. **All nine rule strokes rebound `color/fg` → `color/line`**: the `Eyebrow` component, six
+   `facts` frames, and both `FilterBar` rules.
+3. **The constraint is written into the variable's own description**, so it is visible at the
+   point of use in Figma rather than only here: *the only token any rule may reference; never
+   bind a rule to `color/fg`*, plus the dark value and the equal-contrast principle.
+4. **The Foundations caption now explains both look-alike pairs.** `color/fg` and `color/line`
+   are the same swatch in light and diverge in dark; `color/focus` and `color/accent` are the
+   same violet on purpose. Two identical-looking chips read as a bug otherwise — and one of these
+   pairs is only identical in the mode Figma can show.
+
+**Supersedes** the five-row edit table in "The chrome rules are gone" — rows 3, 4 and 5 of it
+named `--color-fg` as the target. The header and footer deletions in rows 1 and 2 stand and are
+implemented. Nothing further is outstanding on either side.
+
+
 ### 2026-09-07 — `--color-line` is the rule token, and its value is derived, not picked. **Bryan's call.**
 
 Answers the dark-mode question raised in "The chrome rules are gone". Ink rules read heavy in
