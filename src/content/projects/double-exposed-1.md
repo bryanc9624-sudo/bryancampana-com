@@ -12,7 +12,6 @@ dimensions: null
 featured: false
 order: 13
 aspect: "3/2"
----
 cover: "06.jpg"
 ---
 
