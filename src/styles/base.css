@@ -72,7 +72,7 @@ em, i, cite { font-family: var(--font-italic); }
   font-size: var(--size-sm); text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
   color: var(--color-muted); padding-bottom: var(--space-2);
-  border-bottom: 1px solid var(--color-line); margin-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-fg); margin-bottom: var(--space-5);
 }
 
 /* Shared: narrow measure for text-only pages. */
