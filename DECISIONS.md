@@ -188,6 +188,12 @@ neither chat plans against them:
 
 ### Waiting on Bryan, not on either chat
 
+- [ ] **Should the footer rule match the header's ink, or stay a hairline?** The header rule is
+      now `color/fg` and the footer is still `color/line`. Ink on both brackets the page (chrome
+      top and bottom, hairlines only inside); leaving it hairline says the header is the site's
+      one structural edge and the footer is quiet. I lean toward bracketing. One-line change
+      either way — see Settled, "Horizontal rules get a hierarchy".
+
 - [x] ~~**Typeface.**~~ **DONE 2026-09-07** — see Settled, "Typeface swap executed in Figma".
       Nothing outstanding on Bryan for type. The New Frank / Adobe Fonts material that stood
       here is obsolete and has been removed rather than left to mislead.
@@ -245,6 +251,44 @@ when something needs the other chats' attention; a clean audit is not recorded h
 ---
 
 ## Settled
+
+### 2026-09-07 — Horizontal rules get a hierarchy. **Bryan's call. Done in Figma.**
+
+Bryan's read was that there were too many rules and they were all identical. The second half was
+literally true: every rule in the file was a 1px `color/line` hairline, so the header, the footer,
+the landing eyebrow and the project-page facts block all carried the same mark and none of them
+meant anything by it. Two changes:
+
+**1. The header rule is now ink.** The `SiteHeader` component's bottom stroke rebinds from
+`color/line` to `color/fg`, on all three variants (None / Work / About). Weight stays **1px** —
+Bryan asked for prominence without thickness, and darkening does that on its own. This propagates
+to every instance on both breakpoints.
+
+**2. The facts block keeps its top rule and loses the bottom one.** On
+`Project Page — Desktop 1600` the `facts` frame had rules above *and* below. The bottom one is
+removed. Top was the one to keep because the **photography project page already used top-only**,
+so all three project layouts now agree rather than two of them being the odd ones out. Applied to
+the featured and light-no-body layouts at both 1600 and 390.
+
+**The resulting vocabulary — three levels, and this is the whole set:**
+
+| Rule | Colour | Weight | Where | What it means |
+|---|---|---|---|---|
+| Header | `color/fg` | 1px | Under `SiteHeader`, every page | The site chrome ends here |
+| Section | `color/line` | 1px | Above `facts`; under the landing `Eyebrow` | One block of content ends, another begins |
+| Footer | `color/line` | 1px | Above `SiteFooter`, every page | (see open question below) |
+
+**Open — should the footer match the header?** It is currently a `color/line` hairline, which
+puts it in the section tier. Making it ink too would bracket the page: ink top, ink bottom,
+hairlines only inside. Leaving it as a hairline says the footer is quiet and the header is the
+one structural edge. I lean toward **bracketing** — the footer is chrome, not content, and it
+should look like the header's counterpart — but this is Bryan's aesthetic call and I have not
+made it.
+
+**Code and Deploy — one CSS change, no new tokens.** The header rule's colour moves from
+`--color-line` to `--color-fg`; the rule below the facts list is removed. Both tokens already
+exist. If the footer question above resolves to "bracket", that is a second one-line change to
+the footer's `border-top-color`.
 
 ### 2026-09-07 — Serif/sans pairing: IBM Plex Serif with IBM Plex Sans. **Bryan's call. In Figma.**
 
