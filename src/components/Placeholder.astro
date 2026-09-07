@@ -1,0 +1,14 @@
+---
+// src/components/Placeholder.astro
+interface Props { aspect?: string; label?: string }
+const { aspect = '3/2', label = 'Image placeholder' } = Astro.props
+---
+<div class="ph" style={`aspect-ratio:${aspect}`} role="img" aria-label={label}></div>
+
+<style>
+  .ph {
+    width: 100%;
+    background: var(--color-placeholder);
+    border-radius: var(--radius-sm);
+  }
+</style>
