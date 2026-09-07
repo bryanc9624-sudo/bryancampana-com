@@ -282,6 +282,70 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — Header reworked: full width, everything left, Contact moved up from the footer. **Bryan's call. Drawn in Figma.**
+
+**Code and Deploy: this is ready to implement, and one part of it is a code-only fix.**
+
+**1. Full width — Figma was already right; the code is what is wrong.** Every header instance
+in Figma sits at `x=24` with width = frame width − 48, including **1552px** on the 1600 project
+frames. The code renders `<header class="page">` (`--page-max`, 1440) while project pages render
+`<main class="page page--wide">` (`--page-max-wide`, 1600). So on a wide screen the chrome is
+80px narrower per side than the work it frames. That is the "awkwardly small" Bryan reported.
+
+Header and footer should **span the viewport**, with their contents padded `--page-pad` from the
+window edges rather than centred in a `--page-max` box. This matches the settled rule that chrome
+brackets the page while hairlines live inside content: if the header is the edge of the page, it
+belongs at the edge of the page.
+
+*Figma cannot show this and is not expected to* — its widest frame is 1600, so full-bleed and
+`page--wide` look identical there. The spec is this paragraph, not the frame.
+
+*Known trade-off, flagged not hidden:* above roughly 1900px the wordmark sits at the window edge
+while content stays centred at 1600, so the two stop aligning. Judged acceptable — it is the
+common pattern and it reads as deliberate. If Bryan dislikes it in the browser, the alternative
+is one value: give header and footer `--page-max-wide` instead of full bleed.
+
+**2. Everything is flush left.** The row was `space-between` — wordmark hard left, nav hard
+right. It is now `MIN` with a **64px gap** (`space/6`) between wordmark and nav, so the header
+reads left to right in one movement and the right side is deliberately empty. Weight and colour
+already separate the two: the wordmark is SemiBold ink, the nav Regular muted.
+
+**3. Contact joins the nav and leaves the footer.** Bryan's reasoning: people do not reach the
+bottom of the page. Nav is now **Work · About · Contact**.
+
+Contact is a `mailto:`, so it never takes the `aria-current` treatment and stays `--color-muted`
+permanently. That is correct rather than a bug — the current-page mark means *you are here*, and
+Contact is an action, not a location. No new state needed.
+
+**4. Mobile stacks — this is a real layout change, not just a reflow.** At 390px there is 342px
+of content width. Wordmark 125 + gap 64 + nav 194 = **383px**, which overflows by 41px. Closing
+the gap to 16px fits at 335px but puts the wordmark 16px from "Work", reading as one run of text.
+
+So under **40rem the header stacks**: wordmark on the first line, nav on the second, both flush
+left, 16px between them. Header height goes 74px → 116px. In CSS this is `flex-direction: column`
+in the existing 40rem media query; no new tokens.
+
+In Figma this needed a second variant axis, because `layoutMode` cannot be overridden on an
+instance — attempting it silently keeps the parent's direction. `SiteHeader` is now
+**`Current` × `Breakpoint`**, six variants: None/Work/About × Desktop/Mobile. All nine mobile
+frames point at the Mobile variants and reflow correctly, since every mobile frame is vertical
+auto-layout.
+
+**5. Figma's footer was missing two links the code already ships.** It had only Terms of Use and
+Privacy Policy; the code has Contact, LinkedIn, Terms, Privacy. With Contact moving to the
+header, the footer is now **LinkedIn · Terms of Use · Privacy Policy** in both places. LinkedIn
+was added to the Figma component; **Code and Deploy needs to remove Contact from `SiteFooter`.**
+
+**Summary for Code and Deploy — four changes:**
+
+| Where | Change |
+|---|---|
+| `SiteHeader.astro` | Drop `.page` constraint; full-bleed with `--page-pad` inline padding |
+| `SiteHeader.astro` | `justify-content: flex-start`, `gap: var(--space-6)`; add Contact `mailto:` |
+| `SiteHeader.astro` | Under 40rem: `flex-direction: column`, `gap: var(--space-3)` |
+| `SiteFooter.astro` | Remove the Contact link; apply the same full-bleed treatment |
+
+
 ### 2026-09-07 — Hosting stays on Netlify. **Bryan's call. Cloudflare question closed.**
 
 Cloudflare Pages, GitHub Pages, GoDaddy shared hosting and Node.js app hosting were all
