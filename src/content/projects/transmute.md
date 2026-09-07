@@ -1,13 +1,17 @@
 ---
 title: Transmute
 year: 2018
-role: Artist
-category: art
+completed: "2018"
+discipline: "New Media"
+keywords: [New Media]
 scope: Video work exploring how systems evolve through instability.
 designQuestion: TODO_DESIGN_QUESTION
+medium: "Unity based digital game"
+prints: null
+dimensions: null
 featured: false
 order: 10
-aspect: 3/2
+aspect: "3/2"
 ---
 
 explores how systems evolve through instability. Corruption is a mirror for living within a toxic or broken environment. Survival means reshaping what exists. Its environment suggests both a digital space and an organic mind, yet resists being pinned to either.

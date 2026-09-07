@@ -13,10 +13,14 @@ const { project } = Astro.props
 const d = project.data
 const { Content } = await render(project)
 
+// Spec §5.1: the live site uses Completed / Discipline / Medium / Prints.
+// Role never appeared on it and Bryan does not want it displayed at all.
 const facts = [
-  ['Role', d.role],
-  ['Year', d.year ? String(d.year) : null],
-  ['Category', d.category],
+  ['Completed', d.completed],
+  ['Discipline', d.discipline],
+  ['Medium', d.medium],
+  ['Prints', d.prints],
+  ['Dimensions', d.dimensions],
 ].filter(([, v]) => v) as [string, string][]
 
 const mediaImages: { aspect: string; caption?: string }[] = d.images.length > 0

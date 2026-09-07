@@ -33,10 +33,15 @@ describe('project content', () => {
     }
   })
 
-  it('uses only known categories', () => {
-    const allowed = ['design', 'art', 'photography']
+  it('gives every project at least one keyword', () => {
     for (const f of files()) {
-      expect(allowed, `${f} category`).toContain(frontmatter(f).category)
+      expect(frontmatter(f).keywords, `${f} keywords`).toMatch(/\[.+\]/)
+    }
+  })
+
+  it('gives every project a discipline', () => {
+    for (const f of files()) {
+      expect(frontmatter(f).discipline, `${f} discipline`).not.toBe('null')
     }
   })
 

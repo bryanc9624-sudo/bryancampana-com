@@ -1,13 +1,17 @@
 ---
 title: Double Exposed
 year: 2021
-role: Photographer
-category: photography
+completed: "2021"
+discipline: "Photography"
+keywords: [Photography]
 scope: A pen-pal film exchange shot on shared rolls during social distancing.
 designQuestion: TODO_DESIGN_QUESTION
+medium: "35mm Film, Digital Scans"
+prints: null
+dimensions: null
 featured: false
 order: 13
-aspect: 3/2
+aspect: "3/2"
 ---
 
 is a pen-pal exchange between me and another artist. We used film photography to pass the time and stay in touch when socially distanced. These photographs were created by taking turns shooting on the same roll of film.

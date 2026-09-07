@@ -79,6 +79,17 @@ neither chat plans against them:
 
 ## Open decisions — Design and Figma owns these
 
+- [ ] **Filter chip overflow on mobile.** 8 keywords wrap to 5 rows at 390px, pushing the
+      first project roughly 700px down the page — a wall of chips before any work. The
+      reference Bryan supplied had a `(More)` affordance for exactly this; it is not yet
+      designed. Counts are implemented and live. Code and Deploy will build whatever is
+      drawn; it will not invent the interaction.
+- [ ] **Landing statement type size — Figma and code disagree.** Figma draws it at
+      `--size-2xl`; the code renders it at `--size-lg` (22px) and always has. Spec §1.2
+      described an 8-line 296px block at 390px, which is the Figma frame, not the built
+      site. Decide which is right — the responsive step-down added in Slice A does not
+      touch `--size-lg`.
+
 - [ ] **Colour.** All six colour tokens are still neutral placeholders. Needs a real
       palette decision. Not blocking anything — everything is variable-bound, so a colour
       change propagates through Figma and CSS without rework.
@@ -146,6 +157,38 @@ when something needs the other chats' attention; a clean audit is not recorded h
 ---
 
 ## Settled
+
+### 2026-09-07 — Role is removed entirely. **Bryan's call.**
+
+Not hidden — removed from the schema and from all 14 content files. It never appeared on
+the Cargo site, and Bryan does not want it displayed anywhere. `discipline` supersedes it
+and carries real per-project values from the archive.
+
+### 2026-09-07 — Keywords are seeded from the site's disciplines, not the three categories.
+
+**Bryan's call, and it overrides spec §2.1**, which said to seed with `category`
+(Design / Art / Photography). He asked for the disciplines already shown on the Cargo
+site, as a placeholder set until he writes real keywords. That yields 8 keywords with
+genuine overlap rather than 3 disjoint buckets, so multi-keyword filtering is exercised
+from day one: ADA Signage Design, Brand Identity, Digital Communications, Exhibition
+Design, Fine Art, New Media, Photography, Visual Communications.
+
+`re:present` carries two (Exhibition Design + Digital Communications) and correctly
+appears under both. Full keyword functionality is the goal; these values are the seed.
+
+### 2026-09-07 — `discipline` is its own field, not `keywords[0]`.
+
+Code-side call, resolving spec §7.1. `discipline` is single-valued, selects the project
+page layout, and appears in the facts list. `keywords` is an unordered many-valued set.
+Deriving layout from an unordered array would mean adding a keyword could silently change
+a page's layout.
+
+### 2026-09-07 — `year` is a sort key; `completed` is what renders.
+
+Code-side call, resolving spec §7.2. The live site says "September 2025" and "2019" —
+a number cannot hold the former. `year: number|null` stays for ordering, `completed:
+string|null` is displayed.
+
 
 ### 2026-09-07 — Hosting stays on Netlify. **Bryan's call.**
 

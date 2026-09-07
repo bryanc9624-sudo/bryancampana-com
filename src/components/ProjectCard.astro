@@ -6,20 +6,21 @@ interface Props { project: CollectionEntry<'projects'> }
 const { project } = Astro.props
 const d = project.data
 const href = d.featured ? `/work/${project.id}` : undefined
-const meta = d.year ? String(d.year) : ''
+const keyword = d.keywords[0] ?? null
 ---
 <article class="card">
   {href
     ? <a href={href} class="card__media" tabindex="-1" aria-hidden="true"><Placeholder aspect={d.aspect} label={`${d.title} — image placeholder`} /></a>
     : <div class="card__media"><Placeholder aspect={d.aspect} label={`${d.title} — image placeholder`} /></div>}
 
+  {keyword && <p class="card__keyword">{keyword}</p>}
+
   <h3 class="card__title">
     {href ? <a href={href}>{d.title}</a> : d.title}
   </h3>
 
   <p class="card__scope">{d.scope}</p>
-  {d.designQuestion && <p class="card__question">{d.designQuestion}</p>}
-  {meta && <p class="card__meta">{meta}</p>}
+
 </article>
 
 <style>
@@ -29,6 +30,8 @@ const meta = d.year ? String(d.year) : ''
   .card__title a { text-decoration: none; }
   .card__title a:hover { text-decoration: underline; }
   .card__scope { margin: 0; }
-  .card__question { margin: 0; color: var(--color-muted); font-style: italic; }
-  .card__meta { margin: 0; color: var(--color-muted); font-size: var(--size-sm); }
+  .card__keyword {
+    margin: 0; color: var(--color-muted); font-size: var(--size-sm);
+    text-transform: uppercase; letter-spacing: var(--tracking-wide);
+  }
 </style>

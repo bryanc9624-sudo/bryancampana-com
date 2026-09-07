@@ -1,13 +1,17 @@
 ---
 title: TogetherEffect
 year: 2023
-role: Designer
-category: design
+completed: "May 2023"
+discipline: "Brand Identity"
+keywords: [Brand Identity]
 scope: Identity and custom wordmark for a Brooklyn DJ collective.
 designQuestion: TODO_DESIGN_QUESTION
+medium: null
+prints: null
+dimensions: null
 featured: true
 order: 4
-aspect: 3/2
+aspect: "3/2"
 ---
 
 TogetherEffect is a Brooklyn-based DJ collective curating immersive sonic environments across bars, clubs, and restaurant venues. The identity is built to reflect the group’s philosophy: performance as atmosphere, sound as space.

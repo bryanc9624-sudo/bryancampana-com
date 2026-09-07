@@ -1,13 +1,17 @@
 ---
 title: "re:present"
 year: 2022
-role: Designer
-category: design
+completed: "August 2022"
+discipline: "Exhibition Design"
+keywords: [Exhibition Design, Digital Communications]
 scope: Identity and open call campaign for a digital exhibition at New Media Artspace.
 designQuestion: TODO_DESIGN_QUESTION
+medium: null
+prints: null
+dimensions: null
 featured: false
 order: 5
-aspect: 3/2
+aspect: "3/2"
 ---
 
 I collaborated in curating and designing graphics for the open call titled "re:present," a sequel of sorts to "re:semblance." This exhibition delves into the experience of time and self during the post-pandemic period, examining our relationships with our filtered self-depictions and the disorientation of time and routine.

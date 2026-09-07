@@ -1,13 +1,17 @@
 ---
 title: "re:semblance"
 year: 2021
-role: Designer
-category: design
+completed: "June 2021"
+discipline: "Exhibition Design"
+keywords: [Exhibition Design]
 scope: A group exhibition about the appearance of reality.
 designQuestion: TODO_DESIGN_QUESTION
+medium: null
+prints: null
+dimensions: null
 featured: false
 order: 6
-aspect: 3/2
+aspect: "3/2"
 ---
 
 I collaborated in curating and designing social media graphics for the open call titled "re:semblance," an exhibition exploring the distortions brought about by the collision of the online world and the "real world" as our society becomes increasingly intertwined with technology.

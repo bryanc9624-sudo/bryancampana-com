@@ -1,13 +1,17 @@
 ---
 title: Dura Architectural Signage
 year: 2025
-role: Designer
-category: design
+completed: "September 2025"
+discipline: "Visual Communications"
+keywords: [Visual Communications]
 scope: Design intent, shop drawings, and documentation standards at a signage fabricator.
 designQuestion: TODO_DESIGN_QUESTION
+medium: null
+prints: null
+dimensions: null
 featured: true
 order: 1
-aspect: 3/2
+aspect: "3/2"
 ---
 
 I joined Dura to explore how graphic design could strengthen a fabrication company from within. What began as a technical role evolved into a design-led position focused on clarity, process, and communication.
