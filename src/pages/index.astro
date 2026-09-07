@@ -1,12 +1,40 @@
 ---
+// src/pages/index.astro
+import { getCollection } from 'astro:content'
+import Base from '../layouts/Base.astro'
+import ProjectCard from '../components/ProjectCard.astro'
+
+const featured = (await getCollection('projects'))
+  .filter(p => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
 ---
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base title="Bryan Campana — Designer" description="Designer working across signage, identity, and visual systems.">
+  <section class="intro">
+    <h1>Bryan Campana</h1>
+    <p class="intro__lede">TODO_POSITIONING_STATEMENT</p>
+    <p><a href="/work">See all work &rarr;</a></p>
+  </section>
+
+  <section class="featured" aria-labelledby="featured-heading">
+    <h2 id="featured-heading">Selected work</h2>
+    <ul class="grid">
+      {featured.map(p => <li><ProjectCard project={p} /></li>)}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .intro { margin-block: var(--space-7) var(--space-7); }
+  .intro h1 { font-size: var(--size-2xl); margin-bottom: var(--space-4); }
+  .intro__lede { font-size: var(--size-lg); max-width: var(--measure-prose); }
+  .featured h2 {
+    font-size: var(--size-sm); text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--color-muted); padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-line); margin-bottom: var(--space-5);
+  }
+  .grid {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; gap: var(--space-5); grid-template-columns: 1fr;
+  }
+  @media (min-width: 40rem) { .grid { grid-template-columns: repeat(2, 1fr); } }
+</style>
