@@ -296,11 +296,20 @@ What did NOT change:
 - The size ramp is unchanged. Plex Sans and Plex Serif are one superfamily and share an
   x-height, so no size or leading value needed adjusting.
 
-One consequence worth recording: the **design question stays serif**, pinned explicitly in
-`ProjectStandard.astro` and `ProjectPhotography.astro`. IBM Plex Sans is loaded as a variable
-roman with no italic file, so an italic inheriting the sans would be a browser-synthesised
-slant rather than a drawn italic. Pinning keeps that element rendering exactly as it does
-today. If Design wants the question in sans, it should lose the italic at the same time.
+**Italics come from the serif — general rule, Bryan's call.** IBM Plex Sans is loaded as a
+variable roman with no italic file, so `font-style: italic` on the sans would be a
+browser-synthesised slant: a mechanical tilt of the roman, not the drawn italic. Plex Serif
+ships a real 400 italic, and the two are one superfamily, so an italic phrase sits inside
+sans body copy at the same x-height.
+
+This is a token, `--font-italic`, not a per-element pin, and `em`, `i` and `cite` pick it up
+globally in `base.css`. Consequences:
+
+- The design question keeps rendering exactly as it does today (serif italic).
+- `*emphasis*` written in any project body gets a drawn italic automatically. No content
+  file has one yet — this is preventive.
+- **Design and Figma: any italic drawn in Figma should be Plex Serif Italic, whatever the
+  surrounding text is set in.**
 
 
 ### 2026-09-07 — Design questions leave Design and Figma's list. **Bryan's call.**

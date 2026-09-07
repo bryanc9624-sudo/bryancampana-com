@@ -30,6 +30,9 @@ body { font-weight: var(--weight-regular); }
 p { margin: 0 0 var(--space-3); max-width: var(--measure-prose); }
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }
+/* Markdown `*emphasis*` in a project body lands here. Serif so the italic is drawn
+   rather than synthesised — see --font-italic. */
+em, i, cite { font-family: var(--font-italic); }
 :focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
 
 .page { max-width: var(--page-max); margin: 0 auto; padding: 0 var(--page-pad); }

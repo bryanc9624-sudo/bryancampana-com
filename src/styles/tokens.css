@@ -24,6 +24,14 @@
   --font-body: var(--font-sans);
   --font-display: var(--font-serif);
 
+  /* Italics come from the serif. Plex Sans is loaded as a variable roman with no italic
+     file, so `font-style: italic` on the sans would be a browser-synthesised slant — a
+     mechanical tilt of the roman, not the drawn italic with its own letterforms. Plex
+     Serif ships a real 400 italic, and it is one superfamily with the sans, so an italic
+     phrase sits inside sans body copy at the same x-height. Bryan's rule, 2026-09-07:
+     anything that needs an italic uses the serif. */
+  --font-italic: var(--font-serif);
+
   --size-xs: 0.8125rem;
   --size-sm: 0.9375rem;
   --size-base: 1.0625rem;

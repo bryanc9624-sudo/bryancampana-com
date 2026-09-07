@@ -78,9 +78,8 @@ const placeholders = ['16/9', '3/2', '1/1', '3/2']
   }
   .case h1 { font-size: var(--size-2xl); }
   .case__scope { font-size: var(--size-lg); line-height: var(--leading-snug); margin: 0; }
-  /* Serif is pinned here: the sans is a variable roman with no italic file, so an
-     italic on --font-body would be a browser-synthesised slant. */
-  .case__question { margin: 0; color: var(--color-muted); font-family: var(--font-serif);
+  /* --font-italic, not --font-body: this line is italic. See tokens.css. */
+  .case__question { margin: 0; color: var(--color-muted); font-family: var(--font-italic);
     font-style: italic; line-height: var(--leading-snug); }
   .case__body { margin: 0; }
   .case__back { margin: 0; }
