@@ -205,9 +205,9 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
-### 2026-09-07 — Serif/sans pairing: Crimson Text with IBM Plex Sans. **Bryan's call. In Figma.**
+### 2026-09-07 — Serif/sans pairing: IBM Plex Serif with IBM Plex Sans. **Bryan's call. In Figma.**
 
-**Crimson Text** (Google Fonts) for anything read; **IBM Plex Sans** reserved for the small
+**IBM Plex Serif** for anything read; **IBM Plex Sans** reserved for the small
 label tier. Sans now appears on exactly two styles — `Eyebrow` and `Label` — which are the
 eyebrows and fact-pair labels Bryan named.
 
@@ -216,22 +216,24 @@ previously unused:
 
 | Variable | Value | CSS |
 |---|---|---|
-| `font/display` | Crimson Text | `--font-display` |
-| `font/body` | Crimson Text | `--font-body` |
+| `font/display` | IBM Plex Serif | `--font-display` |
+| `font/body` | IBM Plex Serif | `--font-body` |
 | `font/family` | IBM Plex Sans | `--font-sans` *(unchanged)* |
 
-Style mapping: Display 2XL / XL, Title Large and Body Strong take Crimson **SemiBold** via
-`font/display`. Body, Body Large and Body Small take Crimson **Regular**, and Question takes
-Crimson **Italic**, all via `font/body`. Eyebrow and Label stay Plex Medium.
+Style mapping: Display 2XL / XL, Title Large and Body Strong take Plex Serif **SemiBold** via
+`font/display`. Body, Body Large and Body Small take Plex Serif **Regular**, and Question takes
+Plex Serif **Italic**, all via `font/body`. Eyebrow and Label stay Plex Sans Medium.
 
-**Code and Deploy:** two font families now load. `--font-display` and `--font-body` both become
-Crimson Text; `--font-sans` stays IBM Plex Sans. Weights needed: Crimson Regular 400, SemiBold
-600, Italic 400; Plex Medium 500 only, since Plex no longer sets any body or title text.
+**Code and Deploy:** `--font-display` and `--font-body` both become **IBM Plex Serif**;
+`--font-sans` stays IBM Plex Sans. Weights needed: Serif Regular 400, SemiBold 600, Italic 400;
+Sans Medium 500 only, since the sans no longer sets any body or title text.
 
-**Open, and Bryan's to judge:** Crimson Text has a markedly smaller x-height than Plex, so at
-identical pixel sizes everything reads smaller and lighter than it did. The size tokens have not
-been changed. If the ramp needs to grow to compensate, that is a `size/*` adjustment, not a
-per-style one, and it would flow through both Figma and the CSS unchanged.
+**Superseded intermediate:** Crimson Text was applied first and swapped out the same day when
+Bryan realised Plex had a serif. The swap also solved a real problem rather than just being
+tidier — Crimson has a markedly smaller x-height, so at identical pixel sizes the body and scope
+text read too small and a `size/*` bump was going to be needed. **Plex Serif shares its x-height
+and metrics with Plex Sans, being the same superfamily, so the existing size ramp holds
+unchanged.** No token adjustment required.
 
 ### 2026-09-07 — Video facade drawn. **Ready to implement.**
 
