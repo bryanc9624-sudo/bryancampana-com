@@ -11,10 +11,17 @@ const projects = defineCollection({
     year: z.number().nullable().default(null),
     completed: z.string().nullable().default(null),
 
-    // Single canonical discipline. Selects the project-page layout and appears in the
-    // facts list. Deliberately NOT derived from `keywords`: keywords are an unordered
-    // many-valued set, so adding one must never change a page layout.
+    // A label only. Appears in the facts list as "Discipline". It does NOT select the
+    // layout — see `layout` below. Naming a field for its content and then using it for
+    // presentation is what this pair was split apart to avoid.
     discipline: z.string().nullable().default(null),
+
+    // Which project-page layout to use. Named for the layout, not for the kind of work,
+    // so an identity project can be image-first and a photography project can be
+    // standard without either having to misdescribe itself.
+    //   standard    - sticky text rail on the left, wide image column on the right
+    //   image-first - image-led: header, then the images two-up, then the facts
+    layout: z.enum(['standard', 'image-first']).default('standard'),
 
     // Many per project. Drives the /work filter. Seeded from the disciplines shown on
     // the Cargo site; Bryan adds real keywords later without a schema change.

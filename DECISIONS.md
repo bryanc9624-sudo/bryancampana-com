@@ -203,6 +203,50 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — Serif/sans pairing: Crimson Text with IBM Plex Sans. **Bryan's call. In Figma.**
+
+**Crimson Text** (Google Fonts) for anything read; **IBM Plex Sans** reserved for the small
+label tier. Sans now appears on exactly two styles — `Eyebrow` and `Label` — which are the
+eyebrows and fact-pair labels Bryan named.
+
+Two new Figma variables map to CSS properties that already existed in `tokens.css` and were
+previously unused:
+
+| Variable | Value | CSS |
+|---|---|---|
+| `font/display` | Crimson Text | `--font-display` |
+| `font/body` | Crimson Text | `--font-body` |
+| `font/family` | IBM Plex Sans | `--font-sans` *(unchanged)* |
+
+Style mapping: Display 2XL / XL, Title Large and Body Strong take Crimson **SemiBold** via
+`font/display`. Body, Body Large and Body Small take Crimson **Regular**, and Question takes
+Crimson **Italic**, all via `font/body`. Eyebrow and Label stay Plex Medium.
+
+**Code and Deploy:** two font families now load. `--font-display` and `--font-body` both become
+Crimson Text; `--font-sans` stays IBM Plex Sans. Weights needed: Crimson Regular 400, SemiBold
+600, Italic 400; Plex Medium 500 only, since Plex no longer sets any body or title text.
+
+**Open, and Bryan's to judge:** Crimson Text has a markedly smaller x-height than Plex, so at
+identical pixel sizes everything reads smaller and lighter than it did. The size tokens have not
+been changed. If the ramp needs to grow to compensate, that is a `size/*` adjustment, not a
+per-style one, and it would flow through both Figma and the CSS unchanged.
+
+### 2026-09-07 — Video facade drawn. **Ready to implement.**
+
+Component `VideoFacade` on page 04. Three New Media projects use it.
+
+- **Ground is `color/fg` (ink), not grey.** Grey is the placeholder colour on this site, so a
+  grey video block reads as a missing image rather than something you can press. This was the
+  actual problem with the current treatment.
+- **Label bottom-left, sans, `color/bg`** — a `Label` text property so it can carry a duration
+  later. On hover it takes `color/accent`, like every other interactive element.
+- **No icon.** The design has no icon language anywhere, and three videos do not justify
+  inventing one.
+- Where a project has a poster still, the image replaces the fill and the label sits over it.
+  Two of the three have no still — those show the ink block, which is a deliberate state rather
+  than a gap.
+
+
 ### 2026-09-07 — "Droplet" — a reserved shape motif. Named, not applied.
 
 Vocabulary so both chats mean the same thing. **The droplet** is three rounded corners with
