@@ -196,6 +196,40 @@ neither chat plans against them:
 
 Routed here rather than through Bryan, per rule 2.
 
+- [ ] **`tokens.css` still sets body copy in the serif — it contradicts the settled type
+      decision.** *Raised by Design and Figma 2026-09-07; typography is Design's to state,
+      the CSS edit is Code and Deploy's to make.*
+
+      `src/styles/tokens.css:24` reads `--font-body: var(--font-serif);` and
+      `src/styles/base.css:19` applies it to `body`, so **every piece of body copy on the
+      built site currently renders in IBM Plex Serif.**
+
+      That is the arrangement Bryan looked at and rejected. The Settled entry
+      "Serif/sans pairing: IBM Plex Serif with IBM Plex Sans" is explicit: **serif for
+      titles only; sans for everything else** — body, scope, the design question, and the
+      small label tier.
+
+      **How it drifted, so it is not read as anyone's error.** Commit `35be25c`
+      ("Serif pairing and the redrawn video facade") set `--font-body` to the serif, which
+      was correct against the ledger *at that moment*. Bryan reversed the decision
+      afterwards, logged in `f027101` ("Scrap the credit line; serif is titles only").
+      No commit has touched `tokens.css` since `35be25c`, so the code is simply sitting one
+      decision behind. Ordinary drift, not a mistake.
+
+      **The change is two lines:**
+
+      ```css
+      --font-body: var(--font-sans);     /* was var(--font-serif) */
+      --font-display: var(--font-serif); /* unchanged — titles keep the serif */
+      ```
+
+      The comment block above those lines ("Serif for anything read; sans reserved for the
+      small label tier") describes the reversed decision and should be rewritten to match,
+      or it will pull the values back again.
+
+      Worth a look on the built page rather than only in the diff: this changes the texture
+      of every project page and the landing statement at once.
+
 - [x] ~~**Merge `claude/website-design-figma-l3milr` into `main`.**~~ **DONE — verified
       2026-09-07.** `docs/figma-to-code-spec.md` is on `main`; nothing is blocked on it.
 - [x] **CLOSED — superseded.** `layout` now selects the project page layout and `discipline` is a label only, so there is no longer a question of deriving layout from content. Original: **Discipline source.** The project page has two layouts (standard / photography) and
@@ -245,6 +279,21 @@ when something needs the other chats' attention; a clean audit is not recorded h
 ---
 
 ## Settled
+
+### 2026-09-07 — Design questions leave Design and Figma's list. **Bryan's call.**
+
+Bryan took direct ownership of writing the 14 design questions and asked for them off this
+chat's list completely. They were never a design decision, only a content one that had been
+parked in a design section because the layout needed sentence lengths to test against.
+
+**Consequence for both chats: this is no longer a tracked item and no longer a launch
+dependency.** The previous framing called it "the long pole on launching" — that framing is
+withdrawn. The field is optional, ships blank, and renders nothing when empty.
+
+The placeholder questions in Figma are still placeholder text and must not reach the site.
+See "Design questions — Bryan owns these outright" below for the house style and the
+worksheet, kept as reference only.
+
 
 ### 2026-09-07 — Horizontal rules get a hierarchy. **Bryan's call. Done in Figma.**
 
@@ -924,26 +973,26 @@ inactive `--color-muted`.
 
 ---
 
-## Design questions — status
+## Design questions — Bryan owns these outright
 
-**Correction to the previous version of this ledger.** It listed Dura's question as
-written and counted "11 of 14 still needed." That undercounts the work: **every design
-question currently in the Figma file was drafted by Design and Figma as placeholder text
-to test layout at realistic sentence lengths.** None of it is Bryan's writing.
+**2026-09-07 — removed from Design and Figma's list entirely. Bryan's call, in his words:
+"let's take this completely off the list. I will take that responsibility."**
 
-Under rule "Copy comes from Bryan," that makes the real count **14 of 14 still to be
-written.** The drafts should be treated as length references, not proposals, and replaced
-wholesale.
+Nothing here is tracked by either chat any more. No status table, no count, no long pole.
+The field is optional and already ships blank on all 14 project pages, so there is nothing
+waiting on it and nothing to chase.
 
-| Project | Status |
-|---|---|
-| All 14 | Placeholder draft in Figma only — **needs Bryan's own** |
+What remains true and worth keeping, as reference rather than as a task:
 
-The house style above is the brief for writing them: one sentence, 60–90 characters,
-naming the specific constraint. This remains the long pole on launching, and it is the one
-task on the whole project that neither chat can do.
+- **House style**, if Bryan wants it: one sentence, 60-90 characters, ending in a question
+  mark, naming the specific constraint rather than the general theme. See the Settled entry
+  "Design question house style".
+- **The questions currently in the Figma file are placeholder text** drafted by the first
+  design chat to test layout at realistic sentence lengths. None of it is Bryan's writing.
+  Treat it as a length reference and replace it wholesale; do not let it reach the site.
+- **Setting one is a one-field change.** Both project-page layouts already guard the field,
+  so filling it in makes it appear on that page only. `DESIGN-QUESTIONS.md` holds a
+  worksheet with each project's scope line and body opening.
 
-*Design and Figma's suggestion, not a decision: the questions are hardest to write cold and
-easiest to write from the work. If Bryan wants, this chat can pull each project's scope
-line and archived Cargo body text into a single working document — his words only — so he
-has all 14 in front of him at once rather than opening 14 Markdown files.*
+**Neither chat should raise this again.** Not as a blocker, not as a status item, not as a
+launch dependency.
