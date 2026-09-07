@@ -79,6 +79,19 @@ neither chat plans against them:
 
 ## Open decisions — Design and Figma owns these
 
+- [ ] **Dark mode is now inconsistent with the light palette.** The light palette went
+      plum on 2026-09-07 (`fg #361a38`, `muted #7e6f7e`, `line #d4cad4`, `focus #9600dd`)
+      but the dark palette in `tokens.css` is still the original neutral greys
+      (`#101010 / #f2f2f2 / #a0a0a0 / #2a2a2a`), so a visitor whose system is set to dark
+      sees an unrelated colour scheme. Figma cannot express this — its two variable modes
+      are Desktop and Mobile, and Figma Starter allows no more — so dark values have to be
+      stated directly. Code and Deploy will not invent them. Six values needed:
+      bg, fg, muted, line, placeholder, focus.
+- [ ] **What does `color/accent` mark?** New in Figma 2026-09-07, `#9600dd`, identical to
+      `color/focus`. Added to `tokens.css` as `--color-accent` so it stays in sync, but
+      applied to nothing — Figma does not say what it is for, and choosing would be a
+      design decision. Name the elements and it gets applied.
+
 - [ ] **Video facade — visual treatment.** The mechanism is built and working; the
       appearance is not designed. Currently a neutral placeholder: the project's first
       photograph as poster where one exists, otherwise a grey box, with a small uppercase
@@ -180,6 +193,30 @@ when something needs the other chats' attention; a clean audit is not recorded h
 ---
 
 ## Settled
+
+### 2026-09-07 — Radius stays 0, derived from the typeface. **Measured, not defaulted.**
+
+Bryan asked whether the radius could be matched to the curvature of a round glyph in IBM Plex
+Sans. It can be measured, and the answer is zero — but not for the reason it looks like.
+
+**What was measured.** The glyphs were flattened to vectors and the curvature computed from the
+bezier data at a 1000px em. The `o` is 466 x 540, with a radius of curvature of **288 units at
+top and bottom** and **464 at the sides** (0.29em and 0.46em).
+
+**Why that does not transfer.** As a ratio, the `o`'s radius is **0.62x its own width**. Applied
+to a rectangle that produces a pill, not a rounded corner. A round glyph is all curve; a rounded
+rectangle is mostly straight. The measurement is real, it just answers a different question.
+
+**What the typeface actually says about corners.** The `n` stem is `M 80 528 L 0 528 L 0 12
+L 80 12` — pure line commands, sharp joins. The `D` is the same inside and out. **IBM Plex Sans
+has square corners with no rounding anywhere in its construction.**
+
+So `radius/sm` and `radius/md` stay at **0**, now justified by the face rather than left unset.
+Both variable descriptions in Figma carry the derivation so the values are not "corrected" later.
+
+**If a non-zero micro-radius is ever wanted**, the defensible value is the stem width: 80 units
+per 1000px em = **0.08em**, roughly 1.4px at 17px body text. Not currently applied.
+
 
 ### 2026-09-07 — Colour VALUES settled. **Bryan's call. In Figma. Ready to implement.**
 
