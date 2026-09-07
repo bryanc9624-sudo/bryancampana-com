@@ -203,6 +203,23 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — "Droplet" — a reserved shape motif. Named, not applied.
+
+Vocabulary so both chats mean the same thing. **The droplet** is three rounded corners with
+one square. **The nib corner** is the square one, and it goes **top-left** — it is where the
+pen touched down and the ink ran right and down, which is also how the page reads. It is also
+the corner that touches the grid, so keeping it square holds the image to its column and row.
+
+**Currently applied to nothing, deliberately.** Considered for the project card images and
+rejected: Bryan's photography is architectural — right angles, window grids, stone — and a
+rounded frame fights that content. There is also a threshold problem, in that a radius small
+enough not to crop the composition is too small to read as intentional.
+
+**Do not introduce an element in order to use it.** If a real button ever appears in the
+design, the droplet is its shape. Until then it stays a named idea. `radius/sm` and
+`radius/md` remain 0 and radius is no longer an open decision.
+
+
 ### 2026-09-07 — Radius stays 0, derived from the typeface. **Measured, not defaulted.**
 
 Bryan asked whether the radius could be matched to the curvature of a round glyph in IBM Plex
