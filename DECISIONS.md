@@ -280,6 +280,29 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — Body text is Sans, not Serif. **Bryan's call, made in Code and Deploy.**
+
+`--font-body` was `var(--font-serif)`; it is now `var(--font-sans)` (IBM Plex Sans Variable).
+Bryan asked for this directly in the code chat. **Design and Figma: the Body / Body Strong /
+Body Small / Body Large / Question text styles need the same swap so Figma and the site
+still agree — this is the one place they are currently out of sync.**
+
+What did NOT change:
+
+- `--font-display` is still serif. h1/h2/h3 — the wordmark, page titles and project titles —
+  are unaffected. Bryan said "body text", and display type was read as outside that.
+- The small label tier (eyebrows, fact-pair labels, card metadata) was already sans and is
+  untouched.
+- The size ramp is unchanged. Plex Sans and Plex Serif are one superfamily and share an
+  x-height, so no size or leading value needed adjusting.
+
+One consequence worth recording: the **design question stays serif**, pinned explicitly in
+`ProjectStandard.astro` and `ProjectPhotography.astro`. IBM Plex Sans is loaded as a variable
+roman with no italic file, so an italic inheriting the sans would be a browser-synthesised
+slant rather than a drawn italic. Pinning keeps that element rendering exactly as it does
+today. If Design wants the question in sans, it should lose the italic at the same time.
+
+
 ### 2026-09-07 — Design questions leave Design and Figma's list. **Bryan's call.**
 
 Bryan took direct ownership of writing the 14 design questions and asked for them off this

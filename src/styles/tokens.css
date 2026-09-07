@@ -18,10 +18,10 @@
   --font-sans: "IBM Plex Sans Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --font-serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
 
-  /* Serif for anything read; sans reserved for the small label tier — eyebrows and
-     fact-pair labels, and nothing else. Same superfamily, so Plex Serif shares its
-     x-height and metrics with Plex Sans and the existing size ramp holds unchanged. */
-  --font-body: var(--font-serif);
+  /* Sans for running text; serif reserved for display — h1/h2/h3 and the italic
+     design question. Same superfamily, so the two share x-height and metrics and the
+     existing size ramp holds unchanged across the switch. */
+  --font-body: var(--font-sans);
   --font-display: var(--font-serif);
 
   --size-xs: 0.8125rem;
