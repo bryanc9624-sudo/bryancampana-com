@@ -1,0 +1,6 @@
+# bryancampana.com
+# Everything here is public portfolio work — nothing is disallowed.
+User-agent: *
+Allow: /
+
+Sitemap: https://bryancampana.com/sitemap-index.xml
