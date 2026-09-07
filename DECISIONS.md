@@ -79,6 +79,45 @@ neither chat plans against them:
 
 ## Open decisions — Design and Figma owns these
 
+- [ ] **Credit line on the project card — draw it, then Code and Deploy wires it.**
+      Raised by Bryan 2026-09-07 after looking at C&G Partners, whose cards carry the
+      client name under the title. The credibility is real and currently invisible: names
+      like NewYork-Presbyterian and NYU Langone sit only in body prose on four case-study
+      pages, so a recruiter scanning `/work` never sees them.
+
+      **Three things to decide before it can be built:**
+
+      1. **What the field is called, because "client" is wrong for half of them.** The
+         relationship differs by project:
+         | Project | Name | Relationship |
+         |---|---|---|
+         | Dura Architectural Signage | NewYork-Presbyterian, NYU Langone Health | client of the employer |
+         | 590 Madison Ave | 590 Madison Avenue | the building; Dura was the employer |
+         | Big City Volleyball | Big City Volleyball | client |
+         | TogetherEffect | TogetherEffect | client |
+         | re:present, re:semblance | New Media Artspace | **venue**, not client |
+         | Photopolymer Letterpress | Robert Blackburn Printmaking Workshop | **studio** where it was made |
+         | Double Exposed | Treat Gallery, Dodomu Gallery | **venues** it was shown at |
+         | Memory Strip, Transmute, The City That Slept, Two of Hearts, Shapes and Colors, Oscuro | — | **nothing to credit** |
+
+         A single `client` field would force a venue or a studio to be called a client.
+         Something like `credit` is more honest, or the label lives in the value itself.
+
+      2. **Six of fourteen cards would have no credit line.** Not a small minority. The
+         card has to look deliberate when the line is absent, not like a missing field.
+
+      3. **Whether more than one name can appear.** Dura has two, Double Exposed has two.
+         Truncate, pick one, or allow a list.
+
+      Code and Deploy will add the schema field and wire it once the card is drawn; the
+      data above is already recoverable from `archive/content/`. Not started, since the
+      card is Figma's.
+
+      *Context:* C&G Partners runs two filter axes — Services and Industries — which suits
+      a firm selling to institutions. Not proposed here: 14 projects across 6 keywords
+      average 2.3 each, and a second axis would fragment that into mostly-empty cells.
+      Their card metadata is the borrowable part, not their taxonomy.
+
 - [x] **DONE — dark palette applied 2026-09-07.** The values were already settled in
       "Colour VALUES settled" and Code and Deploy had missed them, reporting the item as
       open against a stale list. Now implemented from that table: bg #0F0C0F, fg #FFFFFF,
