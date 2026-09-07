@@ -112,54 +112,9 @@ neither chat plans against them:
 
 ### Waiting on Bryan, not on either chat
 
-- [ ] **Typeface — family chosen, activation outstanding.** Bryan chose **New Frank**
-      (2026-09-07) and created an Adobe Fonts web project: `https://use.typekit.net/udc5guh.css`.
-
-      **Not yet swappable.** New Frank does not appear in Figma's available font list —
-      Design and Figma enumerated all 1,938 families and found only *Frank Ruhl Libre* and
-      *Libre Franklin*. Two possible causes, unresolved: (a) a web project does not install
-      the font, so it still needs activating in the Creative Cloud desktop app; or (b) the
-      Design chat runs in a remote container and may not be able to see Bryan's locally
-      activated fonts at all. If (b), Bryan performs the swap himself — it is one variable
-      edit (see Settled, "Type ramp is bound to one variable").
-
-      **Resolved 2026-09-07:** CSS family is **`new-frank`**. Web project includes 300, 300i,
-      400, 400i, 500, 500i, 700 — covers the revised ramp (see Settled, "Font weights,
-      REVISED"). Domain coverage moved to Code and Deploy's open list.
-
-      **Two manual steps remain, and only Bryan can do them** — the Design chat cannot see
-      New Frank from its container, so it cannot set a font it cannot load:
-
-      1. **Change the `font/family` variable value** from `Inter` to New Frank's family name
-         as Figma's font picker shows it. Verified 2026-09-07: the variable is still `Inter`
-         in both modes. Editing the type specimen on the Foundations page changes only that
-         specimen — the variable is what drives the ten text styles and all 18 frames.
-      2. **Change four text styles from Semi Bold to Bold** — `Display / 2XL`,
-         `Display / XL`, `Title / Large`, `Body / Strong`. New Frank has no 600, so these
-         will otherwise resolve to a missing font once the family switches.
-
-      Also worth checking once switched: the `Question` style asks for style name `Italic`.
-      Depending on how New Frank's internal naming maps, Figma may call it `Regular Italic`.
-
-      **The chosen family must carry four styles**, because the design already uses all
-      four:
-
-      | Style | Used for |
-      |---|---|
-      | Regular (400) | body, captions, nav, description, year |
-      | Medium (500) | labels, eyebrows, the card keyword |
-      | Semi Bold (600) | display sizes, titles, wordmark |
-      | Italic | the design question |
-
-      If the family lacks **Medium**, labels fold into Regular and the distinction is
-      carried by size and letter-spacing alone — acceptable. If it lacks a true **Italic**,
-      the design question needs a different treatment; do not let it synthesise an oblique.
-      Worth checking before committing to a family.
-
-      When it lands: the Adobe embed `<link>` in `Base.astro` and the `--font-sans` value,
-      both Code and Deploy's. **Adobe Fonts web projects are domain-locked**, so both
-      `bryancampana.com` and `bryancampana.netlify.app` must be in the project's allowed
-      domains or the fonts fail silently on one of them.
+- [x] ~~**Typeface.**~~ **DONE 2026-09-07** — see Settled, "Typeface swap executed in Figma".
+      Nothing outstanding on Bryan for type. The New Frank / Adobe Fonts material that stood
+      here is obsolete and has been removed rather than left to mislead.
 
 ## Open decisions — Code and Deploy owns these
 
@@ -208,6 +163,40 @@ when something needs the other chats' attention; a clean audit is not recorded h
 ---
 
 ## Settled
+
+### 2026-09-07 — Typeface swap executed in Figma. **Done, verified.**
+
+Completes Code and Deploy's entry below. Everything it listed as outstanding is finished:
+
+- `font/family` = **IBM Plex Sans** in both `Desktop` and `Mobile` modes.
+- All ten text styles repointed, **600 restored** as Code and Deploy asked. Style names in
+  this family have **no space** — `SemiBold`, not Inter's `Semi Bold`. A silent breaker.
+- All ten styles re-bound to `font/family`, so the next swap is one variable edit again.
+- The Foundations Type specimen is rebuilt in Plex, with every line's size **and** family
+  bound to the variables. It was hardcoded before, which is exactly why it drifted.
+
+**Verified by node count, not by eye:** every one of the 22 rebuilt frames is 100% IBM Plex
+Sans, 0 Inter. The 105 remaining Inter nodes are all inside the original pre-existing
+frames, which are kept deliberately as the "before" reference.
+
+**Metric shift:** Plex sets slightly tighter than Inter here. Desktop landing 1496 → 1415px,
+work index 2643 → 2523px, mobile landing 2419 → 2323px. Nothing reflowed badly; no fix needed.
+
+**For Code and Deploy — the CSS side:**
+
+```css
+--font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+```
+
+Weights needed: **400, 500, 600, and 400 italic**. Nothing else in the family is used. The
+Typekit `<link>` should be removed if it was ever added. Self-hosting vs CDN is Code and
+Deploy's call — Design and Figma has no stake beyond "it must work on localhost."
+
+*Correction owned by Design and Figma:* an earlier report to Bryan said the `font/family`
+variable was "still Inter" and that his change had only touched one specimen node. That was
+wrong. His change had in fact reached all ten text styles and 421 nodes — the read that said
+otherwise was taken before his edit propagated. It also flattened every weight to Regular,
+because New Frank's style names did not match what the styles asked for. All corrected now.
 
 ### 2026-09-07 — Typeface is IBM Plex Sans (Google Fonts), replacing New Frank. **Bryan's call.**
 
@@ -465,7 +454,11 @@ At 390px the landing statement was an eight-line, 296px block; it is now 168px. 
 this is the `Mobile` variable mode. **No new custom properties** — all 26 variables still
 map 1:1 to `tokens.css`.
 
-### 2026-09-07 — Font weights, REVISED for New Frank: 600 becomes 700.
+### 2026-09-07 — Font weights, REVISED for New Frank: 600 becomes 700. **SUPERSEDED — reverted to 600.**
+
+> Dead entry, kept only so the reasoning is traceable. It existed solely because New Frank
+> lacks a Semi Bold. IBM Plex Sans has one, so the original 600 mapping stands and the four
+> text styles are set to `SemiBold` in Figma as of 2026-09-07. Ignore the table below.
 
 **New Frank has no Semi Bold.** Its weights are Thin 100, Light 300, Regular 400, Medium 500,
 Bold 700, ExtraBold 800. The original ramp below specified **600**, which does not exist in
