@@ -10,7 +10,7 @@ const d = project.data
 // Spec §3: every project has a page now, so every card links.
 const href = `/work/${project.id}`
 const keyword = d.keywords[0] ?? null
-const cover = coverFor(project.id)
+const cover = coverFor(project.id, d.cover)
 ---
 <article class="card">
   <a href={href} class="card__media" tabindex="-1" aria-hidden="true">
