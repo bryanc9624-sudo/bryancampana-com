@@ -79,6 +79,47 @@ neither chat plans against them:
 
 ## Open decisions — Design and Figma owns these
 
+- [x] ~~**Credit line on the project card.**~~ **SCRAPPED by Bryan 2026-09-07.** They are not his clients — the relationship is an employer's client, a venue, a studio or a building in most cases, and calling any of them a client would misrepresent the work. No schema field, no card change, nothing to draw. The analysis below is kept only so the question is not raised a third time.
+
+- [ ] ~~Original item:~~
+      Raised by Bryan 2026-09-07 after looking at C&G Partners, whose cards carry the
+      client name under the title. The credibility is real and currently invisible: names
+      like NewYork-Presbyterian and NYU Langone sit only in body prose on four case-study
+      pages, so a recruiter scanning `/work` never sees them.
+
+      **Three things to decide before it can be built:**
+
+      1. **What the field is called, because "client" is wrong for half of them.** The
+         relationship differs by project:
+         | Project | Name | Relationship |
+         |---|---|---|
+         | Dura Architectural Signage | NewYork-Presbyterian, NYU Langone Health | client of the employer |
+         | 590 Madison Ave | 590 Madison Avenue | the building; Dura was the employer |
+         | Big City Volleyball | Big City Volleyball | client |
+         | TogetherEffect | TogetherEffect | client |
+         | re:present, re:semblance | New Media Artspace | **venue**, not client |
+         | Photopolymer Letterpress | Robert Blackburn Printmaking Workshop | **studio** where it was made |
+         | Double Exposed | Treat Gallery, Dodomu Gallery | **venues** it was shown at |
+         | Memory Strip, Transmute, The City That Slept, Two of Hearts, Shapes and Colors, Oscuro | — | **nothing to credit** |
+
+         A single `client` field would force a venue or a studio to be called a client.
+         Something like `credit` is more honest, or the label lives in the value itself.
+
+      2. **Six of fourteen cards would have no credit line.** Not a small minority. The
+         card has to look deliberate when the line is absent, not like a missing field.
+
+      3. **Whether more than one name can appear.** Dura has two, Double Exposed has two.
+         Truncate, pick one, or allow a list.
+
+      Code and Deploy will add the schema field and wire it once the card is drawn; the
+      data above is already recoverable from `archive/content/`. Not started, since the
+      card is Figma's.
+
+      *Context:* C&G Partners runs two filter axes — Services and Industries — which suits
+      a firm selling to institutions. Not proposed here: 14 projects across 6 keywords
+      average 2.3 each, and a second axis would fragment that into mostly-empty cells.
+      Their card metadata is the borrowable part, not their taxonomy.
+
 - [x] **DONE — dark palette applied 2026-09-07.** The values were already settled in
       "Colour VALUES settled" and Code and Deploy had missed them, reporting the item as
       open against a stale list. Now implemented from that table: bg #0F0C0F, fg #FFFFFF,
@@ -109,7 +150,7 @@ neither chat plans against them:
       **Code and Deploy: ready to restyle.** Poster question answered: where a still exists it
       replaces the fill; where none exists the ink block stands on its own as a deliberate
       state, so no fallback to the first project photograph is needed.
-- [ ] **Video poster stills.** Related but Bryan's, not Design's: the three video projects
+- [ ] **Video poster stills** *(Bryan's, not blocking — the ink ground is a deliberate state).* Related but Bryan's, not Design's: the three video projects
       have no dedicated poster frame. Currently reusing the first project photograph, and
       two of the three have no photographs at all, so they show a grey box.
 
@@ -134,7 +175,7 @@ neither chat plans against them:
       all seven tokens, contrast verified. **Code and Deploy: the hold is lifted.** Bryan
       resolved both open questions on the bench: paper is **pure white**, not warm; and the
       charge sits on the **violet** side of the ink, not the magenta side.
-- [ ] **Radius.** `radius/sm` and `radius/md` are both `0`. The only place radius is
+- [x] **CLOSED — radius stays 0**, derived from IBM Plex Sans's square corners. See Settled, "Droplet". Original: **Radius.** `radius/sm` and `radius/md` are both `0`. The only place radius is
       visible is `FilterChip`; every other surface is a hairline or a plain block. Bound
       to the tokens, so it is a one-value change.
       *Merged into the chip-overflow item above — counts are now built and live, so the
@@ -157,11 +198,11 @@ Routed here rather than through Bryan, per rule 2.
 
 - [ ] **Merge `claude/website-design-figma-l3milr` into `main`.** Carries
       `docs/figma-to-code-spec.md` and this ledger update. Blocks everything else.
-- [ ] **Discipline source.** The project page has two layouts (standard / photography) and
+- [x] **CLOSED — superseded.** `layout` now selects the project page layout and `discipline` is a label only, so there is no longer a question of deriving layout from content. Original: **Discipline source.** The project page has two layouts (standard / photography) and
       needs one canonical discipline value to switch on. Either `keywords[0]` or a separate
       `discipline` field — do not infer layout from an unordered array. Code and Deploy's
       call; Design and Figma has no preference beyond "it must be deterministic."
-- [ ] **`year: number` vs `completed: string`.** The live site shows *September 2025* for
+- [x] **CLOSED — both exist.** `year` is a numeric sort key, `completed` is the displayed string. Implemented in the schema migration. Original: **`year: number` vs `completed: string`.** The live site shows *September 2025* for
       Dura and *2019* for Oscuro. The current numeric `year` cannot hold the former.
       Widen it, or add `completed` and keep `year` as a sort key.
 - [x] ~~**Adobe Fonts domain coverage.**~~ **RETRACTED by the chat that raised it, 2026-09-07.**
@@ -207,8 +248,9 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ### 2026-09-07 — Serif/sans pairing: IBM Plex Serif with IBM Plex Sans. **Bryan's call. In Figma.**
 
-**IBM Plex Serif** for anything read; **IBM Plex Sans** reserved for the small
-label tier. Sans now appears on exactly two styles — `Eyebrow` and `Label` — which are the
+**IBM Plex Serif for titles only**; **IBM Plex Sans for everything else** — body, scope,
+the design question, and the small label tier. Bryan set this 2026-09-07 after seeing serif
+body text in situ and preferring the sans. Sans now appears on exactly two styles — `Eyebrow` and `Label` — which are the
 eyebrows and fact-pair labels Bryan named.
 
 Two new Figma variables map to CSS properties that already existed in `tokens.css` and were
@@ -217,16 +259,21 @@ previously unused:
 | Variable | Value | CSS |
 |---|---|---|
 | `font/display` | IBM Plex Serif | `--font-display` |
-| `font/body` | IBM Plex Serif | `--font-body` |
+| `font/body` | IBM Plex **Sans** | `--font-body` |
 | `font/family` | IBM Plex Sans | `--font-sans` *(unchanged)* |
 
-Style mapping: Display 2XL / XL, Title Large and Body Strong take Plex Serif **SemiBold** via
-`font/display`. Body, Body Large and Body Small take Plex Serif **Regular**, and Question takes
-Plex Serif **Italic**, all via `font/body`. Eyebrow and Label stay Plex Sans Medium.
+**Serif** (`font/display`): Display 2XL, Display XL, Title Large, Body Strong — SemiBold.
+Body Strong is the wordmark, which counts as a title.
+**Sans** (`font/body` and `font/family`): Body, Body Large, Body Small, Question, Eyebrow, Label.
 
-**Code and Deploy:** `--font-display` and `--font-body` both become **IBM Plex Serif**;
-`--font-sans` stays IBM Plex Sans. Weights needed: Serif Regular 400, SemiBold 600, Italic 400;
-Sans Medium 500 only, since the sans no longer sets any body or title text.
+Bryan changed this by editing one variable value — `font/body` — and every bound style followed.
+That is the type system working as designed.
+
+**Code and Deploy — this is now a smaller change than it was.** `tokens.css` already defines
+`--font-body: var(--font-sans)`, which is exactly right again, so **only `--font-display` needs
+to change** — to IBM Plex Serif. `--font-sans` becomes IBM Plex Sans.
+Weights: **Serif SemiBold 600 only** (titles are the sole serif use); Sans Regular 400,
+Medium 500, Italic 400.
 
 **Superseded intermediate:** Crimson Text was applied first and swapped out the same day when
 Bryan realised Plex had a serif. The swap also solved a real problem rather than just being

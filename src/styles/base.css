@@ -1,7 +1,13 @@
 /* src/styles/base.css — element defaults and shared layout primitives.
    Tokens only, no literal values (breakpoints excepted — see tokens.css). */
+/* Sans: variable build, one file for every weight. Only Medium 500 is used now, on
+   eyebrows and labels, but the variable file is a single request either way. */
 @import '@fontsource-variable/ibm-plex-sans/wght.css';
-@import '@fontsource-variable/ibm-plex-sans/wght-italic.css';
+/* Serif has no variable build, so load exactly the three faces the styles call for:
+   Regular for body, SemiBold for display and titles, Italic for the design question. */
+@import '@fontsource/ibm-plex-serif/400.css';
+@import '@fontsource/ibm-plex-serif/400-italic.css';
+@import '@fontsource/ibm-plex-serif/600.css';
 @import './tokens.css';
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -49,7 +55,7 @@ a { color: inherit; }
 @media (min-width: 64rem) { .grid--duo { grid-template-columns: repeat(2, 1fr); } }
 
 /* Shared: small uppercase section heading above a grid. */
-.eyebrow { font-weight: var(--weight-medium); line-height: var(--leading-eyebrow);
+.eyebrow { font-family: var(--font-sans); font-weight: var(--weight-medium); line-height: var(--leading-eyebrow);
   font-size: var(--size-sm); text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
   color: var(--color-muted); padding-bottom: var(--space-2);

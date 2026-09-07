@@ -1,9 +1,9 @@
 ---
-import { getCollection } from 'astro:content'
+import { visibleProjects } from '../../lib/projects'
 import Base from '../../layouts/Base.astro'
 import ProjectCard from '../../components/ProjectCard.astro'
 
-const all = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order)
+const all = await visibleProjects()
 
 // Chips are derived from the union of every project's keywords — add a keyword to a
 // content file and a filter link appears. Nothing here is hardcoded.

@@ -4,6 +4,7 @@ import type { CollectionEntry } from 'astro:content'
 import Placeholder from './Placeholder.astro'
 import { Image } from 'astro:assets'
 import { coverFor } from '../lib/projectImages'
+import { showDraftFlag } from '../lib/projects'
 interface Props { project: CollectionEntry<'projects'> }
 const { project } = Astro.props
 const d = project.data
@@ -22,6 +23,8 @@ const cover = coverFor(project.id, d.cover)
         </div>
       : <Placeholder aspect={d.aspect} label={`${d.title} — image placeholder`} />}
   </a>
+
+  {showDraftFlag && d.draft && <p class="card__draft">Draft — hidden when built</p>}
 
   {keyword && <p class="card__keyword">{keyword}</p>}
 
@@ -52,8 +55,15 @@ const cover = coverFor(project.id, d.cover)
   .card__title a { text-decoration: none; }
   .card__title a:hover { text-decoration: underline; }
   .card__scope { margin: 0; }
+  /* Dev only. Never present in a production build, because a draft has no page there. */
+  .card__draft {
+    margin: 0; font-family: var(--font-sans); font-size: var(--size-xs);
+    font-weight: var(--weight-medium); letter-spacing: var(--tracking-wide);
+    text-transform: uppercase; color: var(--color-accent);
+  }
   .card__keyword {
     margin: 0; color: var(--color-muted); font-size: var(--size-sm);
+    font-family: var(--font-sans);
     font-weight: var(--weight-medium); line-height: var(--leading-eyebrow);
     text-transform: uppercase; letter-spacing: var(--tracking-wide);
   }

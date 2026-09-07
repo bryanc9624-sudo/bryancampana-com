@@ -2,8 +2,8 @@
 title: Photopolymer Letterpress
 year: null
 completed: null
-discipline: "Fine Art"
-keywords: ["Fine Art"]
+discipline: "Art"
+keywords: ["Art"]
 scope: "Process study: typographic letterforms through photopolymer letterpress printing."
 designQuestion: null
 medium: null

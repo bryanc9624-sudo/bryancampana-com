@@ -11,6 +11,7 @@ medium: null
 prints: null
 dimensions: null
 cover: null
+draft: true                  # start hidden; set false when ready to publish
 featured: false
 order: 15
 aspect: "3/2"
