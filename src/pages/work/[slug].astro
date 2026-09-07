@@ -3,19 +3,15 @@ import { getCollection, render } from 'astro:content'
 import Base from '../../layouts/Base.astro'
 import ProjectStandard from '../../components/ProjectStandard.astro'
 import ProjectPhotography from '../../components/ProjectPhotography.astro'
-import ProjectNav from '../../components/ProjectNav.astro'
 import { imagesFor } from '../../lib/projectImages'
 
 // Spec §3: every project gets a page. `featured` controls presentation only.
 export async function getStaticPaths() {
-  const all = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order)
-  return all.map((p, i) => ({
-    params: { slug: p.id },
-    props: { project: p, prev: all[i - 1] ?? null, next: all[i + 1] ?? null },
-  }))
+  const all = await getCollection('projects')
+  return all.map(p => ({ params: { slug: p.id }, props: { project: p } }))
 }
 
-const { project, prev, next } = Astro.props
+const { project } = Astro.props
 const d = project.data
 const { Content } = await render(project)
 
@@ -43,6 +39,4 @@ const Layout = isPhotography ? ProjectPhotography : ProjectStandard
   <Layout project={project} photos={photos} facts={facts} hasBody={hasBody}>
     <Content />
   </Layout>
-
-  <ProjectNav prev={prev} next={next} />
 </Base>

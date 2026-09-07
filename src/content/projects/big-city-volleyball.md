@@ -5,7 +5,7 @@ completed: "September 2024"
 discipline: "Brand Identity"
 keywords: [Brand Identity]
 scope: Logo and brand system for an established New York club.
-designQuestion: TODO_DESIGN_QUESTION
+designQuestion: null
 medium: null
 prints: null
 dimensions: null

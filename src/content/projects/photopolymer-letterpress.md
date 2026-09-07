@@ -5,7 +5,7 @@ completed: null
 discipline: "Fine Art"
 keywords: [Fine Art]
 scope: "Process study: typographic letterforms through photopolymer letterpress printing."
-designQuestion: TODO_DESIGN_QUESTION
+designQuestion: null
 medium: null
 prints: null
 dimensions: null

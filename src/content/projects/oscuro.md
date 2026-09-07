@@ -5,7 +5,7 @@ completed: "2019"
 discipline: "Photography"
 keywords: [Photography]
 scope: Oscuro delves into the interplay of light and shadow, exploring the tension between opposing forces. Each image balances black and white, embodying an abstract, metaphysical energy.
-designQuestion: TODO_DESIGN_QUESTION
+designQuestion: null
 medium: "Silver Gelatin prints on photographic paper, glossy finish. Shot on 35mm."
 prints: "Set of 6, Edition of 1"
 dimensions: "Print: 8 × 10 in. Image: 6⅜ × 9½ in."
