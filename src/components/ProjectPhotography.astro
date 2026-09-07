@@ -20,14 +20,18 @@ const { project, photos, facts, hasBody } = Astro.props
 const d = project.data
 const placeholders = ['4/5', '4/5', '4/5', '4/5']
 
-// Desktop column count. Three, except where a smaller count reads better: a set of one or
-// two runs full width and stacks, so a pair of photographs is shown large rather than
-// shrunk to fill a row; four sits two-up as two complete rows. Five and seven are ragged
-// at any column count, so they take the three-up default.
-const cols = photos.length <= 2 ? 1 : photos.length === 4 ? 2 : 3
+// Desktop column count. A project can set `columns` in its frontmatter; otherwise it is
+// derived from how many images there are, so no row is left part-empty. Three by default,
+// except where a smaller count reads better: a set of one or two runs full width and
+// stacks, so a pair of photographs is shown large rather than shrunk to fill a row; four
+// sits two-up as two complete rows. Five and seven are ragged at any count.
+const derived = photos.length <= 2 ? 1 : photos.length === 4 ? 2 : 3
+const cols = d.columns ?? derived
 // Keep `sizes` honest about that, or the browser fetches a variant sized for the wrong
-// column count. 94vw is the content width after page padding.
+// column width. 94vw is the content width after page padding. The middle tier is two-up
+// for everything except a single-column set, which is full width at every size.
 const wide = `${Math.floor(94 / cols)}vw`
+const mid = cols === 1 ? '94vw' : '47vw'
 ---
 <article class="photo">
   <header class="photo__head">
@@ -51,7 +55,7 @@ const wide = `${Math.floor(94 / cols)}vw`
           <figure class="photo__figure">
             <Image src={img} alt={d.images[i]?.caption ?? `${d.title} — image ${i + 1}`}
                    widths={[500, 900, 1400]}
-                   sizes={`(min-width: 64rem) ${wide}, (min-width: 40rem) 47vw, 100vw`}
+                   sizes={`(min-width: 64rem) ${wide}, (min-width: 40rem) ${mid}, 100vw`}
                    loading={i < cols ? 'eager' : 'lazy'}
                    fetchpriority={i === 0 ? 'high' : 'auto'}
                    decoding="async" class="photo__img" />
@@ -90,11 +94,16 @@ const wide = `${Math.floor(94 / cols)}vw`
      of six reads as two rows of three rather than three rows of two. At 1440 that is three
      columns of about 432px with the 2.5rem gutter. */
   .photo__set { display: grid; gap: var(--space-5); grid-template-columns: 1fr; }
-  @media (min-width: 40rem) { .photo__set { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 40rem) {
+    .photo__set { grid-template-columns: repeat(2, 1fr); }
+    /* A one-across set stays one across here too, not just on desktop. */
+    .photo__set[data-cols="1"] { grid-template-columns: 1fr; }
+  }
   @media (min-width: 64rem) {
     .photo__set { grid-template-columns: repeat(3, 1fr); }
-    .photo__set[data-cols="2"] { grid-template-columns: repeat(2, 1fr); }
     .photo__set[data-cols="1"] { grid-template-columns: 1fr; }
+    .photo__set[data-cols="2"] { grid-template-columns: repeat(2, 1fr); }
+    .photo__set[data-cols="4"] { grid-template-columns: repeat(4, 1fr); }
   }
   .photo__figure { margin: 0; }
   .photo__img { width: 100%; height: auto; display: block; }

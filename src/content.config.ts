@@ -23,6 +23,12 @@ const projects = defineCollection({
     //   image-first - image-led: header, then the images two-up, then the facts
     layout: z.enum(['standard', 'image-first']).default('standard'),
 
+    // How many images across, on image-first pages only. Leave it out and the layout
+    // picks a count from how many images the project has; set it to override that for
+    // this one project. Ignored by the standard layout, which is a single media column.
+    // A value outside 1-4 fails the build rather than rendering a broken grid.
+    columns: z.number().int().min(1).max(4).nullable().default(null),
+
     // Many per project. Drives the /work filter. Seeded from the disciplines shown on
     // the Cargo site; Bryan adds real keywords later without a schema change.
     keywords: z.array(z.string()).default([]),

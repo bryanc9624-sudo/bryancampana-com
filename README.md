@@ -157,6 +157,15 @@ how many images the project has, so no row is left part-empty.
 
 Add or remove an image and the layout follows. There is nothing to set.
 
+To override it for one project, add `columns` to that project's frontmatter:
+
+```yaml
+columns: 2        # 1, 2, 3 or 4. Leave it out to use the table above.
+```
+
+It only affects `layout: "image-first"` pages — the standard layout is a single media
+column by design. A value outside 1–4 fails the build.
+
 **Captions** (photography pages) come from an `images` list, matched by position:
 
 ```yaml
