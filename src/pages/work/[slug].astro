@@ -4,14 +4,21 @@ import { getCollection, render } from 'astro:content'
 import Base from '../../layouts/Base.astro'
 import Placeholder from '../../components/Placeholder.astro'
 
+// Spec §3: every project gets a page, not only featured ones. `featured` now controls
+// presentation only — which projects appear on the landing page.
 export async function getStaticPaths() {
-  const featured = (await getCollection('projects')).filter(p => p.data.featured)
-  return featured.map(p => ({ params: { slug: p.id }, props: { project: p } }))
+  const all = await getCollection('projects')
+  return all.map(p => ({ params: { slug: p.id }, props: { project: p } }))
 }
 
 const { project } = Astro.props
 const d = project.data
 const { Content } = await render(project)
+
+// Ten projects have no Markdown body. Rendering <Content /> inside a wrapper anyway
+// would leave an empty div carrying its own top margin, opening a gap under the facts
+// list on exactly those pages. Check the raw body instead of trusting the component.
+const hasBody = (project.body ?? '').trim().length > 0
 
 // Spec §5.1: the live site uses Completed / Discipline / Medium / Prints.
 // Role never appeared on it and Bryan does not want it displayed at all.
@@ -41,7 +48,7 @@ const mediaImages: { aspect: string; caption?: string }[] = d.images.length > 0
         </dl>
       )}
 
-      <div class="case__body"><Content /></div>
+      {hasBody && <div class="case__body"><Content /></div>}
 
       <p class="case__back"><a href="/work">&larr; All work</a></p>
     </div>

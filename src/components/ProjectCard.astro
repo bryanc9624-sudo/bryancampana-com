@@ -5,18 +5,19 @@ import Placeholder from './Placeholder.astro'
 interface Props { project: CollectionEntry<'projects'> }
 const { project } = Astro.props
 const d = project.data
-const href = d.featured ? `/work/${project.id}` : undefined
+// Spec §3: every project has a page now, so every card links.
+const href = `/work/${project.id}`
 const keyword = d.keywords[0] ?? null
 ---
 <article class="card">
-  {href
-    ? <a href={href} class="card__media" tabindex="-1" aria-hidden="true"><Placeholder aspect={d.aspect} label={`${d.title} — image placeholder`} /></a>
-    : <div class="card__media"><Placeholder aspect={d.aspect} label={`${d.title} — image placeholder`} /></div>}
+  <a href={href} class="card__media" tabindex="-1" aria-hidden="true">
+    <Placeholder aspect={d.aspect} label={`${d.title} — image placeholder`} />
+  </a>
 
   {keyword && <p class="card__keyword">{keyword}</p>}
 
   <h3 class="card__title">
-    {href ? <a href={href}>{d.title}</a> : d.title}
+    <a href={href}>{d.title}</a>
   </h3>
 
   <p class="card__scope">{d.scope}</p>
