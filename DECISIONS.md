@@ -79,6 +79,19 @@ neither chat plans against them:
 
 ## Open decisions — Design and Figma owns these
 
+- [ ] **Dark mode is now inconsistent with the light palette.** The light palette went
+      plum on 2026-09-07 (`fg #361a38`, `muted #7e6f7e`, `line #d4cad4`, `focus #9600dd`)
+      but the dark palette in `tokens.css` is still the original neutral greys
+      (`#101010 / #f2f2f2 / #a0a0a0 / #2a2a2a`), so a visitor whose system is set to dark
+      sees an unrelated colour scheme. Figma cannot express this — its two variable modes
+      are Desktop and Mobile, and Figma Starter allows no more — so dark values have to be
+      stated directly. Code and Deploy will not invent them. Six values needed:
+      bg, fg, muted, line, placeholder, focus.
+- [ ] **What does `color/accent` mark?** New in Figma 2026-09-07, `#9600dd`, identical to
+      `color/focus`. Added to `tokens.css` as `--color-accent` so it stays in sync, but
+      applied to nothing — Figma does not say what it is for, and choosing would be a
+      design decision. Name the elements and it gets applied.
+
 - [ ] **Video facade — visual treatment.** The mechanism is built and working; the
       appearance is not designed. Currently a neutral placeholder: the project's first
       photograph as poster where one exists, otherwise a grey box, with a small uppercase

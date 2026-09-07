@@ -3,11 +3,14 @@
    Values are deliberately neutral placeholders — Phase 6 replaces them. */
 :root {
   --color-bg: #ffffff;
-  --color-fg: #141414;
-  --color-muted: #6b6b6b;
-  --color-line: #e4e4e4;
-  --color-placeholder: #e8e8e8;
-  --color-focus: #0044cc;
+  --color-fg: #361a38;
+  --color-muted: #7e6f7e;
+  --color-line: #d4cad4;
+  --color-placeholder: #f0f0f0;
+  --color-focus: #9600dd;
+  /* New in Figma 2026-09-07. Defined so it is available and stays in sync, but not yet
+     applied — Figma does not say what it marks. Design decides; see DECISIONS.md. */
+  --color-accent: #9600dd;
 
   /* IBM Plex Sans, self-hosted via Fontsource. Linking Google's CDN would cost a DNS
      lookup and TLS handshake to fonts.gstatic.com before any text could render, and hand
