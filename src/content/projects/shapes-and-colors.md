@@ -10,6 +10,7 @@ medium: "35mm Film, Digital scans"
 prints: null
 dimensions: null
 layout: "image-first"
+columns: 1
 featured: false
 order: 12
 aspect: "3/2"

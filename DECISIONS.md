@@ -280,6 +280,28 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — The domain mailbox is not carried over. **Bryan's call.**
+
+bryancampana.com currently publishes MX records pointing at Zoho, plus an SPF record and a
+Zoho verification TXT. Bryan set a mailbox up, does not use it, and does not intend to. So
+**the DNS cutover does not need to recreate the MX or TXT records** — the one irreversible
+item on the migration list is closed.
+
+Checked before recording: the site never references a domain address. Both the footer
+"Contact" link and the About page "Email" link already point at bryanc9624@gmail.com. So
+dropping the records breaks nothing that ships.
+
+Two things worth keeping straight for whoever runs the cutover:
+
+- The mailbox lives at **Zoho**, not at Cargo. Dropping the MX records stops mail routing
+  to it; it does not close the Zoho account. If Bryan wants that gone it is a separate
+  errand at Zoho, not something DNS can do.
+- DNS for the domain is served by **ns1/ns2.cargocollective.com** — Cargo, not GoDaddy.
+  GoDaddy is only the registrar. Cancelling Cargo therefore takes the whole zone down, not
+  just the website, so nameservers must move BEFORE Cargo is cancelled, whatever host is
+  chosen. Recorded here because it is the easiest step in the sequence to get backwards.
+
+
 ### 2026-09-07 — Cargo's image ORDER and caption pairing recovered from the archive.
 
 Worth recording because it is not guessable and it nearly went wrong. Oscuro's six captions
