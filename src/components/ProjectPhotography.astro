@@ -1,0 +1,76 @@
+---
+// Spec §5, photography layout. Image-led: no sticky rail, no two-column split. Header at
+// a prose measure, then the image set two-up, then facts BELOW the images, then the back
+// link. Selected by `discipline`, never by `featured` or by keywords.
+import type { CollectionEntry } from 'astro:content'
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
+import Placeholder from './Placeholder.astro'
+import ProjectFacts from './ProjectFacts.astro'
+
+interface Props {
+  project: CollectionEntry<'projects'>
+  photos: ImageMetadata[]
+  facts: [string, string][]
+  hasBody: boolean
+}
+const { project, photos, facts, hasBody } = Astro.props
+const d = project.data
+const placeholders = ['4/5', '4/5', '4/5', '4/5']
+---
+<article class="photo">
+  <header class="photo__head">
+    <p class="photo__eyebrow"><a href="/work">Work</a></p>
+    <h1>{d.title}</h1>
+    <p class="photo__scope">{d.scope}</p>
+    {d.designQuestion && <p class="photo__question">{d.designQuestion}</p>}
+    {hasBody && <div class="photo__body"><slot /></div>}
+  </header>
+
+  <div class="photo__set">
+    {photos.length > 0
+      ? photos.map((img, i) => (
+          <figure class="photo__figure">
+            <Image src={img} alt={d.images[i]?.caption ?? `${d.title} — image ${i + 1}`}
+                   widths={[500, 900, 1400]}
+                   sizes="(min-width: 64rem) 46vw, 100vw"
+                   loading={i === 0 ? 'eager' : 'lazy'}
+                   fetchpriority={i === 0 ? 'high' : 'auto'}
+                   decoding="async" class="photo__img" />
+            {d.images[i]?.caption && <figcaption>{d.images[i].caption}</figcaption>}
+          </figure>
+        ))
+      : placeholders.map((aspect, i) => (
+          <figure class="photo__figure">
+            <Placeholder aspect={aspect} label={`${d.title} — image placeholder ${i + 1} of ${placeholders.length}`} />
+          </figure>
+        ))}
+  </div>
+
+  <ProjectFacts facts={facts} />
+
+  <p class="photo__back"><a href="/work">&larr; All work</a></p>
+</article>
+
+<style>
+  .photo { display: flex; flex-direction: column; gap: var(--space-6); }
+  .photo__head { margin-top: var(--space-6); max-width: var(--measure-prose); }
+  .photo__eyebrow {
+    margin: 0 0 var(--space-3); font-size: var(--size-sm);
+    text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--color-muted);
+  }
+  .photo h1 { font-size: var(--size-2xl); margin-bottom: var(--space-3); }
+  .photo__scope { font-size: var(--size-lg); margin: 0; }
+  .photo__question { margin: var(--space-3) 0 0; color: var(--color-muted); font-style: italic; }
+  .photo__body { margin-top: var(--space-4); }
+
+  .photo__set { display: grid; gap: var(--space-5); grid-template-columns: 1fr; }
+  @media (min-width: 64rem) { .photo__set { grid-template-columns: repeat(2, 1fr); } }
+  .photo__figure { margin: 0; }
+  .photo__img { width: 100%; height: auto; display: block; }
+  figcaption {
+    margin-top: var(--space-2);
+    color: var(--color-muted); font-size: var(--size-sm);
+  }
+  .photo__back { margin: 0; }
+</style>

@@ -1,13 +1,11 @@
 ---
-// src/pages/work/[slug].astro
 import { getCollection, render } from 'astro:content'
 import Base from '../../layouts/Base.astro'
-import Placeholder from '../../components/Placeholder.astro'
-import { Image } from 'astro:assets'
+import ProjectStandard from '../../components/ProjectStandard.astro'
+import ProjectPhotography from '../../components/ProjectPhotography.astro'
 import { imagesFor } from '../../lib/projectImages'
 
-// Spec §3: every project gets a page, not only featured ones. `featured` now controls
-// presentation only — which projects appear on the landing page.
+// Spec §3: every project gets a page. `featured` controls presentation only.
 export async function getStaticPaths() {
   const all = await getCollection('projects')
   return all.map(p => ({ params: { slug: p.id }, props: { project: p } }))
@@ -17,13 +15,10 @@ const { project } = Astro.props
 const d = project.data
 const { Content } = await render(project)
 
-// Ten projects have no Markdown body. Rendering <Content /> inside a wrapper anyway
-// would leave an empty div carrying its own top margin, opening a gap under the facts
-// list on exactly those pages. Check the raw body instead of trusting the component.
+// Ten projects have no Markdown body. Check the raw body rather than trusting the
+// component — an empty <Content /> still occupies its wrapper, leaving a stray margin.
 const hasBody = (project.body ?? '').trim().length > 0
 
-// Spec §5.1: the live site uses Completed / Discipline / Medium / Prints.
-// Role never appeared on it and Bryan does not want it displayed at all.
 const facts = [
   ['Completed', d.completed],
   ['Discipline', d.discipline],
@@ -32,90 +27,16 @@ const facts = [
   ['Dimensions', d.dimensions],
 ].filter(([, v]) => v) as [string, string][]
 
-// Real images when the project has them; grey placeholders until it does. Captions come
-// from frontmatter `images[i].caption`, matched by position.
 const photos = imagesFor(project.id)
-const placeholderAspects = ['16/9', '3/2', '1/1', '3/2']
+
+// Spec §5: layout keys off the single canonical discipline, never off `featured` and
+// never off `keywords` — keywords are unordered, so ordering them differently must not
+// be able to change a page's layout.
+const isPhotography = d.discipline === 'Photography'
+const Layout = isPhotography ? ProjectPhotography : ProjectStandard
 ---
-<Base title={`${d.title} — Bryan Campana`} description={d.scope} wide>
-  <article class="case">
-    <div class="case__rail">
-      <p class="case__eyebrow"><a href="/work">Work</a></p>
-      <h1>{d.title}</h1>
-      <p class="case__scope">{d.scope}</p>
-      {d.designQuestion && <p class="case__question">{d.designQuestion}</p>}
-
-      {facts.length > 0 && (
-        <dl class="case__facts">
-          {facts.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
-        </dl>
-      )}
-
-      {hasBody && <div class="case__body"><Content /></div>}
-
-      <p class="case__back"><a href="/work">&larr; All work</a></p>
-    </div>
-
-    <div class="case__media">
-      {photos.length > 0
-        ? photos.map((img, i) => (
-            <figure class="case__figure">
-              <Image src={img} alt={d.images[i]?.caption ?? `${d.title} — image ${i + 1}`}
-                     widths={[600, 1000, 1600]}
-                     sizes="(min-width: 64rem) 62vw, 100vw"
-                     loading={i === 0 ? 'eager' : 'lazy'}
-                     fetchpriority={i === 0 ? 'high' : 'auto'}
-                     decoding="async" class="case__img" />
-              {d.images[i]?.caption && <figcaption>{d.images[i].caption}</figcaption>}
-            </figure>
-          ))
-        : placeholderAspects.map((aspect, i) => (
-            <figure class="case__figure">
-              <Placeholder aspect={aspect} label={`${d.title} — image placeholder ${i + 1} of ${placeholderAspects.length}`} />
-            </figure>
-          ))}
-    </div>
-  </article>
+<Base title={`${d.title} — Bryan Campana`} description={d.scope} wide={!isPhotography}>
+  <Layout project={project} photos={photos} facts={facts} hasBody={hasBody}>
+    <Content />
+  </Layout>
 </Base>
-
-<style>
-  .case {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
-    margin-block: var(--space-6);
-  }
-  @media (min-width: 64rem) {
-    .case { grid-template-columns: minmax(280px, 1fr) 2fr; align-items: start; }
-    .case__rail { position: sticky; top: var(--space-5); align-self: start; }
-  }
-
-  .case__eyebrow {
-    margin: 0 0 var(--space-3); font-size: var(--size-sm);
-    text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--color-muted);
-  }
-  .case h1 { font-size: var(--size-2xl); margin-bottom: var(--space-3); }
-  .case__scope { font-size: var(--size-lg); max-width: var(--measure-prose); margin: 0; }
-  .case__question {
-    margin: var(--space-3) 0 0; color: var(--color-muted);
-    font-style: italic; max-width: var(--measure-prose);
-  }
-  .case__facts {
-    display: flex; flex-wrap: wrap; gap: var(--space-5);
-    margin: var(--space-4) 0 0; padding-block: var(--space-4);
-    border-block: 1px solid var(--color-line);
-  }
-  .case__facts dt {
-    font-size: var(--size-xs); text-transform: uppercase;
-    letter-spacing: var(--tracking-wide); color: var(--color-muted);
-  }
-  .case__facts dd { margin: var(--space-1) 0 0; }
-  .case__body { margin-top: var(--space-4); }
-  .case__back { margin: var(--space-4) 0 0; }
-
-  .case__media { display: flex; flex-direction: column; gap: var(--space-6); }
-  .case__figure { margin: 0; }
-  .case__figure figcaption {
-    margin-top: var(--space-2); color: var(--color-muted); font-size: var(--size-sm);
-  }
-</style>
