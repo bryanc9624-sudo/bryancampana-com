@@ -55,25 +55,37 @@ neither chat plans against them:
 - [ ] **Filter counts and progressive disclosure.** Bryan supplied a reference showing
       each keyword with a superscript result count and a `(More)` affordance. Figma
       currently has four plain chips with no counts. Needs designing.
-- [ ] **Featured set — ownership needs settling first.** The current brief to Design and
-      Figma says this chat owns "the editorial call on which projects are featured"; the
-      previous ledger said it is Bryan's. Those conflict. Design and Figma's position:
-      **this one should stay Bryan's.** Which four or six projects lead his portfolio is a
-      claim about his own career, not a layout problem, and it is the one decision here
-      that no agent should quietly make for him. Flagging rather than taking it.
-      *Context if he wants it: the old Cargo site featured 6, including `re:present` and
-      `Two of Hearts`. The design supports any count — the landing grid is two-up, so an
-      even number avoids a stranded card. 4 and 6 both work; 5 would strand one.*
+> **Colour and radius are deliberately paused, not forgotten.** Bryan's call, 2026-09-07:
+> hold both until the typeface lands, so they get judged once against the real face rather
+> than twice against Inter. Grey values and corner treatment read differently under a
+> geometric sans than a humanist one. Code and Deploy should keep shipping the current
+> placeholder values and **not** substitute anything — rule 4 applies.
 
 ### Waiting on Bryan, not on either chat
 
-- [ ] **Typeface.** `font/family` is still `Inter`. Bryan is supplying an Adobe Font.
-      Nothing further to decide on the design side — the whole type ramp is bound to that
-      one variable, and all ten text styles inherit it. When it lands: the Adobe embed
-      `<link>` in `Base.astro` and the `--font-sans` value, both Code and Deploy's.
-      **Caveat worth knowing now:** Adobe Fonts web projects are domain-locked, so both
-      `bryancampana.com` and `bryancampana.netlify.app` must be added to the project's
-      allowed domains or the fonts fail silently on one of them.
+- [ ] **Typeface — now the critical path for all remaining design work.** `font/family` is
+      still `Inter`. Bryan is supplying an Adobe Font. The whole type ramp is bound to that
+      one variable and all ten text styles inherit it, so the swap itself is one value.
+
+      **The chosen family must carry four styles**, because the design already uses all
+      four:
+
+      | Style | Used for |
+      |---|---|
+      | Regular (400) | body, captions, nav, description, year |
+      | Medium (500) | labels, eyebrows, the card keyword |
+      | Semi Bold (600) | display sizes, titles, wordmark |
+      | Italic | the design question |
+
+      If the family lacks **Medium**, labels fold into Regular and the distinction is
+      carried by size and letter-spacing alone — acceptable. If it lacks a true **Italic**,
+      the design question needs a different treatment; do not let it synthesise an oblique.
+      Worth checking before committing to a family.
+
+      When it lands: the Adobe embed `<link>` in `Base.astro` and the `--font-sans` value,
+      both Code and Deploy's. **Adobe Fonts web projects are domain-locked**, so both
+      `bryancampana.com` and `bryancampana.netlify.app` must be in the project's allowed
+      domains or the fonts fail silently on one of them.
 
 ## Open decisions — Code and Deploy owns these
 
@@ -92,6 +104,19 @@ Routed here rather than through Bryan, per rule 2.
 ---
 
 ## Settled
+
+### 2026-09-07 — Featured set stays at 4. **Bryan's call.**
+
+`dura-architectural-signage`, `590-madison-ave`, `big-city-volleyball`, `togethereffect`.
+Two rows of two on the landing page. The old Cargo site featured 6; Bryan chose the
+tighter edit.
+
+Consequence worth noting rather than acting on: all four are design projects, so the
+landing page shows no photography or art. The work index carries all 14 and is filterable,
+so the other disciplines are one click away. Revisit only if Bryan raises it.
+
+Promoting a project later is a one-value change — `featured: false` → `true` — plus writing
+its body if it should read as a full case study. No design work either way.
 
 ### 2026-09-07 — ProjectCard direction. **Decided.**
 
