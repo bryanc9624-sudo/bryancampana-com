@@ -42,7 +42,7 @@ const filterCss = keywords.map(k => `
 
   <ul class="grid work-grid">
     {all.map(p => (
-      <li data-keywords={p.data.keywords.map(slug).join(' ')}><ProjectCard project={p} /></li>
+      <li data-keywords={p.data.keywords.map(slug).join(' ')}><ProjectCard project={p} level={2} /></li>
     ))}
   </ul>
 </Base>

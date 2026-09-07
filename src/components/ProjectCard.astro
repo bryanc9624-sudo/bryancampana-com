@@ -5,8 +5,15 @@ import Placeholder from './Placeholder.astro'
 import { Image } from 'astro:assets'
 import { coverFor } from '../lib/projectImages'
 import { showDraftFlag } from '../lib/projects'
-interface Props { project: CollectionEntry<'projects'> }
-const { project } = Astro.props
+interface Props {
+  project: CollectionEntry<'projects'>
+  /** Heading level for the card title. The landing page nests cards under an h2
+      ("Featured work") so they are h3 there; /work/ has no such section heading, so
+      they sit directly under its h1 and must be h2. A card cannot know this itself. */
+  level?: 2 | 3
+}
+const { project, level = 3 } = Astro.props
+const Title = `h${level}` as 'h2' | 'h3'
 const d = project.data
 // Spec §3: every project has a page now, so every card links.
 const href = `/work/${project.id}`
@@ -28,9 +35,9 @@ const cover = coverFor(project.id, d.cover)
 
   {keyword && <p class="card__keyword">{keyword}</p>}
 
-  <h3 class="card__title">
+  <Title class="card__title">
     <a href={href}>{d.title}</a>
-  </h3>
+  </Title>
 
   <p class="card__scope">{d.scope}</p>
 
