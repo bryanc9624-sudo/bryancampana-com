@@ -79,6 +79,16 @@ neither chat plans against them:
 
 ## Open decisions — Design and Figma owns these
 
+- [ ] **Video facade — visual treatment.** The mechanism is built and working; the
+      appearance is not designed. Currently a neutral placeholder: the project's first
+      photograph as poster where one exists, otherwise a grey box, with a small uppercase
+      "Play" label bottom-left on `--color-bg`. Needs a real play affordance and a
+      decision on whether the poster is a dedicated still or the first project image.
+      Affects three projects. Code and Deploy restyles once drawn; no mechanism change.
+- [ ] **Video poster stills.** Related but Bryan's, not Design's: the three video projects
+      have no dedicated poster frame. Currently reusing the first project photograph, and
+      two of the three have no photographs at all, so they show a grey box.
+
 - [ ] **Filter control: chips reverted to text links.** Bryan is reverting the bordered
       chip treatment in favour of the text-link option (2026-09-07). **This is a code
       change, not only a Figma one** — `/work` currently renders `.chip` with a border,
@@ -169,6 +179,26 @@ when something needs the other chats' attention; a clean audit is not recorded h
 ---
 
 ## Settled
+
+### 2026-09-07 — Video is embedded as a facade, not an iframe. **Bryan's call (option B).**
+
+Three projects carry video: The City That Slept (Vimeo 414786969), Memory Strip
+(YouTube KA3hHoIYmZs) and Transmute (YouTube gpXjXkM5byU). All three links were recovered
+from the Cargo archive.
+
+A plain provider iframe pulls roughly a megabyte of third-party JavaScript on page load
+whether or not anyone watches — more than every image on this site combined — and sets
+third-party cookies while doing it. The facade renders a poster and a play button and
+creates the iframe only on click.
+
+**This is the only JavaScript on the site**: 416 bytes, inline, and only on the three
+video pages. Every other page ships zero script tags. It is a deliberate exception to the
+no-client-JS constraint, because inline playback genuinely requires it. YouTube embeds use
+youtube-nocookie.com.
+
+Without JS the poster simply stays and the button does nothing, rather than leaving a dead
+embed.
+
 
 ### 2026-09-07 — Figma file cleaned: no archives, no versioned duplicates. **Bryan's call.**
 

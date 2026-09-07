@@ -1,0 +1,74 @@
+---
+// A facade for an embedded video. Renders a poster and a play button; the provider's
+// iframe is only created when someone actually presses play.
+//
+// Why: a plain YouTube or Vimeo iframe pulls roughly a megabyte of third-party
+// JavaScript on page load, whether or not anyone watches — more than every image on this
+// site combined — and sets third-party cookies while doing it. Most visitors scroll past.
+// This is the only JavaScript on the site, and inline video playback is the one thing
+// that genuinely requires it.
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
+import Placeholder from './Placeholder.astro'
+
+interface Props {
+  video: { provider: 'youtube' | 'vimeo'; id: string; title?: string }
+  poster?: ImageMetadata | null
+  projectTitle: string
+}
+const { video, poster = null, projectTitle } = Astro.props
+const label = video.title ?? projectTitle
+
+const src = video.provider === 'youtube'
+  ? `https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0`
+  : `https://player.vimeo.com/video/${video.id}?autoplay=1`
+---
+<figure class="video">
+  <button class="video__btn" type="button" data-src={src} aria-label={`Play video: ${label}`}>
+    {poster
+      ? <Image src={poster} alt="" widths={[600, 1000, 1600]}
+               sizes="(min-width: 64rem) 62vw, 100vw" loading="lazy" decoding="async" class="video__poster" />
+      : <Placeholder aspect="16/9" label={`${label} — video poster placeholder`} />}
+    <span class="video__play" aria-hidden="true">Play</span>
+  </button>
+</figure>
+
+<script>
+  // Progressive enhancement: without JS the button simply does nothing and the poster
+  // stays, rather than leaving a dead embed. Delegated so it costs one listener.
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement)?.closest<HTMLButtonElement>('.video__btn')
+    if (!btn) return
+    const src = btn.dataset.src
+    if (!src) return
+    const frame = document.createElement('iframe')
+    frame.src = src
+    frame.title = btn.getAttribute('aria-label')?.replace(/^Play video: /, '') ?? 'Video'
+    frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture'
+    frame.allowFullscreen = true
+    frame.className = 'video__frame'
+    btn.replaceWith(frame)
+    frame.focus()
+  })
+</script>
+
+<style>
+  .video { margin: 0; }
+  .video__btn {
+    display: block; position: relative; width: 100%; padding: 0;
+    border: 0; background: none; cursor: pointer; color: inherit;
+  }
+  .video__poster { width: 100%; height: auto; display: block; }
+  .video__play {
+    position: absolute; left: var(--space-3); bottom: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-bg); color: var(--color-fg);
+    font-size: var(--size-sm);
+    text-transform: uppercase; letter-spacing: var(--tracking-wide);
+  }
+  .video__btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+</style>
+
+<style is:global>
+  .video__frame { width: 100%; aspect-ratio: 16 / 9; border: 0; display: block; }
+</style>

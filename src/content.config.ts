@@ -33,6 +33,14 @@ const projects = defineCollection({
     featured: z.boolean().default(false),
     order: z.number().default(0),
     aspect: z.string().default('3/2'),
+    // A single embedded video. Rendered as a facade — poster plus a play button — so no
+    // third-party script loads until a visitor actually asks for the video.
+    video: z.object({
+      provider: z.enum(['youtube', 'vimeo']),
+      id: z.string(),
+      title: z.string().optional(),
+    }).nullable().default(null),
+
     images: z.array(z.object({
       aspect: z.string().default('3/2'),
       caption: z.string().optional(),

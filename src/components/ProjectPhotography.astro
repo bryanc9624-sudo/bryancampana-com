@@ -7,6 +7,7 @@ import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
 import Placeholder from './Placeholder.astro'
 import ProjectFacts from './ProjectFacts.astro'
+import VideoFacade from './VideoFacade.astro'
 
 interface Props {
   project: CollectionEntry<'projects'>
@@ -26,6 +27,12 @@ const placeholders = ['4/5', '4/5', '4/5', '4/5']
     {d.designQuestion && <p class="photo__question">{d.designQuestion}</p>}
     {hasBody && <div class="photo__body"><slot /></div>}
   </header>
+
+  {d.video && (
+    <div class="photo__video">
+      <VideoFacade video={d.video} poster={photos[0] ?? null} projectTitle={d.title} />
+    </div>
+  )}
 
   <div class="photo__set">
     {photos.length > 0
@@ -73,4 +80,5 @@ const placeholders = ['4/5', '4/5', '4/5', '4/5']
     color: var(--color-muted); font-size: var(--size-sm);
   }
   .photo__back { margin: 0; }
+  .photo__video { margin-bottom: var(--space-5); }
 </style>
