@@ -79,7 +79,12 @@ neither chat plans against them:
 
 ## Open decisions — Design and Figma owns these
 
-- [ ] **Dark mode is now inconsistent with the light palette.** The light palette went
+- [x] **DONE — dark palette applied 2026-09-07.** The values were already settled in
+      "Colour VALUES settled" and Code and Deploy had missed them, reporting the item as
+      open against a stale list. Now implemented from that table: bg #0F0C0F, fg #FFFFFF,
+      muted #A4A4A4, line #2D2A2D, placeholder #1E1C1F, focus and accent #DD51FF.
+      Contrast re-verified independently and matches the design chat's figures to two
+      decimal places. Original: **Dark mode is now inconsistent with the light palette.** The light palette went
       plum on 2026-09-07 (`fg #361a38`, `muted #7e6f7e`, `line #d4cad4`, `focus #9600dd`)
       but the dark palette in `tokens.css` is still the original neutral greys
       (`#101010 / #f2f2f2 / #a0a0a0 / #2a2a2a`), so a visitor whose system is set to dark

@@ -68,14 +68,22 @@
      of these two values. */
 }
 
+/* Dark palette. These values are NOT in Figma and cannot be — that collection's two
+   modes are Desktop and Mobile, a breakpoint axis, and Figma Starter allows no more.
+   The table in DECISIONS.md ("Colour VALUES settled", 2026-09-07) is the source of
+   truth for dark; this block must match it.
+
+   The ground is deliberately near-neutral: chroma 0.006, a violet cast that is barely
+   perceptible, chosen so a saturated ground would not fight the warm photography. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-bg: #101010;
-    --color-fg: #f2f2f2;
-    --color-muted: #a0a0a0;
-    --color-line: #2a2a2a;
-    --color-placeholder: #222222;
-    --color-focus: #7aa7ff;
+    --color-bg: #0f0c0f;
+    --color-fg: #ffffff;
+    --color-muted: #a4a4a4;
+    --color-line: #2d2a2d;
+    --color-placeholder: #1e1c1f;
+    --color-focus: #dd51ff;
+    --color-accent: #dd51ff;
   }
 }
 
