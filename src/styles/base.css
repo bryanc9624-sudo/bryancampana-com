@@ -35,6 +35,10 @@ a { color: inherit; }
 @media (min-width: 40rem) { .grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 64rem) { .grid { grid-template-columns: repeat(3, 1fr); } }
 
+/* Modifier: cap at two columns. For grids with a small fixed item count (e.g. the
+   landing page's four featured projects), where a third column strands one item. */
+@media (min-width: 64rem) { .grid--duo { grid-template-columns: repeat(2, 1fr); } }
+
 /* Shared: small uppercase section heading above a grid. */
 .eyebrow {
   font-size: var(--size-sm); text-transform: uppercase;

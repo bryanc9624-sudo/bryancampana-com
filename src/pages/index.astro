@@ -17,7 +17,7 @@ const featured = (await getCollection('projects'))
 
   <section class="featured" aria-labelledby="featured-heading">
     <h2 id="featured-heading" class="eyebrow">Featured work</h2>
-    <ul class="grid">
+    <ul class="grid grid--duo">
       {featured.map(p => <li><ProjectCard project={p} /></li>)}
     </ul>
   </section>
