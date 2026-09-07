@@ -9,6 +9,13 @@ Where the two disagree, the ledger wins and this file is wrong.
 
 ## Read these three things, in this order, before doing anything
 
+> **Before step 2: load the Figma tools with `ToolSearch`.** They are deferred — they are not
+> in your tool list until you ask for them, and nothing tells you that. Reach for the Figma
+> file without doing this and you will find no tools and conclude you have no access. You have
+> access. The exact call, and the other environment traps, are in **"Connecting to Figma"**
+> below — read that section *before* you open the file, not after. It sits lower in this
+> document only because it is reference; in practice it comes first.
+
 1. **`DECISIONS.md` on `main`** — the whole thing, including the ⚠ block at the top. It is the
    only channel between this chat, the Code and Deploy chat, and the Oversight chat. None of us
    can see each other's conversations.
@@ -80,7 +87,7 @@ Write what you need into the ledger and let them implement it.
 
 ## Connecting to Figma — read this first if the tools seem missing
 
-Three environment-specific traps. All three look like "Figma is broken" and none of them are.
+Four environment-specific traps. All four look like "Figma is broken" and none of them are.
 
 **1. The Figma tools are deferred — they are not in your tool list until you ask for them.**
 This is the most common failure. Run this before anything else:
@@ -98,10 +105,31 @@ per-minute ceiling easily. Symptom is a 429; it resets on its own. Batch your re
 spend calls on speculative discovery. `whoami` and write tools are exempt from the limit —
 `whoami` is the cheap way to confirm auth is healthy before blaming it.
 
-**3. `get_screenshot` works, but downloading its result does not.** `figma.com` is blocked by
-this container's egress policy, so the `curl` command the tool suggests fails with
-`connect_rejected`. MCP traffic itself is fine — it routes through an allowlisted proxy. Always
-pass `enableBase64Response: true` and read the image inline. Do not try to fetch the URL.
+**3. `get_screenshot` may or may not be downloadable — it depends on the container.** The
+first design chat found `figma.com` blocked by its egress policy, so the `curl` the tool
+suggests failed with `connect_rejected`. **A later session ran that same `curl` successfully**
+(128,650-byte PNG, read inline without issue), so this is not a universal rule and the original
+absolute wording was wrong.
+
+Try the URL first — it costs one command and uses far fewer tokens than an inline image. If it
+returns `connect_rejected`, re-request with `enableBase64Response: true`. MCP traffic itself is
+always fine; it routes through an allowlisted proxy regardless.
+
+**4. The page listing returns only ONE page, however many the file has.** Calling
+`get_metadata` with no `nodeId` reports the top-level pages — and for this file it reports
+`01 — Foundations` and nothing else, every time. **This is wrong and it is stable**: it does not
+change when Bryan switches pages, selects a node, or reopens the file. The other pages exist and
+their contents are fully readable *once you have a node id inside them*.
+
+Do not try to derive the missing page ids. Probing `0:2`, `0:3`, `0:4` returns two different
+error strings that look meaningful and are not; a whole round of investigation came out of
+over-reading them. **Ask Bryan for the node id instead** — right-click any frame in the page you
+need, *Copy link to selection*, and the URL carries `?node-id=X-Y`. That resolved instantly
+after several failed attempts at inferring it.
+
+Related: the "Currently selected nodes" block is unreliable. It appeared once and then stopped
+appearing for the same selection, so do not build a workflow on it or ask Bryan to click things
+in the hope of catching it.
 
 **Also:** the Figma MCP server has dropped and reconnected mid-session before. Retry once before
 concluding anything is actually wrong.
