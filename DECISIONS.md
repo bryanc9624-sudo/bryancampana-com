@@ -282,6 +282,54 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — The wordmark is serif, at body size. New `Wordmark` text style. **Bryan's call.**
+
+**Code and Deploy: one CSS line, detail at the bottom.**
+
+The name in the header is now **IBM Plex Serif SemiBold at 17px** (`size/base`) — serif because it
+is identity rather than navigation, and 17px because it shares a line with the nav and must not
+step up in size. Both halves were Bryan's instruction: *"serif typeface and the size should match
+the header elements size."*
+
+**Size note, because it looks like a change and is not.** The wordmark and the nav links were
+*already* both 17px. What reads as a size difference is weight — SemiBold against Regular. The
+instruction is therefore a constraint on the serif swap, not a resize: the serif had to land at
+`size/base` rather than promote itself into the display ramp.
+
+**This did NOT become a change to `Body / Strong`, and that matters.** The obvious move was to
+flip that style back to serif, since the wordmark was its main user. Checked first, and
+**`FilterLink` State=Selected uses it too** — the selected keyword on `/work`. Flipping the style
+would have silently turned that serif, contradicting the settled FilterLink rule that the
+selected state differs by **weight and colour**, never by family.
+
+So the wordmark got its own style instead:
+
+| Style | Family | Weight | Size | Used by |
+|---|---|---|---|---|
+| **`Wordmark`** *(new)* | `font/display` — Serif | SemiBold | `size/base` 17px | The header name, and nothing else |
+| `Body / Strong` | `font/body` — Sans | SemiBold | `size/base` 17px | `FilterLink` State=Selected |
+
+Both bind family and size to variables, so neither can drift. Applied to all six `SiteHeader`
+variants. The serif sets 8px wider (125 → 133), which changes nothing: desktop uses 391 of 1392,
+and mobile stacks.
+
+**Relationship to the earlier entry in this log.** "Figma brought in line with the code's type
+decisions" moved `Body / Strong` from serif to sans, reasoning that the wordmark is an anchor
+inheriting body type. That change was correct and stands — `Body / Strong` is sans, and
+FilterLink is why. What is superseded is only the *conclusion about the wordmark*: it no longer
+uses that style at all. Bryan has restored the serif on the name directly.
+
+**Code and Deploy — the wordmark now needs an explicit family.** It currently inherits
+`--font-body` from `body`, which is sans:
+
+```css
+.site-header__name { font-family: var(--font-display); font-weight: var(--weight-semibold); }
+```
+
+No size rule needed — 17px is already the inherited `--size-base`. Do not reach for
+`--font-serif` directly; `--font-display` is the token that carries this role.
+
+
 ### 2026-09-07 — Header reworked: full width, everything left, Contact moved up from the footer. **Bryan's call. Drawn in Figma.**
 
 **Code and Deploy: this is ready to implement, and one part of it is a code-only fix.**
