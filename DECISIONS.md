@@ -282,6 +282,61 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — The deploy gate was inverted and burned the whole billing cycle. **Fixed.**
+
+**Symptom.** Netlify credits hit 300/300 on the first day, with one intended deploy.
+Billing shows **20 production deploys = 300 credits**; bandwidth, web requests and
+compute together came to 0.2. Builds were the entire spend. Production deploys are now
+paused until the cycle resets on **2026-10-07**. The published site is still up, frozen
+at `main@07d3b23`.
+
+**Not an external cause.** One project, linked to the GitHub repo. No build hooks, no
+build plugins enabled, no scheduled builds. The only trigger is a push to `main`.
+
+**Root cause — the guard fired the builds it existed to prevent.** The rule added in
+`5ed32cd` read:
+
+```
+ignore = 'git log -1 --pretty=%B | grep -qF "[deploy]" && exit 1 || exit 0'
+```
+
+`%B` is the **whole commit message, body included**. Commit bodies in this repo discuss
+the deploy rule — `fa56798`'s body says *"Not deployed -- no [deploy] tag."* That literal
+string matched, so the commit announcing it would not deploy is the commit that deployed.
+**17 commits on `main` matched. One meant to.** Roughly 11 further builds predate the rule
+entirely (it landed at 10:22; the repo starts at 00:26), which accounts for the balance.
+
+**Fix — subject line only, anchored.** Bryan chose the strict form:
+
+```
+ignore = 'git log -1 --pretty=%s | grep -q "^\[deploy\]" && exit 1 || exit 0'
+```
+
+`%s` is the subject alone, so bodies can discuss the rule freely. `^` means a subject that
+merely *mentions* the tag does not trigger either. Verified against all 95 commits on
+`main`: the old rule fires on 17, the new rule on 1 — `587de3c`, the intended deploy.
+Edge cases checked: `docs: explain the [deploy] tag` correctly skips.
+
+**A deploy commit's subject must now START with the tag**, e.g.
+`[deploy] feat: social preview cards`. Anywhere else in the subject does nothing.
+
+**Dry-run before pushing** — this is the check that was missing, and the reason the fault
+stayed invisible for a full day:
+
+```
+git log -1 --pretty=%s | grep -q "^\[deploy\]" && echo BUILD || echo skip
+```
+
+**Still open — Deploy Previews.** Netlify is set to build a preview for *any pull request
+against `main`*. It has never fired because both chats commit straight to `main`, but one
+PR is one build out of the 20. Bryan has not decided whether to turn it off.
+
+**Not upgrading.** Free is 300 credits (20 builds); Personal is $9 for 1,000 (66); Pro $20
+for 3,000 (200). The ceiling was never the problem — 19 of 20 builds were a bug. Bryan may
+still pay $9 for a single month purely to unblock publishing before 2026-10-07, then return
+to Free; that is a scheduling decision, not a capacity one, and it is his alone to make.
+
+
 ### 2026-09-07 — The chrome rules are gone. Every remaining rule is ink. **Bryan's call. Drawn in Figma.**
 
 **Code and Deploy: this is the transfer. Five edits, listed at the bottom.**

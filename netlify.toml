@@ -2,11 +2,20 @@
   command = "npm run build"
   publish = "dist"
 
-  # Deploy discipline (see DECISIONS.md, 2026-09-07 — Deploy discipline).
-  # Netlify free tier is 300 credits per billing cycle. Every push used to spend
-  # a build. Now a build only runs when the commit message contains [deploy].
-  # Exit 0 = skip the build. Exit non-zero = run it.
-  ignore = 'git log -1 --pretty=%B | grep -qF "[deploy]" && exit 1 || exit 0'
+  # Deploy discipline (see DECISIONS.md, 2026-09-07 — Deploy gate was inverted).
+  # Netlify free tier is 300 credits per cycle and a build costs 15, so the cycle
+  # buys 20 builds. A build runs ONLY when the commit SUBJECT STARTS WITH the
+  # deploy tag. Exit 0 = skip the build. Exit non-zero = run it.
+  #
+  # %s is the subject line ONLY — deliberately not %B. %B includes the body, and
+  # commit bodies discuss this rule; a body reading "not deploying, no tag" used
+  # to match itself and fire the build. That cost 19 unintended builds and a full
+  # billing cycle on 2026-09-07. The ^ anchor is the other half of the fix: a
+  # subject merely mentioning the tag must not trigger either.
+  #
+  # Check what the current commit would do, before pushing:
+  #   git log -1 --pretty=%s | grep -q "^\[deploy\]" && echo BUILD || echo skip
+  ignore = 'git log -1 --pretty=%s | grep -q "^\[deploy\]" && exit 1 || exit 0'
 
 [build.environment]
   NODE_VERSION = "22"
