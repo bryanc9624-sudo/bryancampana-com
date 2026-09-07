@@ -327,9 +327,27 @@ stayed invisible for a full day:
 git log -1 --pretty=%s | grep -q "^\[deploy\]" && echo BUILD || echo skip
 ```
 
-**Still open — Deploy Previews.** Netlify is set to build a preview for *any pull request
-against `main`*. It has never fired because both chats commit straight to `main`, but one
-PR is one build out of the 20. Bryan has not decided whether to turn it off.
+**CLOSED — Deploy Previews are FREE and stay on. Corrected 2026-09-07.** This entry
+originally said a pull-request preview was "one build out of the 20". **That was wrong**,
+and it was written by this chat without checking. Netlify's docs are explicit:
+
+> "each successful production deploy consumes 15 credits ... and you have free deployments
+> for previewing, experimenting, and creating versions of your site/app"
+
+**Only production deploys are billed.** Deploy Previews and branch deploys cost nothing.
+The account's own billing page said as much and was misread — the line item reads
+*"Production deploys — 20 deploys — 300 credits"*, and there is no line item for previews
+because they are not charged.
+
+Two further facts from the same source, both useful and neither previously recorded:
+
+- **Failed deploys do not consume credits.** A broken build is free.
+- **Rolling back to a previous production deploy does not consume credits.** Reverting a
+  bad release is free; only rolling *forward* costs 15.
+
+**So: Deploy Previews stay enabled.** They are the free way to look at a change on a real
+URL before spending 15 credits on production — which is exactly the discipline rule 12
+asks for. Nothing to turn off.
 
 **One month of Personal, then back to Free. Bryan's call, 2026-09-07.** Free is 300 credits
 (20 builds); Personal is $9 for 1,000 (66); Pro $20 for 3,000 (200). The ceiling was never
