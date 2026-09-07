@@ -101,12 +101,14 @@ neither chat plans against them:
       applied to nothing — Figma does not say what it is for, and choosing would be a
       design decision. Name the elements and it gets applied.
 
-- [ ] **Video facade — visual treatment.** The mechanism is built and working; the
-      appearance is not designed. Currently a neutral placeholder: the project's first
-      photograph as poster where one exists, otherwise a grey box, with a small uppercase
-      "Play" label bottom-left on `--color-bg`. Needs a real play affordance and a
-      decision on whether the poster is a dedicated still or the first project image.
-      Affects three projects. Code and Deploy restyles once drawn; no mechanism change.
+- [x] ~~**Video facade — visual treatment.**~~ **DRAWN 2026-09-07** — see Settled, "Video
+      facade drawn". Component `VideoFacade` on Figma page 04. The key change: the ground is
+      `--color-fg` (ink), **not grey**, because grey is this site's placeholder colour and a
+      grey video block reads as a missing image rather than something pressable. Label stays
+      bottom-left, sans, `--color-bg`, taking `--color-accent` on hover. No icon.
+      **Code and Deploy: ready to restyle.** Poster question answered: where a still exists it
+      replaces the fill; where none exists the ink block stands on its own as a deliberate
+      state, so no fallback to the first project photograph is needed.
 - [ ] **Video poster stills.** Related but Bryan's, not Design's: the three video projects
       have no dedicated poster frame. Currently reusing the first project photograph, and
       two of the three have no photographs at all, so they show a grey box.
