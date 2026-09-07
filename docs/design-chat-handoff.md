@@ -78,6 +78,37 @@ Write what you need into the ledger and let them implement it.
 
 ---
 
+## Connecting to Figma — read this first if the tools seem missing
+
+Three environment-specific traps. All three look like "Figma is broken" and none of them are.
+
+**1. The Figma tools are deferred — they are not in your tool list until you ask for them.**
+This is the most common failure. Run this before anything else:
+
+```
+ToolSearch query="select:use_figma,get_screenshot,get_metadata,get_figma_skill"
+```
+
+If you look for Figma tools without doing that, you will find none and conclude you have no
+Figma access. You do.
+
+**2. The rate limit is per-account, not per-chat: 200 calls/day, 15/min** (Pro plan, Full seat).
+The Code and Deploy chat and any other session share that same 200. A discovery burst trips the
+per-minute ceiling easily. Symptom is a 429; it resets on its own. Batch your reads, and do not
+spend calls on speculative discovery. `whoami` and write tools are exempt from the limit —
+`whoami` is the cheap way to confirm auth is healthy before blaming it.
+
+**3. `get_screenshot` works, but downloading its result does not.** `figma.com` is blocked by
+this container's egress policy, so the `curl` command the tool suggests fails with
+`connect_rejected`. MCP traffic itself is fine — it routes through an allowlisted proxy. Always
+pass `enableBase64Response: true` and read the image inline. Do not try to fetch the URL.
+
+**Also:** the Figma MCP server has dropped and reconnected mid-session before. Retry once before
+concluding anything is actually wrong.
+
+If access genuinely fails, run `whoami` — it reports the authenticated account, plan tier and
+seat, and is the documented first step for debugging permission errors.
+
 ## Working with Figma, practically
 
 - **Load the `figma-use` skill before every `use_figma` call.** Every one. It is mandatory and
