@@ -1,0 +1,27 @@
+---
+// Shared by both project layouts. Spec §5.1: the live site uses Completed / Discipline /
+// Medium / Prints — Role never appeared on it. Values must wrap; Medium and Prints run
+// long ("Silver Gelatin prints on photographic paper, glossy finish. Shot on 35mm."),
+// so no nowrap and no fixed width here.
+interface Props { facts: [string, string][] }
+const { facts } = Astro.props
+---
+{facts.length > 0 && (
+  <dl class="facts">
+    {facts.map(([k, v]) => (<div class="facts__pair"><dt>{k}</dt><dd>{v}</dd></div>))}
+  </dl>
+)}
+
+<style>
+  .facts {
+    display: flex; flex-wrap: wrap; gap: var(--space-5);
+    margin: 0; padding-block: var(--space-4);
+    border-block: 1px solid var(--color-line);
+  }
+  .facts__pair { min-width: 0; }
+  dt {
+    font-size: var(--size-xs); text-transform: uppercase;
+    letter-spacing: var(--tracking-wide); color: var(--color-muted);
+  }
+  dd { margin: var(--space-1) 0 0; max-width: 44ch; }
+</style>
