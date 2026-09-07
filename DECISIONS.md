@@ -282,6 +282,42 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — `--color-line` is the rule token, and its value is derived, not picked. **Bryan's call.**
+
+Answers the dark-mode question raised in "The chrome rules are gone". Ink rules read heavy in
+dark, and Bryan asked for a systemic answer rather than a one-off override.
+
+**The systemic defect was not the brightness.** Three borders referenced `--color-fg` directly,
+and that token means *the colour of text*. Rules had borrowed it because in light mode it
+happened to look right, which left nowhere to say "a rule in dark is not text in dark" — and the
+next rule anyone added would inherit the same assumption silently.
+
+**`--color-line` is revived as the rule token.** It was orphaned by the previous entry and it
+already names exactly this role. Every rule on the site points at it; **no rule may reference
+`--color-fg` again.** That constraint is written into `tokens.css` and is the durable part of
+this entry.
+
+**The value follows a stated principle: a rule holds the same contrast ratio against its ground
+in both modes.**
+
+| Mode | Rule on ground | Ratio |
+|---|---|---|
+| Light | `#361a38` on `#ffffff` | **15.42:1** — the weight already approved, unchanged |
+| Dark, before | `#ffffff` on `#0f0c0f` | 19.45:1 — 26% hotter, which is what Bryan was seeing |
+| Dark, now | **`#e5e5e5`** on `#0f0c0f` | **15.44:1** |
+
+Neutral grey rather than the violet-cast `#e9e3e9` at the same ratio — Bryan's pick. At that
+lightness the chroma is below the threshold where anyone perceives it, so the cast buys nothing.
+
+Derive any future value the same way rather than choosing by eye. WCAG 1.4.11 asks 3:1 for
+non-text; this clears it five times over.
+
+**Design and Figma:** `color/line` needs its light value set to **`#361a38`** — it currently
+holds the retired hairline `#d4cad4`. The dark value cannot live in Figma, since the collection's
+modes are Desktop/Mobile; this ledger stays the source of truth for it. Bryan is taking this over
+himself.
+
+
 ### 2026-09-07 — The deploy gate was inverted and burned the whole billing cycle. **Fixed.**
 
 **Symptom.** Netlify credits hit 300/300 on the first day, with one intended deploy.

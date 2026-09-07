@@ -5,7 +5,11 @@
   --color-bg: #ffffff;
   --color-fg: #361a38;
   --color-muted: #7e6f7e;
-  --color-line: #d4cad4;
+  /* The colour of a rule — the only role this token has, and the only token any rule
+     may reference. Rules must never point at --color-fg directly: that token means "the
+     colour of text", and text and rules do not want the same value in every mode. See
+     the dark block for the principle that sets its value there. */
+  --color-line: #361a38;
   --color-placeholder: #f0f0f0;
   --color-focus: #9600dd;
   /* New in Figma 2026-09-07. Defined so it is available and stays in sync, but not yet
@@ -93,7 +97,13 @@
     --color-bg: #0f0c0f;
     --color-fg: #ffffff;
     --color-muted: #a4a4a4;
-    --color-line: #2d2a2d;
+    /* A rule holds the SAME CONTRAST RATIO against its ground in both modes. Light is
+       #361a38 on #ffffff = 15.42:1, the weight Bryan approved; #ffffff on this ground is
+       19.45:1, a quarter hotter, which is why ink rules read heavy in dark. #e5e5e5
+       lands at 15.44:1. Neutral rather than violet-cast on purpose — at this lightness
+       the chroma is below the threshold where anyone sees it.
+       Derive any future value the same way rather than picking one by eye. */
+    --color-line: #e5e5e5;
     --color-placeholder: #1e1c1f;
     --color-focus: #dd51ff;
     --color-accent: #dd51ff;
