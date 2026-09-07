@@ -2,6 +2,12 @@
   command = "npm run build"
   publish = "dist"
 
+  # Deploy discipline (see DECISIONS.md, 2026-09-07 — Deploy discipline).
+  # Netlify free tier is 300 credits per billing cycle. Every push used to spend
+  # a build. Now a build only runs when the commit message contains [deploy].
+  # Exit 0 = skip the build. Exit non-zero = run it.
+  ignore = 'git log -1 --pretty=%B | grep -qF "[deploy]" && exit 1 || exit 0'
+
 [build.environment]
   NODE_VERSION = "22"
 
