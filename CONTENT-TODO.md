@@ -6,8 +6,8 @@ _No placeholder markers left in source._
   A project shows one only when `designQuestion` is set; leave it `null` and nothing
   renders. Draft in `DESIGN-QUESTIONS.md`, then set the value.
 ## Still needed
-- [ ] Real images — 2 of 14 projects have photographs.
-      Missing: 590-madison-ave, big-city-volleyball, double-exposed-1, dura-architectural-signage, memory-strip, oscuro, photopolymer-letterpress, represent-1, resemblance-1, the-city-that-slept, togethereffect, transmute
+- [ ] Real images — 9 of 14 projects have photographs.
+      Missing: memory-strip, oscuro, photopolymer-letterpress, the-city-that-slept, transmute
 - [ ] Review `/terms` and `/privacy` — clauses about a contact form, payments and
       analytics were removed because this site has none. Confirm what remains is
       what you want published.
