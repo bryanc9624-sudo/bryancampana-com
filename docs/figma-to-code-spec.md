@@ -125,29 +125,29 @@ const href = `/work/${project.id}`
 
 ## 4. `ProjectCard.astro`
 
-One component serves both the landing page and the work index. Field visibility differs by context,
-not by component.
+**There is one card, in one configuration.** The landing page and the work index render it
+identically — no variant, no per-context props. Decided 2026-09-07.
 
-| Field | Featured (landing) | Index | Source |
-|---|---|---|---|
-| Image | yes | yes | `Placeholder` / `images[0]` |
-| Keyword | **pending — see §7** | **pending — see §7** | `keywords[0]` |
-| Title | yes | yes | `title` |
-| Year | yes | yes | `year` / `completed` |
-| Description | yes | **no** | `scope` |
-| Design question | **never** | **never** | — |
+| Field | Shown | Source |
+|---|---|---|
+| Image | yes | `Placeholder` / `images[0]` |
+| Keyword | yes | `keywords[0]` |
+| Title | yes | `title` |
+| Description | yes | `scope` |
+| Year | **no** | — (project page only) |
+| Design question | **never** | — (project page only) |
 
-Order within the card: **image → keyword → title → description → year**, all left-aligned. The
-right-aligned year was rejected; nothing in the card is right-aligned.
+Order within the card: **image → keyword → title → description**, all left-aligned. Nothing in the
+card is right-aligned — an earlier right-aligned year was rejected and the year removed entirely.
 
-**Remove the design question from this component entirely.** It renders only on the project page.
-`designQuestion` stays optional in the schema and stays conditionally rendered there.
+**Remove both the design question and the year from this component.** They render only on the
+project page. `designQuestion` stays optional in the schema and stays conditionally rendered there.
 
-Suggested prop, replacing the implicit featured/non-featured split:
+No new props are needed. `ProjectCard.astro` keeps its current single-prop signature; the only
+change is dropping the year and question markup and adding the keyword line.
 
-```astro
-interface Props { project: CollectionEntry<'projects'>; showDescription?: boolean }
-```
+`featured` no longer affects the card at all — it now only selects which projects appear on the
+landing page, and which project-page layout is used (§5).
 
 ---
 
@@ -158,9 +158,21 @@ The archive shows design and photography projects are not the same shape.
 **Standard** (`Dura`, `590 Madison`, …) — current two-column layout is correct: sticky rail on the
 left (back link, title, scope, design question, facts, body), image column on the right.
 
-**Photography** (`Oscuro`, `Two of Hearts`, `Shapes and Colors`, `Double Exposed`) — image-led.
-Minimal text, images at larger scale, per-image captions from `images[].caption`. Facts move below
-or after the images rather than occupying a persistent rail. **Not yet designed in Figma.**
+**Photography** (`Oscuro`, `Two of Hearts`, `Shapes and Colors`, `Double Exposed`) — image-led, and
+now designed in Figma at both breakpoints. Structure, top to bottom:
+
+1. Back eyebrow, title, description at a ~820px measure. No sticky rail, no two-column split.
+2. The image set — **two-up on desktop, single column on mobile**, portrait 4:5, each image with its
+   caption beneath in `--color-muted` at `--size-sm`. Captions come from `images[].caption`; Oscuro
+   has six ("the place I call home", "a higher power", …).
+3. Facts **after** the images, above a `--color-line` rule: `Completed`, `Discipline`, `Medium`,
+   `Prints`. A wrapping row on desktop, a stack on mobile.
+4. Back link, footer.
+
+The design question is optional here exactly as elsewhere — render it when `designQuestion` has a
+value, omit it when null. It is not suppressed for photography.
+
+Layout selection should key off a single canonical discipline value, not off `featured`.
 
 ### 5.1 Fact labels are wrong in the current code and in Figma
 
@@ -216,15 +228,15 @@ progressive disclosure are additional scope beyond the four chips currently draw
 
 ## 7. Pending decisions — do not implement these yet
 
-1. **Keyword on cards.** Bryan described the index card as "title and the year". Unclear whether the
-   keyword line stays on the card. The supplied reference shows a category label above each title,
-   which argues for keeping it. **Awaiting confirmation.**
-2. **Year on cards.** An earlier instruction removed the year from cards; the latest reinstates it on
-   both card types. Table in §4 reflects the latest. **Confirm before building.**
-3. **Discipline source** — first entry of `keywords`, or its own field (§2.1).
-4. **`year: number` vs `completed: string`** (§2.2).
-5. **Photography project page layout** — not yet designed.
-6. **Filter counts and `(More)`** — not yet designed.
+1. **Discipline source** — first entry of `keywords`, or its own field (§2.1). This one gates the
+   project-page layout switch in §5, so it needs answering before that is built.
+2. **`year: number` vs `completed: string`** (§2.2). The live site shows *September 2025* for Dura,
+   which the current numeric field cannot hold.
+3. **Filter counts and `(More)`** — the supplied reference shows each keyword with a superscript
+   result count and progressive disclosure. Not yet designed; the four plain chips are what exists.
+
+Resolved since first draft: card fields (§4 — keyword, title, description, no year, one
+configuration), and the photography project page layout (§5 — designed at both breakpoints).
 
 ---
 
@@ -244,6 +256,10 @@ progressive disclosure are additional scope beyond the four chips currently draw
   the Figma file is a placeholder draft, not Bryan's copy.
 - **The desktop case-study frame on the live design had no footer** while other pages did; the
   rebuild adds one.
+- **Fact values must wrap.** `Medium` and `Prints` are long — *"Silver Gelatin prints on photographic
+  paper, glossy finish. Shot on 35mm."* On a narrow column these run to two or three lines. Do not
+  apply `white-space: nowrap` or a fixed width to `.case__facts dd`; let it wrap. (The Figma
+  component clipped these until fixed, which is how the problem was found.)
 
 ---
 
@@ -255,6 +271,7 @@ progressive disclosure are additional scope beyond the four chips currently draw
 | Text styles | Display 2XL / XL, Title Large, Body Strong, Body, Body Large, Question, Body Small, Eyebrow, Label — each with font size bound to a `size/*` variable |
 | Variable modes | `Desktop`, `Mobile` — differ only in `size/xl` and `size/2xl` |
 | Pages | `01 — Foundations` (untouched), `02 — Desktop`, `03 — Mobile`, `04 — Components` |
+| Frames | Landing, Work Index (filterable), Project Page ×3 (featured / light / photography), About, Terms, Privacy, 404 — each at 1440–1600 desktop and 390 mobile |
 
 Prose measure in Figma is drawn at 600px as an approximation of `--measure-prose: 68ch`. The CSS
 value is authoritative; do not hardcode 600px.
