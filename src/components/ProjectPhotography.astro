@@ -13,10 +13,11 @@ import VideoFacade from './VideoFacade.astro'
 interface Props {
   project: CollectionEntry<'projects'>
   photos: ImageMetadata[]
+  poster: ImageMetadata | null
   facts: [string, string][]
   hasBody: boolean
 }
-const { project, photos, facts, hasBody } = Astro.props
+const { project, photos, poster, facts, hasBody } = Astro.props
 const d = project.data
 const placeholders = ['4/5', '4/5', '4/5', '4/5']
 
@@ -45,7 +46,7 @@ const mid = cols === 1 ? '94vw' : '47vw'
 
   {d.video && (
     <div class="photo__video">
-      <VideoFacade video={d.video} poster={photos[0] ?? null} projectTitle={d.title} />
+      <VideoFacade video={d.video} poster={poster} projectTitle={d.title} />
     </div>
   )}
 
