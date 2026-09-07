@@ -5,7 +5,7 @@ completed: "May 2023"
 discipline: "Brand Identity"
 keywords: [Brand Identity]
 scope: Identity and custom wordmark for a Brooklyn DJ collective.
-designQuestion: TODO_DESIGN_QUESTION
+designQuestion: null
 medium: null
 prints: null
 dimensions: null

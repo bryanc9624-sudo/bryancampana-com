@@ -5,7 +5,7 @@ completed: "2019"
 discipline: "New Media"
 keywords: [New Media]
 scope: Collaborative video artwork on disorientation during the COVID-19 pandemic.
-designQuestion: TODO_DESIGN_QUESTION
+designQuestion: null
 medium: "Video, Color, 06:38 min."
 prints: null
 dimensions: null

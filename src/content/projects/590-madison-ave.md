@@ -5,7 +5,7 @@ completed: "May 2025"
 discipline: "ADA Signage Design"
 keywords: [ADA Signage Design]
 scope: ADA and wayfinding package for an amenity floor. Materials drawn from the interior architecture.
-designQuestion: TODO_DESIGN_QUESTION
+designQuestion: null
 medium: null
 prints: null
 dimensions: null

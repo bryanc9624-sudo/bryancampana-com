@@ -5,7 +5,7 @@ completed: "2021"
 discipline: "Photography"
 keywords: [Photography]
 scope: Landscapes and architecture through abstract, colorful compositions.
-designQuestion: TODO_DESIGN_QUESTION
+designQuestion: null
 medium: "35mm Film, Digital scans"
 prints: null
 dimensions: null

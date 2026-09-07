@@ -5,7 +5,7 @@ completed: "September 2025"
 discipline: "Visual Communications"
 keywords: [Visual Communications]
 scope: Design intent, shop drawings, and documentation standards at a signage fabricator.
-designQuestion: TODO_DESIGN_QUESTION
+designQuestion: null
 medium: null
 prints: null
 dimensions: null

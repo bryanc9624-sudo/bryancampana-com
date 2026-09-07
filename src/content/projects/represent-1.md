@@ -5,7 +5,7 @@ completed: "August 2022"
 discipline: "Exhibition Design"
 keywords: [Exhibition Design, Digital Communications]
 scope: Identity and open call campaign for a digital exhibition at New Media Artspace.
-designQuestion: TODO_DESIGN_QUESTION
+designQuestion: null
 medium: null
 prints: null
 dimensions: null

@@ -198,6 +198,31 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — Design questions are optional, not required. **Bryan's call.**
+
+Previously tracked as R7, "the long pole on launch". It is not one. Bryan intends to write
+maybe one or two questions across the whole site, not fourteen, so the field is now
+genuinely optional rather than a blank waiting to be filled.
+
+All 14 are set to `null` and nothing renders. Set one and it appears on that project page
+only — both layouts already guard it. `DESIGN-QUESTIONS.md` holds a worksheet with each
+project's scope and body opening for whenever he wants to draft one.
+
+Consequence: the site is no longer content-blocked on questions. What remains is images
+(2 of 14) and the design decisions in the open list.
+
+### 2026-09-07 — Previous/Next project navigation removed.
+
+Built in Slice F from spec §8, then removed on review. The order runs design → art →
+photography, so sequential navigation walks a reader from the strongest recent design work
+toward older student work — a control whose default direction is away from the best
+material on a job-application portfolio. "Next" also exposes the `order` field, which is
+storage order, as though it were curatorial.
+
+Logged for Design and Figma: a "More work" control offering two or three projects sharing
+a keyword would give the intent without the downside. Not designed.
+
+
 ### 2026-09-07 — Landing statement is `--size-xl`. Figma is right; the code should change.
 
 Resolves the open item Code and Deploy raised, with one correction to it: **Figma draws the

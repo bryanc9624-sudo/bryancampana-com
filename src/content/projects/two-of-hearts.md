@@ -5,7 +5,7 @@ completed: "2021"
 discipline: "Photography"
 keywords: [Photography]
 scope: On the balance between human presence and the built environment.
-designQuestion: TODO_DESIGN_QUESTION
+designQuestion: null
 medium: "35mm Film, Digital Scans"
 prints: null
 dimensions: null

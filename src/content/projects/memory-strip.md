@@ -5,7 +5,7 @@ completed: "2019"
 discipline: "New Media"
 keywords: [New Media]
 scope: Video work exploring the connection between body movement and sensory information.
-designQuestion: TODO_DESIGN_QUESTION
+designQuestion: null
 medium: "Video, Color, Sound, 03.25 min."
 prints: null
 dimensions: null

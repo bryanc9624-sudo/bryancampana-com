@@ -5,7 +5,7 @@ completed: "2018"
 discipline: "New Media"
 keywords: [New Media]
 scope: Video work exploring how systems evolve through instability.
-designQuestion: TODO_DESIGN_QUESTION
+designQuestion: null
 medium: "Unity based digital game"
 prints: null
 dimensions: null
