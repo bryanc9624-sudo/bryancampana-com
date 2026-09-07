@@ -20,6 +20,28 @@ Both chats live in this folder, so both read and write this file.
 6. **"Live site" means bryancampana.netlify.app.** bryancampana.com is still served by
    Cargo. The DNS cutover is Phase 5 and needs Bryan's explicit go-ahead.
 
+## Keeping this file in sync — both chats follow this
+
+This file lives on `main` and both chats commit to it directly. Bryan gave standing
+permission for that on 2026-09-07, precisely so it stops going stale on a side branch.
+That removes the worst failure mode but not all of them, so:
+
+7. **`git pull` before you read it. Push immediately after you write it.** The window
+   between your edit and your push is the window where the other chat can be wrong. Keep
+   it to seconds, not days.
+8. **Anything you read more than a few minutes ago is stale.** Git does not notify you of
+   changes — you have to go and fetch them. Re-read before acting on something here,
+   especially before telling Bryan a decision is still open.
+9. **Edit only your own sections.** Design and Figma owns "Open decisions — Design and
+   Figma" and adds its own dated entries to "Settled". Code and Deploy owns its own open
+   list. Never rewrite the whole file; make targeted edits so conflicts stay small and
+   obviously mechanical.
+10. **If your push is rejected, pull and re-apply your change.** Never force-push this
+    file — a force-push here silently deletes the other chat's work, which is the one
+    failure mode git would otherwise have caught for you.
+11. **Date every Settled entry** and add new ones at the top of "Settled", so two chats
+    appending at once conflict in a place that is trivial to resolve.
+
 ---
 
 ## ⚠ Read this before trusting anything below — 2026-09-07, Design and Figma
