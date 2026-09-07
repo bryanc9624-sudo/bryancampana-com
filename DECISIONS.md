@@ -79,7 +79,9 @@ neither chat plans against them:
 
 ## Open decisions — Design and Figma owns these
 
-- [ ] **Credit line on the project card — draw it, then Code and Deploy wires it.**
+- [x] ~~**Credit line on the project card.**~~ **SCRAPPED by Bryan 2026-09-07.** They are not his clients — the relationship is an employer's client, a venue, a studio or a building in most cases, and calling any of them a client would misrepresent the work. No schema field, no card change, nothing to draw. The analysis below is kept only so the question is not raised a third time.
+
+- [ ] ~~Original item:~~
       Raised by Bryan 2026-09-07 after looking at C&G Partners, whose cards carry the
       client name under the title. The credibility is real and currently invisible: names
       like NewYork-Presbyterian and NYU Langone sit only in body prose on four case-study
@@ -246,8 +248,9 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ### 2026-09-07 — Serif/sans pairing: IBM Plex Serif with IBM Plex Sans. **Bryan's call. In Figma.**
 
-**IBM Plex Serif** for anything read; **IBM Plex Sans** reserved for the small
-label tier. Sans now appears on exactly two styles — `Eyebrow` and `Label` — which are the
+**IBM Plex Serif for titles only**; **IBM Plex Sans for everything else** — body, scope,
+the design question, and the small label tier. Bryan set this 2026-09-07 after seeing serif
+body text in situ and preferring the sans. Sans now appears on exactly two styles — `Eyebrow` and `Label` — which are the
 eyebrows and fact-pair labels Bryan named.
 
 Two new Figma variables map to CSS properties that already existed in `tokens.css` and were
@@ -256,16 +259,21 @@ previously unused:
 | Variable | Value | CSS |
 |---|---|---|
 | `font/display` | IBM Plex Serif | `--font-display` |
-| `font/body` | IBM Plex Serif | `--font-body` |
+| `font/body` | IBM Plex **Sans** | `--font-body` |
 | `font/family` | IBM Plex Sans | `--font-sans` *(unchanged)* |
 
-Style mapping: Display 2XL / XL, Title Large and Body Strong take Plex Serif **SemiBold** via
-`font/display`. Body, Body Large and Body Small take Plex Serif **Regular**, and Question takes
-Plex Serif **Italic**, all via `font/body`. Eyebrow and Label stay Plex Sans Medium.
+**Serif** (`font/display`): Display 2XL, Display XL, Title Large, Body Strong — SemiBold.
+Body Strong is the wordmark, which counts as a title.
+**Sans** (`font/body` and `font/family`): Body, Body Large, Body Small, Question, Eyebrow, Label.
 
-**Code and Deploy:** `--font-display` and `--font-body` both become **IBM Plex Serif**;
-`--font-sans` stays IBM Plex Sans. Weights needed: Serif Regular 400, SemiBold 600, Italic 400;
-Sans Medium 500 only, since the sans no longer sets any body or title text.
+Bryan changed this by editing one variable value — `font/body` — and every bound style followed.
+That is the type system working as designed.
+
+**Code and Deploy — this is now a smaller change than it was.** `tokens.css` already defines
+`--font-body: var(--font-sans)`, which is exactly right again, so **only `--font-display` needs
+to change** — to IBM Plex Serif. `--font-sans` becomes IBM Plex Sans.
+Weights: **Serif SemiBold 600 only** (titles are the sole serif use); Sans Regular 400,
+Medium 500, Italic 400.
 
 **Superseded intermediate:** Crimson Text was applied first and swapped out the same day when
 Bryan realised Plex had a serif. The swap also solved a real problem rather than just being
