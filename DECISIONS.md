@@ -79,6 +79,17 @@ neither chat plans against them:
 
 ## Open decisions — Design and Figma owns these
 
+- [ ] **Filter control: chips reverted to text links.** Bryan is reverting the bordered
+      chip treatment in favour of the text-link option (2026-09-07). **This is a code
+      change, not only a Figma one** — `/work` currently renders `.chip` with a border,
+      padding and a `--color-fg` border on the checked state. Text links need different
+      CSS for the selected state, since there is no border to change.
+      Code and Deploy will restyle once the treatment is settled in Figma; the filter
+      mechanism itself (radio inputs, `:has()`, `~=` matching) is unaffected.
+      Likely knock-on: this may resolve the mobile overflow item above on its own —
+      text links wrap far more compactly than bordered chips, which is what pushed the
+      first project ~700px down at 390px.
+
 - [ ] **Filter chip overflow on mobile.** 8 keywords wrap to 5 rows at 390px, pushing the
       first project roughly 700px down the page — a wall of chips before any work. The
       reference Bryan supplied had a `(More)` affordance for exactly this; it is not yet
@@ -197,6 +208,17 @@ when something needs the other chats' attention; a clean audit is not recorded h
 ---
 
 ## Settled
+
+### 2026-09-07 — Legal copy approved as published. **Bryan's call.**
+
+`/terms` and `/privacy` are signed off. The clauses describing a contact form, purchases
+and Stripe payment processing, and traffic analytics were removed because this site has
+none of those; everything remaining is Bryan's own wording, verbatim from the Cargo
+archive. No further review needed.
+
+Still stale and unaddressed by choice: both pages carry "Last Updated: January 1, 2025".
+Setting a new date would be authoring policy, so it stays until Bryan says otherwise.
+
 
 ### 2026-09-07 — Design questions are optional, not required. **Bryan's call.**
 
