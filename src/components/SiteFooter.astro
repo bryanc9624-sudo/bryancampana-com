@@ -1,0 +1,22 @@
+---
+// src/components/SiteFooter.astro
+const year = new Date().getFullYear()
+---
+<footer class="page site-footer">
+  <p>&copy; {year} Bryan Campana</p>
+  <ul>
+    <li><a href="/terms">Terms of Use</a></li>
+    <li><a href="/privacy">Privacy Policy</a></li>
+  </ul>
+</footer>
+
+<style>
+  .site-footer {
+    display: flex; justify-content: space-between; flex-wrap: wrap;
+    gap: var(--space-3); margin-top: var(--space-7); padding-block: var(--space-4);
+    border-top: 1px solid var(--color-line);
+    color: var(--color-muted); font-size: var(--size-sm);
+  }
+  .site-footer p { margin: 0; }
+  ul { display: flex; gap: var(--space-4); list-style: none; margin: 0; padding: 0; }
+</style>

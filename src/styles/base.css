@@ -1,0 +1,26 @@
+/* src/styles/base.css — element defaults. Tokens only, no literal values. */
+@import './tokens.css';
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-body);
+  font-size: var(--size-base);
+  line-height: var(--leading-body);
+}
+h1, h2, h3 { font-family: var(--font-display); line-height: var(--leading-tight); margin: 0; }
+p { margin: 0 0 var(--space-3); max-width: var(--measure-prose); }
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+
+.page { max-width: var(--page-max); margin: 0 auto; padding: 0 var(--page-pad); }
+.skip-link {
+  position: absolute; left: -9999px;
+  background: var(--color-bg); color: var(--color-fg);
+  padding: var(--space-2) var(--space-3);
+}
+.skip-link:focus { left: var(--space-3); top: var(--space-3); z-index: 10; }
