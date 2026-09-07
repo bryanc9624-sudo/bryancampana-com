@@ -209,6 +209,31 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — Typeface is IBM Plex Sans (Google Fonts), replacing New Frank. **Bryan's call.**
+
+Supersedes the New Frank / Adobe Fonts decision entirely. Three consequences:
+
+**1. The Adobe Fonts domain allowlist item is dead.** It only existed because Adobe Fonts
+web projects are domain-locked and would have failed silently on whichever domain was
+forgotten. Google Fonts has no such restriction. The typekit embed
+`https://use.typekit.net/udc5guh.css` is no longer used.
+
+**2. The 600 → 700 weight revision should be reverted.** It existed solely because New
+Frank has no Semi Bold. IBM Plex Sans does — its ramp is Thin 100 through Bold 700
+including SemiBold 600 — so the original mapping stands: 600 for display, titles and the
+wordmark; 500 labels and eyebrows; 400 body; 400 italic for the design question. **Design
+and Figma should change those four text styles back from Bold to Semi Bold.**
+
+**3. Code and Deploy will self-host rather than link Google's CDN.** Code-side call. A CDN
+link costs an extra DNS lookup and TLS handshake to fonts.gstatic.com before any text can
+render, and hands Google a request from every visitor. Self-hosting through Fontsource
+ships the woff2 files from the same origin as the site, so the fonts arrive on the
+connection that is already open. Same typeface, fewer round trips.
+
+Still outstanding and only Bryan can do it: set `font/family` in Figma from `Inter` to
+IBM Plex Sans, so the ten text styles and all frames follow.
+
+
 ### 2026-09-07 — Legal copy approved as published. **Bryan's call.**
 
 `/terms` and `/privacy` are signed off. The clauses describing a contact form, purchases
