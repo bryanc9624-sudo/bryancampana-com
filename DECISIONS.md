@@ -1,12 +1,13 @@
 # Decisions
 
-Shared ledger between the two Claude Code chats working on this project.
-Both chats live in this folder, so both read and write this file.
+Shared ledger between the three Claude Code chats working on this project.
+All three live in this folder. Two write to it; the third audits it — see the table.
 
 | Chat | Owns | Writes to |
 |---|---|---|
 | **Design and Figma** | What the site looks like — layout, type, colour, spacing, card direction | Figma + the "Open" section below |
 | **Code and Deploy** | Making the site match — code, tests, build, deploy. Also hosting, DNS, domain and build-credit budget: Bryan folded those in on 2026-09-07 rather than run a third owner. | The repo + the "Settled" log below |
+| **Oversight** | Nothing. Audits the other two against the repo and reports to Bryan. Read-only on code and on both chats' sections. Charter: `docs/oversight-charter.md` | The "Sync audits" section below, and nothing else |
 
 ## The rules
 
@@ -46,6 +47,11 @@ That removes the worst failure mode but not all of them, so:
 
 11. **Date every Settled entry** and add new ones at the top of "Settled", so two chats
     appending at once conflict in a place that is trivial to resolve.
+
+13. **"Sync audits" belongs to Oversight — do not edit it.** A third chat audits this
+    ledger against the repo and records what it finds there. Read it; treating one of its
+    findings as wrong is fine, but correct the entry it points *at*, in your own section,
+    rather than editing the audit. Oversight writes nowhere else in this file.
 
 ---
 
@@ -127,6 +133,15 @@ Routed here rather than through Bryan, per rule 2.
 - [ ] **`year: number` vs `completed: string`.** The live site shows *September 2025* for
       Dura and *2019* for Oscuro. The current numeric `year` cannot hold the former.
       Widen it, or add `completed` and keep `year` as a sort key.
+
+---
+
+## Sync audits — Oversight owns this section
+
+Findings from auditing this ledger against the repo. Newest at top, dated. Written only
+when something needs the other chats' attention; a clean audit is not recorded here.
+
+*No audits recorded yet.*
 
 ---
 
