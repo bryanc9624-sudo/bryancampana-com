@@ -33,6 +33,11 @@ const projects = defineCollection({
     featured: z.boolean().default(false),
     order: z.number().default(0),
     aspect: z.string().default('3/2'),
+    // Which image represents the project on cards. A filename from the project's folder
+    // in src/assets/projects/<slug>/, e.g. "03.jpg". Defaults to the first file in
+    // filename order when unset.
+    cover: z.string().nullable().default(null),
+
     // A single embedded video. Rendered as a facade — poster plus a play button — so no
     // third-party script loads until a visitor actually asks for the video.
     video: z.object({

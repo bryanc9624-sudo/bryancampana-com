@@ -184,6 +184,41 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — Keyword filter reverted to text links. **Bryan's call. Drawn in Figma.**
+
+Bordered chips are out. The Figma component is renamed **`FilterLink`** and both work index
+frames are rebuilt with the real eight keywords and their counts. **Code and Deploy: this is
+ready to restyle.** The mechanism is unchanged — radio inputs, `:has()`, `~=` matching.
+
+- **No box.** Border, padding and radius removed. Chips were the only rectangles on the site
+  and read as heavy chrome against a design that is otherwise hairlines and type.
+- **Selected differs by weight *and* colour** — `Body / Strong` 600 plus `--color-fg`, against
+  `Body` 400 plus `--color-muted`. Two cues, so the state does not depend on colour alone.
+- **Counts are superscript**, top-aligned, in `--color-muted` at `--size-xs`.
+- **When the colour system lands**, the selected label takes `--color-accent` (the charge)
+  in place of `--color-fg`. Nothing else changes.
+
+**Measured, not assumed.** Desktop: all nine fit on **one line** — 1313px of 1392 available.
+Mobile at 342px: **six rows, 202px**, first project starting **377px** down the page, against
+roughly 700px with chips. Roughly halved.
+
+### 2026-09-07 — Open: the keyword set may be too granular for 14 projects.
+
+Raised by Design and Figma; **the call is Bryan's**, since it is editorial rather than visual.
+
+Current counts: Photography 4, New Media 3, Brand Identity 2, Exhibition Design 2, Visual
+Communications 1, ADA Signage Design 1, Digital Communications 1, Fine Art 1.
+
+**Four of the eight keywords match exactly one project.** A filter option that returns a single
+item does little for the visitor, and those four are also the longest labels — *Digital
+Communications* alone is 192px, more than half the mobile content width.
+
+This is the actual cause of the mobile wall. No treatment fixes a 22-character keyword on a
+342px screen; the text-link revert already took out as much as presentation can. The remaining
+options are consolidating the vocabulary, or designing the `(More)` affordance from Bryan's
+reference. Consolidation would fix mobile **and** make the filter more useful, so it should be
+decided before more design effort goes into overflow behaviour.
+
 ### 2026-09-07 — Colour SYSTEM agreed. Values still open. **Bryan's concept.**
 
 The structure below is settled and will not change with the hex values, so Code and Deploy
