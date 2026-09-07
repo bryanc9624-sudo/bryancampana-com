@@ -331,10 +331,19 @@ git log -1 --pretty=%s | grep -q "^\[deploy\]" && echo BUILD || echo skip
 against `main`*. It has never fired because both chats commit straight to `main`, but one
 PR is one build out of the 20. Bryan has not decided whether to turn it off.
 
-**Not upgrading.** Free is 300 credits (20 builds); Personal is $9 for 1,000 (66); Pro $20
-for 3,000 (200). The ceiling was never the problem — 19 of 20 builds were a bug. Bryan may
-still pay $9 for a single month purely to unblock publishing before 2026-10-07, then return
-to Free; that is a scheduling decision, not a capacity one, and it is his alone to make.
+**One month of Personal, then back to Free. Bryan's call, 2026-09-07.** Free is 300 credits
+(20 builds); Personal is $9 for 1,000 (66); Pro $20 for 3,000 (200). The ceiling was never
+the problem — 19 of 20 builds were a bug, now fixed. Bryan is buying **one month of Personal
+purely so work is not frozen until 2026-10-07**, and intends to return to Free after. This
+is a scheduling decision, not a capacity one.
+
+**Consequence for both chats: deploys are available again, and they are still scarce.** The
+gate is fixed, so nothing builds unless a commit subject starts with the tag — but the
+budget is one month of headroom bought with real money. Keep batching: one tagged commit at
+the end of a session, not one per change.
+
+**Action item for Bryan, not for either chat:** downgrade to Free before the Personal plan
+renews, or it bills again. Worth a calendar reminder for early October.
 
 
 ### 2026-09-07 — The chrome rules are gone. Every remaining rule is ink. **Bryan's call. Drawn in Figma.**
