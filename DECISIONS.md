@@ -84,11 +84,6 @@ neither chat plans against them:
       reference Bryan supplied had a `(More)` affordance for exactly this; it is not yet
       designed. Counts are implemented and live. Code and Deploy will build whatever is
       drawn; it will not invent the interaction.
-- [ ] **Landing statement type size — Figma and code disagree.** Figma draws it at
-      `--size-2xl`; the code renders it at `--size-lg` (22px) and always has. Spec §1.2
-      described an 8-line 296px block at 390px, which is the Figma frame, not the built
-      site. Decide which is right — the responsive step-down added in Slice A does not
-      touch `--size-lg`.
 
 - [ ] **Colour.** All six colour tokens are still neutral placeholders. Needs a real
       palette decision. Not blocking anything — everything is variable-bound, so a colour
@@ -96,9 +91,8 @@ neither chat plans against them:
 - [ ] **Radius.** `radius/sm` and `radius/md` are both `0`. The only place radius is
       visible is `FilterChip`; every other surface is a hairline or a plain block. Bound
       to the tokens, so it is a one-value change.
-- [ ] **Filter counts and progressive disclosure.** Bryan supplied a reference showing
-      each keyword with a superscript result count and a `(More)` affordance. Figma
-      currently has four plain chips with no counts. Needs designing.
+      *Merged into the chip-overflow item above — counts are now built and live, so the
+      only part still undesigned is the overflow behaviour.*
 > **Colour and radius are deliberately paused, not forgotten.** Bryan's call, 2026-09-07:
 > hold both until the typeface lands, so they get judged once against the real face rather
 > than twice against Inter. Grey values and corner treatment read differently under a
@@ -107,9 +101,25 @@ neither chat plans against them:
 
 ### Waiting on Bryan, not on either chat
 
-- [ ] **Typeface — now the critical path for all remaining design work.** `font/family` is
-      still `Inter`. Bryan is supplying an Adobe Font. The whole type ramp is bound to that
-      one variable and all ten text styles inherit it, so the swap itself is one value.
+- [ ] **Typeface — family chosen, activation outstanding.** Bryan chose **New Frank**
+      (2026-09-07) and created an Adobe Fonts web project: `https://use.typekit.net/udc5guh.css`.
+
+      **Not yet swappable.** New Frank does not appear in Figma's available font list —
+      Design and Figma enumerated all 1,938 families and found only *Frank Ruhl Libre* and
+      *Libre Franklin*. Two possible causes, unresolved: (a) a web project does not install
+      the font, so it still needs activating in the Creative Cloud desktop app; or (b) the
+      Design chat runs in a remote container and may not be able to see Bryan's locally
+      activated fonts at all. If (b), Bryan performs the swap himself — it is one variable
+      edit (see Settled, "Type ramp is bound to one variable").
+
+      **Still needed from Bryan:** the CSS family name the web project specifies (likely
+      something like `new-frank`), and confirmation the project includes weights **400, 500,
+      600 and a true italic**. Code and Deploy needs the family name for `--font-sans`; it
+      cannot be derived from the `<link>` alone, and the Design chat's proxy blocks fetching
+      the stylesheet.
+
+      **Both domains** — `bryancampana.com` and `bryancampana.netlify.app` — must be in the
+      web project's allowed list or the fonts fail silently on one of them.
 
       **The chosen family must carry four styles**, because the design already uses all
       four:
@@ -157,6 +167,35 @@ when something needs the other chats' attention; a clean audit is not recorded h
 ---
 
 ## Settled
+
+### 2026-09-07 — Landing statement is `--size-xl`. Figma is right; the code should change.
+
+Resolves the open item Code and Deploy raised, with one correction to it: **Figma draws the
+statement at `--size-xl`, not `--size-2xl`.** Verified on the node — text style
+`Display / XL`, bound to `size/xl`, rendering at 32px.
+
+That distinction matters. The responsive step-down **does** touch `--size-xl` (32px → 24px
+under 40rem), so adopting it gives 32px desktop / 24px mobile — not an unstepped 32px
+everywhere, which is what the open item implied was on offer.
+
+The code renders it at `--size-lg` (22px). **Figma wins.** Bryan reviewed the landing frame
+at this size and approved it explicitly; the code simply predates that. Type sizing is
+Design and Figma's to call, and this one is already signed off.
+
+*Correction owned by Design and Figma:* spec §1.2 described "an 8-line 296px block at
+390px" as though it described the built site. It described the Figma frame. Code and Deploy
+was right to flag it.
+
+### 2026-09-07 — Type ramp is bound to one variable.
+
+All ten text styles now bind `fontFamily` to the `font/family` variable, which carries
+`codeSyntax` `var(--font-sans)`. Changing that one variable swaps the entire ramp across
+every component and all 18 frames.
+
+Practical consequence: **Bryan can perform the typeface swap himself in the Figma UI** —
+select the `font/family` variable, change its value — without waiting on the Design chat.
+This matters because the Design chat may not be able to see locally activated Adobe fonts
+from its container.
 
 ### 2026-09-07 — Role is removed entirely. **Bryan's call.**
 
