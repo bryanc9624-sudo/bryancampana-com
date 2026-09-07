@@ -2,9 +2,9 @@
 title: 590 Madison Ave
 year: 2025
 completed: "May 2025"
-discipline: "Signage & Wayfinding"
+discipline: "Signage & Wayfinding, Code Signage"
 keywords: ["Signage"]
-scope: ADA and wayfinding package for an amenity floor. Materials drawn from the interior architecture.
+scope: Signage design for a tenant amenity space.
 designQuestion: null
 medium: null
 prints: null
@@ -14,4 +14,4 @@ order: 2
 aspect: "3/2"
 ---
 
-This signage system was designed for an amenity floor at 590 Madison Avenue, balancing regulatory, branding, and wayfinding needs. The design draws from the project’s interior palette of stone, glass, and metal, and translates those qualities into a cohesive system. At its core, the concept explores the contrast between materials that feel hard and substantial and those that appear soft and diffuse.
+This signage system was designed for an amenity floor at 590 Madison Avenue. The scope of work included code-required, branded, and wayfinding signage. The design draws from the project’s interior finish palette and translates those qualities into a signage system.

@@ -1,12 +1,10 @@
 ---
 // src/pages/index.astro
-import { getCollection } from 'astro:content'
+import { visibleProjects } from '../lib/projects'
 import Base from '../layouts/Base.astro'
 import ProjectCard from '../components/ProjectCard.astro'
 
-const featured = (await getCollection('projects'))
-  .filter(p => p.data.featured)
-  .sort((a, b) => a.data.order - b.data.order)
+const featured = (await visibleProjects()).filter(p => p.data.featured)
 ---
 <Base title="Bryan Campana — Designer" description="Designer working across signage, identity, and visual systems.">
   <section class="intro">

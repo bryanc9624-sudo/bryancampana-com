@@ -44,6 +44,7 @@ medium: null                      # photography/video projects use these
 prints: null
 dimensions: null
 cover: "02.jpg"                   # optional; which image the card uses
+draft: false                      # true = work in progress, hidden from the built site
 featured: true                    # true = appears on the landing page
 order: 1                          # position on /work
 aspect: "3/2"                     # placeholder shape, only used with no photos
@@ -81,6 +82,23 @@ crowd the filter on a phone.
 
 `discipline` is **not** the same thing. It is a label that appears in the facts list. It
 does not affect the layout or the filter.
+
+---
+
+## Hiding a project while you work on it
+
+```yaml
+draft: true
+```
+
+A draft is **completely absent from the built site** — no page, not on `/work`, not on the
+landing page, not in the sitemap, and its keyword counts drop accordingly. Nobody can reach
+it even by guessing the URL.
+
+Locally it still renders, marked **Draft — hidden when built** in accent purple, so you can
+work on it and preview it exactly as it will look. Set `draft: false` when it is ready.
+
+Use this for a new project you are still writing, or to temporarily pull one down.
 
 ---
 

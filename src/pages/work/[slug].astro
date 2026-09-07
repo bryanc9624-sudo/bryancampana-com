@@ -1,5 +1,6 @@
 ---
-import { getCollection, render } from 'astro:content'
+import { render } from 'astro:content'
+import { visibleProjects } from '../../lib/projects'
 import Base from '../../layouts/Base.astro'
 import ProjectStandard from '../../components/ProjectStandard.astro'
 import ProjectPhotography from '../../components/ProjectPhotography.astro'
@@ -7,7 +8,7 @@ import { imagesFor } from '../../lib/projectImages'
 
 // Spec §3: every project gets a page. `featured` controls presentation only.
 export async function getStaticPaths() {
-  const all = await getCollection('projects')
+  const all = await visibleProjects()
   return all.map(p => ({ params: { slug: p.id }, props: { project: p } }))
 }
 

@@ -35,6 +35,12 @@ const projects = defineCollection({
     prints: z.string().nullable().default(null),
     dimensions: z.string().nullable().default(null),
 
+    // Work in progress. A draft is hidden from the work index, the landing page and the
+    // sitemap, and gets no page at all in a production build — so an unfinished project
+    // cannot leak by someone guessing its URL. It still renders in `npm run dev`, marked
+    // as a draft, so it can be worked on and previewed.
+    draft: z.boolean().default(false),
+
     // `featured` controls presentation only — which projects show on the landing page.
     // Every project gets a page (spec §3).
     featured: z.boolean().default(false),

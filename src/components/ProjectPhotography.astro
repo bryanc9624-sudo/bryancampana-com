@@ -7,6 +7,7 @@ import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
 import Placeholder from './Placeholder.astro'
 import ProjectFacts from './ProjectFacts.astro'
+import { showDraftFlag } from '../lib/projects'
 import VideoFacade from './VideoFacade.astro'
 
 interface Props {
@@ -21,6 +22,7 @@ const placeholders = ['4/5', '4/5', '4/5', '4/5']
 ---
 <article class="photo">
   <header class="photo__head">
+    {showDraftFlag && d.draft && <p class="photo__draft">Draft — hidden when built</p>}
     <p class="photo__eyebrow"><a href="/work">Work</a></p>
     <h1>{d.title}</h1>
     <p class="photo__scope">{d.scope}</p>
@@ -83,4 +85,9 @@ const placeholders = ['4/5', '4/5', '4/5', '4/5']
   }
   .photo__back { margin: 0; }
   .photo__video { margin-bottom: var(--space-5); }
+  .photo__draft {
+    margin: 0 0 var(--space-2); font-family: var(--font-sans); font-size: var(--size-xs);
+    font-weight: var(--weight-medium); letter-spacing: var(--tracking-wide);
+    text-transform: uppercase; color: var(--color-accent);
+  }
 </style>
