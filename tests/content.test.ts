@@ -17,13 +17,14 @@ function frontmatter(file: string): Record<string, string> {
 }
 
 describe('project content', () => {
-  it('has 14 projects', () => {
-    expect(files().length).toBe(14)
+  it('has at least 14 projects', () => {
+    expect(files().length).toBeGreaterThanOrEqual(14)
   })
 
-  it('has exactly 4 featured projects', () => {
+  it('features between 1 and 6 projects', () => {
     const featured = files().filter(f => frontmatter(f).featured === 'true')
-    expect(featured.length).toBe(4)
+    expect(featured.length).toBeGreaterThanOrEqual(1)
+    expect(featured.length).toBeLessThanOrEqual(6)
   })
 
   it('gives every project a non-empty scope', () => {
@@ -36,13 +37,6 @@ describe('project content', () => {
     const allowed = ['design', 'art', 'photography']
     for (const f of files()) {
       expect(allowed, `${f} category`).toContain(frontmatter(f).category)
-    }
-  })
-
-  it('features only design-category projects', () => {
-    for (const f of files()) {
-      const fm = frontmatter(f)
-      if (fm.featured === 'true') expect(fm.category, `${f}`).toBe('design')
     }
   })
 

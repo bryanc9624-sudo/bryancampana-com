@@ -10,7 +10,7 @@ const meta = [d.role, d.year].filter(Boolean).join(' · ')
 ---
 <article class="card">
   {href
-    ? <a href={href} class="card__media"><Placeholder aspect={d.aspect} label={`${d.title} — image placeholder`} /></a>
+    ? <a href={href} class="card__media" tabindex="-1" aria-hidden="true"><Placeholder aspect={d.aspect} label={`${d.title} — image placeholder`} /></a>
     : <div class="card__media"><Placeholder aspect={d.aspect} label={`${d.title} — image placeholder`} /></div>}
 
   <h3 class="card__title">

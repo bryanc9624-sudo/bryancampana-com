@@ -2,14 +2,9 @@
 // src/pages/404.astro
 import Base from '../layouts/Base.astro'
 ---
-<Base title="Not found — Bryan Campana" description="Page not found.">
+<Base title="Not found — Bryan Campana" description="Page not found." noindex>
   <div class="prose">
     <h1>Not found</h1>
     <p>That page doesn't exist. Try <a href="/work">the work</a>.</p>
   </div>
 </Base>
-
-<style>
-  .prose { margin-block: var(--space-7); max-width: var(--measure-prose); }
-  .prose h1 { font-size: var(--size-xl); margin-bottom: var(--space-4); }
-</style>

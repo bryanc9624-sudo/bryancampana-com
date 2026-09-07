@@ -1,6 +1,6 @@
 ---
 title: Double Exposed
-year: null
+year: 2021
 role: Photographer
 category: photography
 scope: A pen-pal film exchange shot on shared rolls during social distancing.
@@ -9,3 +9,7 @@ featured: false
 order: 13
 aspect: 3/2
 ---
+
+is a pen-pal exchange between me and another artist. We used film photography to pass the time and stay in touch when socially distanced. These photographs were created by taking turns shooting on the same roll of film.
+
+The result is a dialogue between personal and external environments. Through this double-exposure process, we explored the nuances of masculinity and femininity. The intersection of visual elements mirrors the intersection of human identities and invites the viewer to contemplate the complexities of perception and gender.

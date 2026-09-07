@@ -1,6 +1,6 @@
 ---
 title: 590 Madison Ave
-year: null
+year: 2025
 role: Designer
 category: design
 scope: ADA and wayfinding package for an amenity floor. Materials drawn from the interior architecture.

@@ -1,4 +1,5 @@
-/* src/styles/base.css — element defaults. Tokens only, no literal values. */
+/* src/styles/base.css — element defaults and shared layout primitives.
+   Tokens only, no literal values (breakpoints excepted — see tokens.css). */
 @import './tokens.css';
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -24,3 +25,25 @@ a { color: inherit; }
   padding: var(--space-2) var(--space-3);
 }
 .skip-link:focus { left: var(--space-3); top: var(--space-3); z-index: 10; }
+
+/* Shared: project card grid. Used by the landing page and the work index. */
+.grid {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: var(--space-5);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 40rem) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 64rem) { .grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* Shared: small uppercase section heading above a grid. */
+.eyebrow {
+  font-size: var(--size-sm); text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-muted); padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-line); margin-bottom: var(--space-5);
+}
+
+/* Shared: narrow measure for text-only pages. */
+.prose { margin-block: var(--space-6); max-width: var(--measure-prose); }
+.prose h1 { font-size: var(--size-xl); margin-bottom: var(--space-4); }
+.prose h2 { font-size: var(--size-lg); margin-top: var(--space-5); margin-bottom: var(--space-3); }

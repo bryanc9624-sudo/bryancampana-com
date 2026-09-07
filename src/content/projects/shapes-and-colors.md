@@ -9,3 +9,5 @@ featured: false
 order: 12
 aspect: 3/2
 ---
+
+This collection of works captures landscapes and architecture through abstract and colorful compositions.

@@ -1,6 +1,6 @@
 ---
 title: TogetherEffect
-year: null
+year: 2023
 role: Designer
 category: design
 scope: Identity and custom wordmark for a Brooklyn DJ collective.

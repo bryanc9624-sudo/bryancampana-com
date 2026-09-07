@@ -3,8 +3,8 @@
 import '../styles/base.css'
 import SiteHeader from '../components/SiteHeader.astro'
 import SiteFooter from '../components/SiteFooter.astro'
-interface Props { title: string; description?: string }
-const { title, description = 'Portfolio of Bryan Campana.' } = Astro.props
+interface Props { title: string; description?: string; noindex?: boolean }
+const { title, description = 'Portfolio of Bryan Campana.', noindex = false } = Astro.props
 ---
 <!doctype html>
 <html lang="en">
@@ -13,12 +13,16 @@ const { title, description = 'Portfolio of Bryan Campana.' } = Astro.props
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site ?? 'https://bryancampana.com')} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {/* The 404 body is served at every unknown URL, so it must not claim a canonical. */}
+    {!noindex && (
+      <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site ?? 'https://bryancampana.com')} />
+    )}
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <SiteHeader />
-    <main id="main" class="page"><slot /></main>
+    <main id="main" class="page" tabindex="-1"><slot /></main>
     <SiteFooter />
   </body>
 </html>

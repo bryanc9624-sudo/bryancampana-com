@@ -1,6 +1,6 @@
 ---
 title: Big City Volleyball Club
-year: null
+year: 2024
 role: Designer
 category: design
 scope: Logo and brand system for an established New York club.

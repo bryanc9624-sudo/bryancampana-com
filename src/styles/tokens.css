@@ -20,6 +20,8 @@
   --size-xl: 2rem;
   --size-2xl: 3rem;
 
+  --tracking-wide: 0.08em;
+
   --leading-tight: 1.15;
   --leading-body: 1.55;
 
@@ -37,6 +39,12 @@
   --measure-prose: 68ch;
   --page-max: 1200px;
   --page-pad: var(--space-4);
+
+  /* Breakpoints: 40rem (2-up) and 64rem (3-up). These two values are the only
+     literals allowed outside this file, because CSS custom properties do not
+     work inside media-query conditions — `@media (min-width: var(--bp))` is
+     invalid CSS. Keep every `@media (min-width: ...)` in the codebase on one
+     of these two values. */
 }
 
 @media (prefers-color-scheme: dark) {
