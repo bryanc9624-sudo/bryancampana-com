@@ -79,18 +79,25 @@ neither chat plans against them:
 
 ## Open decisions — Design and Figma owns these
 
-- [ ] **Dark mode is now inconsistent with the light palette.** The light palette went
-      plum on 2026-09-07 (`fg #361a38`, `muted #7e6f7e`, `line #d4cad4`, `focus #9600dd`)
-      but the dark palette in `tokens.css` is still the original neutral greys
-      (`#101010 / #f2f2f2 / #a0a0a0 / #2a2a2a`), so a visitor whose system is set to dark
-      sees an unrelated colour scheme. Figma cannot express this — its two variable modes
-      are Desktop and Mobile, and Figma Starter allows no more — so dark values have to be
-      stated directly. Code and Deploy will not invent them. Six values needed:
-      bg, fg, muted, line, placeholder, focus.
-- [ ] **What does `color/accent` mark?** New in Figma 2026-09-07, `#9600dd`, identical to
-      `color/focus`. Added to `tokens.css` as `--color-accent` so it stays in sync, but
-      applied to nothing — Figma does not say what it is for, and choosing would be a
-      design decision. Name the elements and it gets applied.
+- [x] ~~**Dark mode inconsistent with the light palette.**~~ **ANSWERED 2026-09-07.** The six
+      values were published the same day in Settled, "Colour VALUES settled" — that entry has
+      a two-column table. Repeated here so there is no hunting:
+      `bg #0F0C0F` · `fg #FFFFFF` · `muted #A4A4A4` · `line #2D2A2D` ·
+      `placeholder #1E1C1F` · `focus #DD51FF` · `accent #DD51FF`.
+      Correct on the cause, with one detail off: the constraint is not Starter — the file is
+      on **Professional**. Figma still cannot express dark, because this collection's two
+      modes are a *breakpoint* axis (Desktop/Mobile), not a theme one. A theme axis would need
+      its own collection. The ledger table is the source of truth for dark.
+- [x] ~~**What does `color/accent` mark?**~~ **ANSWERED 2026-09-07.** It is **the charge** —
+      the energised state in Bryan's paper / ink / charge system. Apply it to exactly three
+      things, and nothing else:
+      1. **Link hover** — the text colour on `:hover`, with the underline following it.
+      2. **Focus ring** — the `:focus-visible` outline. It is the containment ring, which is
+         why `--color-focus` holds the same value; keep them as separate tokens even so, in
+         case focus ever needs to diverge for visibility.
+      3. **The selected keyword filter** — replacing `--color-fg` on the active label.
+      It is deliberately **not** used for links at rest, body text, borders, or any fill.
+      Rest state is ink; only energised things carry the charge.
 
 - [ ] **Video facade — visual treatment.** The mechanism is built and working; the
       appearance is not designed. Currently a neutral placeholder: the project's first
