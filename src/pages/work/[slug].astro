@@ -29,13 +29,13 @@ const facts = [
 
 const photos = imagesFor(project.id)
 
-// Spec §5: layout keys off the single canonical discipline, never off `featured` and
-// never off `keywords` — keywords are unordered, so ordering them differently must not
-// be able to change a page's layout.
-const isPhotography = d.discipline === 'Photography'
-const Layout = isPhotography ? ProjectPhotography : ProjectStandard
+// Layout is chosen by its own field, never inferred from content. `discipline` is a
+// label, `keywords` are an unordered set — neither should be able to change how a page
+// is built.
+const imageFirst = d.layout === 'image-first'
+const Layout = imageFirst ? ProjectPhotography : ProjectStandard
 ---
-<Base title={`${d.title} — Bryan Campana`} description={d.scope} wide={!isPhotography}>
+<Base title={`${d.title} — Bryan Campana`} description={d.scope} wide={!imageFirst}>
   <Layout project={project} photos={photos} facts={facts} hasBody={hasBody}>
     <Content />
   </Layout>

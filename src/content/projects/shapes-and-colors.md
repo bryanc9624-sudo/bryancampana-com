@@ -9,6 +9,7 @@ designQuestion: null
 medium: "35mm Film, Digital scans"
 prints: null
 dimensions: null
+layout: "image-first"
 featured: false
 order: 12
 aspect: "3/2"

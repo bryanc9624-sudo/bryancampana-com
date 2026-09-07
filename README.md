@@ -35,7 +35,8 @@ below is the case-study prose.
 title: Dura Architectural Signage
 year: 2025                        # sort order only, never displayed
 completed: "September 2025"       # what actually shows under Completed
-discipline: "Visual Communications"
+discipline: "Visual Communications"  # a label; does NOT pick the layout
+layout: standard                  # standard | image-first
 keywords: ["Signage"]
 scope: One line describing the project. Shows on the card.
 designQuestion: null              # optional; set it and it appears
@@ -78,9 +79,25 @@ Current set: Photography, Identity, New Media, Signage, Digital, Fine Art.
 Keep them few. A keyword matching one project does little for a visitor, and long labels
 crowd the filter on a phone.
 
-`discipline` is **not** the same thing. It is a single value that picks the page layout —
-`"Photography"` gets the image-led layout, anything else gets the standard one — and it
-appears in the facts list. Changing keywords never changes a layout.
+`discipline` is **not** the same thing. It is a label that appears in the facts list. It
+does not affect the layout or the filter.
+
+---
+
+## Choosing a project page layout
+
+```yaml
+layout: image-first
+```
+
+| Value | What it looks like |
+|---|---|
+| `standard` *(default)* | Sticky text rail on the left, wide image column on the right. Suits work with something to read. |
+| `image-first` | Header at reading width, then the images two-up, then the facts underneath. Suits work that should be looked at rather than read. |
+
+Named for the layout rather than the kind of work, so any project can use either. The four
+photography projects use `image-first`, but nothing stops an identity project from using
+it, and nothing forces a photography project to.
 
 ---
 

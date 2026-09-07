@@ -9,6 +9,7 @@ designQuestion: null
 medium: "Silver Gelatin prints on photographic paper, glossy finish. Shot on 35mm."
 prints: "Set of 6, Edition of 1"
 dimensions: "Print: 8 × 10 in. Image: 6⅜ × 9½ in."
+layout: "image-first"
 featured: false
 order: 14
 aspect: "3/2"

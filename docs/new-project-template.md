@@ -2,7 +2,8 @@
 title: Project Name
 year: 2026
 completed: "Month 2026"
-discipline: "Signage"
+discipline: "Signage"        # a label only, shows under Completed/Discipline
+layout: standard             # standard | image-first
 keywords: ["Signage"]
 scope: One sentence describing the project. This shows on the card.
 designQuestion: null
