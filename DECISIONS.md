@@ -282,6 +282,73 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — The chrome rules are gone. Every remaining rule is ink. **Bryan's call. Drawn in Figma.**
+
+**Code and Deploy: this is the transfer. Five edits, listed at the bottom.**
+
+Bryan did not like the header and footer rules once they were built full-bleed, and chose to
+**remove them entirely** rather than shorten or lighten them. Then: *"make the left over rules
+the same colour as the purple rules we're deleting."*
+
+**What that produces is a simpler vocabulary than the site has ever had — one rule, one meaning.**
+
+| Before | After |
+|---|---|
+| Ink `color/fg` at the page edges — header, footer | **No rule.** Chrome is marked by position and space |
+| Hairline `color/line` inside content — eyebrow, facts, filter | **Ink `color/fg`.** The only rule on the site |
+
+Previously ink meant "the site chrome ends here" and a hairline meant "one block of content ends,
+another begins." With the chrome rules gone there is nothing for the first meaning to mark, so
+the second inherits the ink. **A rule now always means the same thing: a break within content.**
+
+**Supersedes** "Horizontal rules get a hierarchy" (2026-09-07) and its follow-on that bracketed
+the page in ink at both ends. Both were correct decisions about a two-level system that no longer
+exists. The two-level table in that entry is dead — do not implement it.
+
+**The full-bleed decision survives, and the objection to it dissolves.** Header and footer still
+span the viewport with their contents padded `--page-pad` from the window edges — that is what
+stops the chrome being narrower than the work on 1600 project pages. What Bryan objected to was
+never the width; it was a 1px ink line running the whole monitor. With no line there, full bleed
+costs nothing and the ultrawide trade-off flagged earlier no longer applies.
+
+**Two discrepancies found and fixed while doing this.**
+
+1. **Figma had never drawn an edge-to-edge rule.** Its header sits at `x=24` with width
+   `frameWidth − 48`, so the rule always stopped 24px short of each frame edge. The code put
+   `border-bottom` on the full-bleed element, so it ran the entire viewport. **The gap was in the
+   spec, not the implementation** — the entry that asked for full bleed pinned the *content*
+   width and said nothing about where the *rule* should end. Two questions; only one was answered.
+   Moot now that the rule is gone, recorded so the class of mistake is not repeated: when
+   specifying a full-bleed element, say what happens to its border.
+2. **The work index filter rule existed in code and not in Figma.** `work/index.astro` draws a
+   `border-bottom` under `.filter`; the Figma `FilterBar` had no stroke on either breakpoint.
+   Added to both, in ink, so the two agree.
+
+**Worth Bryan's eye on the built site, not a blocker: dark mode.** `--color-fg` is `#FFFFFF` in
+dark, so these rules become pure white on the `#0F0C0F` ground — 19.43:1, *higher* contrast than
+the plum-on-white they replace at 15.44:1. They will read heavier in dark than in light. If that
+is too hot in the browser, the fix is a dark-only rule colour, which needs a decision here first.
+
+**`--color-line` now has no users.** Nothing on the site draws it any more. Keeping the token and
+the `color/line` variable for now rather than deleting: removing it touches both palettes and the
+Figma collection, and the role it names — the construction line — is a plausible return. **Design
+has no objection to deleting it if Code and Deploy would rather not carry a dead token**; flagged
+rather than decided, because an unused token is exactly the kind of rot this file keeps finding.
+
+**The five edits:**
+
+| File | Change |
+|---|---|
+| `SiteHeader.astro` | Delete `border-bottom: 1px solid var(--color-fg);` |
+| `SiteFooter.astro` | Delete `border-top: 1px solid var(--color-fg);` |
+| `base.css` — `.eyebrow` | `border-bottom` colour `--color-line` → `--color-fg` |
+| `ProjectFacts.astro` | `border-block-start` colour `--color-line` → `--color-fg` |
+| `work/index.astro` — `.filter` | `border-bottom` colour `--color-line` → `--color-fg` |
+
+No spacing changes. Padding and margins around the header and footer are unchanged — the space
+that was there is what now separates them, and it reads correctly in Figma at both breakpoints.
+
+
 ### 2026-09-07 — The wordmark is serif, at body size. New `Wordmark` text style. **Bryan's call.**
 
 **Code and Deploy: one CSS line, detail at the bottom.**
