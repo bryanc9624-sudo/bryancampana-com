@@ -79,6 +79,16 @@ neither chat plans against them:
 
 ## Open decisions — Design and Figma owns these
 
+- [ ] **Video facade — visual treatment.** The mechanism is built and working; the
+      appearance is not designed. Currently a neutral placeholder: the project's first
+      photograph as poster where one exists, otherwise a grey box, with a small uppercase
+      "Play" label bottom-left on `--color-bg`. Needs a real play affordance and a
+      decision on whether the poster is a dedicated still or the first project image.
+      Affects three projects. Code and Deploy restyles once drawn; no mechanism change.
+- [ ] **Video poster stills.** Related but Bryan's, not Design's: the three video projects
+      have no dedicated poster frame. Currently reusing the first project photograph, and
+      two of the three have no photographs at all, so they show a grey box.
+
 - [ ] **Filter control: chips reverted to text links.** Bryan is reverting the bordered
       chip treatment in favour of the text-link option (2026-09-07). **This is a code
       change, not only a Figma one** — `/work` currently renders `.chip` with a border,
@@ -96,9 +106,13 @@ neither chat plans against them:
       designed. Counts are implemented and live. Code and Deploy will build whatever is
       drawn; it will not invent the interaction.
 
-- [ ] **Colour.** All six colour tokens are still neutral placeholders. Needs a real
-      palette decision. Not blocking anything — everything is variable-bound, so a colour
-      change propagates through Figma and CSS without rework.
+- [ ] **Colour — VALUES only. The system is settled**, see Settled, "Colour SYSTEM agreed".
+      Paper / ink / charge, one palette inverted across modes, three link states. Outstanding
+      is the actual hex for each token, which Bryan is judging on a live bench against his own
+      photographs. Two questions still open there: whether paper is a soft warm white or pure
+      white, and whether the charge sits on the magenta side of the ink or the violet side.
+      **Code and Deploy: hold. Do not implement colours, and note that a seventh token
+      (`--color-accent`) will be needed when the values land.**
 - [ ] **Radius.** `radius/sm` and `radius/md` are both `0`. The only place radius is
       visible is `FilterChip`; every other surface is a hairline or a plain block. Bound
       to the tokens, so it is a one-value change.
@@ -169,6 +183,77 @@ when something needs the other chats' attention; a clean audit is not recorded h
 ---
 
 ## Settled
+
+### 2026-09-07 — Colour SYSTEM agreed. Values still open. **Bryan's concept.**
+
+The structure below is settled and will not change with the hex values, so Code and Deploy
+can prepare against it. **The values are not chosen yet** — do not implement colours.
+
+**Three roles: paper, ink, charge.** From Bryan's own framing — ink drawn on paper, and ink
+with energy running through it. It is not decoration; it generates the rules below.
+
+**The two modes are one palette inverted**, not two themes:
+
+| Role | Light | Dark |
+|---|---|---|
+| Paper — ground | soft warm white | deep purple, near-black |
+| Ink — body text | deep purple | the light mode's paper colour |
+| Drawn charge — link at rest | ink colour, **weight 500**, underline | same |
+| Full charge — hover | charge colour | charge colour, **glowing** |
+
+Dark mode uses a near-white ink rather than a light purple: a tinted body text reads as
+gimmicky and loses contrast. The purple moves into the ground instead.
+
+**Link states, and why the underline carries them.** An underline is *more ink* — the same
+substance applied differently — so the mark changes state without changing substance. Rules:
+
+- Underline is present in **both** modes. Only the atmosphere differs. If dark mode signalled
+  links by glow alone it would be the less accessible of the two modes.
+- Thickness is `text-decoration-thickness: from-font` — Plex's own underline metric, drawn to
+  match its stem weight — with a deliberate `text-underline-offset` so it clears descenders.
+- Hover changes **colour only**; it does not thicken. Once the underline is at stem weight,
+  thickening is a second signal doing the first one's job.
+- Weight (400 → 500) lives in the **rest** state, never on hover — a weight change on hover
+  reflows the text under the cursor.
+- Underlines are for **inline text links only** — nav, footer, prose, back links. **Not card
+  titles**: the whole card is the target, and 14 underlined titles turn the work index into a
+  page of stripes.
+
+**Focus must stay visually distinct from hover.** Different states, different users: hover is
+for pointers, focus is for keyboards and screen magnifiers. In the concept it is the
+containment ring — the boundary drawn around the area being worked in.
+
+**The three secondary tokens now have rules rather than being picked by eye:** `muted` is
+diluted ink (same hue, less of it), `line` is the construction line (diluted further), and
+`placeholder` is **unworked paper** — space reserved for something not yet drawn, which is
+literally what those boxes are.
+
+**Code and Deploy — one new token is required.** The current six have nowhere for a brand
+colour to live. The charge needs `--color-accent`, with a distinct value per mode (brighter in
+dark). No other new properties.
+
+Working bench, for reference only — not a source of truth:
+`https://claude.ai/code/artifact/e58e4cfd-7500-47d2-95ef-a8a75b3be63e`
+
+### 2026-09-07 — Video is embedded as a facade, not an iframe. **Bryan's call (option B).**
+
+Three projects carry video: The City That Slept (Vimeo 414786969), Memory Strip
+(YouTube KA3hHoIYmZs) and Transmute (YouTube gpXjXkM5byU). All three links were recovered
+from the Cargo archive.
+
+A plain provider iframe pulls roughly a megabyte of third-party JavaScript on page load
+whether or not anyone watches — more than every image on this site combined — and sets
+third-party cookies while doing it. The facade renders a poster and a play button and
+creates the iframe only on click.
+
+**This is the only JavaScript on the site**: 416 bytes, inline, and only on the three
+video pages. Every other page ships zero script tags. It is a deliberate exception to the
+no-client-JS constraint, because inline playback genuinely requires it. YouTube embeds use
+youtube-nocookie.com.
+
+Without JS the poster simply stays and the button does nothing, rather than leaving a dead
+embed.
+
 
 ### 2026-09-07 — Figma file cleaned: no archives, no versioned duplicates. **Bryan's call.**
 
