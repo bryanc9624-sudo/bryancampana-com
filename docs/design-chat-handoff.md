@@ -115,21 +115,42 @@ Try the URL first — it costs one command and uses far fewer tokens than an inl
 returns `connect_rejected`, re-request with `enableBase64Response: true`. MCP traffic itself is
 always fine; it routes through an allowlisted proxy regardless.
 
-**4. The page listing returns only ONE page, however many the file has.** Calling
-`get_metadata` with no `nodeId` reports the top-level pages — and for this file it reports
-`01 — Foundations` and nothing else, every time. **This is wrong and it is stable**: it does not
-change when Bryan switches pages, selects a node, or reopens the file. The other pages exist and
-their contents are fully readable *once you have a node id inside them*.
+**4. `get_metadata` lists only ONE page, however many the file has — use `use_figma` instead.**
+Calling `get_metadata` with no `nodeId` claims this file's only page is `01 — Foundations`. That
+is wrong and it is *stable*: it does not change when Bryan switches pages, selects a node, or
+reopens the file. The file actually has four pages.
 
-Do not try to derive the missing page ids. Probing `0:2`, `0:3`, `0:4` returns two different
-error strings that look meaningful and are not; a whole round of investigation came out of
-over-reading them. **Ask Bryan for the node id instead** — right-click any frame in the page you
-need, *Copy link to selection*, and the URL carries `?node-id=X-Y`. That resolved instantly
-after several failed attempts at inferring it.
+**The fix — a read-only `use_figma` script, which is the authoritative enumeration:**
 
-Related: the "Currently selected nodes" block is unreliable. It appeared once and then stopped
-appearing for the same selection, so do not build a workflow on it or ask Bryan to click things
-in the hope of catching it.
+```js
+return figma.root.children.map(p => ({ id: p.id, name: p.name, children: p.children.length }));
+```
+
+That returns every page immediately. `use_figma` executes against the Figma Plugin API, so it
+sees the real document tree rather than whatever `get_metadata` is caching. **Treat
+`figma.root.children` as the source of truth for file structure and `get_metadata`'s page list
+as unreliable.** Node-addressed `get_metadata` calls are fine — it is only the enumeration that
+lies.
+
+Page ids as of 2026-09-07: `0:1` Foundations (4), `1:29` Desktop (9), `1:30` Mobile (9),
+`12:2` Components (8).
+
+**To read a page's contents**, fan out one `use_figma` per page *in a single message* — the
+skill requires `setCurrentPageAsync` at most once per call, so never loop pages inside one
+script:
+
+```js
+const page = await figma.getNodeByIdAsync("12:2");
+await figma.setCurrentPageAsync(page);
+return page.children.map(n => ({ id: n.id, name: n.name, type: n.type }));
+```
+
+**Dead ends, so nobody repeats them.** Probing `0:2`/`0:3`/`0:4` returns two different error
+strings that look diagnostic and are not. The "Currently selected nodes" block is intermittent —
+it appeared once and then stopped for the same selection, so do not build a workflow on it or
+ask Bryan to click things hoping to catch it. Asking Bryan for *Copy link to selection* does
+work, but it is a manual workaround for a problem the script above solves outright — reach for
+the script first.
 
 **Also:** the Figma MCP server has dropped and reconnected mid-session before. Retry once before
 concluding anything is actually wrong.
