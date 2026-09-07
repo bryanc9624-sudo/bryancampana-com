@@ -15,7 +15,8 @@ const year = new Date().getFullYear()
   .site-footer {
     display: flex; justify-content: space-between; flex-wrap: wrap;
     gap: var(--space-3); margin-top: var(--space-7); padding-block: var(--space-4);
-    border-top: 1px solid var(--color-line);
+    /* Ink, matching the header — the page is bracketed by chrome at both ends. */
+    border-top: 1px solid var(--color-fg);
     color: var(--color-muted); font-size: var(--size-sm);
   }
   .site-footer p { margin: 0; }

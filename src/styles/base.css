@@ -11,7 +11,17 @@
 @import './tokens.css';
 
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Never let the browser fake a face. Bryan's rule, 2026-09-07: if text is italic it uses
+     a drawn italic, not an obliqued roman. --font-italic routes italics to the serif, which
+     is the only family here with a real italic — but the token alone does not stop
+     synthesis, because a missing WEIGHT of that italic would still be slanted mechanically.
+     With this off, anything we have not actually loaded renders upright and is visible as a
+     problem, instead of shipping a counterfeit. Same guarantee for bold.
+     Nothing today relies on synthesis: every weight in use is a real loaded face. */
+  font-synthesis: none;
+}
 body {
   margin: 0;
   background: var(--color-bg);

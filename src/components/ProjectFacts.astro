@@ -16,7 +16,9 @@ const { facts } = Astro.props
   .facts {
     display: flex; flex-wrap: wrap; gap: var(--space-5);
     margin: 0; padding-block: var(--space-4);
-    border-block: 1px solid var(--color-line);
+    /* Top only. `border-block` set both edges; the bottom rule is deleted so all three
+       project layouts agree — the photography layout was already top-only. */
+    border-block-start: 1px solid var(--color-line);
   }
   .facts__pair { min-width: 0; }
   dt {

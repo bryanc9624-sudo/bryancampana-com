@@ -282,6 +282,48 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — No synthesised faces, ever. **Bryan's rule.**
+
+His words: he has *"no intention or desire or need to force a font to display an italic. If
+there is an italic element of text on my website, then we should use the proper font."*
+
+`--font-italic` already routed italics to IBM Plex Serif, the only family here with a drawn
+italic. **That token was not sufficient on its own.** It fixes the family; it does not stop
+the browser faking a face it lacks. Only serif **400** italic is loaded, so an `<em>` inside
+a heading or inside Body / Strong would have wanted serif *600* italic — not loaded, and
+mechanically slanted without complaint.
+
+`font-synthesis: none` is now set on `html`. Anything not actually loaded renders upright
+and is visible as a problem, rather than shipping a counterfeit. It covers bold on the same
+terms.
+
+Nothing today depends on synthesis — every weight in use is a real loaded face: sans as a
+variable font covering 400/500/600, serif 600 for display, serif 400 italic for the design
+question. **No italic renders anywhere on the site right now**; all 14 design questions are
+blank and no project body contains emphasis. This is a guarantee held in advance, not a fix.
+
+**Consequence if an italic is ever wanted in a heading or in bold text:** the real face has
+to be added to the Fontsource imports in `base.css` first. It will look wrong until it is,
+and that is deliberate.
+
+### 2026-09-07 — Rule hierarchy implemented in code. **Code and Deploy.**
+
+The three instructions in "Horizontal rules get a hierarchy" were unactioned in the code
+until now; Figma and the ledger were ahead of the site. Done: header `border-bottom` and
+footer `border-top` rebound from `--color-line` to `--color-fg`, and the facts block's
+bottom rule removed. That last one had been `border-block`, the shorthand for both edges, so
+the bottom rule existed without anyone deciding it should.
+
+Verified in the browser: header and footer resolve to `--color-fg`, facts top is a 1px
+hairline, facts bottom is 0px. The site now carries the two-level vocabulary the design
+entry describes — ink at the page edges, hairline inside the content.
+
+Token audit at the same time: **all 30 Figma variables match `tokens.css` in both modes**,
+including the new `font/italic`. Ten CSS properties have no Figma variable and should not
+get one — `--font-serif` is reached through `font/display`, weights and line-heights are
+properties of the text styles, `--measure-prose` is in `ch` units.
+
+
 ### 2026-09-07 — Figma brought in line with the code's type decisions; Foundations repaired. **Design and Figma.**
 
 Bryan's instruction: **what is in the code right now is correct.** This entry records Figma
