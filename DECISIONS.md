@@ -106,13 +106,10 @@ neither chat plans against them:
       designed. Counts are implemented and live. Code and Deploy will build whatever is
       drawn; it will not invent the interaction.
 
-- [ ] **Colour — VALUES only. The system is settled**, see Settled, "Colour SYSTEM agreed".
-      Paper / ink / charge, one palette inverted across modes, three link states. Outstanding
-      is the actual hex for each token, which Bryan is judging on a live bench against his own
-      photographs. Two questions still open there: whether paper is a soft warm white or pure
-      white, and whether the charge sits on the magenta side of the ink or the violet side.
-      **Code and Deploy: hold. Do not implement colours, and note that a seventh token
-      (`--color-accent`) will be needed when the values land.**
+- [x] ~~**Colour.**~~ **DONE 2026-09-07** — see Settled, "Colour VALUES settled". Both modes,
+      all seven tokens, contrast verified. **Code and Deploy: the hold is lifted.** Bryan
+      resolved both open questions on the bench: paper is **pure white**, not warm; and the
+      charge sits on the **violet** side of the ink, not the magenta side.
 - [ ] **Radius.** `radius/sm` and `radius/md` are both `0`. The only place radius is
       visible is `FilterChip`; every other surface is a hairline or a plain block. Bound
       to the tokens, so it is a one-value change.
@@ -183,6 +180,72 @@ when something needs the other chats' attention; a clean audit is not recorded h
 ---
 
 ## Settled
+
+### 2026-09-07 — Colour VALUES settled. **Bryan's call. In Figma. Ready to implement.**
+
+Chosen on a live bench against his own photographs, every pair contrast-checked. The system
+these fill is the entry "Colour SYSTEM agreed" below; nothing about the structure changed.
+
+| Token | Light | Dark | Notes |
+|---|---|---|---|
+| `--color-bg` | `#FFFFFF` | `#0F0C0F` | paper / ground |
+| `--color-fg` | `#361A38` | `#FFFFFF` | ink; dark takes the light paper |
+| `--color-accent` | `#9600DD` | `#DD51FF` | **new token** — the charge |
+| `--color-muted` | `#7E6F7E` | `#A4A4A4` | diluted ink |
+| `--color-line` | `#D4CAD4` | `#2D2A2D` | construction line |
+| `--color-placeholder` | `#F0F0F0` | `#1E1C1F` | unworked paper |
+| `--color-focus` | `#9600DD` | `#DD51FF` | the containment ring — same as the charge |
+
+Contrast, measured: ink on paper **15.44**, charge on paper **6.28**, text on dark ground
+**19.43**, charge on dark ground **6.19**, muted on paper **4.72**. All pass at body size.
+
+**In Figma:** the six existing variables carry the light values, and `color/accent` is created
+with scopes `TEXT_FILL, STROKE_COLOR` and code syntax `var(--color-accent)`. **Dark values are
+NOT in Figma** and cannot be — that collection's modes are Desktop/Mobile, a breakpoint axis.
+The table above is the source of truth for dark.
+
+**Naming, per Bryan:** variables stay named for *where the colour is used*, never for the
+colour itself. The existing `color/bg` … `color/accent` scheme already satisfies this, and it
+is why two hue changes cost nothing to absorb. In conversation the roles are paper / ink /
+charge; in the file they are bg / fg / accent.
+
+**Two things to know rather than fix:**
+
+1. **Both accent values sit outside sRGB and are clipped.** The hexes above are the clipped
+   results and are exactly what ships, so this is not a defect — but chroma above roughly 0.26
+   produces no further visible change, so there is no more saturation available in that hue.
+2. **The dark ground is effectively neutral.** Bryan settled its chroma at 0.006, so `#0F0C0F`
+   is a near-black with a violet cast that is barely perceptible. The concept's "the purple
+   becomes the space" is therefore not literally happening in dark mode; the purple lives in
+   the light-mode ink and in the charge. Deliberate — it was the safest answer to the risk of
+   a saturated ground fighting the warm photography.
+
+### 2026-09-07 — Keywords consolidated from eight to six. **Bryan's call. Content change.**
+
+**Code and Deploy: this is the change to make in `src/content/projects/*.md`.**
+
+| Project | From | To |
+|---|---|---|
+| `590-madison-ave` | ADA Signage Design | **Signage** |
+| `dura-architectural-signage` | Visual Communications | **Signage** |
+| `big-city-volleyball` | Brand Identity | **Identity** |
+| `togethereffect` | Brand Identity | **Identity** |
+| `resemblance-1` | Exhibition Design | **Identity** |
+| `represent-1` | Exhibition Design, Digital Communications | **Identity, Digital** |
+| `photopolymer-letterpress` | Fine Art | Fine Art *(unchanged)* |
+| `double-exposed-1`, `oscuro`, `shapes-and-colors`, `two-of-hearts` | Photography | Photography *(unchanged)* |
+| `memory-strip`, `the-city-that-slept`, `transmute` | New Media | New Media *(unchanged)* |
+
+Resulting counts: Photography 4, Identity 4, New Media 3, Signage 2, Digital 1, Fine Art 1.
+Four singletons become one. Fine Art stays at 1 because Photopolymer Letterpress is not the
+only fine art work for long — Bryan has more coming.
+
+Card keyword labels in Figma are relabelled to match on all 18 cards across both breakpoints.
+
+**This probably closes the `(More)` item.** Measured on the mobile work index at 390px:
+chips ≈ 700px before the first project; eight text links 377px; **six text links 309px**, with
+the filter at three rows. Worth Bryan looking at the built site before any overflow
+affordance is designed, because it may no longer be a problem worth solving.
 
 ### 2026-09-07 — Keyword filter reverted to text links. **Bryan's call. Drawn in Figma.**
 
