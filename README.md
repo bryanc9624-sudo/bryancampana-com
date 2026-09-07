@@ -146,6 +146,17 @@ when the card wants a different crop from anything in the set. It matters most f
 portrait work: the card frame is 3:2 landscape, so a 9:16 phone photograph cropped into it
 loses most of the picture, and a square or landscape crop made for the card fixes that.
 
+**How many across** (image-first pages only): the grid picks its own column count from
+how many images the project has, so no row is left part-empty.
+
+| images | across | why |
+|---|---|---|
+| 1–2 | 1 | shown large and stacked, rather than shrunk to fill a row |
+| 4 | 2 | two complete rows |
+| 3, 5, 6, 7… | 3 | 3 and 6 fill exactly; 5 and 7 are ragged at any count |
+
+Add or remove an image and the layout follows. There is nothing to set.
+
 **Captions** (photography pages) come from an `images` list, matched by position:
 
 ```yaml

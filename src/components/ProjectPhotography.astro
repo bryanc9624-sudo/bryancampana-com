@@ -20,10 +20,11 @@ const { project, photos, facts, hasBody } = Astro.props
 const d = project.data
 const placeholders = ['4/5', '4/5', '4/5', '4/5']
 
-// Desktop column count. Three, except for counts that would leave a ragged last row: one
-// image fills the width, two and four sit two-up as complete rows. Five and seven are
-// ragged at any column count, so they take the three-up default.
-const cols = photos.length === 1 ? 1 : (photos.length === 2 || photos.length === 4) ? 2 : 3
+// Desktop column count. Three, except where a smaller count reads better: a set of one or
+// two runs full width and stacks, so a pair of photographs is shown large rather than
+// shrunk to fill a row; four sits two-up as two complete rows. Five and seven are ragged
+// at any column count, so they take the three-up default.
+const cols = photos.length <= 2 ? 1 : photos.length === 4 ? 2 : 3
 // Keep `sizes` honest about that, or the browser fetches a variant sized for the wrong
 // column count. 94vw is the content width after page padding.
 const wide = `${Math.floor(94 / cols)}vw`
