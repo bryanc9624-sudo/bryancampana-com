@@ -112,14 +112,23 @@ neither chat plans against them:
       activated fonts at all. If (b), Bryan performs the swap himself — it is one variable
       edit (see Settled, "Type ramp is bound to one variable").
 
-      **Still needed from Bryan:** the CSS family name the web project specifies (likely
-      something like `new-frank`), and confirmation the project includes weights **400, 500,
-      600 and a true italic**. Code and Deploy needs the family name for `--font-sans`; it
-      cannot be derived from the `<link>` alone, and the Design chat's proxy blocks fetching
-      the stylesheet.
+      **Resolved 2026-09-07:** CSS family is **`new-frank`**. Web project includes 300, 300i,
+      400, 400i, 500, 500i, 700 — covers the revised ramp (see Settled, "Font weights,
+      REVISED"). Domain coverage moved to Code and Deploy's open list.
 
-      **Both domains** — `bryancampana.com` and `bryancampana.netlify.app` — must be in the
-      web project's allowed list or the fonts fail silently on one of them.
+      **Two manual steps remain, and only Bryan can do them** — the Design chat cannot see
+      New Frank from its container, so it cannot set a font it cannot load:
+
+      1. **Change the `font/family` variable value** from `Inter` to New Frank's family name
+         as Figma's font picker shows it. Verified 2026-09-07: the variable is still `Inter`
+         in both modes. Editing the type specimen on the Foundations page changes only that
+         specimen — the variable is what drives the ten text styles and all 18 frames.
+      2. **Change four text styles from Semi Bold to Bold** — `Display / 2XL`,
+         `Display / XL`, `Title / Large`, `Body / Strong`. New Frank has no 600, so these
+         will otherwise resolve to a missing font once the family switches.
+
+      Also worth checking once switched: the `Question` style asks for style name `Italic`.
+      Depending on how New Frank's internal naming maps, Figma may call it `Regular Italic`.
 
       **The chosen family must carry four styles**, because the design already uses all
       four:
@@ -154,6 +163,27 @@ Routed here rather than through Bryan, per rule 2.
 - [ ] **`year: number` vs `completed: string`.** The live site shows *September 2025* for
       Dura and *2019* for Oscuro. The current numeric `year` cannot hold the former.
       Widen it, or add `completed` and keep `year` as a sort key.
+- [ ] **Adobe Fonts domain coverage.** *Raised by Design and Figma 2026-09-07; hosting and
+      domains are Code and Deploy's per the ownership table.* The web project
+      (`https://use.typekit.net/udc5guh.css`, family `new-frank`) currently covers **one
+      domain** — Bryan reports the UI would not accept a second. Three are needed over the
+      project's life:
+
+      | Domain | Why | When |
+      |---|---|---|
+      | `bryancampana.netlify.app` | currently the live site | now |
+      | `localhost` | rule 5 requires a local preview before every deploy | now |
+      | `bryancampana.com` | the eventual home | at DNS cutover |
+
+      **Adobe Fonts failures are silent** — the page renders in the fallback and nothing
+      errors. Without `localhost`, every local preview shows the wrong typeface, which makes
+      rule 5 useless for judging type. Worth confirming whether the domains field genuinely
+      accepts only one entry (it may accept several separated by newlines) before creating a
+      second web project as a workaround.
+
+> *Note from Design and Figma, 2026-09-07:* the three items above this one — the branch
+> merge, discipline source, and `year`/`completed` — all appear to have been settled in the
+> log below. Not editing them, since this is not my section; flagging so they can be ticked.
 
 ---
 
@@ -363,7 +393,31 @@ At 390px the landing statement was an eight-line, 296px block; it is now 168px. 
 this is the `Mobile` variable mode. **No new custom properties** — all 26 variables still
 map 1:1 to `tokens.css`.
 
-### 2026-09-07 — Font weights.
+### 2026-09-07 — Font weights, REVISED for New Frank: 600 becomes 700.
+
+**New Frank has no Semi Bold.** Its weights are Thin 100, Light 300, Regular 400, Medium 500,
+Bold 700, ExtraBold 800. The original ramp below specified **600**, which does not exist in
+this family. Revised mapping:
+
+| Role | Weight | Text styles |
+|---|---|---|
+| Display, titles, wordmark | **700 Bold** (was 600) | Display 2XL / XL, Title Large, Body Strong |
+| Labels, eyebrows, keyword | 500 Medium | Eyebrow, Label |
+| Body, captions, nav | 400 Regular | Body, Body Large, Body Small |
+| Design question | 400 Italic | Question |
+
+Bryan's web project includes 300, 300i, 400, 400i, 500, 500i and 700 — everything the design
+needs, plus Light and Light Italic which nothing currently uses. Bold Italic 700 is **not**
+included and is not needed; nothing pairs bold with italic.
+
+CSS family name is **`new-frank`** (`font-family: new-frank, sans-serif;`). Note this differs
+from the Figma family name, which is the display name shown in Figma's font picker.
+
+*Caveat on verification:* the Design chat cannot see New Frank from its container, so it
+cannot render or visually check the typeface. Type appearance has to be eyeballed by Bryan in
+Figma or on the built site. Structure, metrics and token wiring remain verifiable from here.
+
+### 2026-09-07 — Font weights. **SUPERSEDED by the entry above — 600 does not exist in New Frank.**
 
 Settled by the ten text styles now in Figma, recorded here so Code and Deploy can stop
 relying on browser defaults:
