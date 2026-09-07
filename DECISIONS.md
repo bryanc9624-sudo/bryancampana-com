@@ -196,7 +196,9 @@ neither chat plans against them:
 
 Routed here rather than through Bryan, per rule 2.
 
-- [ ] **`tokens.css` still sets body copy in the serif — it contradicts the settled type
+- [x] ~~**`tokens.css` still sets body copy in the serif.**~~ **ALREADY FIXED — closed by the chat that raised it, 2026-09-07.** Code and Deploy had resolved it in `0264eef` before this item was read; `--font-body` is `var(--font-sans)`. The routed item was written against a tree that was one commit stale. Figma has now been brought into line from the other side — see Settled, "Figma brought in line with the code's type decisions". Original text kept below for traceability; **do not action it.**
+
+- [ ] ~~Original item:~~ **`tokens.css` still sets body copy in the serif — it contradicts the settled type
       decision.** *Raised by Design and Figma 2026-09-07; typography is Design's to state,
       the CSS edit is Code and Deploy's to make.*
 
@@ -279,6 +281,63 @@ when something needs the other chats' attention; a clean audit is not recorded h
 ---
 
 ## Settled
+
+### 2026-09-07 — Figma brought in line with the code's type decisions; Foundations repaired. **Design and Figma.**
+
+Bryan's instruction: **what is in the code right now is correct.** This entry records Figma
+being moved to match it, not the other way round.
+
+**Answering Code and Deploy's two requests directly.** They asked for Body / Body Strong /
+Body Small / Body Large / Question to swap to sans. Checked against the file first: **only two
+of the five were actually wrong.** `Body`, `Body / Small` and `Body / Large` were already IBM
+Plex Sans, and `font/body` was already `IBM Plex Sans`. The two that had drifted:
+
+| Style | Was | Now | Why |
+|---|---|---|---|
+| `Body / Strong` | Serif SemiBold | **Sans SemiBold** | It is the wordmark, and an earlier entry argued the wordmark "counts as a title". The code disagrees: `.site-header__name` is an `<a>`, not a heading, so it inherits `--font-body`. Body type, not display type. |
+| `Question` | **Sans** Italic | **Serif Italic** | Exactly the browser-synthesised slant that `--font-italic` exists to prevent. |
+
+**New variable — `font/italic` = IBM Plex Serif**, scope `FONT_FAMILY`, code syntax
+`var(--font-italic)`, matching the `var(--…)` convention its siblings already use. Figma had
+nowhere for the italic rule to live, which broke the file's own promise that every variable maps
+1:1 to a CSS custom property. `Question` binds to it, so the rule is enforced rather than typed.
+
+**Supersedes** the line in "Serif/sans pairing" reading *"Body Strong is the wordmark, which
+counts as a title"*. That reasoning is withdrawn.
+
+**Foundations page repaired — four defects, all in the file's own documentation.**
+
+1. **Swatch captions no longer carry a hex.** Five of six read the pre-plum greys (`#141414`,
+   `#6b6b6b`, `#e4e4e4`, `#e8e8e8`, `#0044cc`) while the chips above them rendered correct plum.
+   They were typed text, not bound values, so they did not follow the variable change. Rather
+   than retype five hexes that would rot again on the next colour change, **each caption is now
+   the CSS custom property** — `var(--color-bg)`, `var(--color-fg)` and so on. That is the
+   actual contract with the code, it is what you want to copy, and it does not change when a
+   value does. Exact values live in the variable itself and in this ledger.
+2. **`color/accent` now has a swatch.** The variable existed and the palette page did not show
+   it. Seven chips. The caption also now states that `color/focus` and `color/accent` hold the
+   same violet **deliberately** — two identical purple blocks otherwise read as a mistake.
+3. **"What is deliberately undecided" is gone**, replaced by "What is settled — these are not
+   empty slots". It claimed colours were neutral greys and both radius tokens were open slots
+   waiting to be filled. Both were settled; a designer reading that page as an invitation would
+   have undone real work.
+4. **The type specimen shows both families.** It rendered the entire ramp in sans, including
+   `size/2xl`, `size/xl` and `size/lg` — the three serif display styles. Those three are now
+   serif and bound to `font/display`; the three reading sizes bind to `font/body`; the italic
+   line is set in Plex Serif Italic and bound to `font/italic`, so it demonstrates the rule it
+   describes. The typeface section named only Plex Sans and now documents all three variables.
+
+Verified by screenshot, not by return value: the first pass widened the swatch row into the
+documentation frame and clipped the accent chip by 16px. The script reported success. Only the
+render showed it. Fixed with a 64px gutter and re-checked.
+
+**Note for both chats — `get_metadata`'s page listing is unreliable.** It reports this file as
+having one page; it has four. Use a read-only `use_figma` running
+`figma.root.children.map(p => ({id: p.id, name: p.name}))` instead. Page ids: `0:1` Foundations,
+`1:29` Desktop, `1:30` Mobile, `12:2` Components. Full detail in `docs/design-chat-handoff.md`.
+
+**Nothing here changes the code.** Figma moved to match the site, as instructed.
+
 
 ### 2026-09-07 — The domain mailbox is not carried over. **Bryan's call.**
 
