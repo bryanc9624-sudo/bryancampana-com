@@ -14,7 +14,7 @@ order: 10
 aspect: "3/2"
 ---
 
-explores how systems evolve through instability. Corruption is a mirror for living within a toxic or broken environment. Survival means reshaping what exists. Its environment suggests both a digital space and an organic mind, yet resists being pinned to either.
+Transmute explores how systems evolve through instability. Corruption is a mirror for living within a toxic or broken environment. Survival means reshaping what exists. Its environment suggests both a digital space and an organic mind, yet resists being pinned to either.
 
 The work asks how new futures emerge from what’s been damaged, and whether growth can happen without distortion
 
