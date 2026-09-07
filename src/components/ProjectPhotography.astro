@@ -19,6 +19,14 @@ interface Props {
 const { project, photos, facts, hasBody } = Astro.props
 const d = project.data
 const placeholders = ['4/5', '4/5', '4/5', '4/5']
+
+// Desktop column count. Three, except for counts that would leave a ragged last row: one
+// image fills the width, two and four sit two-up as complete rows. Five and seven are
+// ragged at any column count, so they take the three-up default.
+const cols = photos.length === 1 ? 1 : (photos.length === 2 || photos.length === 4) ? 2 : 3
+// Keep `sizes` honest about that, or the browser fetches a variant sized for the wrong
+// column count. 94vw is the content width after page padding.
+const wide = `${Math.floor(94 / cols)}vw`
 ---
 <article class="photo">
   <header class="photo__head">
@@ -36,14 +44,14 @@ const placeholders = ['4/5', '4/5', '4/5', '4/5']
     </div>
   )}
 
-  <div class="photo__set">
+  <div class="photo__set" data-cols={cols}>
     {photos.length > 0
       ? photos.map((img, i) => (
           <figure class="photo__figure">
             <Image src={img} alt={d.images[i]?.caption ?? `${d.title} — image ${i + 1}`}
                    widths={[500, 900, 1400]}
-                   sizes="(min-width: 64rem) 46vw, 100vw"
-                   loading={i === 0 ? 'eager' : 'lazy'}
+                   sizes={`(min-width: 64rem) ${wide}, (min-width: 40rem) 47vw, 100vw`}
+                   loading={i < cols ? 'eager' : 'lazy'}
                    fetchpriority={i === 0 ? 'high' : 'auto'}
                    decoding="async" class="photo__img" />
             {d.images[i]?.caption && <figcaption>{d.images[i].caption}</figcaption>}
@@ -77,8 +85,16 @@ const placeholders = ['4/5', '4/5', '4/5', '4/5']
     font-style: italic; line-height: var(--leading-snug); }
   .photo__body { margin-top: var(--space-4); }
 
+  /* Same 1 -> 2 -> 3 progression as the card grid, on the same two breakpoints, so a set
+     of six reads as two rows of three rather than three rows of two. At 1440 that is three
+     columns of about 432px with the 2.5rem gutter. */
   .photo__set { display: grid; gap: var(--space-5); grid-template-columns: 1fr; }
-  @media (min-width: 64rem) { .photo__set { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 40rem) { .photo__set { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 64rem) {
+    .photo__set { grid-template-columns: repeat(3, 1fr); }
+    .photo__set[data-cols="2"] { grid-template-columns: repeat(2, 1fr); }
+    .photo__set[data-cols="1"] { grid-template-columns: 1fr; }
+  }
   .photo__figure { margin: 0; }
   .photo__img { width: 100%; height: auto; display: block; }
   figcaption {

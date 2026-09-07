@@ -11,6 +11,7 @@ prints: null
 dimensions: null
 featured: false
 order: 7
+layout: "image-first"
 aspect: "3/2"
 # Running order is the one the Cargo page published: 01-04 are its four images and 05 is
 # the fifth photograph Cargo never showed, which Bryan asked to include. No captions here,
