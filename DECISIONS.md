@@ -194,6 +194,30 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — Radius stays 0, derived from the typeface. **Measured, not defaulted.**
+
+Bryan asked whether the radius could be matched to the curvature of a round glyph in IBM Plex
+Sans. It can be measured, and the answer is zero — but not for the reason it looks like.
+
+**What was measured.** The glyphs were flattened to vectors and the curvature computed from the
+bezier data at a 1000px em. The `o` is 466 x 540, with a radius of curvature of **288 units at
+top and bottom** and **464 at the sides** (0.29em and 0.46em).
+
+**Why that does not transfer.** As a ratio, the `o`'s radius is **0.62x its own width**. Applied
+to a rectangle that produces a pill, not a rounded corner. A round glyph is all curve; a rounded
+rectangle is mostly straight. The measurement is real, it just answers a different question.
+
+**What the typeface actually says about corners.** The `n` stem is `M 80 528 L 0 528 L 0 12
+L 80 12` — pure line commands, sharp joins. The `D` is the same inside and out. **IBM Plex Sans
+has square corners with no rounding anywhere in its construction.**
+
+So `radius/sm` and `radius/md` stay at **0**, now justified by the face rather than left unset.
+Both variable descriptions in Figma carry the derivation so the values are not "corrected" later.
+
+**If a non-zero micro-radius is ever wanted**, the defensible value is the stem width: 80 units
+per 1000px em = **0.08em**, roughly 1.4px at 17px body text. Not currently applied.
+
+
 ### 2026-09-07 — Colour VALUES settled. **Bryan's call. In Figma. Ready to implement.**
 
 Chosen on a live bench against his own photographs, every pair contrast-checked. The system
