@@ -38,4 +38,11 @@ describe('project content', () => {
       expect(allowed, `${f} category`).toContain(frontmatter(f).category)
     }
   })
+
+  it('features only design-category projects', () => {
+    for (const f of files()) {
+      const fm = frontmatter(f)
+      if (fm.featured === 'true') expect(fm.category, `${f}`).toBe('design')
+    }
+  })
 })

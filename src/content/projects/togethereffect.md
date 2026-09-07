@@ -1,0 +1,15 @@
+---
+title: TogetherEffect
+year: null
+role: Designer
+category: design
+scope: Identity and custom wordmark for a Brooklyn DJ collective.
+designQuestion: TODO_DESIGN_QUESTION
+featured: true
+order: 4
+aspect: 3/2
+---
+
+TogetherEffect is a Brooklyn-based DJ collective curating immersive sonic environments across bars, clubs, and restaurant venues. The identity is built to reflect the group’s philosophy: performance as atmosphere, sound as space.
+
+The custom wordmark leans into modular geometry and spatial rhythm, echoing the collective’s focus on sonic architecture. The thick, rounded letterforms borrow from retro-futurism while maintaining a grounded, contemporary edge, suggesting both movement and cohesion.
