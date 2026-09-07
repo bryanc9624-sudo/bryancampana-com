@@ -3,6 +3,8 @@
 import { getCollection, render } from 'astro:content'
 import Base from '../../layouts/Base.astro'
 import Placeholder from '../../components/Placeholder.astro'
+import { Image } from 'astro:assets'
+import { imagesFor } from '../../lib/projectImages'
 
 // Spec §3: every project gets a page, not only featured ones. `featured` now controls
 // presentation only — which projects appear on the landing page.
@@ -30,9 +32,10 @@ const facts = [
   ['Dimensions', d.dimensions],
 ].filter(([, v]) => v) as [string, string][]
 
-const mediaImages: { aspect: string; caption?: string }[] = d.images.length > 0
-  ? d.images
-  : [{ aspect: '16/9' }, { aspect: '3/2' }, { aspect: '1/1' }, { aspect: '3/2' }]
+// Real images when the project has them; grey placeholders until it does. Captions come
+// from frontmatter `images[i].caption`, matched by position.
+const photos = imagesFor(project.id)
+const placeholderAspects = ['16/9', '3/2', '1/1', '3/2']
 ---
 <Base title={`${d.title} — Bryan Campana`} description={d.scope} wide>
   <article class="case">
@@ -54,12 +57,23 @@ const mediaImages: { aspect: string; caption?: string }[] = d.images.length > 0
     </div>
 
     <div class="case__media">
-      {mediaImages.map((img, i) => (
-        <figure class="case__figure">
-          <Placeholder aspect={img.aspect} label={`${d.title} — image placeholder ${i + 1} of ${mediaImages.length}`} />
-          {img.caption && <figcaption>{img.caption}</figcaption>}
-        </figure>
-      ))}
+      {photos.length > 0
+        ? photos.map((img, i) => (
+            <figure class="case__figure">
+              <Image src={img} alt={d.images[i]?.caption ?? `${d.title} — image ${i + 1}`}
+                     widths={[600, 1000, 1600]}
+                     sizes="(min-width: 64rem) 62vw, 100vw"
+                     loading={i === 0 ? 'eager' : 'lazy'}
+                     fetchpriority={i === 0 ? 'high' : 'auto'}
+                     decoding="async" class="case__img" />
+              {d.images[i]?.caption && <figcaption>{d.images[i].caption}</figcaption>}
+            </figure>
+          ))
+        : placeholderAspects.map((aspect, i) => (
+            <figure class="case__figure">
+              <Placeholder aspect={aspect} label={`${d.title} — image placeholder ${i + 1} of ${placeholderAspects.length}`} />
+            </figure>
+          ))}
     </div>
   </article>
 </Base>

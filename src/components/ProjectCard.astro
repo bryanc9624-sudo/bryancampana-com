@@ -2,16 +2,23 @@
 // src/components/ProjectCard.astro
 import type { CollectionEntry } from 'astro:content'
 import Placeholder from './Placeholder.astro'
+import { Image } from 'astro:assets'
+import { coverFor } from '../lib/projectImages'
 interface Props { project: CollectionEntry<'projects'> }
 const { project } = Astro.props
 const d = project.data
 // Spec §3: every project has a page now, so every card links.
 const href = `/work/${project.id}`
 const keyword = d.keywords[0] ?? null
+const cover = coverFor(project.id)
 ---
 <article class="card">
   <a href={href} class="card__media" tabindex="-1" aria-hidden="true">
-    <Placeholder aspect={d.aspect} label={`${d.title} — image placeholder`} />
+    {cover
+      ? <Image src={cover} alt={d.title} widths={[400, 700, 1000]}
+               sizes="(min-width: 64rem) 33vw, (min-width: 40rem) 50vw, 100vw"
+               loading="lazy" decoding="async" class="card__img" />
+      : <Placeholder aspect={d.aspect} label={`${d.title} — image placeholder`} />}
   </a>
 
   {keyword && <p class="card__keyword">{keyword}</p>}
@@ -27,6 +34,7 @@ const keyword = d.keywords[0] ?? null
 <style>
   .card { display: flex; flex-direction: column; gap: var(--space-2); }
   .card__media { display: block; }
+  .card__img { width: 100%; height: auto; display: block; }
   .card__title { font-size: var(--size-lg); margin-top: var(--space-2); }
   .card__title a { text-decoration: none; }
   .card__title a:hover { text-decoration: underline; }
