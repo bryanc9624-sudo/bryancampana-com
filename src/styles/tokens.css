@@ -58,3 +58,17 @@
     --color-focus: #7aa7ff;
   }
 }
+
+/* Responsive display type. Spec §1.2. In Figma this is the Mobile variable mode;
+   here it is one media query. At 390px the landing statement rendered as an 8-line,
+   296px block at --size-2xl; stepped down it is 168px. Same problem affected the
+   "Work" heading and every project-page title.
+
+   40rem is one of the two breakpoint literals this file permits (see above) —
+   custom properties cannot be used inside media-query conditions. */
+@media (max-width: 39.999rem) {
+  :root {
+    --size-xl: 1.5rem;
+    --size-2xl: 2rem;
+  }
+}
