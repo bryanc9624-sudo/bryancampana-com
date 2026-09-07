@@ -9,7 +9,10 @@
   --color-placeholder: #e8e8e8;
   --color-focus: #0044cc;
 
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  /* IBM Plex Sans, self-hosted via Fontsource. Linking Google's CDN would cost a DNS
+     lookup and TLS handshake to fonts.gstatic.com before any text could render, and hand
+     Google a request from every visitor. Same typeface, one fewer connection. */
+  --font-sans: "IBM Plex Sans Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --font-body: var(--font-sans);
   --font-display: var(--font-sans);
 
@@ -19,6 +22,12 @@
   --size-lg: 1.375rem;
   --size-xl: 2rem;
   --size-2xl: 3rem;
+
+  /* Weights mirror the ten Figma text styles: SemiBold for display, titles and the
+     wordmark; Medium for labels and eyebrows; Regular for body. */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
 
   --tracking-wide: 0.08em;
 
