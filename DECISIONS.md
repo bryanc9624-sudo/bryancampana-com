@@ -69,11 +69,11 @@ neither chat plans against them:
    directly. Code and Deploy's recorded opinion — "design question promoted above the
    scope line" — is therefore moot rather than overruled; it was a reasonable read of a
    file that had since moved on. No hard feelings intended in either direction.
-3. **`docs/figma-to-code-spec.md` exists but is NOT on `main`.** It is on
-   `claude/website-design-figma-l3milr` and carries the full implementation spec —
-   schema changes, routing, the no-JS filter, the photography layout. Code and Deploy
-   cannot see it until that branch is merged. **This is the highest-priority coordination
-   item on the list.**
+3. ~~**`docs/figma-to-code-spec.md` is NOT on `main`.**~~ **STALE — corrected 2026-09-07.**
+   It **is** on `main` now (commits `da518a0`, `370d5f0`) and Code and Deploy can read it.
+   The spec itself is also partly out of date where later decisions overtook it — the
+   filter chips in its §6 were reverted to text links, and its §1.2 describes the Figma
+   frame rather than the built site. **`DECISIONS.md` wins wherever the two disagree.**
 
 ---
 
@@ -188,12 +188,6 @@ neither chat plans against them:
 
 ### Waiting on Bryan, not on either chat
 
-- [ ] **Should the footer rule match the header's ink, or stay a hairline?** The header rule is
-      now `color/fg` and the footer is still `color/line`. Ink on both brackets the page (chrome
-      top and bottom, hairlines only inside); leaving it hairline says the header is the site's
-      one structural edge and the footer is quiet. I lean toward bracketing. One-line change
-      either way — see Settled, "Horizontal rules get a hierarchy".
-
 - [x] ~~**Typeface.**~~ **DONE 2026-09-07** — see Settled, "Typeface swap executed in Figma".
       Nothing outstanding on Bryan for type. The New Frank / Adobe Fonts material that stood
       here is obsolete and has been removed rather than left to mislead.
@@ -202,8 +196,8 @@ neither chat plans against them:
 
 Routed here rather than through Bryan, per rule 2.
 
-- [ ] **Merge `claude/website-design-figma-l3milr` into `main`.** Carries
-      `docs/figma-to-code-spec.md` and this ledger update. Blocks everything else.
+- [x] ~~**Merge `claude/website-design-figma-l3milr` into `main`.**~~ **DONE — verified
+      2026-09-07.** `docs/figma-to-code-spec.md` is on `main`; nothing is blocked on it.
 - [x] **CLOSED — superseded.** `layout` now selects the project page layout and `discipline` is a label only, so there is no longer a question of deriving layout from content. Original: **Discipline source.** The project page has two layouts (standard / photography) and
       needs one canonical discipline value to switch on. Either `keywords[0]` or a separate
       `discipline` field — do not infer layout from an unordered array. Code and Deploy's
@@ -276,19 +270,19 @@ the featured and light-no-body layouts at both 1600 and 390.
 |---|---|---|---|---|
 | Header | `color/fg` | 1px | Under `SiteHeader`, every page | The site chrome ends here |
 | Section | `color/line` | 1px | Above `facts`; under the landing `Eyebrow` | One block of content ends, another begins |
-| Footer | `color/line` | 1px | Above `SiteFooter`, every page | (see open question below) |
+| Footer | `color/fg` | 1px | Above `SiteFooter`, every page | The site chrome ends here |
 
-**Open — should the footer match the header?** It is currently a `color/line` hairline, which
-puts it in the section tier. Making it ink too would bracket the page: ink top, ink bottom,
-hairlines only inside. Leaving it as a hairline says the footer is quiet and the header is the
-one structural edge. I lean toward **bracketing** — the footer is chrome, not content, and it
-should look like the header's counterpart — but this is Bryan's aesthetic call and I have not
-made it.
+**3. The footer rule is ink too — the page is bracketed.** Bryan's call, 2026-09-07. Chrome is
+ink at both ends of the page; hairlines exist only *inside* the content. That collapses the
+vocabulary to **two levels, not three**, which is the right number for a site this size: a rule
+is either the edge of the page or a break within it. The footer is chrome, not content, so
+filing it in the section tier was the actual mistake — not the header being too quiet.
 
-**Code and Deploy — one CSS change, no new tokens.** The header rule's colour moves from
-`--color-line` to `--color-fg`; the rule below the facts list is removed. Both tokens already
-exist. If the footer question above resolves to "bracket", that is a second one-line change to
-the footer's `border-top-color`.
+**Code and Deploy — two colour swaps and one deletion, no new tokens.**
+`--color-line` → `--color-fg` on the header's `border-bottom-color` and the footer's
+`border-top-color`; delete the rule below the facts list. Both tokens already exist.
+The landing eyebrow and the facts rule stay `--color-line` and are now the only hairlines
+on the site.
 
 ### 2026-09-07 — Serif/sans pairing: IBM Plex Serif with IBM Plex Sans. **Bryan's call. In Figma.**
 
