@@ -87,7 +87,11 @@ neither chat plans against them:
       are Desktop and Mobile, and Figma Starter allows no more — so dark values have to be
       stated directly. Code and Deploy will not invent them. Six values needed:
       bg, fg, muted, line, placeholder, focus.
-- [ ] **What does `color/accent` mark?** New in Figma 2026-09-07, `#9600dd`, identical to
+- [x] **RESOLVED — `color/accent` marks the selected filter link.** The FilterLink
+      decision answered it: "when the colour system lands, the selected label takes
+      --color-accent in place of --color-fg". The colour system has landed, so it is
+      applied there and nowhere else. If accent should mark anything further, say what.
+      Original question: **What did `color/accent` mark?** New in Figma 2026-09-07, `#9600dd`, identical to
       `color/focus`. Added to `tokens.css` as `--color-accent` so it stays in sync, but
       applied to nothing — Figma does not say what it is for, and choosing would be a
       design decision. Name the elements and it gets applied.
@@ -102,7 +106,7 @@ neither chat plans against them:
       have no dedicated poster frame. Currently reusing the first project photograph, and
       two of the three have no photographs at all, so they show a grey box.
 
-- [ ] **Filter control: chips reverted to text links.** Bryan is reverting the bordered
+- [x] **DONE — filter control is now text links.** Implemented 2026-09-07. Original: **Filter control: chips reverted to text links.** Bryan is reverting the bordered
       chip treatment in favour of the text-link option (2026-09-07). **This is a code
       change, not only a Figma one** — `/work` currently renders `.chip` with a border,
       padding and a `--color-fg` border on the checked state. Text links need different
@@ -113,7 +117,7 @@ neither chat plans against them:
       text links wrap far more compactly than bordered chips, which is what pushed the
       first project ~700px down at 390px.
 
-- [ ] **Filter chip overflow on mobile.** 8 keywords wrap to 5 rows at 390px, pushing the
+- [x] **RESOLVED — filter overflow.** Text links plus six keywords put the filter at 94px on a 390px viewport with the first project 334px down, against roughly 700px with chips. Original: **Filter chip overflow on mobile.** 8 keywords wrap to 5 rows at 390px, pushing the
       first project roughly 700px down the page — a wall of chips before any work. The
       reference Bryan supplied had a `(More)` affordance for exactly this; it is not yet
       designed. Counts are implemented and live. Code and Deploy will build whatever is

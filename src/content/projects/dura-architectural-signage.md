@@ -3,7 +3,7 @@ title: Dura Architectural Signage
 year: 2025
 completed: "September 2025"
 discipline: "Visual Communications"
-keywords: [Visual Communications]
+keywords: ["Signage"]
 scope: Design intent, shop drawings, and documentation standards at a signage fabricator.
 designQuestion: null
 medium: null
