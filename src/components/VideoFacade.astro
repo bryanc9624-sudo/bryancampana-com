@@ -9,7 +9,6 @@
 // that genuinely requires it.
 import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
-import Placeholder from './Placeholder.astro'
 
 interface Props {
   video: { provider: 'youtube' | 'vimeo'; id: string; title?: string }
@@ -28,8 +27,8 @@ const src = video.provider === 'youtube'
     {poster
       ? <Image src={poster} alt="" widths={[600, 1000, 1600]}
                sizes="(min-width: 64rem) 62vw, 100vw" loading="lazy" decoding="async" class="video__poster" />
-      : <Placeholder aspect="16/9" label={`${label} — video poster placeholder`} />}
-    <span class="video__play" aria-hidden="true">Play</span>
+      : <span class="video__ground" aria-hidden="true"></span>}
+    <span class="video__label" aria-hidden="true">Play</span>
   </button>
 </figure>
 
@@ -59,13 +58,26 @@ const src = video.provider === 'youtube'
     border: 0; background: none; cursor: pointer; color: inherit;
   }
   .video__poster { width: 100%; height: auto; display: block; }
-  .video__play {
+
+  /* Ink, not grey. Grey is this site's placeholder colour, so a grey video block reads
+     as a missing image rather than something you can press. Two of the three video
+     projects have no poster still — the ink block is a deliberate state, not a gap. */
+  .video__ground {
+    display: block; width: 100%; aspect-ratio: 16 / 9;
+    background: var(--color-fg);
+  }
+
+  /* Sans, because this is the label tier. No icon: the design has no icon language
+     anywhere and three videos do not justify inventing one. */
+  .video__label {
     position: absolute; left: var(--space-3); bottom: var(--space-3);
-    padding: var(--space-2) var(--space-3);
-    background: var(--color-bg); color: var(--color-fg);
-    font-size: var(--size-sm);
+    font-family: var(--font-sans);
+    font-size: var(--size-sm); font-weight: var(--weight-medium);
+    line-height: var(--leading-eyebrow);
+    color: var(--color-bg);
     text-transform: uppercase; letter-spacing: var(--tracking-wide);
   }
+  .video__btn:hover .video__label { color: var(--color-accent); }
   .video__btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
 </style>
 

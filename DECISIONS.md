@@ -109,7 +109,7 @@ neither chat plans against them:
       **Code and Deploy: ready to restyle.** Poster question answered: where a still exists it
       replaces the fill; where none exists the ink block stands on its own as a deliberate
       state, so no fallback to the first project photograph is needed.
-- [ ] **Video poster stills.** Related but Bryan's, not Design's: the three video projects
+- [ ] **Video poster stills** *(Bryan's, not blocking — the ink ground is a deliberate state).* Related but Bryan's, not Design's: the three video projects
       have no dedicated poster frame. Currently reusing the first project photograph, and
       two of the three have no photographs at all, so they show a grey box.
 
@@ -134,7 +134,7 @@ neither chat plans against them:
       all seven tokens, contrast verified. **Code and Deploy: the hold is lifted.** Bryan
       resolved both open questions on the bench: paper is **pure white**, not warm; and the
       charge sits on the **violet** side of the ink, not the magenta side.
-- [ ] **Radius.** `radius/sm` and `radius/md` are both `0`. The only place radius is
+- [x] **CLOSED — radius stays 0**, derived from IBM Plex Sans's square corners. See Settled, "Droplet". Original: **Radius.** `radius/sm` and `radius/md` are both `0`. The only place radius is
       visible is `FilterChip`; every other surface is a hairline or a plain block. Bound
       to the tokens, so it is a one-value change.
       *Merged into the chip-overflow item above — counts are now built and live, so the
@@ -157,11 +157,11 @@ Routed here rather than through Bryan, per rule 2.
 
 - [ ] **Merge `claude/website-design-figma-l3milr` into `main`.** Carries
       `docs/figma-to-code-spec.md` and this ledger update. Blocks everything else.
-- [ ] **Discipline source.** The project page has two layouts (standard / photography) and
+- [x] **CLOSED — superseded.** `layout` now selects the project page layout and `discipline` is a label only, so there is no longer a question of deriving layout from content. Original: **Discipline source.** The project page has two layouts (standard / photography) and
       needs one canonical discipline value to switch on. Either `keywords[0]` or a separate
       `discipline` field — do not infer layout from an unordered array. Code and Deploy's
       call; Design and Figma has no preference beyond "it must be deterministic."
-- [ ] **`year: number` vs `completed: string`.** The live site shows *September 2025* for
+- [x] **CLOSED — both exist.** `year` is a numeric sort key, `completed` is the displayed string. Implemented in the schema migration. Original: **`year: number` vs `completed: string`.** The live site shows *September 2025* for
       Dura and *2019* for Oscuro. The current numeric `year` cannot hold the former.
       Widen it, or add `completed` and keep `year` as a sort key.
 - [x] ~~**Adobe Fonts domain coverage.**~~ **RETRACTED by the chat that raised it, 2026-09-07.**
