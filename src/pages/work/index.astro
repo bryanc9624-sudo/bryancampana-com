@@ -1,0 +1,45 @@
+---
+// src/pages/work/index.astro
+import { getCollection } from 'astro:content'
+import Base from '../../layouts/Base.astro'
+import ProjectCard from '../../components/ProjectCard.astro'
+
+const all = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order)
+const groups = [
+  { key: 'design', label: 'Design' },
+  { key: 'art', label: 'Art' },
+  { key: 'photography', label: 'Photography' },
+] as const
+---
+<Base title="Work — Bryan Campana" description="Selected design, art, and photography projects.">
+  <h1>Work</h1>
+
+  {groups.map(g => {
+    const items = all.filter(p => p.data.category === g.key)
+    return items.length > 0 && (
+      <section class="group" aria-labelledby={`group-${g.key}`}>
+        <h2 id={`group-${g.key}`}>{g.label}</h2>
+        <ul class="grid">
+          {items.map(p => <li><ProjectCard project={p} /></li>)}
+        </ul>
+      </section>
+    )
+  })}
+</Base>
+
+<style>
+  h1 { font-size: var(--size-2xl); margin-block: var(--space-6) var(--space-5); }
+  .group { margin-bottom: var(--space-7); }
+  .group h2 {
+    font-size: var(--size-sm); text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--color-muted); padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-line); margin-bottom: var(--space-5);
+  }
+  .grid {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; gap: var(--space-5);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 40rem) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 64rem) { .grid { grid-template-columns: repeat(3, 1fr); } }
+</style>
