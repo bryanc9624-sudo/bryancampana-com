@@ -282,6 +282,68 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — Muted is retuned, and the current nav item gains a weight cue. **Bryan's call. Applied in Figma.**
+
+**Code and Deploy: two changes, at the bottom.**
+
+Bryan: the grey on the disciplines and keyword filters does not fit the system; light is tolerable
+but off, dark should sit much closer to white. His reasoning, worth keeping verbatim in spirit —
+*typography is already creating the hierarchy, so colour should be subtle and let form do the
+heavy lifting.* Agreed, and adopted.
+
+**Correcting the premise, because it changes the fix.** The two modes were not the same grey.
+Light `#7E6F7E` is plum-tinted (r−g = 15). Dark `#A4A4A4` is **pure neutral, r = g = b exactly**.
+Light already belonged to the system; dark never did.
+
+**Why dark could not be fixed by deriving it.** The colour system defines muted as *diluted ink —
+same hue, less of it*. In dark, ink is white, so diluting toward the ground should pick up the
+ground's violet. It does not: white mixed toward `#0F0C0F` lands at r−g = 1, effectively neutral.
+That traces straight back to Bryan's own earlier decision to hold the dark ground's chroma at
+0.006 so a saturated ground would not fight the photography. That decision was right and this is
+its downstream cost: **nothing derived from the dark ground can carry the violet, so dark's muted
+has to be tinted deliberately.** Recorded because the same trap waits for any future dark value.
+
+| | Was | Now | vs ground | Gap to ink | Tint (r−g) |
+|---|---|---|---|---|---|
+| Light | `#7E6F7E` | **`#75617A`** | 4.71 → **5.60:1** | 3.28 → 2.75 | 15 → **20** |
+| Dark | `#A4A4A4` | **`#C9BFCD`** | 7.80 → **10.94:1** | 2.49 → **1.78** | 0 → **10** |
+
+Light gains violet *and* contrast — it was sitting at 4.71, barely over the 4.5 floor, which was
+fragile for a value used on captions and card descriptions. Dark gains a real cast and moves close
+to white, which is what Bryan asked for.
+
+**The two gaps differ on purpose (2.75 light, 1.78 dark).** A dark surround exaggerates lightness
+differences, so equal *perceived* separation needs a smaller measured step in dark. Same shape of
+reasoning as the rule token — state the principle, derive the value — but the principle here is
+perceptual rather than a fixed ratio, so the numbers deliberately do not match across modes.
+
+**The nav needed a second cue before colour could whisper.** `nav a` was muted and
+`nav a[aria-current]` was fg, with **no weight difference** — colour was the only signal. Softening
+muted would have pushed that toward invisible, and "all base text white" would have erased it
+outright: the exact defect the ledger fixed when it noted `aria-current` had no visual treatment.
+
+`FilterLink` already got this right — selected is weight **and** colour, two cues, so state never
+rests on colour alone. The nav is simply where that rule was never applied. New style:
+
+**`Body / Medium`** — Sans Medium 500 at `size/base`, bound to `font/body` and `size/base`. Applied
+to the current item in all six `SiteHeader` variants. **500 rather than FilterLink's 600** because
+the nav sits beside a 600 serif wordmark and should not compete with it. This also fills a real gap
+— Medium previously existed only at 15px (`Eyebrow`) and 13px (`Label`).
+
+**Not changed, and deliberately:** the footer and image captions stay muted. Bryan's "all base text
+white" would flatten the footer to the same voice as body copy, and captions sit under the thing
+they describe and should not compete with it. Raised at the time; no objection.
+
+**The two edits:**
+
+| File | Change |
+|---|---|
+| `tokens.css` | `--color-muted` → `#75617A` light, `#C9BFCD` dark |
+| `SiteHeader.astro` | `nav a[aria-current='page'] { font-weight: var(--weight-medium); }` |
+
+Contrast figures above were computed, not estimated, and both new values clear 4.5:1 comfortably.
+
+
 ### 2026-09-07 — Figma realigned to the rule token. **Design and Figma confirms Code and Deploy's solution.**
 
 Checked `715147d` against the file. **Aligned, and their version is better than the spec I handed
