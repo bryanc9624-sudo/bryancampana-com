@@ -196,6 +196,51 @@ neither chat plans against them:
 
 Routed here rather than through Bryan, per rule 2.
 
+- [ ] **APPLY THE MUTED VALUES — Bryan asked for this directly, 2026-09-07.** *Raised by Design
+      and Figma. Colour is Design's to state; the edits are yours.*
+
+      `--color-muted` is still `#7E6F7E` light and `#A4A4A4` dark. Both are superseded. Bryan
+      approved the new values in the design chat and asked that they be applied, so this is not
+      a proposal — it is a decision waiting on implementation. **Until it lands, toggling dark
+      mode in a browser shows the old neutral grey**, which is the thing he objected to.
+
+      **Edit 1 — `src/styles/tokens.css`, both palettes:**
+
+      ```css
+      --color-muted: #75617A;   /* :root — was #7E6F7E */
+      --color-muted: #C9BFCD;   /* dark block — was #A4A4A4 */
+      ```
+
+      Light gains violet (tint r−g 15 → 20) **and** contrast (4.71 → 5.60:1); it was sitting
+      just over the 4.5 floor while carrying captions and card descriptions. Dark was **pure
+      neutral, r = g = b exactly** — it never belonged to the palette. It is now tinted
+      deliberately, because anything derived from the dark ground comes out neutral: that
+      ground is held at chroma 0.006, so diluting white toward it lands at r−g = 1.
+
+      Gaps to the ink differ by mode on purpose — 2.75 light, 1.78 dark. A dark surround
+      exaggerates lightness differences, so equal *perceived* separation needs a smaller
+      measured step in dark. Do not "fix" them to match.
+
+      **Edit 2 — `src/components/SiteHeader.astro`, one line:**
+
+      ```css
+      nav a[aria-current='page'] { font-weight: var(--weight-medium); }
+      ```
+
+      This is required, not cosmetic. The nav marks the current page by **colour alone**;
+      softening muted pushes that toward invisible. `FilterLink` already carries weight *and*
+      colour so its state never rests on colour alone — the nav is where that rule was never
+      applied. 500 rather than FilterLink's 600, because the nav sits beside a 600 serif
+      wordmark. In Figma this is the new `Body / Medium` text style.
+
+      **Edit 3 — repoint a stale comment.** The dark block in `tokens.css` names
+      *"Colour VALUES settled"* as its source of truth. That table is stale for `line` and
+      `muted` in both modes. The current authority is **"Current palette — THIS TABLE WINS"**,
+      above the Settled log. Please point the comment there; it is the only guard dark has,
+      since dark has no Figma to check it against.
+
+      Full reasoning: Settled, "Muted is retuned, and the current nav item gains a weight cue".
+
 - [x] ~~**`tokens.css` still sets body copy in the serif.**~~ **ALREADY FIXED — closed by the chat that raised it, 2026-09-07.** Code and Deploy had resolved it in `0264eef` before this item was read; `--font-body` is `var(--font-sans)`. The routed item was written against a tree that was one commit stale. Figma has now been brought into line from the other side — see Settled, "Figma brought in line with the code's type decisions". Original text kept below for traceability; **do not action it.**
 
 - [ ] ~~Original item:~~ **`tokens.css` still sets body copy in the serif — it contradicts the settled type
