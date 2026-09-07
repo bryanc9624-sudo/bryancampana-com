@@ -104,11 +104,11 @@ neither chat plans against them:
       to the tokens, so it is a one-value change.
       *Merged into the chip-overflow item above — counts are now built and live, so the
       only part still undesigned is the overflow behaviour.*
-> **Colour and radius are deliberately paused, not forgotten.** Bryan's call, 2026-09-07:
-> hold both until the typeface lands, so they get judged once against the real face rather
-> than twice against Inter. Grey values and corner treatment read differently under a
-> geometric sans than a humanist one. Code and Deploy should keep shipping the current
-> placeholder values and **not** substitute anything — rule 4 applies.
+> **Colour and radius are UNBLOCKED as of 2026-09-07.** They were held until the typeface
+> landed so they would be judged once against the real face rather than twice against Inter.
+> IBM Plex Sans is now in, so that condition is met and both are live design work again.
+> Until they are decided, Code and Deploy should still ship the current placeholder values
+> and **not** substitute anything — rule 4 still applies.
 
 ### Waiting on Bryan, not on either chat
 
@@ -129,7 +129,13 @@ Routed here rather than through Bryan, per rule 2.
 - [ ] **`year: number` vs `completed: string`.** The live site shows *September 2025* for
       Dura and *2019* for Oscuro. The current numeric `year` cannot hold the former.
       Widen it, or add `completed` and keep `year` as a sort key.
-- [ ] **Adobe Fonts domain coverage.** *Raised by Design and Figma 2026-09-07; hosting and
+- [x] ~~**Adobe Fonts domain coverage.**~~ **RETRACTED by the chat that raised it, 2026-09-07.**
+      Dead with the move to IBM Plex Sans — a Google font has no allowed-domains list, so
+      there is nothing to configure and no silent-failure risk on localhost or either
+      domain. Struck rather than deleted only because it is not this chat's section to
+      tidy. Original text kept below for traceability; **do not action it.**
+
+      ~~*Raised by Design and Figma 2026-09-07; hosting and
       domains are Code and Deploy's per the ownership table.* The web project
       (`https://use.typekit.net/udc5guh.css`, family `new-frank`) currently covers **one
       domain** — Bryan reports the UI would not accept a second. Three are needed over the
@@ -163,6 +169,31 @@ when something needs the other chats' attention; a clean audit is not recorded h
 ---
 
 ## Settled
+
+### 2026-09-07 — Figma file cleaned: no archives, no versioned duplicates. **Bryan's call.**
+
+IBM Plex Sans is the typeface going forward, so everything from before it was outdated
+weight rather than history worth keeping. Deleted:
+
+- The three original desktop frames and two original mobile frames kept as "before"
+  references. **The before/after comparison is over** — there is now one version of each page.
+- The archived ProjectCard A/B/C explorations and the filter-bar explorations.
+- Four validation scaffolding frames (grid checks, header/footer check, eyebrow/FactPair
+  check). The real pages serve that purpose now.
+
+`04 — Components` contains the seven components and nothing else. Version suffixes are gone
+from frame names — no more `(v2)`, `(v3, filterable)`. The layout suffixes on project pages
+(`featured`, `light, no body`, `photography`) stay, because those name real variants.
+
+**Every page is now 100% IBM Plex Sans**, Foundations included — its Colour, Spacing and
+documentation frames were still Inter and have been converted, mapping Inter's spaced
+`Semi Bold` onto Plex's `SemiBold`.
+
+**The "How to use this file" doc was rewritten**, because it had become actively wrong: it
+still told the reader to activate an Adobe Font, claimed `font/family` was "currently Inter",
+and stated that Figma Starter allows only one variable mode. It now describes IBM Plex Sans,
+the weights in use, the SemiBold-without-a-space trap, and the Desktop/Mobile breakpoint
+modes. A documentation page that lies is worse than none.
 
 ### 2026-09-07 — Typeface swap executed in Figma. **Done, verified.**
 
