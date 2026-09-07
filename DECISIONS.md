@@ -282,6 +282,38 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 ## Settled
 
+### 2026-09-07 — Hosting stays on Netlify. **Bryan's call. Cloudflare question closed.**
+
+Cloudflare Pages, GitHub Pages, GoDaddy shared hosting and Node.js app hosting were all
+priced and measured against this site. Bryan's decision: **stay where we are.** It works, and
+the credit budget is manageable as long as deploys stay deliberate.
+
+The numbers behind that, so nobody re-derives them: Netlify Free is **300 credits/month**,
+**15 per production deploy**, 20 credits/GB bandwidth, 2 credits per 10k requests. A visitor
+who reads five pages costs about 1MB. At four deploys a month that leaves headroom for
+roughly 12,000 full visits — traffic will never be the constraint. **Deploys are**, and the
+hard ceiling is 20 a month with zero traffic. Running out pauses the site rather than
+throttling it, which is why `netlify.toml`'s `[deploy]` guard matters.
+
+**Do not reopen this** without a new reason. The alternatives were researched properly and
+the analysis is in this chat's history; the outcome is Bryan's, not a default.
+
+Still true regardless of host: DNS for bryancampana.com is served by Cargo's nameservers, so
+nameservers must move before Cargo is cancelled. The Zoho MX/TXT records are not being
+carried over — see the mailbox entry.
+
+### 2026-09-07 — `/terms` and `/privacy` are approved as they stand. **Bryan's call.**
+
+Recorded late. Bryan approved the trimmed legal pages verbally — *"Let's cross off the terms
+and privacy wording off the list. This is all approved."* — but it was never written down,
+so `scripts/content-todos.mjs` kept reporting it as outstanding and it would have been raised
+again. The hardcoded line is removed from the reporter.
+
+What they say now is what ships: the Cargo-era clauses about a contact form, Stripe payments,
+order fulfilment and analytics were deleted because none of those exist on this site. Nothing
+was written to replace them.
+
+
 ### 2026-09-07 — No synthesised faces, ever. **Bryan's rule.**
 
 His words: he has *"no intention or desire or need to force a font to display an italic. If

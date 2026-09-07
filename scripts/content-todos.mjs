@@ -47,9 +47,6 @@ const lines = [
   '',
   '- [ ] Real images — ' + withImages.length + ' of ' + slugs.length + ' projects have photographs.',
   missing.length ? '      Missing: ' + missing.join(', ') : '',
-  '- [ ] Review `/terms` and `/privacy` — clauses about a contact form, payments and',
-  '      analytics were removed because this site has none. Confirm what remains is',
-  '      what you want published.',
   '',
 ].filter(l => l !== '')
 

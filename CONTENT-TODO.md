@@ -6,8 +6,5 @@ _No placeholder markers left in source._
   A project shows one only when `designQuestion` is set; leave it `null` and nothing
   renders. Draft in `DESIGN-QUESTIONS.md`, then set the value.
 ## Still needed
-- [ ] Real images — 9 of 14 projects have photographs.
-      Missing: memory-strip, oscuro, photopolymer-letterpress, the-city-that-slept, transmute
-- [ ] Review `/terms` and `/privacy` — clauses about a contact form, payments and
-      analytics were removed because this site has none. Confirm what remains is
-      what you want published.
+- [ ] Real images — 11 of 14 projects have photographs.
+      Missing: memory-strip, the-city-that-slept, transmute
