@@ -79,6 +79,36 @@ neither chat plans against them:
 
 ## Open decisions — Design and Figma owns these
 
+- [ ] **The keyword set on the live site does not match the consolidation.** *Raised by
+      Code and Deploy 2026-09-07 from the built page; the values are Design's to decide.*
+
+      Settled log says "Keywords consolidated from eight to six". The site currently renders
+      **seven**, and two of them are not the agreed six:
+
+      | On the site now | Projects | In the agreed six? |
+      |---|---|---|
+      | Photography | 4 | yes |
+      | Identity | 4 | yes |
+      | New Media | 3 | yes |
+      | **Art** | 3 | **no — the agreed name is "Fine Art"** |
+      | Signage | 2 | yes |
+      | **Visual Communications** | 1 | **no — not in the set at all** |
+      | Digital | 1 | yes |
+
+      Two separate problems:
+
+      1. **A naming mismatch.** Content says `Art`; the decision says `Fine Art`. One of them
+         is wrong and Design says which.
+      2. **`Visual Communications` is on exactly one project** (Dura). A filter link that
+         matches one project out of fourteen is the exact granularity problem the
+         consolidation was meant to solve — see Settled, "the keyword set may be too granular
+         for 14 projects". `Digital` is also on one.
+
+      Code and Deploy will make the content edits once Design names the final set. Nothing
+      has been changed. **No code change is needed for the filter itself** — the links and
+      their counts are generated from the content, so editing the `keywords` lines in
+      `src/content/projects/*.md` is the whole job.
+
 - [x] ~~**Credit line on the project card.**~~ **SCRAPPED by Bryan 2026-09-07.** They are not his clients — the relationship is an employer's client, a venue, a studio or a building in most cases, and calling any of them a client would misrepresent the work. No schema field, no card change, nothing to draw. The analysis below is kept only so the question is not raised a third time.
 
 - [ ] ~~Original item:~~
