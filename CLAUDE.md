@@ -104,11 +104,14 @@ four chats that could not see each other; with one chat that job is gone, and th
 **Sync Figma on purpose, for a reason** — Bryan is about to draw in it, look at it,
 or show it — never continuously and never out of duty. Expect it to be behind.
 
-**The exception worth knowing:** Figma stays authoritative for anything it expresses
-*completely and natively*, which in practice means the type styles. It cannot express
-dark mode, layout derived from content, full-bleed chrome, the responsive continuum or
-generated counts — six things `DF-004` lists — and being authoritative for those is
-what made it wrong before.
+**Nothing in Figma rules the code, type styles included.** A sync pipeline for type was
+considered and dropped: Figma-to-code token tooling is real and standard, but it exists
+to carry a decision between a designer and an engineer who are different people, which
+is the problem this project removed. Type is simply the *easiest* thing to copy across
+by hand, because Figma holds a text style completely and loses nothing.
+
+**The habit that prevents drift: when code and Figma diverge, say which one is stale in
+the same message.** The failure is never the gap, it is a gap nobody mentioned.
 
 Nothing in the build depends on live Figma access. It was a day-one non-goal.
 

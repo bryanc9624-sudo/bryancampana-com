@@ -226,10 +226,11 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 
 ## Figma
 
-**A reference, not the spec — `CD-011`.** The code is the source of truth; where the two
-disagree the site is right and Figma is behind, which is expected rather than a defect. Figma stays
-authoritative only where it is *expressive*: the text styles, completely and natively. Not dark
-mode, derived layout, full-bleed chrome, the responsive continuum or generated counts.
+**A reference, not the spec — `CD-011`, corrected by `CD-012`.** The code is the source of truth;
+where the two disagree the site is right and Figma is behind, which is expected rather than a
+defect. **Nothing in Figma rules the code, type included.** Type is only the easiest thing to copy
+across by hand, because a text style is held completely. **When the two diverge, say which is
+stale in the same message** — that habit is the whole mechanism.
 
 **Node ids, so nothing has to be hunted for:** `SiteHeader` `16:49` · `SiteFooter` `16:50` ·
 `ProjectCard` `15:23` · `Eyebrow` `17:50` · `FactPair` `17:52` · `FilterLink` `29:62` ·
@@ -570,7 +571,7 @@ current palette).
 
 # Decision index
 
-83 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+84 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
@@ -578,7 +579,8 @@ history, never to decide what to do next.** Full text in
 |---|---|---|
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
 | [`DF-007`](docs/decisions-archive.md#df-007) | Handover: what this chat knew that no file held | |
-| [`CD-011`](docs/decisions-archive.md#cd-011) | Figma is a reference, not the spec; code is the source of truth. | |
+| [`CD-012`](docs/decisions-archive.md#cd-012) | No type-sync pipeline; nothing in Figma rules the code. Bryan's call. | |
+| [`CD-011`](docs/decisions-archive.md#cd-011) | Figma is a reference, not the spec; code is the source of truth. ⚠ | — Partly superseded |
 | [`CD-010`](docs/decisions-archive.md#cd-010) | Wordmark steps up; underlines step away; "Featured work" loses a word. | |
 | [`CD-009`](docs/decisions-archive.md#cd-009) | Every project dated to the month; three years were wrong. | |
 | [`CD-008`](docs/decisions-archive.md#cd-008) | Month refines the sort; month and completed guarded by a test. | |

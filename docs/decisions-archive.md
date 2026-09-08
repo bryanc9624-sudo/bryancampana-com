@@ -1,7 +1,54 @@
-<a id="cd-011"></a>
-### CD-011 · 2026-09-08 — Figma is a reference, not the spec. The code is the source of truth. **Bryan's call.**
+<a id="cd-012"></a>
+### CD-012 · 2026-09-08 — No type-sync pipeline. Nothing in Figma rules the code. **Bryan's call.**
 
 **Status:** Accepted
+
+`CD-011` demoted Figma to a reference but carved out an exception: the type styles would stay
+authoritative, because Figma expresses them completely. A `sync:type` script was proposed to make
+that real. **Bryan asked whether that was an established practice or something being invented
+because he had asked for it.** Checked rather than asserted, and the answer cut both ways.
+
+**The category is real.** Figma → design tokens → code is standard practice for design-system
+teams, with a named stack: Tokens Studio for the Figma side and git sync, Style Dictionary for
+transforming JSON into CSS or platform formats, W3C DTCG as the interchange format. Described in
+2026 as having moved from experimental to standard.
+
+**And the same sources say not to build it at this size.** The guidance is explicit that a full
+pipeline is overkill below a certain scale, that the answer for a small project is Figma variables
+plus CSS custom properties, and that over-building a system is how solo designers burn out. This
+project already has the three things recommended instead: a component library in Figma,
+`DECISIONS.md`, and `tokens.css`.
+
+**The decisive argument is what the tooling is for.** A token pipeline carries a decision between
+a designer and an engineer who are different people. That is precisely the coordination problem
+`CD-011` removed six hours earlier. Building it would reintroduce that cost one layer down.
+
+**Recorded because the reasoning was backwards, not just the conclusion.** Bryan asked whether
+Figma could rule the type styles; this chat answered yes, wrote that claim into the Figma file,
+and then went looking for a mechanism to make its own claim true. The question that caught it —
+*is this a practice other people use, or are we inventing it because I asked?* — is worth reusing.
+A practice can be real, well documented and widely adopted and still be wrong here, and the
+fastest test is to check **who the tool was built for** rather than to evaluate the tool.
+
+**What replaces it.** Nothing automatic. Change the Figma file, say so, and it is applied to the
+code by hand — which took about a minute the last time it happened. Type stays the easiest case
+because a text style is held completely and loses nothing in translation, but it does not sync
+itself.
+
+**The habit that actually prevents drift, and the real failure today:** when the code and Figma
+diverge, **say which one is stale in the same message**. Today's eight sync incidents were not
+caused by a missing pipeline. They were caused by changes landing in one place with nobody saying
+the other was now behind.
+
+The Figma file's status panel and `CLAUDE.md` are corrected; both had already been written to
+claim the specimen was authoritative.
+
+<a id="cd-011"></a>
+### CD-011 · 2026-09-08 — Figma is a reference, not the spec. The code is the source of truth. **Bryan's call.** ⚠
+
+**Status:** Partly superseded by [`CD-012`](#cd-012) — the demotion stands in full. **The one
+carve-out it made, that the type specimen stays authoritative, was withdrawn.** Nothing in Figma
+rules the code. Read the rest as current.
 
 Bryan noticed the last several changes went straight to code without touching Figma and asked
 whether that was correct, or an artifact of the four-chat era. **It was an artifact, and the
