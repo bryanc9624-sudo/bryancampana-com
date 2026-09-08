@@ -170,9 +170,9 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
   is not an anchor. Nothing static carries the charge; a permanent accent makes it decorative and
   it stops signalling. `--color-focus` is the same value but a different token for a different
   state — pointers versus keyboards — and the two must stay distinguishable.
-- **The keyword set is full at seven links.** 814px against ~122px for an average keyword; an
-  eighth goes to four mobile rows. Renaming inside 14 characters is free. **The count is part of
-  the link** — `ART` grew 10px when its count reached double digits, with no character changing.
+- **The count is part of the link's width** — `ART` grew 10px when its count reached double
+  digits, with no character changing. This is why a filter row measurement goes stale on its own:
+  publish a project and a label can widen without anyone editing a string.
 - **The count is `--weight-regular`, not Medium** — `CD-001`. It annotates the label rather
   than belonging to it, and every property on that element is chosen to keep it inside the 26px
   row the label sets, because the filter hairline sits on that row. Figma's node is to be
@@ -231,7 +231,7 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
   `month` sorts last within its year. **`month` sorts, `completed` renders, and a test asserts they
   agree.** `CD-007`, `CD-008`.
 - **`layout` selects the project page layout — `discipline` does not**, and never has; the field
-  is a label. `keywords` is an unordered set. `year` sorts,
+  is a label and the filter vocabulary. `year` sorts,
   `completed` renders. `columns` overrides the photography grid, else it is derived from image
   count (≤2 → one column, 4 → two-up, otherwise three-up). `cover.<ext>` is a card-only image.
 - **Slugs carry no `-1` suffix.** Three did, out of the Cargo export; they are renamed with `301`
@@ -314,8 +314,12 @@ spacing, sizes, radii; which elements exist on a page and in what order.
   `12:2` Components.
 - Professional. **One collection, modes `Desktop` / `Mobile` — a breakpoint axis, not a theme.**
   Dark mode cannot live in Figma; the palette table above owns dark and has no second check.
-- **`get_metadata`'s page listing is wrong** — it reports one page. Use a read-only `use_figma`
-  running `figma.root.children`. Full detail in `docs/retired/design-chat-handoff.md`.
+- **`get_metadata`'s page enumeration is wrong, and wrong *stably*** — it reports one page
+  however many exist, and does not change when Bryan switches page, selects a node or reopens the
+  file. **Node-addressed `get_metadata` calls are fine; only the enumeration lies.** The
+  authoritative read is a read-only `use_figma` running
+  `figma.root.children.map(p => ({ id: p.id, name: p.name, children: p.children.length }))`,
+  which executes against the Plugin API and sees the real document tree.
 - **For photography galleries the code is the source of truth, not Figma.** Figma draws two-up,
   which is now only the four-image case. Do not "correct" the code to match the drawing.
 
@@ -355,7 +359,7 @@ Decided *against*, with the reason. Re-raising these costs someone a redo of rej
 | Year on the card | Read as a table column in a layout with no other columns |
 | Rounded corners on cards | Architectural photography fights a rounded frame. The "droplet" motif is reserved for a real button if one ever appears |
 | Previous/next project nav | Its default direction walked readers from strong recent work toward older student work |
-| "More work" control | At 14 projects the keyword filter already does this, better |
+| "More work" control | At 14 projects the discipline filter already does this, better |
 | A non-zero radius | Measured against the typeface; Plex has square corners throughout |
 | Dark mode in Figma | Costed and rejected — 74 unbound fills, a second copy of the palette, and you can already see dark on the built site |
 

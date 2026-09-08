@@ -136,7 +136,7 @@ folder name must match the `.md` filename.
 |---|---|
 | Long edge | 2400px |
 | Format | JPEG, quality 85–90 (PNG for flat graphic work) |
-| Colour profile | **sRGB** — not Adobe RGB. Wrong profile renders dull and shifted. |
+| Colour profile | **sRGB** — not Adobe RGB. Wrong profile renders dull and shifted. Screen captures carry your monitor's profile; `sips --matchTo` converts them. |
 | Metadata | strip it |
 
 Do not compress for the web. The build produces WebP at several sizes and serves each

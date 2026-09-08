@@ -90,6 +90,10 @@ card-and-poster only and is excluded from the gallery.
 - **Dark mode is not in Figma** and cannot be — the two variable modes are
   Desktop/Mobile. The dark palette lives in `DECISIONS.md`'s colour table and in
   `tokens.css`, and nothing else checks it.
+- **The photography grid's `sizes` and its eager/lazy cutoff derive from the same column
+  count the layout does** — `cols`, then `wide`/`mid`, then `loading={i < cols ? 'eager' : 'lazy'}`
+  in `ProjectPhotography.astro`. Declaring any of the three by hand is the bug: a stale `sizes`
+  costs bandwidth on every visit while the page looks perfectly fine.
 - **`src/lib/projects.ts` holds the single visibility rule.** Index, landing and
   route generator all call it. Keep it that way.
 
