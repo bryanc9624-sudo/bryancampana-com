@@ -199,8 +199,16 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
   than belonging to it, and every property on that element is chosen to keep it inside the 26px
   row the label sets, because the filter hairline sits on that row. Figma's node is to be
   rebound from `Label` to `Body / Small`.
-- **Every state carries two cues — weight *and* colour — never colour alone.** FilterLink selected
-  is 600 + `--color-fg`; the current nav item is `Body / Medium` 500 + `--color-fg`.
+- **Every state carries two cues — never colour alone.** The current nav item is `Body / Medium`
+  500 + `--color-fg`. The selected filter is `Eyebrow / Selected` — Bold **plus an underline** —
+  because both filter states are ink, so weight alone would be one cue.
+- **`--color-accent` is HOVER ONLY.** It marks a link under the pointer and nothing else. It is
+  not a resting state, not a selected state, and not a label colour. `--color-focus` shares its
+  value but is a different token for a different state and stays — hover is for pointers, focus
+  is for keyboards, and the two must remain distinguishable.
+- **The keyword filter is the Eyebrow tier**: uppercase, 15px, 8% tracking. **Label and count are
+  the same size and weight and are separated by colour alone** — label `--color-fg`, count
+  `--color-muted`. Not by size or a raised position, which is what they used before.
 - **VideoFacade's ground is `--color-fg` (ink), not grey** — grey is this site's placeholder
   colour, so a grey video block reads as a missing image rather than something pressable.
 
@@ -381,6 +389,65 @@ Bryan's, not this chat's: the 14 design questions.
 
 Routed here rather than through Bryan, per rule 2.
 
+- [ ] **The violet is on four static things and should be on none of them. `DF-005`.**
+      *Raised by Design and Figma 2026-09-07. Three of the four are drift against Figma, not a
+      new decision — Figma has said `muted` all along.*
+
+      `--color-accent` is **hover only**. The settled colour system has always said so — *"drawn
+      charge"* at rest, *"full charge"* on hover — and the code has it on four resting elements
+      and one hover.
+
+      | File | Now | Should be |
+      |---|---|---|
+      | `ProjectCard.astro:69` `.card__keyword` | `--color-accent` | `--color-muted` |
+      | `ProjectStandard.astro:91` | `--color-accent` | `--color-muted` |
+      | `ProjectPhotography.astro:114` | `--color-accent` | `--color-muted` |
+      | `work/index.astro:88,91` selected filter + count | `--color-accent` | see below |
+
+      The card keyword is the loud one — it renders violet **fourteen times on `/work`** and four
+      more on the landing page. That is what Bryan was reacting to.
+
+      **Add hover instead**, which currently exists only on `VideoFacade`: a filter label and any
+      inline text link take `--color-accent` on `:hover`. **`--color-focus` does not change** —
+      same value, different token, different state. Hover is for pointers and focus is for
+      keyboards, and the settled system requires them to stay distinguishable.
+
+- [ ] **Restyle the keyword filter to the eyebrow tier. `DF-005`.** *Design and Figma; drawn on
+      both work-index frames.*
+
+      Label and count now share one tier and are separated by **colour alone**:
+
+      ```css
+      .filterlink {
+        font-size: var(--size-sm); font-weight: var(--weight-semibold);
+        text-transform: uppercase; letter-spacing: var(--tracking-wide);
+        color: var(--color-fg);
+      }
+      .filterlink__count {           /* same size and weight — only the colour differs */
+        margin-left: 6px; font-size: inherit; font-weight: inherit;
+        color: var(--color-muted);
+      }
+      .filter input:checked + .filterlink {
+        font-weight: var(--weight-bold); text-decoration: underline;
+        color: var(--color-fg);      /* NOT accent */
+      }
+      .filterlink:hover { color: var(--color-accent); }
+      ```
+
+      **`--weight-bold: 700` is needed** and `tokens.css` stops at semibold. No font work: Sans
+      is the variable file spanning `100 700`.
+
+      **Why selected gains an underline.** Both states are ink now, so weight alone would be a
+      single cue. Underline is the second, and it is the device the colour system already
+      reserves for text links.
+
+      **Drop `line-height: 0` and the baseline offset on the count** — it is the same size as the
+      label now, so it cannot grow the line box and needs no protection.
+
+      **Measured, so the row is known-good:** 696px → 813px, +17%. One line on desktop, three rows
+      at 390px, unchanged. Headroom fell from ~197px to 80px, so **the keyword set is now full at
+      seven links** — `docs/copy-constraints.md` is updated.
+
 - [x] **DONE — `CD-001`.** `.eyebrow` is SemiBold and is now the single definition of that type;
       `.eyebrow--section` adds the hairline, and `about.astro` declares no eyebrow type of its own.
       Original: **`.eyebrow` is still Medium; it should be SemiBold.** *Raised by Design and Figma
@@ -498,6 +565,7 @@ history, never to decide what to do next.** Full text in
 | ID | Decision | Status |
 |---|---|---|
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
+| [`DF-005`](docs/decisions-archive.md#df-005) | Filter takes the eyebrow tier; the violet becomes hover-only | |
 | [`DF-004`](docs/decisions-archive.md#df-004) | Figma is build-ready; where it is 1:1 with code and where it is not | |
 | [`DF-003`](docs/decisions-archive.md#df-003) | One eyebrow, two contexts — the type is implemented twice | |
 | [`DF-002`](docs/decisions-archive.md#df-002) | Eyebrows are section headings only; eyebrow steps to SemiBold | |

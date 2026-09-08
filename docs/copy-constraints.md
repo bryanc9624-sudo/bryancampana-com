@@ -17,7 +17,7 @@ styles at the real container widths, in Figma, on 2026-09-07. Method is at the b
 | What | Limit | Why |
 |---|---|---|
 | **Keyword label** | **≤ 14 characters** | Longer labels wrap the mobile filter |
-| **Keyword set** | **≤ 7 filter links** (six keywords + `All`) | An eighth needs a re-measure |
+| **Keyword set** | **7 filter links — the set is full** | Adding an eighth goes to four rows |
 | **Card scope line** | **≤ 100 characters** | The card is drawn for two lines; three breaks grid rhythm |
 | **Project title** | **≤ 30 characters** for one line | Longer wraps on both card widths |
 
@@ -47,12 +47,17 @@ around; it can only be shortened.
 | `Digital` | 49px |
 | `All` | 21px |
 
-The whole row is about **750px**, which is one line on desktop and **three rows at 390px**.
-Three rows is the accepted ceiling. There is roughly **120px of headroom** — one more
-average-length keyword, not two.
+**Re-measured 2026-09-07** after the filter moved to the uppercase eyebrow tier (`DF-005`).
+Uppercase at 15px with 8% tracking costs more per character than sentence case at 17px, so the
+row grew **17%: 696px → 813px**. Still one line on desktop, still three rows at 390px — but
+usable space across three rows is about 893px, so headroom fell from ~197px to **80px**.
 
-**So: adding a seventh keyword is fine if it is short. Adding an eighth needs Design to
-re-measure first.** Renaming is free as long as the new name is ≤ 14 characters.
+An average keyword plus its count and gaps costs about **122px**. **So the set is full at seven
+links.** Renaming inside 14 characters is still free; **adding an eighth keyword pushes the
+filter to four rows and needs Design to re-measure first.**
+
+Measured per label, uppercase: `PHOTOGRAPHY` 123px · `NEW MEDIA` 96px · `IDENTITY` 78px ·
+`FINE ART` 76px · `SIGNAGE` 74px · `DIGITAL` 67px · `ALL` 29px.
 
 ---
 

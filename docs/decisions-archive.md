@@ -17,6 +17,74 @@ IDs are chronological: `D-001` is the oldest.
 
 ---
 
+<a id="df-005"></a>
+### DF-005 · 2026-09-07 — The keyword filter takes the eyebrow tier. The violet becomes hover-only. **Bryan's call.**
+
+**Status:** Accepted
+
+**1. The filter is the Eyebrow tier.** Uppercase, 15px, 8% tracking — matching the section
+eyebrows rather than sitting in body type. Bryan asked for the labels to mirror the eyebrows, and
+for the count to stop being distinguished by size and a raised position.
+
+**Label and count are now the same size and weight, separated by colour alone** — label
+`--color-fg`, count `--color-muted`.
+
+**There is no colour lighter than `muted` in the palette**, which shaped this. The only lighter
+value is `placeholder` `#F0F0F0`, about 1.2:1 on white — invisible as text. So rather than invent
+a tier, the two that exist do the work: ink label, muted count. That makes the filter a row of
+ink eyebrows, which is a real shift in the page's weight and is what "match the eyebrow" implies
+now that the eyebrow is ink.
+
+**2. `--color-accent` is hover only — this restores the settled system rather than changing it.**
+
+The colour system entry has always said the charge appears on hover: *"drawn charge — link at
+rest: ink, weight 500, underline"* and *"full charge — hover: charge colour"*. The code had it
+the other way round — on **four resting elements** and one hover:
+
+| Where | Rendered | Figma said |
+|---|---|---|
+| `ProjectCard` keyword | accent | `color/muted` |
+| `ProjectStandard` label | accent | muted |
+| `ProjectPhotography` label | accent | muted |
+| Selected filter label and count | accent | accent |
+
+**Three of the four are pure drift** — Figma has said muted all along, so no design decision was
+needed to correct them. The card keyword is what made it loud: violet fourteen times on `/work`
+and four more on the landing page.
+
+**The fourth was a genuine contradiction between two settled entries.** The `FilterLink` entry
+said *"the selected label takes `--color-accent` in place of `--color-fg`"*, which the colour
+system's hover rule forbids. Bryan resolved it in favour of the colour system. A persistent
+accent on a static control makes the charge decorative, and once it is decorative it stops
+signalling anything.
+
+**`--color-focus` keeps the value and does not change.** Same colour, different token, different
+state. Hover is for pointers, focus is for keyboards, and the settled system requires them to
+stay visually distinct from one another.
+
+**3. The selected state needed a replacement cue.** With both states ink and both at the eyebrow
+weight, colour and weight could not both carry it. New style **`Eyebrow / Selected`** — Bold plus
+an **underline**. Two cues, no accent, and underline is the device the colour system already
+reserves for text links.
+
+Named for the role rather than `Eyebrow / Strong` because the underline is part of it, not just
+the weight.
+
+**Measured before drawing, and the numbers moved a constraint.** Uppercase at 15px with 8%
+tracking costs more per character than sentence case at 17px: the row grew **17%, 696px → 813px**.
+Still one desktop line, still three mobile rows — but headroom across those rows fell from ~197px
+to **80px**, and an average keyword costs ~122px. **The keyword set is now full at seven links.**
+Renaming inside 14 characters stays free; adding an eighth goes to four rows.
+`docs/copy-constraints.md` updated.
+
+**A Figma mechanic worth recording, since it cost two failed attempts.** `textDecoration` is a
+property of a Figma **text style**, not just of a node. Setting it on a node that has a style
+applied appears to work and then resolves back from the style on the next read — which looked
+exactly like cross-variant propagation and was not. The underline had to go into
+`Eyebrow / Selected` itself. **Read state back after a write; the return value of the write is
+not evidence.**
+
+
 <a id="cd-001"></a>
 ### CD-001 · 2026-09-07 — The filter count stays Regular. One eyebrow, one definition. **Code and Deploy.**
 
