@@ -36,12 +36,13 @@ const path = Astro.url.pathname
      the nav and must not step up. Weight, not size, is what separates it. */
   .site-header__name {
     font-family: var(--font-display); font-weight: var(--weight-semibold);
-    text-decoration: none;
   }
   ul { display: flex; gap: var(--space-4); list-style: none; margin: 0; padding: 0; }
 
   /* Spec §8: aria-current was set but had no visual treatment. Figma shows the
-     active nav item at --color-fg and inactive at --color-muted. */
+     active nav item at --color-fg and inactive at --color-muted. Undecorated via the base
+     `a` rule — the nav's states are colour and weight, and hover is the charge; an
+     underline was never one of them. */
   nav a { color: var(--color-muted); }
   /* Weight as well as colour. Required, not cosmetic: softening --color-muted pushes a
      colour-only cue toward invisible, and this is the one place that rule was never

@@ -118,6 +118,10 @@ mode Figma cannot show.
   `--page-pad`. They are *not* `.page` — that was the bug where chrome sat 80px narrower per side
   than the work it framed.
 - **No rule on the header or footer.** Chrome is marked by position and space.
+- **Links carry no decoration at rest; an underline means a STATE.** Two exist: a card title on
+  hover, and the selected filter link. Set once as `a { text-decoration: none }` in `base.css` —
+  never repeat it per component. No inline prose link exists yet; one would need its own
+  decision. `CD-004`.
 - **One rule type, one meaning: a break within content.** Three places only — under the eyebrow,
   above the facts block, under the work-index filter.
 - **Rules reference `--color-line` and nothing else.** Never bind a rule to `--color-fg`: that
@@ -542,7 +546,7 @@ current palette).
 
 # Decision index
 
-75 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+76 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
@@ -550,6 +554,7 @@ history, never to decide what to do next.** Full text in
 |---|---|---|
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
 | [`DF-007`](docs/decisions-archive.md#df-007) | Handover: what this chat knew that no file held | |
+| [`CD-004`](docs/decisions-archive.md#cd-004) | Links are undecorated; an underline is a state. Bryan's call. | |
 | [`CD-003`](docs/decisions-archive.md#cd-003) | Consolidated to one chat; DF-005 finished, DF-006 built, disciplines settled. | |
 | [`DF-006`](docs/decisions-archive.md#df-006) | The PLAY label moves below the image | |
 | [`CD-002`](docs/decisions-archive.md#cd-002) | Filter is the eyebrow tier; the charge is hover-only. Code and Deploy. | |

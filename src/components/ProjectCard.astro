@@ -59,7 +59,7 @@ const cover = coverFor(project.id, d.cover)
     object-position: center;
   }
   .card__title { font-size: var(--size-lg); margin-top: var(--space-2); }
-  .card__title a { text-decoration: none; }
+  /* Undecorated at rest via the base `a` rule; the underline here is a hover STATE. */
   .card__title a:hover { text-decoration: underline; }
   .card__scope { margin: 0; }
   /* Dev only. Never present in a production build, because a draft has no page there. */

@@ -64,6 +64,41 @@ Bryan's alone. The two `discipline` strings from `DF-001` — `Art` and `Visual 
 which need Content and Copy. And the two items in Code and Deploy's list: the accent corrections
 and the filter restyle.
 
+<a id="cd-004"></a>
+### CD-004 · 2026-09-08 — Links are undecorated; an underline is a state. **Bryan's call.**
+
+**Status:** Accepted
+
+Bryan spotted the cause exactly: `.site-header__name` set `text-decoration: none` and `nav a`
+never did, so the nav was rendering **the browser default rather than anything anyone chose**.
+The footer and the About contact block were the same.
+
+**The rule: a link carries no decoration at rest. An underline means a state.** Two survive —
+a card title on hover, and the selected filter link, where `DF-005` chose it deliberately as the
+second cue once the accent came off. Every Figma frame draws every resting link undecorated:
+all six `SiteHeader` variants, both footer links, the contact block.
+
+**One rule, not four.** `a { text-decoration: none }` in `base.css`, and the three local copies
+deleted — the wordmark's, the nav's, and `.card__title a`'s. Three components each declaring the
+same thing is the duplication `DF-003` named, and it is what let the nav drift from the wordmark
+in the first place: the two were meant to match and nothing connected them.
+
+**Checked before applying it globally, because a global decoration rule is the kind that catches
+something it should not.** There is no inline prose link anywhere on the site — zero anchors in
+any project body, no markdown links in any content file. Every anchor is chrome, a card title or
+a back link. So nothing lost an underline it wanted. **If a prose link ever appears it needs its
+own decision**; the colour system's *"link at rest: ink, weight 500, underline"* was written for
+exactly that case and would apply there, not here.
+
+Verified in the built page: header nav, wordmark, footer and all three contact links compute
+`none`; the current nav item still reads at 15.42:1 in ink at weight 500 against muted 400, so
+removing the underline cost it nothing — that state never rested on the underline.
+
+**Also fixed, tooling rather than design:** `.claude/launch.json` had `autoPort` set, a workaround
+from when three chats shared this folder and contended for a port. Astro does not read the
+harness's assigned port, so it kept listening on 4321 while the preview waited on 3000 — every
+server reported `neverBecameReady` and every preview tab opened dead. Pinned back to 4321.
+
 <a id="cd-003"></a>
 ### CD-003 · 2026-09-07 — Consolidated to one chat. DF-005 finished, DF-006 built, disciplines settled. **Code and Deploy.**
 

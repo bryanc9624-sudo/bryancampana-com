@@ -43,7 +43,16 @@ h1, h2, h3 {
 body { font-weight: var(--weight-regular); }
 p { margin: 0 0 var(--space-3); max-width: var(--measure-prose); }
 img { max-width: 100%; height: auto; display: block; }
-a { color: inherit; }
+/* Links are undecorated by default, and an underline is a STATE rather than a resting
+   treatment — a card title on hover, the selected filter link. Every Figma frame draws
+   every link this way; the underlines that were on the header nav, the footer and the
+   About contact block were the browser default showing through, not a choice.
+   One rule rather than one per component: three copies of `text-decoration: none` is the
+   duplication DF-003 warned about, and there is nothing here to keep in sync by hand.
+   No inline prose link exists on the site today — zero anchors in any project body — so
+   nothing is losing an underline it wanted. If one ever appears, decide it then: the
+   colour system's "link at rest: ink, weight 500, underline" was written for that case. */
+a { color: inherit; text-decoration: none; }
 /* The charge, on hover and nowhere else — DF-005. The settled colour system has always read
    "ink at rest, charge on hover"; the code had drifted to the opposite on several static
    elements. One rule for every link, so it cannot drift per component again.
