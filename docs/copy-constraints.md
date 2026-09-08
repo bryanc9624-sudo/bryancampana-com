@@ -92,33 +92,14 @@ deliberately rather than by accident.
 
 ---
 
-## Discipline — ≤ 32 characters for one line
-
-Discipline is proposed to move into the eyebrow above the project title, where it sets in
-**uppercase at 15px Medium with 8% tracking** — the most expensive type on the site per
-character.
-
-| Value | Width | At 390px |
-|---|---|---|
-| `SIGNAGE & WAYFINDING, CODE SIGNAGE` (34) | **334px** | one line, **8px spare** |
-| `EXHIBITION DESIGN, NEW MEDIA ART` (32) | 308px | one line, 34px spare |
-| `VISUAL COMMUNICATIONS` (21) | 215px | comfortable |
-| `BRAND IDENTITY` (14) | 139px | comfortable |
-| `PHOTOGRAPHY` (11) | 122px | comfortable |
-
-Both long values clear the 496px desktop rail easily. **Mobile is the constraint, and
-`590 Madison Ave` has 8px of slack** — one more character wraps it to two lines.
-
-*Re-measured 2026-09-07 after the Eyebrow weight was reverted from Bold to Medium. At Bold
-the same string measured 342px — exactly the content width, with no slack at all. A weight
-change moved this figure by 8px and turned "wraps" into "just fits", which is why this file
-must be re-measured after any text-style change rather than assumed to hold.*
-
 ## Things with no meaningful limit
 
 - **Project body copy.** Wraps at a 68ch measure and flows. Write what the work needs.
-- **Fact values** — `Medium`, `Prints`, `Completed`. The block is built to wrap; it already
-  carries *"Silver Gelatin prints on photographic paper, glossy finish. Shot on 35mm."*
+- **Fact values** — `Discipline`, `Medium`, `Prints`, `Completed`. The block is built to wrap;
+  it already carries *"Silver Gelatin prints on photographic paper, glossy finish. Shot on
+  35mm."* **`discipline` was briefly going to move into the eyebrow above the project title,
+  which would have capped it at 32 characters — that is off, so it has no length limit again.**
+  See `DF-002`.
 - **About page prose.** A biography column with no fixed height.
 - **Legal pages.** Prose in a narrow measure.
 
@@ -139,6 +120,6 @@ ruler, because `n` is wider than an average mixed-case letter. Container widths:
 content 342px, mobile card 342px, desktop card 437px, desktop project rail 496px.
 
 Re-measure after any change to a text style's size, weight, family or tracking — all four
-move these numbers. The discipline figures above have already been measured twice in one
-day: Bryan reweighted `Eyebrow` to Bold and then reverted it, and the long value moved from
-342px to 334px across those two states.
+move these numbers. `Eyebrow` alone moved three times on 2026-09-07 — Medium to Bold, back to
+Medium, then to SemiBold — and each step changed what fitted. None of the four limits above
+depend on it today, but that is luck rather than design.

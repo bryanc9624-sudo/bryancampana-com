@@ -17,6 +17,60 @@ IDs are chronological: `D-001` is the oldest.
 
 ---
 
+<a id="df-002"></a>
+### DF-002 · 2026-09-07 — Eyebrows are section headings only. Discipline stays in the facts. Eyebrow steps to SemiBold. **Bryan's call.**
+
+**Status:** Accepted
+
+**1. No eyebrow on a project page, and nothing fills the slot.** The `WORK` eyebrow was removed
+in `D-062`; the question left open was whether `discipline` should move up into it. **It should
+not.** Eyebrows are **section headings** — `FEATURED` on the landing page, `CONTACT` on About —
+and a project page has no section above its title to head. The slot stays empty and the page
+opens on the title.
+
+**This closes the discipline swap**, which was recommended by this chat and agreed in principle
+earlier the same day. It does not survive Bryan's narrower definition of what an eyebrow is for,
+and the narrower definition is better: a component used for one thing is easier to reason about
+than one used for a heading here and a metadata label there.
+
+**Two consequences.**
+
+- **`discipline` keeps its `Discipline` row in the facts block** and stays a prose description of
+  the practice. `DF-001` still applies — it must not carry a retired keyword string, so `Art` and
+  `Visual Communications` still change.
+- **`discipline` has no length limit again.** Had it moved into the eyebrow it would have been
+  capped near **32 characters**, and `590 Madison Ave` was already at the edge —
+  `SIGNAGE & WAYFINDING, CODE SIGNAGE` measured within a few pixels of the full mobile width in
+  every weight tested. In the facts block it wraps like every other fact value.
+  `docs/copy-constraints.md` is updated: that section is gone, not softened.
+
+**2. `Eyebrow` steps up one weight class: Sans Medium 500 → SemiBold 600.** Size stays 15px,
+colour stays `--color-fg`.
+
+Bryan's reason: the ink alone was not enough separation from the keyword on project cards. It now
+differs on **three** axes — SemiBold against Medium, 15px against 13px, ink against muted — where
+before it differed only on size, quietly.
+
+**This is safe where the earlier Bold was not, and the distinction is worth stating.** The
+reweighting reverted in `D-064` broke because it asked for **Serif** 500 and 700, which are static
+per-weight files and were not imported. SemiBold 600 is **Sans**, which is loaded as a variable
+file spanning `100 700`, and 600 is already in use by four other styles. **No font import, no new
+weight in the system.**
+
+**Code and Deploy — one line, and it replaces the one in `D-064`.** `base.css`:
+
+```css
+.eyebrow { font-weight: var(--weight-semibold); color: var(--color-fg); }
+```
+
+was `var(--weight-medium)` and `var(--color-muted)`. Both tokens exist.
+
+**Note on the standing re-measure obligation:** `Eyebrow` has now moved three times in one day —
+Medium, Bold, Medium, SemiBold. None of the four limits in `copy-constraints.md` depend on it
+today, but only because discipline left the eyebrow in the same breath. That is luck, not design,
+and the obligation stands.
+
+
 <a id="df-001"></a>
 ### DF-001 · 2026-09-07 — Discipline strings settled; decision ids become per-chat
 

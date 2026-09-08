@@ -137,9 +137,9 @@ mode Figma cannot show.
   32 under 40rem — in Figma that is the `Mobile` variable mode.
 - **The display ramp is uniform: Display/2XL, Display/XL and Title/Large are all SemiBold
   600.** A Bold/Medium split was tried on 2026-09-07 and reverted — see `D-064`.
-- **The section eyebrow is `--color-fg`, not `--color-muted`.** Ink, so it separates from the
-  card keyword, which stays muted at 13px `Label`. The two were never the same style, but they
-  read as the same tier until this changed. **It is not `--color-accent`** — accent is the
+- **The section eyebrow is `Eyebrow` — Sans SemiBold 15px, `--color-fg`.** It separates from the card
+  keyword on **three** axes now — weight, size and colour — against `Label`, Sans Medium 13px
+  muted. The two were never the same style, but they read as one tier until this changed. **It is not `--color-accent`** — accent is the
   charge and marks the selected filter link only; spending it on static labels would make it
   decorative and stop it meaning anything.
 - **`Wordmark`** is serif at body size. It is identity, not navigation, and shares a line with the
@@ -168,10 +168,11 @@ mode Figma cannot show.
   row is 307px against 342px at 390px, so it fits there — but the query runs `0–639px`, and at
   **320px** there is only 272px of content width. The row stops fitting below a **355px**
   viewport. Six `SiteHeader` variants, not three.
-- **Project pages open on the title.** The `WORK` eyebrow that sat above it is removed — the
-  header already routes to the index, and on a project page it carries `aria-current`
-  because the path starts with `/work`. The `← All work` link at the foot of the page
-  stays: it is a different affordance, offered where the reading ends.
+- **Project pages open on the title, and the slot above it stays empty.** The `WORK` eyebrow is
+  removed and nothing replaces it — putting `discipline` there was considered and dropped
+  (`DF-002`). **Eyebrows are for section headings only**: `FEATURED` on the landing page and
+  `CONTACT` on About. They do not appear on project pages. The `← All work` link at the foot
+  stays — a different affordance, offered where the reading ends.
 - **Contact block, About page.** Desktop is three columns — portrait `1fr`, biography `2fr`,
   contact `1fr`, 64px gutters. Mobile stacks it after the biography. The block is a `CONTACT`
   eyebrow (the text style, **no rule** — it is a column element, not a break in a flow), then
@@ -367,12 +368,13 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 # Decision index
 
-66 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+67 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
 | ID | Decision | Status |
 |---|---|---|
+| [`DF-002`](docs/decisions-archive.md#df-002) | Eyebrows are section headings only; eyebrow steps to SemiBold | |
 | [`DF-001`](docs/decisions-archive.md#df-001) | Discipline strings, and per-chat decision ids | |
 | [`D-065`](docs/decisions-archive.md#d-065) | Build budget is 1,000 credits a cycle, not 300. Code and Deploy. | |
 | [`D-064`](docs/decisions-archive.md#d-064) | Weights reverted; the eyebrow keeps its ink. Bryan's call. | |
