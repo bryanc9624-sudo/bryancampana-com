@@ -50,9 +50,9 @@
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
-  /* D-061. Display/2XL and the Eyebrow are Bold. The serif face is loaded in base.css;
-     the sans is variable and declares 100–700, so it needs nothing. */
-  --weight-bold: 700;
+  /* No --weight-bold. D-061 added one and D-064 reverted the reweighting, so nothing uses
+     700 and the serif face for it is no longer loaded. A token left here would be a trap:
+     used on the serif it would silently render 600. */
 
   --tracking-wide: 0.08em;
 

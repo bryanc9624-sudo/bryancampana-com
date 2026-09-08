@@ -3,19 +3,15 @@
 /* Sans: variable build, one file for every weight. Only Medium 500 is used now, on
    eyebrows and labels, but the variable file is a single request either way. */
 @import '@fontsource-variable/ibm-plex-sans/wght.css';
-/* Serif has no variable build, so every weight is a separate request and each one has to
-   be loaded deliberately. Regular for body, Italic for the design question, SemiBold for
-   Title/Large and the wordmark — and, per D-061, Medium for Display/XL and Bold for
-   Display/2XL after Bryan reweighted them.
-   These two exist because a missing WEIGHT fails quietly where a missing italic fails
-   loudly: font-synthesis:none stops the browser faking either, but an unavailable face
-   still falls back to the nearest loaded one, so Serif 500 would render as 400 and 700 as
-   600 with nothing in the console and no obvious breakage to spot. */
+/* Serif has no variable build, so load exactly the three faces the styles call for:
+   Regular for body, SemiBold for display and titles, Italic for the design question.
+   500 and 700 were briefly added for D-061's reweighting and withdrawn again by D-064,
+   which reverted it. Do not re-add them without a style that asks for them: an
+   unavailable weight resolves to the nearest loaded face rather than erroring, so the
+   pairing has to be kept honest here by hand. */
 @import '@fontsource/ibm-plex-serif/400.css';
 @import '@fontsource/ibm-plex-serif/400-italic.css';
-@import '@fontsource/ibm-plex-serif/500.css';
 @import '@fontsource/ibm-plex-serif/600.css';
-@import '@fontsource/ibm-plex-serif/700.css';
 @import './tokens.css';
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -79,7 +75,12 @@ em, i, cite { font-family: var(--font-italic); }
 .eyebrow { font-family: var(--font-sans); font-weight: var(--weight-medium); line-height: var(--leading-eyebrow);
   font-size: var(--size-sm); text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
-  color: var(--color-muted); padding-bottom: var(--space-2);
+  /* Ink, not muted. D-064: the section eyebrow and the keyword on a project card were both
+     uppercase, tracked and muted, so they read as one tier. Colour separates them now. It
+     is --color-fg and deliberately not --color-accent: the accent is the charge and marks
+     the selected filter link only, so spending it on a static label would make it
+     decorative. It reads purple because the ink on this site is plum. */
+  color: var(--color-fg); padding-bottom: var(--space-2);
   border-bottom: 1px solid var(--color-line); margin-bottom: var(--space-5);
 }
 
