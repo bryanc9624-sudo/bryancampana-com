@@ -1,3 +1,45 @@
+<a id="cd-014"></a>
+### CD-014 · 2026-09-08 — 590 Madison Ave rewritten in first person. **Bryan's brief; direction settled before writing.**
+
+**Status:** Accepted
+
+**First copy written under the split from `CD-013`** — direction from Bryan's adviser, words from
+this chat. The brief arrived with the angle already decided and said not to re-litigate it, which
+is what made it workable: every question left open was one that could be answered by measuring or
+by asking, not by taste.
+
+**The angle:** he read the architecture from the outside and matched it anyway. The stone, glass
+and metal palette was inferred from renderings and material photographs, not handed over as a
+specification, so the materials are **evidence the read was correct** rather than a concept about
+texture.
+
+**What changed.** The old body opened *"This signage system was designed for…"* — passive, and it
+erased the only author the project has. Sole authorship is now the first clause. The four inputs
+are stated as an inventory. The strongest sentence in the old draft, the one about satisfying
+regulatory, branding and wayfinding needs at once, moved from the opening to the close, where it
+lands as a payoff instead of throat-clearing.
+
+The old closing idea — *"the contrast between materials that feel hard and substantial and those
+that appear soft and diffuse"* — survives recast as design rationale rather than art statement:
+the contrast is what gives the system its hierarchy, separating what stays fixed from what directs
+you through the floor.
+
+**Constraints held to:** no employer named, no fabricator named, no site visit, walkthrough, finish
+schedule or architect collaboration claimed, no career narration. Verified against the built page —
+zero occurrences of any of them.
+
+**The scope line was measured before being touched, and did not need shortening.** At 96 characters
+it is over the ≤80 in Current state, but that limit is a round number and the page is the
+authority: it renders as **two lines** at the 342px mobile card, which is the constraint the number
+approximates. `package` became `system` — a semantic fix rather than a length one, since the body
+now claims authorship of a system and `package` describes what was delivered. 95 characters, still
+two lines, card height unchanged at 350px.
+
+**Two things put to Bryan rather than decided:** how plainly to state the thin-input inventory, and
+the wording in `dura-architectural-signage.md`, which frames 590 Madison as team work while this
+page claims sole authorship of the amenity-floor system. Those are compatible — different scopes —
+but the phrasing may want tuning, and editing a second project file was outside the brief.
+
 <a id="cd-013"></a>
 ### CD-013 · 2026-09-08 — `copy-constraints.md` deleted. Copy is written here; direction comes from outside. **Bryan's call.**
 

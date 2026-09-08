@@ -200,6 +200,8 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 
 - **Copy is Bryan's**, verbatim from `archive/content/`. No chat writes portfolio prose in his
   voice; Content and Copy edits, cuts and advises.
+- **Project bodies are first person, active, and name Bryan as the author.** Professional register,
+  not curatorial — an architecture-firm reader should finish knowing he can do the job. `CD-014`.
 - **Copy is written here, direction comes from outside.** Bryan's adviser sets voice and angle;
   this chat writes the words, because length is checkable against the built page and voice is not.
   Assign each to whoever can verify it. `docs/copy-constraints.md` is deleted — `CD-013`.
@@ -582,7 +584,7 @@ current palette).
 
 # Decision index
 
-85 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+86 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
@@ -590,6 +592,7 @@ history, never to decide what to do next.** Full text in
 |---|---|---|
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
 | [`DF-007`](docs/decisions-archive.md#df-007) | Handover: what this chat knew that no file held | |
+| [`CD-014`](docs/decisions-archive.md#cd-014) | 590 Madison Ave rewritten in first person. Bryan's brief. | |
 | [`CD-013`](docs/decisions-archive.md#cd-013) | copy-constraints deleted; copy written here, direction from outside. | |
 | [`CD-012`](docs/decisions-archive.md#cd-012) | No type-sync pipeline; nothing in Figma rules the code. Bryan's call. | |
 | [`CD-011`](docs/decisions-archive.md#cd-011) | Figma is a reference, not the spec; code is the source of truth. ⚠ | — Partly superseded |
