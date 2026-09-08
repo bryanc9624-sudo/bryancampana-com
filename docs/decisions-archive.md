@@ -64,6 +64,52 @@ Bryan's alone. The two `discipline` strings from `DF-001` — `Art` and `Visual 
 which need Content and Copy. And the two items in Code and Deploy's list: the accent corrections
 and the filter restyle.
 
+<a id="cd-003"></a>
+### CD-003 · 2026-09-07 — Consolidated to one chat. DF-005 finished, DF-006 built, disciplines settled. **Code and Deploy.**
+
+**Status:** Accepted
+
+Bryan folded Design, Oversight and Content into this chat. Setup, then the work that was
+outstanding across all three.
+
+**Setup.** `CLAUDE.md` added at the repo root. `DECISIONS.md` lost the four-chat ownership table
+and 18 rules, and now carries five: read Current state and Do not reopen first; write a decision
+down or it never happened; preview before pushing; builds need a `[deploy]` subject; the archive
+is frozen and Current state wins. The empty "Sync audits" section is gone, and the two per-chat
+"Open decisions" inboxes — both holding nothing but closed items — are one "Open". The
+consolidation banner stays. `docs/oversight-charter.md`, `docs/design-chat-handoff.md` and
+`docs/code-chat-handoff.md` moved to `docs/retired/` rather than being deleted; the one live
+reference to the design handoff now points there. `docs/workflow.md` rewritten — its routing
+table described a structure that no longer exists.
+
+**DF-005's remaining three — and a correction to what they were.** The routing said three
+resting elements still carried `--color-accent`, naming `.card__keyword` and the two project
+labels, and that this rendered "violet fourteen times on `/work`". **It did not.** Those line
+numbers point at `.card__draft`, `.case__draft` and `.photo__draft`. Confirmed against the
+**live site**, not the source: the served rule reads
+`.card__keyword{…color:var(--color-muted)…}`, and no draft element appears in the HTML at all.
+
+`showDraftFlag` is `import.meta.env.DEV`, so draft markup never renders in a build, and no
+project carries `draft: true` in any case. **Changed all three to `--color-muted` anyway** —
+Bryan asked, the rule reads better absolute, and nothing visible moves. Worth stating plainly so
+nobody looks at `/work` after this deploy expecting a change: **there was never any violet there
+to remove.** The only resting accent that ever shipped was the selected filter link, fixed in
+`CD-002`.
+
+**DF-006 built.** `VideoFacade` is now a vertical stack — poster or ink ground, 8px, then the
+label. The button is `flex-direction: column` with `text-align: left`, because a button centres
+its text and nothing had to say otherwise while the label was absolutely positioned.
+
+Measured after the change: label below the media, 8px gap, `position: static`, no underline,
+13px Medium. **On paper it measures 15.42:1 light and 19.45:1 dark** — matching `DF-006`'s
+prediction exactly, and replacing a figure that could not be computed at all while the label sat
+over a photograph. `.video__ground` stays `--color-fg` for any project shipped without a still.
+
+**Disciplines settled** — the last thing waiting on the retired Content chat.
+`photopolymer-letterpress` is `Printmaking`, `dura-architectural-signage` is
+`Signage & Wayfinding`. Verified in the built output; neither retired string appears anywhere in
+`dist/`.
+
 <a id="df-006"></a>
 ### DF-006 · 2026-09-07 — The PLAY label moves below the image. **Design and Figma. Raised by Code and Deploy.**
 

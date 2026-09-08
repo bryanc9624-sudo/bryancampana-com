@@ -1,0 +1,116 @@
+# bryancampana.com
+
+Bryan's portfolio. Astro, static, no client JavaScript. 14 projects, 20 pages.
+Live at bryancampana.com on Netlify.
+
+## How this project is run
+
+**One chat does the work — design and code together.** It was split across four
+chats until 2026-09-07; that cost more in coordination than it returned. Extra
+chats are fine as long as they only *read* and advise. Only one chat writes.
+
+You own design decisions as well as code. There is nobody to route them to.
+When something is genuinely Bryan's call — a colour, a word, an editorial choice
+— ask him directly.
+
+## Where the truth is
+
+| Question | Answer lives in |
+|---|---|
+| What is true right now | `DECISIONS.md` → "Current state" |
+| What we already rejected, and why | `DECISIONS.md` → "Do not reopen" — **read before proposing** |
+| Why we did something | `git log`, then `docs/decisions-archive.md` |
+| Every colour, size, weight | `src/styles/tokens.css` |
+
+The archive is frozen history. Entries in it contradict each other in places —
+`DECISIONS.md` wins, always.
+
+**Write a decision down or it never happened.** A conclusion reached only in chat
+is gone when the chat ends.
+
+## Things that cost money or silently break
+
+**1. Publishing costs 15 credits. Nothing else does.**
+A build runs only when the commit **subject starts with** `[deploy]`. Netlify
+Personal gives 1,000 credits a cycle (~65 builds), cycle runs the 7th to the 6th.
+Never put `[deploy]` in a commit *body* — that once fired 19 builds and burned a
+whole cycle. Check before pushing:
+
+    git log -1 --pretty=%s | grep -q "^\[deploy\]" && echo BUILD || echo skip
+
+**Preview before pushing.** Build locally, show Bryan, push once he approves.
+
+**2. Restart the dev server after editing CSS in an `.astro` file.**
+Hot reload does not reapply scoped styles. You will see the old rule and "fix" a
+bug that does not exist. Never clear `.astro/` while the server runs — it corrupts
+the content store and the site goes silently empty.
+
+**3. HTML comments in a markdown body ship to the page.**
+Astro passes them straight through — invisible in preview, visible in view-source.
+Use YAML `#` comments in frontmatter, and `{/* … */}` in `.astro` templates.
+
+**4. Images go under `src/`, never `public/`.**
+`public/` is copied through unoptimised. Export sRGB at 2400px. `cover.<ext>` is
+card-and-poster only and is excluded from the gallery.
+
+## Design rules that are load-bearing
+
+- **`tokens.css` mirrors Figma 1:1.** Each Figma variable names its CSS property
+  via `codeSyntax`. Ten CSS properties have no Figma variable **on purpose** —
+  don't "fix" that.
+- **No rule may reference `--color-fg`.** That token means *the colour of text*.
+  Rules point at `--color-line`, whose value is derived so a rule holds the same
+  contrast against its ground in both modes. Derive future values; never eyeball one.
+- **`--color-accent` is hover only.** Charge at rest, full charge on hover.
+  `--color-focus` is the same value but a different state — keep them separate.
+- **No synthesised faces, ever.** `font-synthesis: none` is set on `html`.
+  Anything italic uses the serif via `--font-italic`; Plex Sans ships no italic.
+  A missing weight renders upright on purpose, so the gap is visible.
+- **Style names have no space** — `SemiBold`, not `Semi Bold`. The mismatch
+  silently drops text to Regular.
+- **Dark mode is not in Figma** and cannot be — the two variable modes are
+  Desktop/Mobile. The dark palette lives in `DECISIONS.md`'s colour table and in
+  `tokens.css`, and nothing else checks it.
+- **`src/lib/projects.ts` holds the single visibility rule.** Index, landing and
+  route generator all call it. Keep it that way.
+
+## Figma
+
+File `IeY23kkW263ZvuyJqiV2kD` — "bryancampana.com — Design System & Screens".
+Professional plan: 200 calls/day, 15/min, shared across every session.
+
+**The tools are deferred — load them first or you will think you have no access:**
+
+    ToolSearch query="select:use_figma,get_screenshot,get_metadata,get_figma_skill"
+
+Load the `figma-use` skill before every `use_figma` call. **`get_metadata` lies
+about the page list** — it reports one page however many exist. Use
+`figma.root.children` via `use_figma` instead; that is authoritative.
+
+**"Figma isn't working" is two different problems that look the same:**
+- *The tools weren't loaded.* By far the more common one. Run the `ToolSearch`
+  above. The connection is fine; you just hadn't asked for the tools.
+- *The session can't sign in.* Some sessions can't run the authorization flow.
+  Nothing in a chat fixes this — Bryan authorizes Figma in his claude.ai
+  connector settings, or works in an interactive terminal. Say which of the two
+  it is before telling him anything is broken.
+
+Nothing in the build depends on live Figma access. It was a day-one non-goal.
+
+## Commands
+
+    npm run dev      # restart it after any CSS edit; port is auto-assigned
+    npm run build
+    npm test
+    npm run todos    # regenerates CONTENT-TODO.md
+
+## Working with Bryan
+
+Graphic designer, new to git and the terminal, learns fast, watches cost.
+
+- **Plain English, with an analogy for anything mechanical.** Skip the jargon
+  first pass; he'll ask for depth and you should give it properly.
+- **Give a recommendation, not a menu.** He overrules often and is usually right.
+- **Verify, then report** — not the other way round. Read state back after a
+  change and say what you actually observed.
+- **Own a mistake in one sentence and move on.** Hedging costs more than the error.

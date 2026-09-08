@@ -53,15 +53,20 @@ const src = video.provider === 'youtube'
 
 <style>
   .video { margin: 0; }
+  /* DF-006: a vertical stack, not a label floated over the image. `text-align: left`
+     because a button centres its text by default and the label used to be absolutely
+     positioned, so nothing had to say so before. */
   .video__btn {
-    display: block; position: relative; width: 100%; padding: 0;
+    display: flex; flex-direction: column; gap: var(--space-2);
+    width: 100%; padding: 0; text-align: left;
     border: 0; background: none; cursor: pointer; color: inherit;
   }
   .video__poster { width: 100%; height: auto; display: block; }
 
   /* Ink, not grey. Grey is this site's placeholder colour, so a grey video block reads
-     as a missing image rather than something you can press. Two of the three video
-     projects have no poster still — the ink block is a deliberate state, not a gap. */
+     as a missing image rather than something you can press. All three video projects
+     have stills now, so this renders for nothing today — it stays as the deliberate
+     state for any project that ships without one. */
   .video__ground {
     display: block; width: 100%; aspect-ratio: 16 / 9;
     background: var(--color-fg);
@@ -69,16 +74,23 @@ const src = video.provider === 'youtube'
 
   /* The Label text style — 13px Medium, 140% — which is what Figma binds this node to.
      No icon: the design has no icon language anywhere and three videos do not justify
-     inventing one. CD-001: this used --size-sm and --leading-eyebrow, the Eyebrow style's
-     values. The two leading tokens exist to keep those styles apart and reaching for the
-     wrong one is silent, so pair --size-xs with --leading-label here and nowhere else
-     borrow across. */
+     inventing one.
+
+     DF-006 moved this below the image and changed it from --color-bg to --color-fg. It
+     was never really "on the page's ground": it sat on a photograph, so it had no
+     derivable contrast — near-black on an image in dark mode, white on one in light, the
+     image deciding. That was correct when two of three videos had no still and the ink
+     block WAS the ground; the content moved underneath the decision. Below the image it
+     is on paper and measures like everything else, 15.42:1 light and 19.45:1 dark.
+
+     No underline: the whole facade is the target, the same reasoning that keeps
+     underlines off card titles. Hover needs its own rule because this is a button, not an
+     anchor, so the global a:hover does not reach it. */
   .video__label {
-    position: absolute; left: var(--space-3); bottom: var(--space-3);
     font-family: var(--font-sans);
     font-size: var(--size-xs); font-weight: var(--weight-medium);
     line-height: var(--leading-label);
-    color: var(--color-bg);
+    color: var(--color-fg);
     text-transform: uppercase; letter-spacing: var(--tracking-wide);
   }
   .video__btn:hover .video__label { color: var(--color-accent); }

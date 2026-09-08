@@ -1,6 +1,7 @@
-# How to work on this site
+# How Bryan works on this site
 
-Short version. For details on editing content, see `README.md`.
+Short version. For editing content, see `README.md`. For how the chat is meant to
+behave, see `CLAUDE.md`.
 
 ---
 
@@ -10,81 +11,53 @@ Short version. For details on editing content, see `README.md`.
 npm run dev
 ```
 
-Open <http://localhost:4322>. This is the real, current site. The live site only
-updates when you publish, so it is usually behind.
+Open the address it prints. That is the real, current site. **The live site only
+changes when you publish**, so it is normally behind — sometimes by a whole day's work.
 
 ---
 
-## 2. Decide which chat to talk to
+## 2. Say what you want, in one place
 
-| You want to say… | Talk to |
-|---|---|
-| "This should **look** different" | **Design chat** |
-| "This is **broken** / doesn't match what I approved" | **Code chat** |
-| Not sure | **Design chat** |
+There used to be four chats and a rule about which one to talk to. There is now **one
+chat**, and it owns design, code, content and publishing. So say the thing:
 
-Design can hand work down to Code. Code is not allowed to invent design. So when in
-doubt, start with Design — it flows the right way.
+- *"This should look different"* — it decides and builds it.
+- *"This is broken"* — same chat, same conversation.
+- *"Change this word"* — content is in scope too.
 
----
+If something is genuinely yours to call — a colour, a word, an editorial choice — it
+will ask you rather than guess.
 
-## 3. Tell ONE chat. Never both.
-
-Say what you noticed. Include:
-
-- the page
-- **how wide your browser was** (this matters more than you'd think)
-- a screenshot if you have one
-
-That chat writes the decision into `DECISIONS.md`.
+You can still open extra chats to get a second opinion. Keep them **read-only**: two
+chats writing to the same folder was the thing that caused the most trouble, because
+git cannot see a conflict in files nobody has committed yet.
 
 ---
 
-## 4. Hand off with one sentence
+## 3. Nothing is live until you say so
 
-When Design is done, open the Code chat and say:
+Work is committed as it goes, which is just saving with a note attached. **Publishing
+is a separate, deliberate step** and it is the only thing that costs money — 15 credits
+a time, out of 1,000 a month.
 
-> Pull — Design routed something to you.
-
-**That's the whole handoff.** Never repeat what Design decided. You say *that* there's
-work; the file says *what* it is. You're the scheduler, not the messenger.
-
----
-
-## 5. Publishing (making it live)
-
-Say to the Code chat:
-
-> Deploy this.
-
-It writes the message correctly and pushes. Nothing else needed.
-
-**What it costs:**
-
-| Thing | Cost |
-|---|---|
-| Publishing the live site | **15 credits** |
-| Preview copies, failed builds, undoing a release | Free |
-| Visitors browsing the site | Effectively nothing |
-
-Only publishing costs. You have **1,000 credits/month = 66 publishes** on the current
-plan (300 = 20 on the free plan).
-
-**Batch it.** One publish at the end of a work session, not one per change.
+So the normal shape of a session is: make a batch of changes, look at them locally,
+then publish once at the end. Ask for a preview whenever you want to see where things
+stand; that is free.
 
 ---
 
-## 6. Things only you can do
+## 4. What to expect back
 
-- **Content edits** — project text, photos, keywords. See `README.md`; no chat needed.
-- **Downgrade the Netlify plan back to Free in early October**, or it bills again.
-- Any payment, ever.
+- **A recommendation, not a menu.** If there is a real trade-off you will get it in a
+  sentence, with a suggested answer.
+- **Numbers that were actually measured.** "Verified" should mean it was read back from
+  the built page, not assumed from the code.
+- **Plain English first.** Ask for more depth on anything mechanical and you will get it
+  properly rather than being waved off.
 
 ---
 
-## The two rules that keep this from breaking
+## 5. If something looks wrong after publishing
 
-1. **Never carry a decision between chats yourself.** It goes in `DECISIONS.md` or it
-   doesn't exist.
-2. **One chat at a time.** Design session, then Code session. Running both at once is
-   how they end up working from stale copies of the file.
+Say so. Rolling back is free — a previous deploy can be restored from Netlify without
+spending a build. Nothing you approve is one-way.

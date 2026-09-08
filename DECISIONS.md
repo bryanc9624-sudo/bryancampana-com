@@ -1,14 +1,10 @@
 # Decisions
 
-Shared ledger between the three Claude Code chats working on this project.
-All three live in this folder. Two write to it; the third audits it — see the table.
+The contract for bryancampana.com. **"Current state" is what is true; "Do not reopen" is what
+was rejected and why.** Dated reasoning lives in [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
-| Chat | Owns | Writes to |
-|---|---|---|
-| **Design and Figma** | What the site looks like — layout, type, colour, spacing, card direction | Figma + "Current state" + its own "Open" section |
-| **Code and Deploy** | Making the site match — code, tests, build, deploy. Also hosting, DNS, domain and build-credit budget. **Not `src/content/**` — that moved to Content and Copy on 2026-09-07; route content changes to Bryan.** | The repo, except `src/content/**` + "Current state" + its own "Open" section |
-| **Content and Copy** | The words — `src/content/**` exclusively, prose inside `.astro` pages, `DESIGN-QUESTIONS.md`, `CONTENT-TODO.md`. **Does not use this ledger at all** — it edits source files directly, the way Bryan does, and the other chats adapt to what they find. Constraints it works inside: `docs/copy-constraints.md` | The content files. **Never this file.** |
-| **Oversight** | Nothing. Audits the other two against the repo and reports to Bryan. Read-only on code and on both chats' sections. Charter: `docs/oversight-charter.md` | The "Sync audits" section below, and nothing else |
+**One chat writes; read-only advisory chats are fine.** Until 2026-09-07 this was split across
+four, and most of the machinery below existed only to keep them from overwriting each other.
 
 ## ⚠ The chat structure is being consolidated — 2026-09-07
 
@@ -31,72 +27,19 @@ a file that lies about its own process is the failure this ledger was restructur
 
 ## The rules
 
-1. **Read this file before asking Bryan anything.** If the answer is here, use it.
-2. **Never ask a question the other chat owns.** Route it instead: add it to "Open
-   decisions" and tell Bryan which chat it belongs to. He is not a message bus.
-3. **Design decisions are not real until they are written here or visible in Figma.**
-   A decision made only in conversation is invisible to the other chat forever.
-4. **Code and Deploy never invents design.** If Figma doesn't say, it stays a placeholder.
-5. **Preview before pushing.** Bryan reviews a local build before anything deploys.
-6. **"Live site" means bryancampana.netlify.app.** bryancampana.com is still served by
-   Cargo. The DNS cutover is Phase 5 and needs Bryan's explicit go-ahead.
-
-## Keeping this file in sync — both chats follow this
-
-This file lives on `main` and both chats commit to it directly. Bryan gave standing
-permission for that on 2026-09-07, precisely so it stops going stale on a side branch.
-That removes the worst failure mode but not all of them, so:
-
-7. **`git pull` before you read it. Push immediately after you write it.** The window
-   between your edit and your push is the window where the other chat can be wrong. Keep
-   it to seconds, not days.
-8. **Anything you read more than a few minutes ago is stale.** Git does not notify you of
-   changes — you have to go and fetch them. Re-read before acting on something here,
-   especially before telling Bryan a decision is still open.
-9. **Edit only your own sections.** Each chat owns its own "Open decisions" section.
-   "Current state" is shared — update the part your decision touches, and nothing else.
-   Never rewrite the whole file; make targeted edits so conflicts stay small and
-   obviously mechanical.
-10. **If your push is rejected, pull and re-apply your change.** Never force-push this
-    file — a force-push here silently deletes the other chat's work, which is the one
-    failure mode git would otherwise have caught for you.
-12. **Builds cost money — tag them.** A push only triggers a Netlify build when the
-    commit message contains `[deploy]`; `netlify.toml`'s `ignore` command skips the rest
-    before the build starts. Batch work, then tag one commit. The Personal plan is
-    1,000 credits per cycle and the cycle runs the 7th to the 6th, not the calendar
-    month. See "Hosting and deploys" below for the numbers.
-
-11. **A decision is TWO writes, and both belong in the same commit.**
-    (a) Append a full dated entry to the top of `docs/decisions-archive.md`, with the next id
-    **in your own chat's sequence** and `**Status:** Accepted`.
-    (b) Update the affected "Current state" section here to say what is now true.
-
-11b. **Ids are per chat, never shared: `DF-###` for Design and Figma, `CD-###` for Code and
-    Deploy.** Take the next number in *your* prefix only; never count across the whole file.
-    `D-001`–`D-065` are the shared sequence used before 2026-09-07 and are frozen — do not
-    allocate another. This exists because a single sequence collided twice in one hour: two
-    chats both reading `max(id)+1` from a file they both write will race, and claiming the
-    number in the same commit that uses it does not prevent it. A prefix has no shared
-    counter to contend for. See `DF-001`.
-    Skipping (b) is how this file previously grew to 1,863 lines of history nobody could
-    resolve into an answer.
-
-9a. **When you rewrite a section, re-read it at write time.** Never rebuild one from an
-    earlier reading, however recent — a clean `git pull` does not make your notes current.
-    Design and Figma destroyed a live routed item this way during the 2026-09-07 restructure
-    and then reported the file as having no open items. See `D-059`.
-
-11a. **Archive entries are immutable.** To change a decision, write a new one and set the
-    old entry's status to `Superseded by D-NNN`. Never edit an accepted entry's contents —
-    that is how "Colour VALUES settled" ended up half true. Adapted from Architecture
-    Decision Records; git holds the history either way.
-
-13. **"Sync audits" belongs to Oversight — do not edit it.** A third chat audits this
-    ledger against the repo and records what it finds there. Read it; treating one of its
-    findings as wrong is fine, but correct the entry it points *at*, in your own section,
-    rather than editing the audit. Oversight writes nowhere else in this file.
-
----
+1. **Read "Current state" and "Do not reopen" before proposing anything.** The answer is
+   usually already there, and the second one is the record of what has already been paid for
+   once.
+2. **Write a decision down or it never happened.** Two writes, same commit: an entry at the top
+   of `docs/decisions-archive.md`, and the "Current state" section it changes. A conclusion
+   reached only in chat is gone when the chat ends.
+3. **Preview before pushing.** Build locally, show Bryan, push once he approves.
+4. **Builds need a `[deploy]` subject line.** A push only builds when the commit *subject starts
+   with* the tag — never put it in a body. Check first:
+   `git log -1 --pretty=%s | grep -q "^\[deploy\]" && echo BUILD || echo skip`
+5. **The archive is frozen history and "Current state" wins.** Entries are immutable and several
+   contradict each other; supersede rather than edit. An entry being present says nothing about
+   it still being true — check whether a later one overrode it.
 
 ---
 
@@ -319,7 +262,7 @@ spacing, sizes, radii; which elements exist on a page and in what order.
 - Professional. **One collection, modes `Desktop` / `Mobile` — a breakpoint axis, not a theme.**
   Dark mode cannot live in Figma; the palette table above owns dark and has no second check.
 - **`get_metadata`'s page listing is wrong** — it reports one page. Use a read-only `use_figma`
-  running `figma.root.children`. Full detail in `docs/design-chat-handoff.md`.
+  running `figma.root.children`. Full detail in `docs/retired/design-chat-handoff.md`.
 - **For photography galleries the code is the source of truth, not Figma.** Figma draws two-up,
   which is now only the four-image case. Do not "correct" the code to match the drawing.
 
@@ -358,7 +301,10 @@ Decided *against*, with the reason. Re-raising these costs someone a redo of rej
 
 ---
 
-# Open decisions — Design and Figma owns these
+# Open
+
+**Nothing open.** Recently closed items are kept below for traceability; older ones are in
+the archive's "Appendix — closed routing items".
 
 - [x] **RESOLVED 2026-09-07 — Design names the final six. See `D-059`.** Two content edits,
       no code change, and one question that is Bryan's rather than mine.
@@ -428,9 +374,6 @@ Decided *against*, with the reason. Re-raising these costs someone a redo of rej
 
 Bryan's, not this chat's: the 14 design questions.
 
-## Open decisions — Code and Deploy owns these
-
-Routed here rather than through Bryan, per rule 2.
 
 - [x] **DONE — `CD-002`, with a correction.** Only ONE of the four ever shipped: the selected
       filter link, now ink + Bold + underline. The other three line numbers point at `.card__draft`,
@@ -597,20 +540,9 @@ drift happened rather than just that it did: **the serif body drift** (a spec wr
 tree one commit stale) and **the muted values** (which carry the contrast reasoning behind the
 current palette).
 
-## Sync audits — Oversight owns this section
-
-Findings from auditing this ledger against the repo. Newest at top, dated. Written only
-when something needs the other chats' attention; a clean audit is not recorded here.
-
-*No audits recorded yet.*
-
----
-
----
-
 # Decision index
 
-74 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+75 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
@@ -618,6 +550,7 @@ history, never to decide what to do next.** Full text in
 |---|---|---|
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
 | [`DF-007`](docs/decisions-archive.md#df-007) | Handover: what this chat knew that no file held | |
+| [`CD-003`](docs/decisions-archive.md#cd-003) | Consolidated to one chat; DF-005 finished, DF-006 built, disciplines settled. | |
 | [`DF-006`](docs/decisions-archive.md#df-006) | The PLAY label moves below the image | |
 | [`CD-002`](docs/decisions-archive.md#cd-002) | Filter is the eyebrow tier; the charge is hover-only. Code and Deploy. | |
 | [`DF-005`](docs/decisions-archive.md#df-005) | Filter takes the eyebrow tier; the violet becomes hover-only | |
