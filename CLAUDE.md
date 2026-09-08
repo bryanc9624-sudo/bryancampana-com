@@ -49,7 +49,21 @@ the content store and the site goes silently empty.
 Astro passes them straight through — invisible in preview, visible in view-source.
 Use YAML `#` comments in frontmatter, and `{/* … */}` in `.astro` templates.
 
-**4. Images go under `src/`, never `public/`.**
+**4. Measuring a baseline needs `overflow:hidden` on the probe.**
+The trick is a zero-size inline-block span appended to the element; its
+`getBoundingClientRect().bottom` sits on the line's baseline. **Without
+`overflow:hidden` it returns the element's box top instead**, which reads as a 5px
+misalignment that is not there. A measurement that disagrees with *itself* — box top
+and baseline being identical is impossible — indicts the instrument, not the site.
+Check that a number could physically be what it claims before acting on it.
+
+**5. `git` can stop working after an Xcode update.**
+macOS gates it behind a licence prompt and every git command fails with the same
+message. `/Library/Developer/CommandLineTools/usr/bin/git` works without it, so nothing
+is blocked; the permanent fix is `sudo xcode-select -s /Library/Developer/CommandLineTools`,
+which needs Bryan's password.
+
+**6. Images go under `src/`, never `public/`.**
 `public/` is copied through unoptimised. Export sRGB at 2400px. `cover.<ext>` is
 card-and-poster only and is excluded from the gallery.
 

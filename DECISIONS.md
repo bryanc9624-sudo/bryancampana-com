@@ -340,13 +340,36 @@ Decided *against*, with the reason. Re-raising these costs someone a redo of rej
 
 # Open
 
+- [ ] **How plainly to state the thin input on 590 Madison Ave.** *Raised by `CD-014`; Bryan's,
+      and deliberately left to him.*
+
+      The body reads: *"I worked from what the architects had shared: photographs of the
+      materials, floorplans, renderings, and a few pages of their discovery deck."* A flat
+      inventory with no framing word — no "only", no "all I had". The next sentence carries the
+      weight: the palette came out of those references.
+
+      **Plainer is available** — naming it as four things makes the achievement harder to miss,
+      and it is his single most differentiating fact. **Pushed harder it reads as an excuse**, and
+      the reader is deciding whether to hire him. One sentence to move, either direction.
+
+- [ ] **`dura-architectural-signage.md` frames 590 Madison as team work.** *Raised by `CD-014`;
+      editing a second project file was outside that brief.*
+
+      It says *"Our team handled … donor recognition and corporate signage at 590 Madison
+      Avenue"*, while `590-madison-ave.md` now claims sole authorship of the amenity-floor system.
+      **These are compatible** — different scopes, and the Dura page is about the wider engagement
+      — but a reader hitting both in sequence may notice the shift. Leave it, or tune the Dura
+      wording so the scopes are explicit.
+
+---
+
+Everything below is closed, kept for traceability; older items are in the archive's
+"Appendix — closed routing items".
+
 - [x] **RESOLVED 2026-09-08 — deferred to Figma. See `CD-013`.** `.card__scope` is `--size-sm`,
       matching the `Body / Small` the node has been bound to since the component was drawn. Cards
       over two lines went from four to one; the survivor is a 181-character scope, which is a copy
       problem rather than a type one.
-
-**Nothing else open.** Recently closed items are kept below for traceability; older ones are in
-the archive's "Appendix — closed routing items".
 
 - [x] **RESOLVED 2026-09-07 — Design names the final six. See `D-059`.** Two content edits,
       no code change, and one question that is Bryan's rather than mine.
