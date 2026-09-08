@@ -35,9 +35,9 @@ is gone when the chat ends.
 A build runs only when the commit **subject starts with** `[deploy]`. Netlify
 Personal gives 1,000 credits a cycle (~65 builds), cycle runs the 7th to the 6th.
 The gate in `netlify.toml` reads the subject only, anchored — the fix after a body-matching
-version fired 19 builds and burned a whole cycle. `.githooks/pre-push` is the second layer:
-it refuses a push carrying the tag in a body, and announces an intentional build with its
-cost. Nothing to check by hand.
+version fired 19 builds and burned a whole cycle. `.githooks/pre-push` announces a build before
+it happens and refuses a subject carrying the tag anywhere but the front, which reads as intent
+to publish and silently does not. A body mentioning the tag is harmless and only gets a note.
 
 **Preview before pushing.** Build locally, show Bryan, push once he approves.
 

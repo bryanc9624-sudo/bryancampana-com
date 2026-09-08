@@ -292,11 +292,13 @@ spacing, sizes, radii; which elements exist on a page and in what order.
 - **A build runs only when the commit SUBJECT STARTS WITH `[deploy]`.** The gate is
   `netlify.toml`'s `ignore`, which reads `%s` anchored at `^`. An earlier version read `%B` and
   matched bodies discussing the rule — that is how `D-052` burned a cycle.
-- **`.githooks/pre-push` is the second layer, since 2026-09-08.** It refuses a push carrying the
-  tag in a body and announces an intentional build with its credit cost, catching the intent
-  error locally instead of silently at build time, and holding if the gate is ever loosened.
-  Wired through `git config core.hooksPath .githooks` so it is versioned, not stranded in
-  `.git/hooks`.
+- **`.githooks/pre-push` makes the gate's verdict visible before the push, since 2026-09-08.**
+  It announces a build with its credit cost, and blocks a subject carrying the tag anywhere but
+  the front — which reads as intent to publish and builds nothing. A body mention is harmless
+  under the anchor and gets a note only. **Its first version blocked body mentions and refused
+  the commit that introduced it**, since messages here discuss deploys constantly; a guard
+  stricter than the thing it guards is a false-positive generator. Wired through
+  `git config core.hooksPath .githooks` so it is versioned, not stranded in `.git/hooks`.
 - **Domain:** `bryancampana.com`, apex canonical, `www` 301s to it. DNS delegated to Netlify
   (`dns1..4.p04.nsone.net`). Let's Encrypt certificate issued 2026-09-07 23:34 UTC.
 - **During a DNS cutover a check by hostname proves nothing** — it says only that *something*

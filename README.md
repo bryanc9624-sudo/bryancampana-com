@@ -192,10 +192,10 @@ Nothing else. Routes, the filter, the sitemap and the landing page all follow.
 Local edits are not live. The site deploys to Netlify only when a commit's **subject line starts
 with** `[deploy]`, which keeps build credits from being spent on every change.
 
-The tag belongs at the very start of the subject and nowhere else. An earlier version of the
-gate read whole messages and fired a build for every commit in a push, which burned a whole
-cycle. `.githooks/pre-push` refuses a push carrying the tag in a body, and a push that will
-genuinely build prints a notice with its credit cost.
+The tag has to be at the very start of the subject line — anywhere else and nothing happens,
+which is its own kind of trap. `.githooks/pre-push` tells you which it is before the push goes
+out: a real build prints a notice with its credit cost, and a tag in the wrong place stops the
+push and says why.
 
 Ask Claude to commit and deploy — the git side is handled for you.
 

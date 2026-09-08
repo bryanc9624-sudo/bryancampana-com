@@ -1,15 +1,18 @@
 #!/bin/sh
 #
-# Guards the Netlify build budget.
+# Makes the deploy gate's verdict visible before the push, so a build is never a
+# surprise in either direction.
 #
-# A build runs only when a commit SUBJECT starts with [deploy]. Netlify Personal
-# gives ~65 builds a cycle at 15 credits each.
+# The gate is netlify.toml's `ignore`: --pretty=%s, anchored at ^. Subject only.
+# An earlier version read %B, matched bodies that discussed the rule, and fired 19
+# builds — a whole cycle (D-052). Because the anchor is now in place, a body
+# mentioning the tag is harmless, and this hook says so rather than blocking it:
+# commit messages here discuss deploys constantly, and an earlier version of this
+# hook refused the very commit that introduced it.
 #
-# The gate itself is netlify.toml's `ignore`, which reads --pretty=%s anchored at ^.
-# An earlier version read %B, matched commit bodies that discussed the rule, and
-# fired 19 builds — a whole cycle (D-052). This hook is the second layer: it catches
-# the intent error locally, before the push, instead of silently at build time, and
-# it still holds if the gate is ever loosened back.
+# What is left to catch is the quiet failure — a tag placed somewhere that reads
+# as intent to publish but does not match the anchor, so nothing builds and you
+# believe it did.
 #
 # Installed via: git config core.hooksPath .githooks
 
@@ -27,27 +30,28 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
 	[ -z "$range" ] && continue
 
 	for sha in $range; do
+		short=$(git log -1 --pretty=%h "$sha")
 		subject=$(git log -1 --pretty=%s "$sha")
-		body=$(git log -1 --pretty=%b "$sha")
-
-		case "$body" in
-		*'[deploy]'*)
-			echo "BLOCKED: [deploy] found in the BODY of $(git log -1 --pretty=%h "$sha")" >&2
-			echo "  $subject" >&2
-			echo "" >&2
-			echo "  The tag belongs at the start of a subject and nowhere else. A gate that" >&2
-			echo "  read whole messages once fired 19 builds and cost a whole cycle." >&2
-			echo "  Move the tag to the start of the subject, or take it out:" >&2
-			echo "    git rebase -i $(git log -1 --pretty=%h "$sha")~1   # reword" >&2
-			status=1
-			;;
-		esac
 
 		case "$subject" in
 		'[deploy]'*)
-			echo "BUILD: $(git log -1 --pretty=%h "$sha") will publish to bryancampana.com" >&2
+			echo "BUILD: $short will publish to bryancampana.com" >&2
 			echo "  $subject" >&2
 			echo "  ~15 of ~1000 credits this cycle." >&2
+			;;
+		*'[deploy]'*)
+			echo "BLOCKED: $short has [deploy] in its subject but NOT at the start." >&2
+			echo "  $subject" >&2
+			echo "" >&2
+			echo "  netlify.toml anchors the tag at ^, so this publishes nothing while" >&2
+			echo "  reading as though it does. Move the tag to the front:" >&2
+			echo "    git rebase -i $short~1   # reword" >&2
+			status=1
+			;;
+		*)
+			if git log -1 --pretty=%b "$sha" | grep -q '\[deploy\]'; then
+				echo "note: $short mentions [deploy] in its body — no build. $subject" >&2
+			fi
 			;;
 		esac
 	done
