@@ -166,9 +166,9 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
   `.filterlink:hover` for the label, which is not an anchor. Nothing static carries the charge;
   a permanent accent makes it decorative and it stops signalling. `--color-focus` is the same
   value but a different token for a different state — pointers versus keyboards.
-- **The keyword set is FULL at seven links.** The eyebrow tier cost +17% row width, leaving 80px
-  of headroom against ~122px for an average keyword. Renaming inside 14 characters is free; an
-  eighth link goes to four mobile rows. See `docs/copy-constraints.md`.
+- **The keyword set is full at seven links.** 804px against ~122px for an average keyword; an
+  eighth goes to four mobile rows. Renaming inside 14 characters is free. See
+  `docs/copy-constraints.md`.
 - **The count is `--weight-regular`, not Medium** — `CD-001`. It annotates the label rather
   than belonging to it, and every property on that element is chosen to keep it inside the 26px
   row the label sets, because the filter hairline sits on that row. Figma's node is to be
@@ -201,12 +201,16 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
   them — keyword label ≤ 14 characters, filter set ≤ 7 links, card scope ≤ 100 characters,
   project title ≤ 30 for one line, discipline ≤ 32. **Design owns that file and re-measures
   it after any text-style change**, since size, weight, family and tracking all move it.
-- **Six keywords** — Photography 4 · Identity 4 · New Media 3 · Fine Art 3 · Signage 2 · Digital 1.
-  `Art` is not a keyword: the name is **Fine Art**. `Visual Communications` was retired into
-  Signage. See `D-059`.
+- **Seven keywords** — Art 6 · Photography 4 · New Media 3 · Exhibition 2 · Identity 2 ·
+  Signage 2. `Fine Art` and `Digital` are retired; `Art` is the category for work made as art
+  rather than commissioned as design. The filter row measures 804px, one desktop line, three
+  rows at 390px. `CD-005`.
 - `discipline` selects the project page layout; `keywords` is an unordered set. `year` sorts,
   `completed` renders. `columns` overrides the photography grid, else it is derived from image
   count (≤2 → one column, 4 → two-up, otherwise three-up). `cover.<ext>` is a card-only image.
+- **Slugs carry no `-1` suffix.** Three did, out of the Cargo export; they are renamed with `301`
+  redirects in `netlify.toml`. A slug rename is TWO renames — the content file and the matching
+  directory under `src/assets/projects/`, which is how images are keyed. `CD-005`.
 - **Featured set is 4**; all 14 projects get a page. Design questions are optional and Bryan's.
 
 ## Figma
@@ -546,7 +550,7 @@ current palette).
 
 # Decision index
 
-76 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+77 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
@@ -554,6 +558,7 @@ history, never to decide what to do next.** Full text in
 |---|---|---|
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
 | [`DF-007`](docs/decisions-archive.md#df-007) | Handover: what this chat knew that no file held | |
+| [`CD-005`](docs/decisions-archive.md#cd-005) | Art replaces Fine Art, Exhibition returns, slugs lose the Cargo suffix. Bryan's call. | |
 | [`CD-004`](docs/decisions-archive.md#cd-004) | Links are undecorated; an underline is a state. Bryan's call. | |
 | [`CD-003`](docs/decisions-archive.md#cd-003) | Consolidated to one chat; DF-005 finished, DF-006 built, disciplines settled. | |
 | [`DF-006`](docs/decisions-archive.md#df-006) | The PLAY label moves below the image | |

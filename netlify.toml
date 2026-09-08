@@ -32,3 +32,26 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# 301s for the three slugs that carried a "-1" suffix out of the Cargo export
+# (`archive/content/` still shows `art-1.md`, `privacy-policy-1.md`). The suffix was an
+# export artifact, never a decision, and the names are cleaner without it — but all three
+# URLs were live and returning 200, so they get permanent redirects rather than 404s.
+# Anyone holding a link, and any search index, follows through to the new address.
+[[redirects]]
+  from = "/work/represent-1"
+  to = "/work/represent/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/work/resemblance-1"
+  to = "/work/resemblance/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/work/double-exposed-1"
+  to = "/work/double-exposed/"
+  status = 301
+  force = true

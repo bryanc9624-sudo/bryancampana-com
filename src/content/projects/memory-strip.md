@@ -3,7 +3,7 @@ title: Memory Strip
 year: 2019
 completed: "2019"
 discipline: "New Media"
-keywords: ["New Media"]
+keywords: ["New Media", "Art"]
 scope: Video work exploring the connection between body movement and sensory information.
 designQuestion: null
 medium: "Video, Color, Sound, 03.25 min."

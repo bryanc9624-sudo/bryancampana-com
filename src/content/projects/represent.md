@@ -3,7 +3,7 @@ title: "re:present"
 year: 2022
 completed: "August 2022"
 discipline: "Exhibition Design"
-keywords: ["Identity", "Digital", "Fine Art"]
+keywords: ["Art", "Exhibition"]
 scope: Identity and open call campaign for a digital exhibition at New Media Artspace.
 designQuestion: null
 medium: null

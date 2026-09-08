@@ -1,3 +1,77 @@
+<a id="cd-005"></a>
+### CD-005 · 2026-09-08 — Art replaces Fine Art, Exhibition returns, slugs lose the Cargo suffix. **Bryan's call.**
+
+**Status:** Accepted
+
+Five things, cleared in one pass so the board is empty before the next batch.
+
+**1. `Fine Art` becomes `Art`, and it is applied more widely. This reverses `D-059`.** That entry
+argued `Art` beside `Photography` and `New Media` was a category error, since those are also art.
+Bryan overruled it on the ground that **none of the work is fine art except the letterpress** — so
+the precise word was precise about the wrong thing. `Art` is now the category for work made as
+art rather than commissioned as design.
+
+**2. `Exhibition` returns**, recovered from the `Exhibition Design` that the original consolidation
+folded into `Identity`. `represent` and `resemblance` are exhibitions and now carry two keywords
+each.
+
+**The set, and what moved:**
+
+| Keyword | Count | Change |
+|---|---|---|
+| `Art` | 6 | was `Fine Art` 3 — gains the three video works |
+| `Photography` | 4 | unchanged |
+| `New Media` | 3 | unchanged |
+| `Exhibition` | 2 | new |
+| `Identity` | 2 | was 4 — loses `represent` and `resemblance` |
+| `Signage` | 2 | unchanged |
+| ~~`Digital`~~ | 0 | **retired** — it was only ever on `represent`, which now carries Art + Exhibition |
+
+**Still seven links, and it got smaller, not bigger.** `DF-005` measured the previous set at 815px
+with 80px of headroom and called it full. This one measures **804px** — `Art` and `Exhibition` cost
+less than `Fine Art` and `Digital` did. Three mobile rows at 390px, no overflow, unchanged.
+
+**Left for Bryan:** the four photography projects are art too, and are not tagged `Art`. Tagging
+them would take it to 10 of 14, at which point the filter stops discriminating — a link matching
+most of the work does not narrow anything. Recommended against, but it is an editorial call.
+
+**3. The `-1` slugs are gone.** `represent-1`, `resemblance-1` and `double-exposed-1` were **Cargo
+export artifacts**, not decisions — `archive/content/` still carries `art-1.md` and
+`privacy-policy-1.md` from the same export. Renamed to `represent`, `resemblance`,
+`double-exposed`.
+
+**All three URLs were live and returning 200**, so they get `301` redirects in `netlify.toml`
+rather than becoming 404s. Anyone holding a link, and any search index, follows through.
+
+**A trap this hit, worth recording:** project images are keyed by the **directory name** under
+`src/assets/projects/`, which has to match the slug. Renaming the content files alone dropped
+images from **14/14 to 11/14** — silently, with a green build and passing tests. `npm run todos`
+caught it in one line. The asset directories were renamed to match. **Slug renames are two
+renames, not one.**
+
+**4. Three `FilterLink` fills in Figma rendered black.** Flagged in `CD-002` and reported fixed by
+the data — `boundVariables` said `color/fg` and `color/muted` on all four nodes, which is what an
+audit script checks and what `DF-004`'s audit passed on. **The pixels disagreed.** Rendering the
+component at 8x showed both `ALL` and `14` in pure black.
+
+Re-binding with `setBoundVariableForPaint` and reassigning the returned paint — the documented
+correct call — did not change the render either. What fixed it was setting the paint's literal
+colour to the variable's resolved value **as well as** binding it. Now correct in both the data
+and the render, confirmed by screenshot.
+
+**The general lesson, which is `DF-005`'s own and cost two attempts to relearn:** a binding that
+reports as present is not a binding that paints. Some defects are invisible to inspection and
+visible only in pixels. Screenshot the node.
+
+**5. Two items struck from the board at Bryan's direction.** The 14 design questions — optional
+since `D-023`, not being developed, off the list rather than carried. And the Netlify downgrade
+reminder from `D-052` — his to handle, not tracked here. Neither is rejected; both are simply not
+this project's work.
+
+**Also:** the About contact line reads `Based in New York` rather than `Based in New York City`.
+It still sits alongside the biography's *"Lives and works in Queens, New York"*, which Bryan is
+content with — the block is general, the biography is specific.
+
 # Decisions archive
 
 The full dated log for bryancampana.com. **This is history, not the contract.**

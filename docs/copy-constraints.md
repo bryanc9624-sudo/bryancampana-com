@@ -35,29 +35,28 @@ rows and pushed the first project roughly 700px down the page, and fixing it mea
 rewriting the vocabulary rather than the layout. A 22-character keyword cannot be designed
 around; it can only be shortened.
 
-**Current set, measured:**
+**Current set, measured 2026-09-08** after `CD-005` — `Fine Art` became `Art`, `Exhibition`
+returned and `Digital` retired. Uppercase, as the filter renders:
 
-| Label | Width |
-|---|---|
-| `Photography` | 98px |
-| `New Media` | 85px |
-| `Identity` | 61px |
-| `Signage` | 61px |
-| `Fine Art` | 60px |
-| `Digital` | 49px |
-| `All` | 21px |
+| Label | Label width | With count and gap |
+|---|---|---|
+| `PHOTOGRAPHY` | 124px | 140px |
+| `EXHIBITION` | 101px | 117px |
+| `NEW MEDIA` | 96px | 113px |
+| `IDENTITY` | 79px | 95px |
+| `SIGNAGE` | 75px | 91px |
+| `ART` | 32px | 48px |
+| `ALL` | 30px | 56px |
 
-**Re-measured 2026-09-07** after the filter moved to the uppercase eyebrow tier (`DF-005`).
-Uppercase at 15px with 8% tracking costs more per character than sentence case at 17px, so the
-row grew **17%: 696px → 813px**. Still one line on desktop, still three rows at 390px — but
-usable space across three rows is about 893px, so headroom fell from ~197px to **80px**.
+**Row total: 804px.** One line on desktop, three rows at 390px, no overflow.
 
-An average keyword plus its count and gaps costs about **122px**. **So the set is full at seven
-links.** Renaming inside 14 characters is still free; **adding an eighth keyword pushes the
-filter to four rows and needs Design to re-measure first.**
+**The set got cheaper, not more expensive, while gaining a keyword.** `DF-005` measured the
+previous seven links at 813px and called the set full; swapping `FINE ART` (76px) and `DIGITAL`
+(67px) for `ART` (32px) and `EXHIBITION` (101px) came out 9px ahead. Headroom across three mobile
+rows is about 893px, so roughly **89px** remains against ~122px for an average keyword.
 
-Measured per label, uppercase: `PHOTOGRAPHY` 123px · `NEW MEDIA` 96px · `IDENTITY` 78px ·
-`FINE ART` 76px · `SIGNAGE` 74px · `DIGITAL` 67px · `ALL` 29px.
+**So the set is still full at seven links.** Renaming inside 14 characters is free; an eighth
+keyword pushes the filter to four rows and needs re-measuring first.
 
 ---
 

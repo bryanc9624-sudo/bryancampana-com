@@ -3,7 +3,7 @@ title: The City That Slept
 year: 2019
 completed: "2019"
 discipline: "New Media"
-keywords: ["New Media"]
+keywords: ["New Media", "Art"]
 scope: Collaborative video artwork on disorientation during the COVID-19 pandemic.
 designQuestion: null
 medium: "Video, Color, 06:38 min."
