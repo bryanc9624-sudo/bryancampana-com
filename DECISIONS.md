@@ -346,13 +346,14 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 # Decision index
 
-60 decisions. **⚠ means the entry is superseded or partly superseded — read it for
+61 decisions. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
 | ID | Decision | Status |
 |---|---|---|
-| [`D-060`](docs/decisions-archive.md#d-060) | Build budget is 1,000 credits a cycle, not 300. Code and Deploy. | |
+| [`D-061`](docs/decisions-archive.md#d-061) | Build budget is 1,000 credits a cycle, not 300. Code and Deploy. | |
+| [`D-060`](docs/decisions-archive.md#d-060) | Contact consolidates on About; header baseline locked; counts drop to the baseline. | |
 | [`D-059`](docs/decisions-archive.md#d-059) | The final six keywords, and a routed item that was destroyed and restored. | |
 | [`D-058`](docs/decisions-archive.md#d-058) | Shipped. First deploy ran, and the domain was cut over to Netlify. | |
 | [`D-057`](docs/decisions-archive.md#d-057) | Muted retuned and the nav gains a weight cue, in code. Code and Deploy. | |
