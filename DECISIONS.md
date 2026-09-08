@@ -10,6 +10,25 @@ All three live in this folder. Two write to it; the third audits it — see the 
 | **Content and Copy** | The words — `src/content/**` exclusively, prose inside `.astro` pages, `DESIGN-QUESTIONS.md`, `CONTENT-TODO.md`. **Does not use this ledger at all** — it edits source files directly, the way Bryan does, and the other chats adapt to what they find. Constraints it works inside: `docs/copy-constraints.md` | The content files. **Never this file.** |
 | **Oversight** | Nothing. Audits the other two against the repo and reports to Bryan. Read-only on code and on both chats' sections. Charter: `docs/oversight-charter.md` | The "Sync audits" section below, and nothing else |
 
+## ⚠ The chat structure is being consolidated — 2026-09-07
+
+Bryan is folding the separate chats into one. **Most of this file's coordination machinery exists
+only because several chats wrote to it concurrently**, and with one writer it is dead weight that
+will mislead rather than help. What survives and what does not:
+
+**Still worth keeping with one chat:**
+- **Current state** — this is the contract, and its value does not depend on how many chats exist.
+- **Do not reopen** — the record of what was rejected and why. The most expensive thing to lose.
+- **A decision is two writes** (rule 11): the archive entry *and* the Current state update.
+  This is what stopped the file becoming 1,863 lines of unresolvable history.
+- **Archive entries are immutable; supersede rather than edit** (rule 11a).
+- **Re-read a section at write time** (rule 9a) — the cause of the worst error made here.
+
+**Dead weight once there is one chat:** the ownership table, rule 2 routing, rule 9 section
+ownership, the per-chat id prefixes of rule 11b, and both "Open decisions" sections as separate
+inboxes. Collapse them rather than leaving them to describe a structure that no longer exists —
+a file that lies about its own process is the failure this ledger was restructured to fix.
+
 ## The rules
 
 1. **Read this file before asking Bryan anything.** If the answer is here, use it.
@@ -209,6 +228,11 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 - **The keyword filter is the Eyebrow tier**: uppercase, 15px, 8% tracking. **Label and count are
   the same size and weight and are separated by colour alone** — label `--color-fg`, count
   `--color-muted`. Not by size or a raised position, which is what they used before.
+- **VideoFacade is image-then-label, not label-over-image.** The `PLAY` label sits **below** the
+  ground in `--color-fg`, `--color-accent` on hover, no underline — the whole facade is the
+  target, the same reasoning as card titles. Text over a photograph has no derivable contrast;
+  below it, the label is on paper and measures 15.42:1 light and 19.45:1 dark like everything
+  else. See `DF-006`.
 - **VideoFacade's ground is `--color-fg` (ink), not grey** — grey is this site's placeholder
   colour, so a grey video block reads as a missing image rather than something pressable.
 
@@ -231,6 +255,38 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 - **Featured set is 4**; all 14 projects get a page. Design questions are optional and Bryan's.
 
 ## Figma
+
+**Node ids, so nothing has to be hunted for:** `SiteHeader` `16:49` · `SiteFooter` `16:50` ·
+`ProjectCard` `15:23` · `Eyebrow` `17:50` · `FactPair` `17:52` · `FilterLink` `29:62` ·
+`VideoFacade` `100:2` · `Placeholder` `13:5`. Landing desktop `19:2` · work index desktop
+`30:130` (its `FilterBar` `30:138`) · About desktop `35:183` · work index mobile `38:35`
+(`FilterBar` `38:43`) · About mobile `41:159`.
+
+**How to check Figma is build-ready — four queries, all via `use_figma`.** Run these after any
+substantial change; each has caught a real defect that a screenshot did not:
+
+1. **Text nodes with no `textStyleId`** — unstyled text drifts silently.
+2. **Solid fills or strokes with no `boundVariables.color`** — this found a `#000000` eyebrow
+   that looked plausibly dark in every render, and 74 stray white frame fills.
+3. **Text styles not bound to both `fontFamily` and `fontSize`** — an unbound style stops
+   following a variable change.
+4. **Variables with no WEB `codeSyntax`** — those have no counterpart in `tokens.css`.
+
+Clean as of 2026-09-07: 0, 0, 0, 0 across all three pages — 8 components, 13 styles, 30
+variables, 9 desktop and 9 mobile frames.
+
+**Figma API traps that cost real time here:**
+
+- `layoutMode` **cannot be overridden on an instance.** It silently keeps the parent's direction
+  while accepting the spacing change. Responsive direction changes need a variant axis.
+- `textDecoration` is a property of the **text style**, not just the node. Setting it on a styled
+  node appears to work and resolves back from the style on the next read.
+- `figma.createAutoLayout()` adds an opaque **white fill** by default; `figma.createText()`
+  defaults to **black**, and applying a text style sets type but never colour. Bind both
+  explicitly or they enter the file unbound.
+- **Read state back after every write.** A write's return value is not evidence — it reports what
+  was set, not what resolved.
+
 
 **Figma and the code are 1:1 on VALUES and STRUCTURE, and deliberately not on BEHAVIOUR.**
 Read this before "fixing" code to match a drawing — `DF-004` has the full reasoning.
@@ -359,29 +415,8 @@ Decided *against*, with the reason. Re-raising these costs someone a redo of rej
       longer can — `D-063` moved `src/content/**` to Content and Copy the same day. The edits go
       to Bryan, who takes them to that chat.
 
-- [ ] **The video facade's ink ground never renders any more, and the PLAY label was coloured
-      for it.** *Raised by Code and Deploy 2026-09-07 from the built output; the call is
-      Design's.*
-
-      `VideoFacade` has two states: a poster still, or `--color-fg` ink where no still exists.
-      **All three video projects now have posters** — `memory-strip`, `transmute` and
-      `the-city-that-slept` — so `.video__ground` is never painted on the live site. Bryan
-      supplied the stills at some point; the ledger still describes two of three as having none.
-
-      The consequence is the label. `PLAY` is `--color-bg`, chosen against the ink ground, where
-      it is 15.42:1 light and 19.45:1 dark. Over a photograph it has no guaranteed contrast at
-      all — it is near-black on an image in dark mode and white on an image in light, and the
-      image decides. Nothing measured this because there was always assumed to be a flat ground
-      underneath.
-
-      Not a regression and not urgent: it has been this way since posters were added. But it is
-      the one place on the site where a contrast figure cannot be derived, and the site is
-      otherwise WCAG AA throughout by construction.
-
-      **Design's to answer** — a scrim, a fixed dark-on-light treatment regardless of scheme, or
-      a considered "the stills are all dark enough, leave it". Code and Deploy will build
-      whichever. `.video__ground` stays either way: it is the fallback if a project ever ships
-      without a still.
+- [x] **RESOLVED 2026-09-07 — the label moves below the image. See `DF-006`.** Drawn on the
+      `VideoFacade` component, so every instance follows.
 
 Bryan's, not this chat's: the 14 design questions.
 
@@ -558,13 +593,15 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 # Decision index
 
-70 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+72 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
 | ID | Decision | Status |
 |---|---|---|
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
+| [`DF-007`](docs/decisions-archive.md#df-007) | Handover: what this chat knew that no file held | |
+| [`DF-006`](docs/decisions-archive.md#df-006) | The PLAY label moves below the image | |
 | [`DF-005`](docs/decisions-archive.md#df-005) | Filter takes the eyebrow tier; the violet becomes hover-only | |
 | [`DF-004`](docs/decisions-archive.md#df-004) | Figma is build-ready; where it is 1:1 with code and where it is not | |
 | [`DF-003`](docs/decisions-archive.md#df-003) | One eyebrow, two contexts — the type is implemented twice | |

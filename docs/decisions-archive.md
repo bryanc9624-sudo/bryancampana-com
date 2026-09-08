@@ -17,6 +17,95 @@ IDs are chronological: `D-001` is the oldest.
 
 ---
 
+<a id="df-007"></a>
+### DF-007 · 2026-09-07 — Handover: what this chat knew that no file held. **Design and Figma, closing.**
+
+**Status:** Accepted
+
+Written on Bryan's instruction while consolidating the chats. Everything here existed only in
+conversation until now.
+
+**1. The chat structure is changing, and most of this file's process is about to describe
+something that no longer exists.** A banner at the top of `DECISIONS.md` sets out which rules
+survive one writer and which are dead weight. The short version: **Current state**, **Do not
+reopen**, and rules 9a, 11 and 11a earn their place regardless. The ownership table, rule 2
+routing, rule 9 section ownership and the per-chat ids of rule 11b do not.
+
+**2. Bryan dislikes in-between weights, and a two-weight system is one import away.** He said so
+directly, tried it (`D-061`), and reverted it (`D-064`) because it broke — but **it broke for a
+reason that would not recur.** He asked for **Serif** 500 and 700, which ship as static
+per-weight files and were not imported. A 400/700 system needs only `@fontsource/ibm-plex-serif/700.css`
+added; the Sans is a variable file spanning `100 700` and needs nothing. If it is ever revisited:
+`Display / XL` → Regular, `Title / Large` / `Wordmark` / `Body / Strong` → Bold, `Label` →
+Regular, and `Body / Medium` deletes entirely, its role collapsing into `Body / Strong`.
+
+**3. The recurring failure on this project, stated plainly: duplicated values do not stay
+equal, and the duplication is invisible until one side changes.** Four instances in a day —
+Foundations swatch captions showing pre-plum greys while the variables were correct; `tokens.css`
+naming a colour table as its source of truth while four of that table's values had moved; the
+eyebrow type written out twice in CSS; and the accent applied to four resting elements the code
+had drifted on. **All four were found by comparing two things that should have been one, never by
+reading either alone.** Two fixes came out of it and both are worth keeping: the Foundations
+swatch captions now show `var(--color-name)` rather than a hex, because the var name is the
+contract and does not change when a value does; and `docs/copy-constraints.md` must be re-measured
+after any text-style change, because size, weight, family and tracking all move it.
+
+**4. Figma working practice** — node ids, the four build-readiness queries, and four API traps —
+is now recorded in `DECISIONS.md` under **Current state → Figma** rather than left in this chat.
+
+**5. Content facts that moved under decisions.** All three video projects have poster stills now;
+the ledger described two of three as having none, which is what made `DF-006` necessary. Worth
+generalising: **several decisions here were correct when written and were invalidated by content
+changing underneath them**, not by anyone being wrong. `D-062`'s discipline swap, the video
+facade, and the keyword consolidation all have this shape.
+
+**6. Still genuinely open, for whoever holds the work next.** The 14 design questions, which are
+Bryan's alone. The two `discipline` strings from `DF-001` — `Art` and `Visual Communications` —
+which need Content and Copy. And the two items in Code and Deploy's list: the accent corrections
+and the filter restyle.
+
+<a id="df-006"></a>
+### DF-006 · 2026-09-07 — The PLAY label moves below the image. **Design and Figma. Raised by Code and Deploy.**
+
+**Status:** Accepted
+
+**The label sits below the ground, not over it.** `--color-fg` at rest, `--color-accent` on hover,
+**no underline** — the whole facade is the target, which is the same reasoning that keeps
+underlines off card titles.
+
+**Why it needed changing.** `PLAY` was `--color-bg` — a token meaning *the page's ground* — but
+the label does not sit on the page's ground. It sits on a photograph. That was correct when it
+was written: two of three videos had no still, so the ink block **was** the ground. All three have
+posters now, so the exception became the rule. **The decision did not rot; the content moved
+underneath it.**
+
+Over a photograph the label had no derivable contrast — near-black on an image in dark mode,
+white on an image in light, with the image deciding. It was the only element on the site where a
+contrast figure could not be computed.
+
+**Below the image it is on paper and measures like everything else:** 15.42:1 light, 19.45:1 dark.
+
+**Why not a scrim, which was the obvious alternative.** Every other option adds vocabulary this
+site does not have. A translucent scrim introduces transparency that appears nowhere else, and it
+would darken Bryan's photographs — which the entire colour system was tuned to avoid fighting. A
+text-shadow is the same problem. A solid block behind the label reintroduces the rectangle that
+the chip-to-text-link revert deliberately removed. And the ledger already rejected inventing an
+icon here on the grounds that *"three videos do not justify inventing one"* — the same argument
+applies to inventing an overlay treatment.
+
+**What it becomes instead is something the site already has:** image, then a text link beneath.
+Structurally identical to a project card. Nothing added, contrast guaranteed, and the hover accent
+that `VideoFacade` already carried now reads correctly as a link state — which is what it always
+was.
+
+**`ground` stays `--color-fg`.** A project shipped without a still still gets a deliberate ink
+block rather than a gap, and the label reads the same in both cases.
+
+**Structural note for Code and Deploy:** the component is now a vertical stack — `ground` (the
+poster or the ink block) then `Label`, 8px apart. The facade grew from 558px to 584px at the
+drawn width.
+
+
 <a id="df-005"></a>
 ### DF-005 · 2026-09-07 — The keyword filter takes the eyebrow tier. The violet becomes hover-only. **Bryan's call.**
 
