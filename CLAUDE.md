@@ -146,3 +146,24 @@ Graphic designer, new to git and the terminal, learns fast, watches cost.
 - **Verify, then report** — not the other way round. Read state back after a
   change and say what you actually observed.
 - **Own a mistake in one sentence and move on.** Hedging costs more than the error.
+
+## Agent skills
+
+Configuration for the `mattpocock-skills` engineering skills. These files are
+read by the skills, not by the build. Nothing here changes what ships.
+
+### Issue tracker
+
+GitHub Issues on `bryanc9624-sudo/bryancampana-com`, via the `gh` CLI.
+See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The five default labels, unchanged: `needs-triage`, `needs-info`,
+`ready-for-agent`, `ready-for-human`, `wontfix`.
+See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context. **There is no `docs/adr/` and there should not be** — decisions
+live in `DECISIONS.md`. See `docs/agents/domain.md`.
