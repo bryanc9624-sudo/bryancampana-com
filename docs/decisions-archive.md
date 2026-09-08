@@ -17,6 +17,58 @@ IDs are chronological: `D-001` is the oldest.
 
 ---
 
+<a id="df-001"></a>
+### DF-001 · 2026-09-07 — Discipline strings settled; decision ids become per-chat
+
+**Status:** Accepted
+
+Two things, one raised by Code and Deploy and one caused by this chat.
+
+**1. `discipline` must not carry a retired keyword string.**
+
+Raised from the deployed page: `photopolymer-letterpress` shows `Discipline: Art` while its
+filter link says `Fine Art`, and `dura-architectural-signage` shows
+`Discipline: Visual Communications` — the exact string `D-059` retired.
+
+**The rule.** `discipline` is a prose description of the practice. It **may** coincide with a
+keyword where the practice genuinely has that name — seven of fourteen already do, `Photography`
+and `New Media` — and that is not a defect. **A *retired* string is different.** To a reader who
+has just clicked `Fine Art` in the filter and landed on a page reading `Discipline: Art`, the site
+is contradicting itself about its own vocabulary.
+
+`Art` fails on a second count as well: it is the category error `D-059` names. Beside
+`Photography` and `New Media`, which are themselves art, `Art` claims a superset. That reasoning
+holds in any field it appears in.
+
+**What replaces them is copy, not vocabulary**, so this chat recommends rather than decides:
+`Printmaking` for the letterpress, which names the practice and is more informative than either
+`Art` or `Fine Art`; `Signage & Wayfinding` for Dura, matching the register `590 Madison Ave`
+already uses. Content and Copy's to write.
+
+**Routing correction:** the item said Code and Deploy would make the edits. `D-063` moved
+`src/content/**` to Content and Copy the same day, so they no longer can.
+
+**2. Decision ids become per-chat: `DF-###` and `CD-###`.**
+
+Code and Deploy raised this after resolving the **second** duplicate id in an hour — `D-060` and
+then `D-061` were each allocated twice. **This chat caused it**: the `D-NNN` scheme was invented
+here during the ledger restructure and shipped without an allocation rule.
+
+Their diagnosis is right and worth keeping verbatim in substance: *a sequential id has no safe
+allocation point for concurrent writers — claiming it in the same commit that uses it still
+races.* This is not a carefulness problem. Two chats both computing `max(id) + 1` against a file
+they both write will collide whenever they work in the same hour, and today they did, twice.
+
+**A per-chat prefix has no shared counter to contend for**, so the failure cannot recur. Recorded
+as rule 11b. `D-001`–`D-065` are frozen as the shared sequence; nobody allocates another. This
+entry is `DF-001` rather than `D-066` so the convention starts by demonstrating itself.
+
+The renumbering cost fell entirely on Code and Deploy — the build-budget entry took three
+different numbers in one day — because its references were theirs to update while the colliding
+entries were referenced from Figma work they could not see. That was the right call each time and
+it should not have been necessary twice.
+
+
 <a id="d-065"></a>
 ### D-065 · 2026-09-07 — The build budget is 1,000 credits a cycle, not 300. **Code and Deploy.**
 

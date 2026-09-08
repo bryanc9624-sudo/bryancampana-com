@@ -48,9 +48,17 @@ That removes the worst failure mode but not all of them, so:
     month. See "Hosting and deploys" below for the numbers.
 
 11. **A decision is TWO writes, and both belong in the same commit.**
-    (a) Append a full dated entry to the top of `docs/decisions-archive.md`, with the next
-    `D-NNN` id and `**Status:** Accepted`.
+    (a) Append a full dated entry to the top of `docs/decisions-archive.md`, with the next id
+    **in your own chat's sequence** and `**Status:** Accepted`.
     (b) Update the affected "Current state" section here to say what is now true.
+
+11b. **Ids are per chat, never shared: `DF-###` for Design and Figma, `CD-###` for Code and
+    Deploy.** Take the next number in *your* prefix only; never count across the whole file.
+    `D-001`–`D-065` are the shared sequence used before 2026-09-07 and are frozen — do not
+    allocate another. This exists because a single sequence collided twice in one hour: two
+    chats both reading `max(id)+1` from a file they both write will race, and claiming the
+    number in the same commit that uses it does not prevent it. A prefix has no shared
+    counter to contend for. See `DF-001`.
     Skipping (b) is how this file previously grew to 1,863 lines of history nobody could
     resolve into an answer.
 
@@ -292,36 +300,29 @@ Decided *against*, with the reason. Re-raising these costs someone a redo of rej
 > than quietly repaired because it is the exact failure the restructure was meant to prevent —
 > acting on a value copied from a source that had since moved on.
 
-- [ ] **`discipline` still shows the two strings `D-059` retired.** *Raised by Code and Deploy
-      2026-09-07 from the deployed page; the vocabulary is Design's to settle.*
+- [x] **RESOLVED 2026-09-07 — both strings change. See `DF-001`.** The rule, not the words:
+      **`discipline` is a prose description of the practice, and it may coincide with a keyword
+      where the practice genuinely has that name — but it must never carry a string the keyword
+      vocabulary has retired.** Seven of fourteen disciplines already equal their keyword
+      (`Photography`, `New Media`), and that is fine. A *retired* string is different: to a reader
+      who has just used the filter, it reads as the site contradicting itself.
 
-      `D-059` settled the **keyword** vocabulary and the content now matches it. But `discipline`
-      is a **separate frontmatter field**, rendered as a visible `Discipline` row in the facts
-      block on every project page, and it was never part of the consolidation. Two projects now
-      contradict the filter that links to them:
+      So `Art` and `Visual Communications` both go. What replaces them is **copy, not vocabulary**,
+      and `src/content/**` belongs to Content and Copy as of `D-063` — so this is theirs to write,
+      not Code and Deploy's to edit. My recommendations, to accept or improve:
 
-      | Project | Filter says | Facts block says |
-      |---|---|---|
-      | `photopolymer-letterpress` | Fine Art | **Discipline: Art** |
-      | `dura-architectural-signage` | Signage | **Discipline: Visual Communications** |
+      | Project | Now | Suggested | Why |
+      |---|---|---|---|
+      | `photopolymer-letterpress` | `Art` | **`Printmaking`** | Names the actual practice. More informative than either `Art` or `Fine Art`, and it is what the work is |
+      | `dura-architectural-signage` | `Visual Communications` | **`Signage & Wayfinding`** | Matches the register of `590 Madison Ave`, and describes the work the scope line already describes |
 
-      Both are live now. `Art` is the exact category error `D-059` names — "`Art` beside
-      `Photography` and `New Media` is a category error" — and `Visual Communications` is the
-      exact string it retired for being the longest label in the set.
+      **Not a naming problem in one case.** `Art` is also the category error `D-059` names — beside
+      `Photography` and `New Media`, which are themselves art, it claims a superset. That reasoning
+      applies to any field it appears in, not just the filter.
 
-      **This may well be intentional and need no change.** `discipline` reads as a longer, prose
-      register than `keywords`: the other twelve include `Signage & Wayfinding, Code Signage` and
-      `Exhibition Design, New Media Art`, which are plainly descriptions rather than filter
-      labels. If the two registers are meant to differ, these two are simply the cases where the
-      prose happens to be one word and collides with a retired keyword. Say so and it closes.
-
-      **What is not in question:** `discipline` is display-only. Layout is selected by the
-      separate `layout` field (`src/pages/work/[slug].astro:36` — "Layout is chosen by its own
-      field, never inferred from content"), so changing a `discipline` string cannot move a
-      project between templates. It is a one-line content edit per project with no code change,
-      whichever way it goes.
-
-      Code and Deploy will make the edits once Design names the strings. Nothing changed.
+      **Correction to the routing:** the item says "Code and Deploy will make the edits". They no
+      longer can — `D-063` moved `src/content/**` to Content and Copy the same day. The edits go
+      to Bryan, who takes them to that chat.
 
 Bryan's, not this chat's: video poster stills (the ink ground is a deliberate state, not a gap)
 and the 14 design questions.
@@ -366,12 +367,13 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 # Decision index
 
-65 decisions. **⚠ means the entry is superseded or partly superseded — read it for
+66 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
 | ID | Decision | Status |
 |---|---|---|
+| [`DF-001`](docs/decisions-archive.md#df-001) | Discipline strings, and per-chat decision ids | |
 | [`D-065`](docs/decisions-archive.md#d-065) | Build budget is 1,000 credits a cycle, not 300. Code and Deploy. | |
 | [`D-064`](docs/decisions-archive.md#d-064) | Weights reverted; the eyebrow keeps its ink. Bryan's call. | |
 | [`D-063`](docs/decisions-archive.md#d-063) | A fourth chat for copy, which does not use this ledger. `src/content/` moves to it. | |
