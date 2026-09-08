@@ -150,7 +150,7 @@ neither chat plans against them:
       **Code and Deploy: ready to restyle.** Poster question answered: where a still exists it
       replaces the fill; where none exists the ink block stands on its own as a deliberate
       state, so no fallback to the first project photograph is needed.
-- [ ] **Video poster stills** *(Bryan's, not blocking — the ink ground is a deliberate state).* Related but Bryan's, not Design's: the three video projects
+- [x] **CLOSED as a design item 2026-09-07 — nothing here is waiting on design.** The visual answer is settled: where a still exists it replaces the fill; where none exists the ink ground stands on its own as a deliberate state, not a gap. Supplying stills is Bryan's, and dropping one in needs no design work — it is a content field. Removed from this chat's list so it stops reading as outstanding design. Original: **Video poster stills** *(Bryan's, not blocking — the ink ground is a deliberate state).* Related but Bryan's, not Design's: the three video projects
       have no dedicated poster frame. Currently reusing the first project photograph, and
       two of the three have no photographs at all, so they show a grey box.
 
@@ -364,6 +364,65 @@ system exists, not of what the values are.
 ---
 
 ## Settled
+
+### 2026-09-07 — Closing out Design and Figma's open list before launch. **Three items, three different closes.**
+
+Bryan asked for this chat's side to be clean ahead of a deploy. Nothing below changes the built
+site; all of it is Figma-side or scope.
+
+**1. Unbound white fills — removed. 74 nodes.**
+
+Layout frames across the file carried hardcoded `#FFFFFF` fills: `nav`, `legal`, `intro`, `grid`,
+`row`, `article`, `rail (sticky)`, `facts`, `body`, `media`, `prose`, `section`, `about`,
+`portrait`, `text`, `links`, `image set`, `figure`, `h1`, `FilterBar`. Invisible on white, and
+pure noise — a container should not paint a ground.
+
+Cleared on all three working pages, leaving the top-level page frames (which legitimately hold the
+ground) and every variable-bound fill untouched. **Verified by screenshot: the landing page is
+pixel-identical before and after.** This is also what made the dark-mode question answerable —
+under a theme switch those 74 fills would have rendered as white blocks over everything.
+
+**2. The "More work" control — decided against for launch. Design and Figma's call.**
+
+Logged when previous/next navigation was removed: *"a 'More work' control offering two or three
+projects sharing a keyword would give the intent without the downside. Not designed."* It stayed
+open on the grounds that it was a better version of a thing that had been removed.
+
+**Not building it, and not because of time.** With 14 projects, every project page is one click
+from a work index that is already filterable by exactly the axis such a control would use —
+keyword. A "more work" rail would be a second, worse route to the same page: three projects chosen
+by a rule instead of fourteen chosen by the reader. It duplicates the filter's job on a catalogue
+too small to need two routes.
+
+Revisit if the work grows past roughly thirty projects, where scanning an index stops being
+pleasant and a curated tail starts earning its space. Recorded as a decision rather than a
+deferral so it is not re-raised as an oversight.
+
+**3. Figma is behind the code on photography column counts — documented, not redrawn.**
+
+`ProjectPhotography.astro` now derives a desktop column count from image count: **≤2 images → one
+column full width, 4 → two-up, otherwise three-up**, overridable per project by a `columns`
+frontmatter field (`shapes-and-colors` sets `1`). Figma's photography project page draws **two-up
+only**, which now describes just the four-image case.
+
+**Deliberately not redrawing it now.** Representing four column counts across two breakpoints is a
+real session's work, and the frames would need redrawing again the moment a project's image count
+changes — the layout is a *rule* in code, and Figma frames are instances of a rule, so they will
+always trail it.
+
+**What matters is that nobody mistakes the drawing for the spec.** So, explicitly:
+
+> **For photography galleries, the code is the source of truth, not Figma.** The Figma frame shows
+> one case. Do not "correct" the code back to two-up on the strength of it.
+
+Same applies to the sibling changes that landed in code and are not in Figma: full-width stacked
+one- and two-image sets, letterpress running image-first, and the `cover.<ext>` card convention.
+All are Bryan-approved and correct on the site.
+
+**Still open on this chat's side after the above: nothing that blocks a deploy.** The only
+outstanding design decision anywhere is `--color-muted`, which is implementation, routed to Code
+and Deploy, and listed in their section.
+
 
 ### 2026-09-07 — Muted is retuned, and the current nav item gains a weight cue. **Bryan's call. Applied in Figma.**
 
