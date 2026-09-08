@@ -37,7 +37,7 @@ const mid = cols === 1 ? '94vw' : '47vw'
 <article class="photo">
   <header class="photo__head">
     {showDraftFlag && d.draft && <p class="photo__draft">Draft — hidden when built</p>}
-    <p class="photo__eyebrow"><a href="/work">Work</a></p>
+    {/* D-062: no WORK eyebrow — see ProjectStandard. The foot link stays. */}
     <h1>{d.title}</h1>
     <p class="photo__scope">{d.scope}</p>
     {d.designQuestion && <p class="photo__question">{d.designQuestion}</p>}
@@ -78,12 +78,6 @@ const mid = cols === 1 ? '94vw' : '47vw'
 <style>
   .photo { display: flex; flex-direction: column; gap: var(--space-6); }
   .photo__head { margin-top: var(--space-6); max-width: var(--measure-prose); }
-  .photo__eyebrow {
-    font-family: var(--font-sans); font-weight: var(--weight-medium);
-    line-height: var(--leading-eyebrow);
-    margin: 0 0 var(--space-3); font-size: var(--size-sm);
-    text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--color-muted);
-  }
   .photo h1 { font-size: var(--size-2xl); margin-bottom: var(--space-3); }
   .photo__scope { font-size: var(--size-lg); line-height: var(--leading-snug); margin: 0; }
   /* --font-italic, not --font-body: this line is italic. See tokens.css. */
