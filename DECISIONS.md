@@ -42,8 +42,9 @@ That removes the worst failure mode but not all of them, so:
     failure mode git would otherwise have caught for you.
 12. **Builds cost money — tag them.** A push only triggers a Netlify build when the
     commit message contains `[deploy]`; `netlify.toml`'s `ignore` command skips the rest
-    before the build starts. Batch work, then tag one commit. Free tier is 300 credits
-    per cycle and the cycle runs the 7th to the 6th, not the calendar month.
+    before the build starts. Batch work, then tag one commit. The Personal plan is
+    1,000 credits per cycle and the cycle runs the 7th to the 6th, not the calendar
+    month. See "Hosting and deploys" below for the numbers.
 
 11. **A decision is TWO writes, and both belong in the same commit.**
     (a) Append a full dated entry to the top of `docs/decisions-archive.md`, with the next
@@ -175,6 +176,22 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 - **For photography galleries the code is the source of truth, not Figma.** Figma draws two-up,
   which is now only the four-image case. Do not "correct" the code to match the drawing.
 
+## Hosting and deploys
+
+- **Netlify, Personal plan** ($9/month, team `Nero`). **1,000 credits per cycle**, cycle runs
+  the **7th to the 6th** — not the calendar month. One concurrent build.
+- **A production build costs ~15 credits**, so a cycle buys roughly **65 builds**. Measured, not
+  quoted: the first deploy took 15.2 credits including bandwidth and compute. **Builds are the
+  entire cost** — bandwidth and compute together were 0.2.
+- **A build runs only when the commit SUBJECT STARTS WITH `[deploy]`.** Never put the tag in a
+  commit body. Check before pushing:
+  `git log -1 --pretty=%s | grep -q "^\[deploy\]" && echo BUILD || echo skip`
+- **Domain:** `bryancampana.com`, apex canonical, `www` 301s to it. DNS delegated to Netlify
+  (`dns1..4.p04.nsone.net`). Let's Encrypt certificate issued 2026-09-07 23:34 UTC.
+- **During a DNS cutover a check by hostname proves nothing** — it says only that *something*
+  answered. Pin the IP (`curl --resolve`, `openssl s_client -connect <IP>`) and read the
+  certificate's `notBefore`.
+
 ---
 
 # Do not reopen
@@ -278,12 +295,14 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 # Decision index
 
-58 decisions. **⚠ means the entry is superseded or partly superseded — read it for
+60 decisions. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
 | ID | Decision | Status |
 |---|---|---|
+| [`D-060`](docs/decisions-archive.md#d-060) | Build budget is 1,000 credits a cycle, not 300. Code and Deploy. | |
+| [`D-059`](docs/decisions-archive.md#d-059) | The final six keywords, and a routed item that was destroyed and restored. | |
 | [`D-058`](docs/decisions-archive.md#d-058) | Shipped. First deploy ran, and the domain was cut over to Netlify. | |
 | [`D-057`](docs/decisions-archive.md#d-057) | Muted retuned and the nav gains a weight cue, in code. Code and Deploy. | |
 | [`D-056`](docs/decisions-archive.md#d-056) | Closing out Design and Figma's open list before launch. Three items, three … | |
