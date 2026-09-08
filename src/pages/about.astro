@@ -15,18 +15,56 @@ import Placeholder from '../components/Placeholder.astro'
       <p>Before TPG he spent two years at Dura Architectural Signage, a fabricator, translating architects’ design intent into shop drawings and building the templates and drawing standards the shop worked from.</p>
       <p>He also keeps an art practice in photography and printmaking. His work has been shown at Treat Gallery, Dodomu Gallery, and the New Media Artspace.</p>
       <p>B.A. in Graphic Design, minor in New Media Arts, Baruch College (CUNY). Lives and works in Queens, New York.</p>
-      <ul class="about__links">
-        <li><a href="/resume.pdf" download>Download résumé (PDF)</a></li>
-        <li><a href="mailto:bryanc9624@gmail.com">Email</a></li>
-        <li><a href="https://www.linkedin.com/in/bryancampana/" rel="me noopener">LinkedIn</a></li>
-      </ul>
     </div>
+    {/* D-060: every way of reaching Bryan lives here now, and nowhere else — it left the
+        header nav and the footer. A heading rather than a styled paragraph, so the block
+        is reachable in the document outline; "Contact" is uppercased by CSS so the
+        accessible name stays a word rather than an acronym. */}
+    <aside class="about__contact">
+      <h2 class="about__label">Contact</h2>
+      <p class="about__where">Based in New York City</p>
+      <ul class="about__links">
+        {/* The address, not the word "Email". D-060: it is copyable, and it reads as an
+            invitation. Order is deliberate — résumé last, being a document rather than a
+            channel, but kept in this block because splitting it out makes two thin ones. */}
+        <li><a href="mailto:bryanc9624@gmail.com">bryanc9624@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/bryancampana/" rel="me noopener">LinkedIn</a></li>
+        <li><a href="/resume.pdf" download>Download résumé (PDF)</a></li>
+      </ul>
+    </aside>
   </div>
 </Base>
 
 <style>
-  .about { display: grid; gap: var(--space-5); margin-block: var(--space-6); }
+  .about { display: grid; gap: var(--space-5); margin-block: var(--space-6) var(--space-7); }
+  /* Two columns first. The contact block stays stacked under the biography here: at 40rem
+     a third column leaves roughly 118px a side once the two 64px gutters are taken, and
+     "Download résumé (PDF)" does not fit that. */
   @media (min-width: 40rem) { .about { grid-template-columns: 1fr 2fr; gap: var(--space-6); } }
+  /* Three columns, 1fr 2fr 1fr with 64px gutters — 316 / 632 / 316 on the 1392px content
+     width Figma draws. 64rem is where .grid--duo already splits, so the page has one
+     breakpoint vocabulary rather than two. */
+  @media (min-width: 64rem) { .about { grid-template-columns: 1fr 2fr 1fr; } }
+
   .about h1 { font-size: var(--size-2xl); margin-bottom: var(--space-4); }
-  .about__links { list-style: none; margin: var(--space-5) 0 0; padding: 0; display: grid; gap: var(--space-2); }
+
+  /* The Eyebrow TEXT STYLE, not the Eyebrow component — deliberately no rule. D-060: the
+     block is a column element, not a break in a flow of content, and a fourth rule on the
+     site would need a reason. Space separates it instead. Overrides the serif h2 default,
+     since this is a label tier rather than a title. */
+  .about__label {
+    font-family: var(--font-sans); font-weight: var(--weight-medium);
+    font-size: var(--size-sm); line-height: var(--leading-eyebrow);
+    text-transform: uppercase; letter-spacing: var(--tracking-wide);
+    color: var(--color-fg); margin: 0;
+  }
+  /* Mirrors the drawn structure: the block itself spaces its parts by 16, and the links
+     carry a further 24 of their own padding. So label→location is 16 and location→links
+     is 40 — the channels are set apart from the label pair rather than listed with it. */
+  .about__contact { display: grid; gap: var(--space-3); align-content: start; }
+  .about__where { color: var(--color-muted); margin: 0; }
+  .about__links {
+    list-style: none; margin: 0; padding: var(--space-4) 0 0;
+    display: grid; gap: var(--space-2);
+  }
 </style>
