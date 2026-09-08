@@ -1,7 +1,8 @@
 ---
 title: Memory Strip
-year: 2019
-completed: "2019"
+year: 2018
+month: 2
+completed: "February 2018"
 discipline: "New Media"
 keywords: ["New Media", "Art"]
 scope: Video work exploring the connection between body movement and sensory information.

@@ -1,3 +1,39 @@
+<a id="cd-009"></a>
+### CD-009 · 2026-09-08 — Every project is dated to the month. Three years were wrong. **Bryan's dates.**
+
+**Status:** Accepted
+
+Bryan dated the last five projects, and **three of them corrected the year, not just the month:**
+
+| Project | Was | Is |
+|---|---|---|
+| `photopolymer-letterpress` | undated | **January 2024** |
+| `the-city-that-slept` | 2019 | **May 2020** |
+| `memory-strip` | 2019 | **February 2018** |
+| `oscuro` | 2019 | October 2019 |
+| `transmute` | 2018 | December 2018 |
+
+**The letterpress moved from last to fourth**, and now opens the `Art` view — the same view whose
+ordering started this, where Bryan said the work he wanted to highlight was at the bottom. It was
+at the bottom because it had no date, not because anyone had ranked it there.
+
+`memory-strip` and `the-city-that-slept` were both carrying 2019 and were **two years apart**. A
+wrong year is invisible in a list sorted by year: the project sits somewhere plausible and nothing
+contradicts it. Only stating the month surfaced it.
+
+**All fourteen projects now carry a year and a month, and the sequence is strictly descending with
+no ties.** Two consequences worth recording:
+
+- The rules for missing dates — no `year` sorts last overall, no `month` sorts last within its
+  year — are now unexercised. They stay, because the next project starts undated.
+- **`order` is vestigial.** It survives as the final tiebreak and nothing reaches it, since no two
+  projects share a year and a month. Left in place rather than removed: it costs nothing and the
+  case it exists for is one duplicate date away.
+
+The `month`/`completed` guard from `CD-008` was carrying real load here — five `completed` strings
+changed in the same edit, and a mismatch on any of them would have failed the build's tests rather
+than shipping.
+
 <a id="cd-008"></a>
 ### CD-008 · 2026-09-08 — Month refines the sort. `month` and `completed` are guarded by a test. **Bryan's dates.**
 

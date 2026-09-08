@@ -1,7 +1,8 @@
 ---
 title: Oscuro
 year: 2019
-completed: "2019"
+month: 10
+completed: "October 2019"
 discipline: "Photography"
 keywords: ["Photography", "Art"]
 scope: Oscuro delves into the interplay of light and shadow, exploring the tension between opposing forces. Each image balances black and white, embodying an abstract, metaphysical energy.

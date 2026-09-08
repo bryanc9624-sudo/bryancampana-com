@@ -556,7 +556,7 @@ current palette).
 
 # Decision index
 
-80 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+81 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
@@ -564,6 +564,7 @@ history, never to decide what to do next.** Full text in
 |---|---|---|
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
 | [`DF-007`](docs/decisions-archive.md#df-007) | Handover: what this chat knew that no file held | |
+| [`CD-009`](docs/decisions-archive.md#cd-009) | Every project dated to the month; three years were wrong. | |
 | [`CD-008`](docs/decisions-archive.md#cd-008) | Month refines the sort; month and completed guarded by a test. | |
 | [`CD-007`](docs/decisions-archive.md#cd-007) | Projects sort by date, newest first. Bryan's call. | |
 | [`CD-006`](docs/decisions-archive.md#cd-006) | The photography is Art too. Bryan's call. | |

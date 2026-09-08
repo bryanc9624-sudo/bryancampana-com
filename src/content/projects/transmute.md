@@ -1,7 +1,8 @@
 ---
 title: Transmute
 year: 2018
-completed: "2018"
+month: 12
+completed: "December 2018"
 discipline: "New Media"
 keywords: ["New Media", "Art"]
 scope: Video work exploring how systems evolve through instability.
