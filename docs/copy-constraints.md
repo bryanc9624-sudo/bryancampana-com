@@ -45,15 +45,15 @@ returned and `Digital` retired. Uppercase, as the filter renders:
 | `NEW MEDIA` | 96px | 113px |
 | `IDENTITY` | 79px | 95px |
 | `SIGNAGE` | 75px | 91px |
-| `ART` | 32px | 48px |
+| `ART` | 32px | 58px (two-digit count) |
 | `ALL` | 30px | 56px |
 
-**Row total: 804px.** One line on desktop, three rows at 390px, no overflow.
+**Row total: 814px.** One line on desktop, three rows at 390px, no overflow.
 
 **The set got cheaper, not more expensive, while gaining a keyword.** `DF-005` measured the
 previous seven links at 813px and called the set full; swapping `FINE ART` (76px) and `DIGITAL`
 (67px) for `ART` (32px) and `EXHIBITION` (101px) came out 9px ahead. Headroom across three mobile
-rows is about 893px, so roughly **89px** remains against ~122px for an average keyword.
+rows is about 893px, so roughly **79px** remains against ~122px for an average keyword.
 
 **So the set is still full at seven links.** Renaming inside 14 characters is free; an eighth
 keyword pushes the filter to four rows and needs re-measuring first.

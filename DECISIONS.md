@@ -201,10 +201,11 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
   them — keyword label ≤ 14 characters, filter set ≤ 7 links, card scope ≤ 100 characters,
   project title ≤ 30 for one line, discipline ≤ 32. **Design owns that file and re-measures
   it after any text-style change**, since size, weight, family and tracking all move it.
-- **Seven keywords** — Art 6 · Photography 4 · New Media 3 · Exhibition 2 · Identity 2 ·
-  Signage 2. `Fine Art` and `Digital` are retired; `Art` is the category for work made as art
-  rather than commissioned as design. The filter row measures 804px, one desktop line, three
-  rows at 390px. `CD-005`.
+- **Seven keywords** — Art 10 · Photography 4 · New Media 3 · Exhibition 2 · Identity 2 ·
+  Signage 2. `Fine Art` and `Digital` are retired. **`Art` is a second axis, not a medium** —
+  it covers everything made as art rather than commissioned as design, so a project can carry
+  it alongside `Photography` or `New Media`. The four excluded are the client work. The filter
+  row measures 814px, one desktop line, three rows at 390px. `CD-005`, `CD-006`.
 - `discipline` selects the project page layout; `keywords` is an unordered set. `year` sorts,
   `completed` renders. `columns` overrides the photography grid, else it is derived from image
   count (≤2 → one column, 4 → two-up, otherwise three-up). `cover.<ext>` is a card-only image.
@@ -550,7 +551,7 @@ current palette).
 
 # Decision index
 
-77 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+78 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
@@ -558,6 +559,7 @@ history, never to decide what to do next.** Full text in
 |---|---|---|
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
 | [`DF-007`](docs/decisions-archive.md#df-007) | Handover: what this chat knew that no file held | |
+| [`CD-006`](docs/decisions-archive.md#cd-006) | The photography is Art too. Bryan's call. | |
 | [`CD-005`](docs/decisions-archive.md#cd-005) | Art replaces Fine Art, Exhibition returns, slugs lose the Cargo suffix. Bryan's call. | |
 | [`CD-004`](docs/decisions-archive.md#cd-004) | Links are undecorated; an underline is a state. Bryan's call. | |
 | [`CD-003`](docs/decisions-archive.md#cd-003) | Consolidated to one chat; DF-005 finished, DF-006 built, disciplines settled. | |

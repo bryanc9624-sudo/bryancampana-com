@@ -3,7 +3,7 @@ title: Double Exposed
 year: 2021
 completed: "2021"
 discipline: "Photography"
-keywords: ["Photography"]
+keywords: ["Photography", "Art"]
 scope: A pen-pal film exchange shot on shared rolls during social distancing.
 designQuestion: null
 medium: "35mm Film, Digital Scans"

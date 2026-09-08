@@ -1,3 +1,27 @@
+<a id="cd-006"></a>
+### CD-006 · 2026-09-08 — The photography is `Art` too. **Bryan's call.**
+
+**Status:** Accepted
+
+`CD-005` left the four photography projects untagged and recommended against adding `Art`, on the
+ground that 10 of 14 stops a filter discriminating. **Bryan overruled it**, and the recommendation
+was arguing the wrong point: `Art` is not competing with `Photography` for those four, it is a
+second axis over the same work. A visitor filtering `Photography` wants a medium; one filtering
+`Art` wants everything that is not client work. Both are useful questions and the same project can
+answer both — which is exactly what an unordered keyword set is for.
+
+`Art` is now **10 of 14**: the printmaking, both exhibitions, the three video works and the four
+photography projects. What it excludes is the commissioned design — `590 Madison Ave`, `Dura`,
+`Big City Volleyball`, `TogetherEffect`. **That is the line it draws, and it is a real one.**
+
+**Measured.** The row went **804px → 814px** — the label is unchanged at 32px, the extra 10px is
+the second digit in the count. Three mobile rows at 390px, no overflow, first card unmoved at
+397px. Still inside the seven-link ceiling, with roughly **79px** of headroom.
+
+**Filtering verified functionally, not just visually:** selecting `Art` shows exactly those ten
+projects, `Exhibition` shows the two, and `All` restores fourteen. The rules are generated from
+the content, so no code changed.
+
 <a id="cd-005"></a>
 ### CD-005 · 2026-09-08 — Art replaces Fine Art, Exhibition returns, slugs lose the Cargo suffix. **Bryan's call.**
 
