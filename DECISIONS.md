@@ -196,7 +196,9 @@ neither chat plans against them:
 
 Routed here rather than through Bryan, per rule 2.
 
-- [ ] **APPLY THE MUTED VALUES — Bryan asked for this directly, 2026-09-07.** *Raised by Design
+- [x] ~~**APPLY THE MUTED VALUES.**~~ **DONE 2026-09-07 by Code and Deploy** — all three edits landed and were verified in both schemes; see Settled below. Original text kept for traceability.
+
+- [ ] ~~Superseded:~~ **APPLY THE MUTED VALUES — Bryan asked for this directly, 2026-09-07.** *Raised by Design
       and Figma. Colour is Design's to state; the edits are yours.*
 
       `--color-muted` is still `#7E6F7E` light and `#A4A4A4` dark. Both are superseded. Bryan
@@ -364,6 +366,30 @@ system exists, not of what the values are.
 ---
 
 ## Settled
+
+### 2026-09-07 — Muted retuned and the nav gains a weight cue, in code. **Code and Deploy.**
+
+Implements the routed item. Three edits, all verified in the browser in both schemes.
+
+| | Was | Now | On its ground |
+|---|---|---|---|
+| `--color-muted` light | `#7E6F7E` | **`#75617A`** | 4.71 → **5.60:1** |
+| `--color-muted` dark | `#A4A4A4` | **`#C9BFCD`** | 7.80 → **10.94:1** |
+
+The dark value was pure neutral — `r = g = b` exactly — and never belonged to the palette.
+Measured gaps to the ink stay deliberately unequal, **2.75 light and 1.78 dark**: a dark
+surround exaggerates lightness differences, so equal perceived separation needs a smaller
+measured step. Both figures reproduced exactly as the design entry predicted.
+
+`nav a[aria-current='page']` now carries `--weight-medium` as well as `--color-fg`. Verified:
+the current item computes weight 500 in both schemes, the inactive item 400. This was the only
+place on the site where state rested on colour alone, and softening muted would have pushed it
+toward invisible.
+
+The stale source-of-truth comment in the dark block now points at "Current palette — THIS TABLE
+WINS" rather than "Colour VALUES settled". Dark has no Figma to check it against, so that
+pointer is its only guard.
+
 
 ### 2026-09-07 — Closing out Design and Figma's open list before launch. **Three items, three different closes.**
 

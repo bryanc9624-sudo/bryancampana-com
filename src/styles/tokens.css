@@ -4,7 +4,9 @@
 :root {
   --color-bg: #ffffff;
   --color-fg: #361a38;
-  --color-muted: #7e6f7e;
+  /* Violet-tinted, not neutral grey. Carries captions, card descriptions and the
+     inactive nav, so it sits above the 4.5 floor with room: 5.60:1 on white. */
+  --color-muted: #75617A;
   /* The colour of a rule — the only role this token has, and the only token any rule
      may reference. Rules must never point at --color-fg directly: that token means "the
      colour of text", and text and rules do not want the same value in every mode. See
@@ -87,8 +89,10 @@
 
 /* Dark palette. These values are NOT in Figma and cannot be — that collection's two
    modes are Desktop and Mobile, a breakpoint axis, and Figma Starter allows no more.
-   The table in DECISIONS.md ("Colour VALUES settled", 2026-09-07) is the source of
-   truth for dark; this block must match it.
+   The table in DECISIONS.md under "Current palette — THIS TABLE WINS" is the
+   source of truth for dark; this block must match it. ("Colour VALUES settled" is stale
+   for line and muted.) Dark has no Figma to check it against, so that table is its only
+   guard.
 
    The ground is deliberately near-neutral: chroma 0.006, a violet cast that is barely
    perceptible, chosen so a saturated ground would not fight the warm photography. */
@@ -96,7 +100,10 @@
   :root:not([data-theme="light"]) {
     --color-bg: #0f0c0f;
     --color-fg: #ffffff;
-    --color-muted: #a4a4a4;
+    /* The gap to the ink is smaller here than in light (1.78 vs 2.75) on purpose: a
+       dark surround exaggerates lightness differences, so equal PERCEIVED separation
+       needs a smaller measured step. Do not "fix" these to match. */
+    --color-muted: #C9BFCD;
     /* A rule holds the SAME CONTRAST RATIO against its ground in both modes. Light is
        #361a38 on #ffffff = 15.42:1, the weight Bryan approved; #ffffff on this ground is
        19.45:1, a quarter hotter, which is why ink rules read heavy in dark. #e5e5e5

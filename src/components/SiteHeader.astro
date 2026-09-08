@@ -47,7 +47,10 @@ const path = Astro.url.pathname
   /* Spec §8: aria-current was set but had no visual treatment. Figma shows the
      active nav item at --color-fg and inactive at --color-muted. */
   nav a { color: var(--color-muted); }
-  nav a[aria-current='page'] { color: var(--color-fg); }
+  /* Weight as well as colour. Required, not cosmetic: softening --color-muted pushes a
+     colour-only cue toward invisible, and this is the one place that rule was never
+     applied. 500 rather than FilterLink's 600 — the nav sits beside a 600 serif wordmark. */
+  nav a[aria-current='page'] { color: var(--color-fg); font-weight: var(--weight-medium); }
 
   /* At 390px there is 342px of content. Wordmark 133 + 64 gap + nav 194 overflows by
      ~49px, and closing the gap puts the name against "Work" as one run of text. So it
