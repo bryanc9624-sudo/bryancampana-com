@@ -53,6 +53,14 @@ img { max-width: 100%; height: auto; display: block; }
    nothing is losing an underline it wanted. If one ever appears, decide it then: the
    colour system's "link at rest: ink, weight 500, underline" was written for that case. */
 a { color: inherit; text-decoration: none; }
+/* Underlines sit clear of the letters — `--underline-offset`, applied where an underline is
+   actually drawn.
+   NOT set on `html` to inherit, which was the first attempt and does not work: an `em` there
+   resolves against the root font size and inherits as a fixed 3.2px, so every underline gets
+   the same gap whatever its text size. Measured, not assumed — 3.2px on both the 15px filter
+   label and the 22px card title, which is 0.21em under one and 0.145em under the other.
+   Declared per element so the `em` resolves against that element's own size, and held in a
+   token so the value still lives in one place. */
 /* The charge, on hover and nowhere else — DF-005. The settled colour system has always read
    "ink at rest, charge on hover"; the code had drifted to the opposite on several static
    elements. One rule for every link, so it cannot drift per component again.

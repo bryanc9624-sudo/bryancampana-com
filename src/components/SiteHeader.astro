@@ -34,8 +34,19 @@ const path = Astro.url.pathname
   /* Serif because the name is identity, not navigation. --font-display, not --font-serif:
      the token carries the role. Size is the inherited --size-base — it shares a line with
      the nav and must not step up. Weight, not size, is what separates it. */
+  /* --size-lg, a real step up, not an optical correction. D-050 had the wordmark at body
+     size on the reasoning that it shares a line with the nav and weight should separate it.
+     Bryan reversed that: it read too small next to the links.
+
+     Worth recording because it is counter-intuitive — there was no optical mismatch to fix.
+     Plex Serif and Plex Sans are a superfamily with matched vertical metrics, and at 17px
+     both measure cap 12, x-height 9, ascender 13, descender 3, identically. What reads as
+     smaller is the serif's modulated stroke: thin hairlines and serifs put less ink on the
+     page than the sans's uniform stems, even at 600 against 400. So this is a deliberate
+     size change and not a correction, which is why it needed Bryan rather than a formula. */
   .site-header__name {
     font-family: var(--font-display); font-weight: var(--weight-semibold);
+    font-size: var(--size-lg);
   }
   ul { display: flex; gap: var(--space-4); list-style: none; margin: 0; padding: 0; }
 

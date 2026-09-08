@@ -1,3 +1,49 @@
+<a id="cd-010"></a>
+### CD-010 · 2026-09-08 — Wordmark steps up, underlines step away, "Featured work" loses a word. **Bryan's call.**
+
+**Status:** Accepted
+
+**1. The section eyebrow is `Featured`, not `Featured work`.** It sits above the work grid on the
+landing page; "work" was doing nothing the grid did not already say. The `ProjectCard` comment
+that quoted the old string is updated with it — a comment naming a string is a copy of that
+string.
+
+**2. The wordmark is `--size-lg`, up from body size. This reverses `D-050`.** That entry set it at
+17px on the reasoning that it shares a line with the nav and weight, not size, should separate it.
+Bryan overruled it: next to the links it read too small.
+
+**Worth recording because the obvious explanation is wrong.** This was measured before it was
+changed, expecting an optical mismatch to correct. There is none. Plex Serif and Plex Sans are a
+superfamily with matched vertical metrics, and at 17px the two are **identical on every one** —
+cap 12, x-height 9, ascender 13, descender 3. Nothing was geometrically smaller.
+
+What reads as smaller is ink, not size: the serif's modulated stroke puts thin hairlines and
+serifs where the sans puts uniform stems, so at 600 against 400 it still covers less of the page.
+**So this is a deliberate size change, not a correction** — which is exactly why it was Bryan's to
+make and not a formula's.
+
+`--size-lg` rather than an off-scale nudge, so the value stays on the ramp. Measured after: the
+desktop row needs 345px of 1152px, and at 320px the header still stacks with the 171px wordmark
+inside 272px and no overflow.
+
+**`D-060`'s baseline spec paid for itself here.** It fixed the header to `align-items: baseline`
+and said so: *"today both are 17px so the two approaches land identically — the moment the
+wordmark steps up a size, only baseline stays correct."* That moment arrived. Centring would now
+misalign the two by half their size difference; nothing had to change.
+
+**3. Underlines sit clear of the letters —** `--underline-offset: 0.2em`, on the two places an
+underline is drawn: the selected filter link and a card title on hover.
+
+**The first attempt was wrong and the measurement caught it.** Setting it once on `html` to
+inherit looks right and is not: an `em` there resolves against the root font size and inherits as
+a **fixed 3.2px**, so every underline gets the same gap regardless of its text size — 0.21em under
+the 15px filter label and 0.145em under a 22px card title, which is the crowding Bryan was
+describing, merely moved. Declared per element the `em` resolves against that element's own size:
+**3px and 4.4px**, verified.
+
+The value lives in a token, so it is applied twice but decided once. That is the distinction
+`DF-003` draws — two *uses* of one value are fine; two *statements* of it are the bug.
+
 <a id="cd-009"></a>
 ### CD-009 · 2026-09-08 — Every project is dated to the month. Three years were wrong. **Bryan's dates.**
 

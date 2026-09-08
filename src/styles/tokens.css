@@ -60,6 +60,9 @@
   --weight-bold: 700;
 
   --tracking-wide: 0.08em;
+  /* Gap between a letter and the underline beneath it. In `em`, so it must be applied
+     where the underline is drawn rather than inherited — see base.css. */
+  --underline-offset: 0.2em;
 
   /* Line heights read from the ten Figma text styles rather than rounded to two values.
      tight  1.15 - Display 2XL / XL, Title Large

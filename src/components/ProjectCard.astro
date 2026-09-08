@@ -8,7 +8,7 @@ import { showDraftFlag } from '../lib/projects'
 interface Props {
   project: CollectionEntry<'projects'>
   /** Heading level for the card title. The landing page nests cards under an h2
-      ("Featured work") so they are h3 there; /work/ has no such section heading, so
+      ("Featured") so they are h3 there; /work/ has no such section heading, so
       they sit directly under its h1 and must be h2. A card cannot know this itself. */
   level?: 2 | 3
 }
@@ -60,7 +60,7 @@ const cover = coverFor(project.id, d.cover)
   }
   .card__title { font-size: var(--size-lg); margin-top: var(--space-2); }
   /* Undecorated at rest via the base `a` rule; the underline here is a hover STATE. */
-  .card__title a:hover { text-decoration: underline; }
+  .card__title a:hover { text-decoration: underline; text-underline-offset: var(--underline-offset); }
   .card__scope { margin: 0; }
   /* Dev only. Never present in a production build, because a draft has no page there. */
   .card__draft {

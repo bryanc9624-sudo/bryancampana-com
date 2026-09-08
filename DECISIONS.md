@@ -108,8 +108,10 @@ mode Figma cannot show.
   muted. The two were never the same style, but they read as one tier until this changed. **It is not `--color-accent`** — accent is the
   charge and marks the selected filter link only; spending it on static labels would make it
   decorative and stop it meaning anything.
-- **`Wordmark`** is serif at body size. It is identity, not navigation, and shares a line with the
-  nav, so it must not step up in size — weight separates it, not size.
+- **`Wordmark`** is serif at `--size-lg`, a step above the nav it shares a line with. It was at
+  body size until `CD-010`; Bryan stepped it up because it read small. Not an optical fix — Plex
+  Serif and Sans have identical vertical metrics at the same size; the serif just puts less ink
+  down. **The header is baseline-aligned, which is what makes this safe.**
 
 ## Layout and chrome
 
@@ -118,6 +120,9 @@ mode Figma cannot show.
   `--page-pad`. They are *not* `.page` — that was the bug where chrome sat 80px narrower per side
   than the work it framed.
 - **No rule on the header or footer.** Chrome is marked by position and space.
+- **Underlines clear the letters by `--underline-offset` (0.2em).** Applied where the underline is
+  drawn, never inherited from `html` — an `em` there resolves against the root size and inherits
+  as a fixed length, so it stops scaling. `CD-010`.
 - **Links carry no decoration at rest; an underline means a STATE.** Two exist: a card title on
   hover, and the selected filter link. Set once as `a { text-decoration: none }` in `base.css` —
   never repeat it per component. No inline prose link exists yet; one would need its own
@@ -556,7 +561,7 @@ current palette).
 
 # Decision index
 
-81 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+82 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
@@ -564,6 +569,7 @@ history, never to decide what to do next.** Full text in
 |---|---|---|
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
 | [`DF-007`](docs/decisions-archive.md#df-007) | Handover: what this chat knew that no file held | |
+| [`CD-010`](docs/decisions-archive.md#cd-010) | Wordmark steps up; underlines step away; "Featured work" loses a word. | |
 | [`CD-009`](docs/decisions-archive.md#cd-009) | Every project dated to the month; three years were wrong. | |
 | [`CD-008`](docs/decisions-archive.md#cd-008) | Month refines the sort; month and completed guarded by a test. | |
 | [`CD-007`](docs/decisions-archive.md#cd-007) | Projects sort by date, newest first. Bryan's call. | |

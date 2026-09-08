@@ -13,7 +13,7 @@ const featured = (await visibleProjects()).filter(p => p.data.featured)
   </section>
 
   <section class="featured" aria-labelledby="featured-heading">
-    <h2 id="featured-heading" class="eyebrow eyebrow--section">Featured work</h2>
+    <h2 id="featured-heading" class="eyebrow eyebrow--section">Featured</h2>
     <ul class="grid grid--duo">
       {featured.map(p => <li><ProjectCard project={p} /></li>)}
     </ul>
