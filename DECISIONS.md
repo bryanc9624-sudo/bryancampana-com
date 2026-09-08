@@ -252,6 +252,37 @@ Decided *against*, with the reason. Re-raising these costs someone a redo of rej
 > than quietly repaired because it is the exact failure the restructure was meant to prevent —
 > acting on a value copied from a source that had since moved on.
 
+- [ ] **`discipline` still shows the two strings `D-059` retired.** *Raised by Code and Deploy
+      2026-09-07 from the deployed page; the vocabulary is Design's to settle.*
+
+      `D-059` settled the **keyword** vocabulary and the content now matches it. But `discipline`
+      is a **separate frontmatter field**, rendered as a visible `Discipline` row in the facts
+      block on every project page, and it was never part of the consolidation. Two projects now
+      contradict the filter that links to them:
+
+      | Project | Filter says | Facts block says |
+      |---|---|---|
+      | `photopolymer-letterpress` | Fine Art | **Discipline: Art** |
+      | `dura-architectural-signage` | Signage | **Discipline: Visual Communications** |
+
+      Both are live now. `Art` is the exact category error `D-059` names — "`Art` beside
+      `Photography` and `New Media` is a category error" — and `Visual Communications` is the
+      exact string it retired for being the longest label in the set.
+
+      **This may well be intentional and need no change.** `discipline` reads as a longer, prose
+      register than `keywords`: the other twelve include `Signage & Wayfinding, Code Signage` and
+      `Exhibition Design, New Media Art`, which are plainly descriptions rather than filter
+      labels. If the two registers are meant to differ, these two are simply the cases where the
+      prose happens to be one word and collides with a retired keyword. Say so and it closes.
+
+      **What is not in question:** `discipline` is display-only. Layout is selected by the
+      separate `layout` field (`src/pages/work/[slug].astro:36` — "Layout is chosen by its own
+      field, never inferred from content"), so changing a `discipline` string cannot move a
+      project between templates. It is a one-line content edit per project with no code change,
+      whichever way it goes.
+
+      Code and Deploy will make the edits once Design names the strings. Nothing changed.
+
 Bryan's, not this chat's: video poster stills (the ink ground is a deliberate state, not a gap)
 and the 14 design questions.
 
