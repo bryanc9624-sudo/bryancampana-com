@@ -17,6 +17,51 @@ IDs are chronological: `D-001` is the oldest.
 
 ---
 
+<a id="d-063"></a>
+### D-063 · 2026-09-07 — A fourth chat for copy, which does not use this ledger. `src/content/` moves to it. **Bryan's call.**
+
+**Status:** Accepted
+
+**Code and Deploy: you lose `src/content/**`. That is the actionable part.**
+
+A Content and Copy chat joins. It is deliberately shaped unlike the other three: **it does not
+read or write this ledger.** It edits the source files directly, the way Bryan does between
+sessions, and the rest of us adapt to what we find — which is already how both chats handle his
+own edits, and it has worked all day.
+
+**Why not make it a fourth ledger writer**, which was this chat's first proposal and was wrong:
+
+- **The coupling between copy and design is observable in the output, not announceable.** A
+  keyword too long shows up as a wrapped filter; a scope line too long shows up as a taller card.
+  Nobody needs telling — someone needs to look. Code and Deploy caught the seven-vs-six keyword
+  mismatch this morning by reading the built page, not by being sent a message.
+- **Shared mutable state is where this project's mistakes come from.** The worst error today was
+  Design acting on a stale read of this file and destroying a live routed item (`D-059`). A
+  fourth writer multiplies that; a fourth *worker* does not.
+- **So coordination is replaced by constraints.** Instead of "tell Design before changing a
+  keyword", the rule is "a keyword label is ≤ 14 characters". A limit enforces itself. A message
+  has to be sent, read, and acted on by someone who might be holding a stale file.
+
+**`docs/copy-constraints.md` is new and is the mechanism.** Measured, not estimated — real text
+nodes in the production styles at the real container widths. It carries the four limits that
+actually bite and states plainly which parts of the site have no meaningful limit. **Design owns
+it and must re-measure after any text-style change**, because size, weight, family and tracking
+all move the numbers. Bryan's `Eyebrow` reweight to Bold earlier today already did.
+
+**Ownership moves.** `src/content/**` is Content and Copy's exclusively. Code and Deploy edited
+those files as recently as today — the keyword fix — and stops. The reason is not tidiness: two
+chats editing the same files in the same working tree is a collision surface **that lives in git
+rather than in this ledger, so nothing is watching it.** Content changes either chat needs go to
+Bryan, who brings them to Content and Copy.
+
+**Detection, since there is no routing.** Content and Copy regenerates `CONTENT-TODO.md`
+(`npm run todos`) with any keyword or scope change and commits it. That file lists the live
+keyword set with counts, read from the content itself, so drift stays visible to everyone without
+a message being sent. It is the only detection there is.
+
+**Content and Copy never tags a deploy.** Builds stay with Code and Deploy.
+
+
 <a id="d-062"></a>
 ### D-062 · 2026-09-07 — The WORK eyebrow above the project title is removed. **Bryan's call.**
 

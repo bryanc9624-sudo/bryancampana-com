@@ -6,7 +6,8 @@ All three live in this folder. Two write to it; the third audits it — see the 
 | Chat | Owns | Writes to |
 |---|---|---|
 | **Design and Figma** | What the site looks like — layout, type, colour, spacing, card direction | Figma + "Current state" + its own "Open" section |
-| **Code and Deploy** | Making the site match — code, tests, build, deploy. Also hosting, DNS, domain and build-credit budget: Bryan folded those in on 2026-09-07 rather than run a third owner. | The repo + "Current state" + its own "Open" section |
+| **Code and Deploy** | Making the site match — code, tests, build, deploy. Also hosting, DNS, domain and build-credit budget. **Not `src/content/**` — that moved to Content and Copy on 2026-09-07; route content changes to Bryan.** | The repo, except `src/content/**` + "Current state" + its own "Open" section |
+| **Content and Copy** | The words — `src/content/**` exclusively, prose inside `.astro` pages, `DESIGN-QUESTIONS.md`, `CONTENT-TODO.md`. **Does not use this ledger at all** — it edits source files directly, the way Bryan does, and the other chats adapt to what they find. Constraints it works inside: `docs/copy-constraints.md` | The content files. **Never this file.** |
 | **Oversight** | Nothing. Audits the other two against the repo and reports to Bryan. Read-only on code and on both chats' sections. Charter: `docs/oversight-charter.md` | The "Sync audits" section below, and nothing else |
 
 ## The rules
@@ -188,7 +189,14 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 
 ## Content and schema
 
-- **Copy is Bryan's**, verbatim from `archive/content/`. Neither chat writes portfolio copy.
+- **Copy is Bryan's**, verbatim from `archive/content/`. No chat writes portfolio prose in his
+  voice; Content and Copy edits, cuts and advises.
+- **`src/content/**` belongs to Content and Copy.** Design and Code both keep out. Content
+  changes either chat needs go to Bryan.
+- **Copy works inside measured limits, not by asking.** `docs/copy-constraints.md` carries
+  them — keyword label ≤ 14 characters, filter set ≤ 7 links, card scope ≤ 100 characters,
+  project title ≤ 30 for one line, discipline ≤ 32. **Design owns that file and re-measures
+  it after any text-style change**, since size, weight, family and tracking all move it.
 - **Six keywords** — Photography 4 · Identity 4 · New Media 3 · Fine Art 3 · Signage 2 · Digital 1.
   `Art` is not a keyword: the name is **Fine Art**. `Visual Communications` was retired into
   Signage. See `D-059`.
