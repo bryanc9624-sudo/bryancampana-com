@@ -1,3 +1,57 @@
+<a id="cd-007"></a>
+### CD-007 · 2026-09-08 — Projects sort by date, newest first. **Bryan's call.**
+
+**Status:** Accepted
+
+**The problem, which was not the one it looked like.** Bryan asked whether the work index
+re-sorts as you move through the keyword filters. It does not — the filter sets `display: none`
+on non-matching cards and never reorders, so **every filtered view inherits the one global
+order**. That is fine when the global order suits every subset and useless when it does not.
+
+The old order was hand-set, 1–14, grouped by kind: client work, then printmaking, video,
+photography, roughly newest-first inside each group. Filter to `Art` and the client work drops
+out, leaving three group-orders stacked end to end:
+
+`2022 · 2021 · — · 2019 · 2019 · 2018 · 2021 · 2021 · 2021 · 2019`
+
+Descending, then jumping back. Legible as nothing, which is exactly how Bryan described it. The
+photography sat at 11–14 because it was last in the grouping, so his strongest art work was at the
+bottom of the `Art` view. **None of the four `featured` projects appear under `Art` at all** — the
+top of that view had never been ranked by anyone, it just fell there.
+
+**The fix needed no new mechanism.** Because filtering preserves relative order, one ordering that
+is true of every subset fixes all seven views at once. Date is that ordering: it does not depend
+on which projects are showing. Sorting by curatorial preference would have worked too and Bryan
+chose date.
+
+**Implemented as a sort, not a renumbering.** `visibleProjects()` now sorts by `year` descending
+with `order` breaking ties inside a year. This is what `year` was separated from `completed` for
+in `D-016` — `completed` renders ("September 2025"), `year` sorts — and it had been unused since.
+Adding a project now needs a year, not a renumber of fourteen files.
+
+`order` survives as the tiebreak, and its schema comment says so. Four projects share 2021 and
+three share 2019, so the tiebreak is load-bearing rather than decorative: without it the order
+within a year would be whatever the collection happened to return.
+
+**Verified across all seven views, not just the one that prompted it.** Every filter now reads
+strictly newest-first:
+
+| View | Years |
+|---|---|
+| All | 2025 2025 2024 2023 2022 2021 2021 2021 2021 2019 2019 2019 2018 — |
+| Art | 2022 2021 2021 2021 2021 2019 2019 2019 2018 — |
+| Photography | 2021 2021 2021 2019 |
+| New Media | 2019 2019 2018 |
+| Exhibition, Identity, Signage | two each, in order |
+
+**One consequence to accept:** `/work` no longer opens on the client work. Dura and 590 Madison
+still lead, but because they are the most recent, not because they were chosen — and if a personal
+project lands next, it goes to the top. That is what a date sort means.
+
+**`Photopolymer Letterpress` has no `year` and sorts last.** An undated project has no place in a
+sequence meaning "most recent first", and the end is the only honest position for it. Giving it a
+year moves it; that is content, and Bryan's.
+
 <a id="cd-006"></a>
 ### CD-006 · 2026-09-08 — The photography is `Art` too. **Bryan's call.**
 

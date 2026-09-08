@@ -50,6 +50,10 @@ const projects = defineCollection({
     // `featured` controls presentation only — which projects show on the landing page.
     // Every project gets a page (spec §3).
     featured: z.boolean().default(false),
+    // Tiebreak only. Projects sort by `year` descending; `order` decides the sequence
+    // WITHIN a year, where two projects share one. It stopped being the primary sort in
+    // CD-007 — a hand-set sequence read as noise under the keyword filter, which hides
+    // cards rather than reordering them, so every filtered view inherited it.
     order: z.number().default(0),
     aspect: z.string().default('3/2'),
     // Which image represents the project on cards. A filename from the project's folder
