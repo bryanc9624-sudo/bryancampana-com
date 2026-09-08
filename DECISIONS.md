@@ -366,13 +366,17 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 # Decision index
 
-61 decisions. **⚠ means the entry is superseded or partly superseded — read it for
+65 decisions. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
 | ID | Decision | Status |
 |---|---|---|
-| [`D-061`](docs/decisions-archive.md#d-061) | Build budget is 1,000 credits a cycle, not 300. Code and Deploy. | |
+| [`D-065`](docs/decisions-archive.md#d-065) | Build budget is 1,000 credits a cycle, not 300. Code and Deploy. | |
+| [`D-064`](docs/decisions-archive.md#d-064) | Weights reverted; the eyebrow keeps its ink. Bryan's call. | |
+| [`D-063`](docs/decisions-archive.md#d-063) | A fourth chat for copy, which does not use this ledger. `src/content/` moves to it. | |
+| [`D-062`](docs/decisions-archive.md#d-062) | The WORK eyebrow above the project title is removed. Bryan's call. | |
+| [`D-061`](docs/decisions-archive.md#d-061) | Bryan reweights the display ramp and the eyebrow. ⚠ | — Superseded |
 | [`D-060`](docs/decisions-archive.md#d-060) | Contact consolidates on About; header baseline locked; counts drop to the baseline. | |
 | [`D-059`](docs/decisions-archive.md#d-059) | The final six keywords, and a routed item that was destroyed and restored. | |
 | [`D-058`](docs/decisions-archive.md#d-058) | Shipped. First deploy ran, and the domain was cut over to Netlify. | |

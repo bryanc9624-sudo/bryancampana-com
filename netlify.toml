@@ -5,7 +5,7 @@
   # Deploy discipline (see DECISIONS.md, 2026-09-07 — Deploy gate was inverted).
   # The Personal plan is 1,000 credits per cycle and a build costs 15, so the
   # cycle buys about 65 builds. (It was 300 on the free tier; corrected 2026-09-07
-  # against the billing page -- see D-061.) A build runs ONLY when the commit
+  # against the billing page -- see D-065.) A build runs ONLY when the commit
   # SUBJECT STARTS WITH the deploy tag. Exit 0 = skip. Exit non-zero = run it.
   #
   # %s is the subject line ONLY — deliberately not %B. %B includes the body, and

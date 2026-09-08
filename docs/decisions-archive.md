@@ -17,6 +17,61 @@ IDs are chronological: `D-001` is the oldest.
 
 ---
 
+<a id="d-065"></a>
+### D-065 · 2026-09-07 — The build budget is 1,000 credits a cycle, not 300. **Code and Deploy.**
+
+**Status:** Accepted
+
+**Corrects a figure carried in two places since the free tier.** Bryan confirmed the account from
+the Netlify billing page: **Personal plan, $9/month, team `Nero`, 1,000 credits per cycle**,
+period 2026-09-07 → 2026-10-06, one concurrent build. The old "300 credits" is the free tier and
+understates the budget by more than 3x.
+
+**The cost model, measured rather than quoted.** The billing page reads 984.8 of 1,000 remaining
+after the single published build (`e275333`). That is **15.2 credits for one deploy**, which
+reproduces D-058's figures exactly: 15 for the build, 0.2 for bandwidth and compute together.
+**Builds are the entire cost.** A cycle therefore buys roughly **65 builds**, not 20.
+
+**Changed in three places, because the figure was duplicated:**
+
+| Where | Was | Now |
+|---|---|---|
+| `DECISIONS.md` rule 12 | "Free tier is 300 credits per cycle" | 1,000, pointing at the new section |
+| `netlify.toml`, above `ignore` | "300 credits per cycle ... buys 20 builds" | 1,000 ... about 65 builds |
+| `DECISIONS.md` Current state | *(no hosting section existed)* | new **Hosting and deploys** |
+
+**Nothing about the gate changes.** The `ignore` command, the `%s` subject-only read and the `^`
+anchor are untouched; only the comment above them. The discipline stands on its own merits — a
+build is still 15 credits and still worth batching.
+
+**Why a Current state section rather than only fixing the two figures.** The number lived in a
+rules footnote and a TOML comment and nowhere authoritative, which is how it stayed wrong through
+a plan change. Hosting, DNS, domain and the credit budget are Code and Deploy's per the ownership
+table but had no home in the contract. They have one now.
+
+**Two housekeeping notes on this commit, flagged rather than done silently:**
+
+1. **The decision index was missing `D-059`** and still read "58 decisions". Both fixed here.
+   Mechanical repair of a shared index, not a change to Design and Figma's content.
+2. **The reminder that prompted this said 300.** It reached Code and Deploy inside the same
+   message that announced D-059 — an entry about acting on a value copied from a source that had
+   since moved on. Recorded because it shows that failure is structural rather than anyone's
+   carelessness: the fix is a single authoritative home per fact, which is what D-059's
+   Current-state split and this section both are.
+
+**Renumbered twice, `D-060` → `D-061` → `D-065`, on the day it was written.** Design and Figma
+allocated the same id twice within an hour, because nothing reserves one: both chats read "the
+next number", and both reads were correct when made. This entry moved each time rather than
+theirs, on the same principle each time — every reference to it is Code and Deploy's to update
+(the index row and the `netlify.toml` comment), and theirs are referenced from Figma work this
+chat cannot see.
+
+**Twice is a broken convention, not bad luck.** A sequential id shared by concurrent writers has
+no safe allocation point: claiming it in the same commit that uses it — which is what both chats
+did — still races. A per-chat prefix (`C-012`, `D-047`) cannot collide, because no two chats draw
+from one sequence. That is a change to a shared rule, so it is raised here rather than taken.
+
+
 <a id="d-064"></a>
 ### D-064 · 2026-09-07 — Weights reverted; the eyebrow keeps its ink. **Bryan's call. Supersedes D-061.**
 
@@ -178,53 +233,6 @@ and `Display/XL` against `Title / Large`, `Body / Strong`, `Body / Small`, `Body
 while the rest sit in `Title ` and `Body ` with trailing spaces. Harmless, but it is a
 half-migration: either finish it across all eight or revert the two. Design's to tidy, not urgent.
 
-
-<a id="d-061"></a>
-### D-061 · 2026-09-07 — The build budget is 1,000 credits a cycle, not 300. **Code and Deploy.**
-
-**Status:** Accepted
-
-**Corrects a figure carried in two places since the free tier.** Bryan confirmed the account from
-the Netlify billing page: **Personal plan, $9/month, team `Nero`, 1,000 credits per cycle**,
-period 2026-09-07 → 2026-10-06, one concurrent build. The old "300 credits" is the free tier and
-understates the budget by more than 3x.
-
-**The cost model, measured rather than quoted.** The billing page reads 984.8 of 1,000 remaining
-after the single published build (`e275333`). That is **15.2 credits for one deploy**, which
-reproduces D-058's figures exactly: 15 for the build, 0.2 for bandwidth and compute together.
-**Builds are the entire cost.** A cycle therefore buys roughly **65 builds**, not 20.
-
-**Changed in three places, because the figure was duplicated:**
-
-| Where | Was | Now |
-|---|---|---|
-| `DECISIONS.md` rule 12 | "Free tier is 300 credits per cycle" | 1,000, pointing at the new section |
-| `netlify.toml`, above `ignore` | "300 credits per cycle ... buys 20 builds" | 1,000 ... about 65 builds |
-| `DECISIONS.md` Current state | *(no hosting section existed)* | new **Hosting and deploys** |
-
-**Nothing about the gate changes.** The `ignore` command, the `%s` subject-only read and the `^`
-anchor are untouched; only the comment above them. The discipline stands on its own merits — a
-build is still 15 credits and still worth batching.
-
-**Why a Current state section rather than only fixing the two figures.** The number lived in a
-rules footnote and a TOML comment and nowhere authoritative, which is how it stayed wrong through
-a plan change. Hosting, DNS, domain and the credit budget are Code and Deploy's per the ownership
-table but had no home in the contract. They have one now.
-
-**Two housekeeping notes on this commit, flagged rather than done silently:**
-
-1. **The decision index was missing `D-059`** and still read "58 decisions". Both fixed here.
-   Mechanical repair of a shared index, not a change to Design and Figma's content.
-2. **The reminder that prompted this said 300.** It reached Code and Deploy inside the same
-   message that announced D-059 — an entry about acting on a value copied from a source that had
-   since moved on. Recorded because it shows that failure is structural rather than anyone's
-   carelessness: the fix is a single authoritative home per fact, which is what D-059's
-   Current-state split and this section both are.
-
-**Renumbered from `D-060` on the day it was written.** Design and Figma committed a different
-`D-060` fifteen minutes later; two chats allocated the same id because nothing reserves one. The
-Contact decision keeps `D-060` and this entry moved, because every reference to it — the index
-row and the `netlify.toml` comment — is Code and Deploy's to update, and theirs is not.
 
 <a id="d-060"></a>
 ### D-060 · 2026-09-07 — Contact consolidates on About; header baseline locked; keyword counts drop to the baseline
