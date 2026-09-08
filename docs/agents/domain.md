@@ -8,8 +8,9 @@ exploring the codebase.
 - **`DECISIONS.md`** at the repo root. This is the domain doc. "Current state"
   is what is true now; "Do not reopen" is what was already rejected and why —
   read it before proposing anything.
-- **`docs/decisions-archive.md`** for why. Frozen history; entries contradict
-  each other in places. `DECISIONS.md` wins, always.
+- **`git log`** for why. `git log --grep CD-020` returns the decision and its
+  reasoning. A past commit message says what was true when written, never what
+  is true now — `DECISIONS.md` wins, always.
 - **`src/styles/tokens.css`** for every colour, size and weight.
 
 **Do not create `CONTEXT.md`, `CONTEXT-MAP.md`, or `docs/adr/`.** This repo
@@ -25,7 +26,6 @@ Single-context. There is one package, one decision record, one token file.
 ├── CLAUDE.md                   ← how the project is run
 ├── DECISIONS.md                ← current state + what not to reopen
 ├── docs/
-│   ├── decisions-archive.md    ← frozen history, superseded by DECISIONS.md
 │   └── agents/                 ← this directory; skill configuration
 └── src/
     ├── styles/tokens.css       ← every colour, size, weight

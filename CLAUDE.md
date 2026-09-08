@@ -14,17 +14,61 @@ You own design decisions as well as code. There is nobody to route them to.
 When something is genuinely Bryan's call — a colour, a word, an editorial choice
 — ask him directly.
 
+## How a decision is made here
+
+Six rules that decide cases nobody has brought yet. They are here because each one was
+paid for — the reasoning is in `git log`, and none of it needs re-reading to use these.
+
+**1. Replace coordination with a constraint.** *"Tell someone before changing a keyword"*
+has to be sent, read, and acted on by a person who might be holding a stale file.
+*"A keyword label is ≤ 14 characters"* enforces itself. Whenever a rule needs a human to
+remember it, ask what limit would make remembering unnecessary. This is why
+`tests/rules.test.ts` exists, and it is the reason this project prefers a failing test to
+a well-written paragraph.
+
+**2. Read a section at write time. Never rebuild it from an earlier reading, however
+recent.** A ledger section was once rebuilt from an audit taken minutes earlier and
+destroyed a live item that had been raised in between; the commit then reported the file
+clean. The same shape produced stale swatch hexes and a superseded colour table. The pull
+was clean each time — the input had moved.
+
+**3. Duplicated values do not stay equal, and the duplication is invisible until one side
+moves.** Every instance of this found here was caught by comparing two things that should
+have been one, never by reading either alone. So: **documentation shows the contract, not
+the value.** A Figma swatch caption reads `var(--color-bg)` rather than a hex, because the
+variable name is what the code actually agrees to and it does not rot when the value moves.
+
+**4. A decision that can expire records what would reopen it.** *"No 'More work' control"*
+is a dead end; *"no 'More work' control — revisit past ~30 projects, where scanning an
+index stops being pleasant"* tells the next reader what to watch for. A flat prohibition
+teaches nothing and gets re-raised as an oversight.
+
+**5. Before building a mechanism, ask who is on the other side of it.** The four-chat
+ledger, the Figma-to-code type pipeline and the decisions archive were all machinery for
+carrying a decision between people who could not see each other's work. With one session
+doing the work, each became maintenance with no beneficiary. If the answer is "nobody, any
+more", it goes.
+
+**6. A measurement can be real and still answer a different question.** Plex's `o` has a
+genuine radius of curvature — and it is 0.62× the glyph's own width, so applied to a
+rectangle it yields a pill, not a rounded corner. Before acting on a number, check it
+measures the thing you are about to change. Its sibling is trap 4 below: a measurement that
+disagrees with *itself* indicts the instrument.
+
 ## Where the truth is
 
 | Question | Answer lives in |
 |---|---|
 | What is true right now | `DECISIONS.md` → "Current state" |
 | What we already rejected, and why | `DECISIONS.md` → "Do not reopen" — **read before proposing** |
-| Why we did something | `git log`, then `docs/decisions-archive.md` |
+| Why we did something | `git log`, and nowhere else |
 | Every colour, size, weight | `src/styles/tokens.css` |
 
-The archive is frozen history. Entries in it contradict each other in places —
-`DECISIONS.md` wins, always.
+**`git log` is the *why* layer.** `docs/decisions-archive.md` held it until 2026-09-08 and
+was deleted: a decision id resolves with `git log --grep CD-020`, and the commit carries
+more reasoning than the archive entry did. `git tag ledger-full` (`6401470`) is the last
+commit holding the archive — `git show ledger-full:docs/decisions-archive.md`.
+`tests/ledger.test.ts` fails if we ever cite an id git cannot resolve.
 
 **Write a decision down or it never happened.** A conclusion reached only in chat
 is gone when the chat ends.
@@ -93,9 +137,18 @@ card-and-poster only and is excluded from the gallery.
   contrast against its ground in both modes. Derive future values; never eyeball one.
 - **`--color-accent` is hover only.** Charge at rest, full charge on hover.
   `--color-focus` is the same value but a different state — keep them separate.
-- **No synthesised faces, ever.** `font-synthesis: none` is set on `html`.
+- **A weight exists only when a face is loaded for it.** Sans is a variable file
+  spanning 100–700 and always has it. Serif ships **static per-weight files** — it has
+  only what `base.css` imports (400, 400-italic, 600). Ask the serif for a weight it
+  has not loaded and nothing errors and nothing looks broken: the browser matches the
+  **nearest loaded face** and renders that. 500 becomes 400, 700 becomes 600. `D-061`
+  failed exactly here, invisibly, and this file recorded it as "renders upright, so the
+  gap is visible" — the safe failure mode, not the real one. **To add a weight, import
+  its face**; `tests/rules.test.ts` reads the imports and permits what they load.
+- **No synthesised faces, ever.** `font-synthesis: none` is set on `html`. That is a
+  *different* mechanism — it stops a faked italic or bold, which is why a missing italic
+  does render upright and visibly. It does nothing about a missing weight.
   Anything italic uses the serif via `--font-italic`; Plex Sans ships no italic.
-  A missing weight renders upright on purpose, so the gap is visible.
 - **Style names have no space** — `SemiBold`, not `Semi Bold`. The mismatch
   silently drops text to Regular.
 - **Dark mode is not in Figma** and cannot be — the two variable modes are

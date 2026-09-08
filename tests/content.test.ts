@@ -33,6 +33,20 @@ describe('project content', () => {
     }
   })
 
+  /**
+   * The card is drawn for a fragment, not a sentence. A terminal period on one
+   * scope and not the next is visible across fourteen cards in a grid, and the
+   * register is mixed on purpose — narrative reads as a sentence, a capability
+   * list as Title Case — so the period is the one mark that has to be uniform.
+   * Removed from all fourteen in 0ae5458; pinned here so it stays that way.
+   */
+  it('ends no card scope with a terminal period', () => {
+    for (const f of files()) {
+      const scope = (frontmatter(f).scope ?? '').replace(/^["']|["']$/g, '').trim()
+      expect(scope.endsWith('.'), `${f} scope ends in a period`).toBe(false)
+    }
+  })
+
   it('gives every project a discipline', () => {
     for (const f of files()) {
       expect(frontmatter(f).discipline, `${f} discipline`).not.toBe('null')

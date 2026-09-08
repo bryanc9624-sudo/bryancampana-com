@@ -1,7 +1,8 @@
 # Decisions
 
 The contract for bryancampana.com. **"Current state" is what is true; "Do not reopen" is what
-was rejected and why.** Dated reasoning lives in [`docs/decisions-archive.md`](docs/decisions-archive.md).
+was rejected and why.** Dated reasoning lives in `git log` — `git log --grep CD-020` returns the
+decision and the reasoning behind it.
 
 **One chat does the work.** Until 2026-09-07 this was split across four, and most of this file's
 machinery existed only to keep them from overwriting each other. That machinery is gone: the
@@ -9,56 +10,59 @@ ownership table, the routing rules, the per-chat id prefixes and the separate in
 survived is what does not depend on how many chats exist — the contract below, the record of what
 was rejected, and the discipline that a decision is two writes.
 
-## Compacting this ledger — in progress, 2026-09-08
+## The ledger was compacted on 2026-09-08
 
-**The plan: `git log` becomes the *why* layer and `docs/decisions-archive.md` goes.** An archive is
-a cache of a lookup git already performs, and a cache earns its load only when the lookup is
-expensive. What survives is this file's **Current state** and **Do not reopen**, plus `CLAUDE.md`
-for what the environment cannot confess.
+**`docs/decisions-archive.md` is gone and `git log` is the *why* layer.** An archive is a cache of
+a lookup git already performs, and 3,682 lines is past the point anyone re-reads: a decision id had
+been dangling in this file for a day, and a live billing obligation sat unread at line 1979.
+`git log --grep <id>` returns more reasoning than the entry did. `git tag ledger-full` marks
+`6401470`, the last commit holding everything — `git show ledger-full:docs/decisions-archive.md`.
 
-**Done:** `docs/retired/` deleted, three facts extracted from it first. `git tag ledger-full`
-marks `6401470`, the last commit holding everything — `git show ledger-full:<path>` returns any
-of it.
+**What the audit moved before deleting**, since the entries were read rather than assumed:
 
-**Not done: the archive audit.** 3,682 lines to read, each entry marked live, superseded or
-historical, and anything live moved into Current state before deletion.
+- The correction that a missing **weight** renders as the nearest loaded face, silently — this
+  file and `CLAUDE.md` had recorded the safe failure mode instead. Now `tests/rules.test.ts`.
+- Six generalising laws, into `CLAUDE.md` → "How a decision is made here".
+- Six site-level rules, into Current state below.
+- One dated obligation that no file should hold: the Netlify plan reverts to Free before it
+  renews on **2026-10-07**. Bryan holds this in his calendar, not in the repo.
 
-**Two rules learned doing the first half, both the hard way:**
+**Three rules the audit itself produced, worth keeping:**
 
 1. **Extract before deleting, and do not trust a plan that says "no reading required."** The plan
-   called `docs/retired/` a free win. This file pointed *into* it for the `get_metadata` detail,
-   and two more facts lived nowhere else.
-2. **The decision index goes LAST, with the archive, not before it.** The index is the map used to
-   audit the archive — `⚠` already marks the superseded entries. Deleting it first means auditing
-   3,682 lines blind. It only becomes meaningless once its target is gone.
+   called `docs/retired/` a free win; three facts lived only there.
+2. **The decision index goes LAST, with the archive.** It was the map used to audit the archive.
+3. **A prohibition is not a peer of the law it comes from.** *"No rule may reference
+   `--color-fg`"* is a *consequence* of *"a rule holds the same contrast against its ground in
+   both modes"*. State the law; the prohibition follows. Where a prohibition follows from no law,
+   a law is missing.
 
 ## The rules
 
 1. **Read "Current state" and "Do not reopen" before proposing anything.** The answer is
    usually already there, and the second one is the record of what has already been paid for
    once.
-2. **Write a decision down or it never happened.** Two writes, same commit: an entry at the top
-   of `docs/decisions-archive.md`, and the "Current state" section it changes. A conclusion
-   reached only in chat is gone when the chat ends.
+2. **Write a decision down or it never happened.** Two writes, same commit: the reasoning in the
+   **commit message**, and the "Current state" section it changes. A conclusion reached only in
+   chat is gone when the chat ends.
 3. **Preview before pushing.** Build locally, show Bryan, push once he approves.
 4. **Builds need a `[deploy]` subject line.** A push only builds when the commit *subject starts
    with* the tag. `netlify.toml` gates it and `.githooks/pre-push` catches the mistake before
    the push lands, so this is enforced rather than remembered.
-5. **The archive is frozen history and "Current state" wins.** Entries are immutable and several
-   contradict each other; supersede rather than edit. An entry being present says nothing about
-   it still being true — check whether a later one overrode it.
+5. **A commit message is frozen history and "Current state" wins.** A past message says what was
+   true when it was written, never what is true now. Read it for *why*, never for *what*.
 
 ---
 
 # Current state
 
 **This section is the contract. Read it to know what is true.** Dated reasoning lives in
-[`docs/decisions-archive.md`](docs/decisions-archive.md) — go there for *why*, never for *what*.
+`git log` — go there for *why*, never for *what*.
 
 ## Colour — this table wins
 
 **Read this before touching a colour anywhere.** When a colour changes, update it **here**, in
-the same commit as the archive entry that changes it.
+the same commit that changes it.
 
 It matters because **dark has no second check.** Light is verifiable against Figma by eye; dark
 lives only in this table and in `tokens.css`, so if those two disagree nothing catches it.
@@ -86,6 +90,11 @@ lives only in this table and in `tokens.css`, so if those two disagree nothing c
 3. **Muted is tuned for equal *perceived* separation, not equal measured ratio** — gap to ink
    2.75 light, 1.78 dark. A dark surround exaggerates lightness differences, so equal perceived
    separation needs a smaller measured step in dark. Do not "fix" them to match.
+
+**A colour token is named for where it is used, never for what it is.** `bg` / `fg` / `accent`,
+not `plum` / `violet`. It is why two hue changes have cost nothing to absorb: the name stays true
+when the value moves. In conversation the roles are paper / ink / charge; in the file and in Figma
+they are `bg` / `fg` / `accent`.
 
 **The trap:** anything *derived* from the dark ground comes out neutral, because that ground sits
 at chroma 0.006 — diluting white toward it lands at r−g = 1. Dark values that should read as part
@@ -193,6 +202,9 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
   is not an anchor. Nothing static carries the charge; a permanent accent makes it decorative and
   it stops signalling. `--color-focus` is the same value but a different token for a different
   state — pointers versus keyboards — and the two must stay distinguishable.
+- **Hover changes colour and nothing else.** Weight lives in the *rest* state — a weight change
+  under the cursor reflows the text being pointed at. Once an underline is at stem weight,
+  thickening it on hover is a second signal doing the first one's job.
 - **The count is part of the link's width** — `ART` grew 10px when its count reached double
   digits, with no character changing. This is why a filter row measurement goes stale on its own:
   publish a project and a label can widen without anyone editing a string.
@@ -253,6 +265,10 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
   a date sort is the only one that stays true of every subset. No `year` sorts last overall; no
   `month` sorts last within its year. **`month` sorts, `completed` renders, and a test asserts they
   agree.** `CD-007`, `CD-008`.
+- **Never derive behaviour from an unordered collection.** `discipline` is single-valued and
+  selects nothing; `layout` selects the layout. Deriving a page's layout from `keywords[0]` — the
+  first element of an explicitly unordered array — meant adding a keyword could silently change a
+  page. The card label had exactly that bug until `CD-017`.
 - **`layout` selects the project page layout — `discipline` does not**, and never has; the field
   is a label and the filter vocabulary. `year` sorts,
   `completed` renders. `columns` overrides the photography grid, else it is derived from image
@@ -263,8 +279,8 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 - **No card scope carries a terminal period** — all 14, checked. Register is still editorial:
   narrative reads as a sentence, a capability list as Title Case. **Consistency within one scope is
   not editorial** — Title Case running into lowercase mid-list is a bug. A scope containing a colon
-  needs YAML quotes, which are stripped before render. `CD-015`, corrected by `CD-021`: that entry
-  recorded narrative scopes as keeping a period, and Bryan removed every one shortly after.
+  needs YAML quotes, which are stripped before render. Pinned by `tests/content.test.ts`, so a
+  period reintroduced in a copy pass fails the build rather than reaching the grid.
 - **Six disciplines, exactly one per project.** Photography 4 · New Media 3 · Brand Identity 2 ·
   Signage & Wayfinding 2 · Exhibition Design 2 · Printmaking 1. **Every one names a practice**, which
   is the test for admitting a new one — `Visual Communications` named a *field* and was retired for
@@ -312,6 +328,9 @@ variables, 9 desktop and 9 mobile frames.
 - `figma.createAutoLayout()` adds an opaque **white fill** by default; `figma.createText()`
   defaults to **black**, and applying a text style sets type but never colour. Bind both
   explicitly or they enter the file unbound.
+- **A container does not paint a ground.** 74 unbound `#FFFFFF` frame fills were invisible on
+  white and would have rendered as white blocks under a theme switch. Only the top-level page
+  frame holds the ground.
 - **Read state back after every write.** A write's return value is not evidence — it reports what
   was set, not what resolved.
 
@@ -366,6 +385,10 @@ spacing, sizes, radii; which elements exist on a page and in what order.
   `git config core.hooksPath .githooks` so it is versioned, not stranded in `.git/hooks`.
 - **Domain:** `bryancampana.com`, apex canonical, `www` 301s to it. DNS delegated to Netlify
   (`dns1..4.p04.nsone.net`). Let's Encrypt certificate issued 2026-09-07 23:34 UTC.
+- **"Static" describes delivery, not behaviour.** CSS animation, View Transitions, canvas and
+  WebGL all run client-side and work identically on any host. Nothing about this hosting choice
+  forecloses motion later. (The site ships one 416-byte inline script, on the three video pages
+  only — the facade in `VideoFacade.astro`. Everything else is zero-JS.)
 - **During a DNS cutover a check by hostname proves nothing** — it says only that *something*
   answered. Pin the IP (`curl --resolve`, `openssl s_client -connect <IP>`) and read the
   certificate's `notBefore`.
@@ -381,10 +404,10 @@ Decided *against*, with the reason. Re-raising these costs someone a redo of rej
 | Credit line on the card | They are not his clients — venue, studio or employer's client in most cases |
 | Design question on the card | Bryan's call, made twice. It lives on the project page only |
 | Year on the card | Read as a table column in a layout with no other columns |
-| Rounded corners on cards | Architectural photography fights a rounded frame. The "droplet" motif is reserved for a real button if one ever appears |
+| Rounded corners on cards | Architectural photography fights a rounded frame. **Do not introduce an element in order to use it** — the "droplet" (three rounded corners, one square; the square "nib corner" goes top-left) is named and applied to nothing, and stays that way until a real button appears |
 | Previous/next project nav | Its default direction walked readers from strong recent work toward older student work |
 | "More work" control | At 14 projects the discipline filter already does this, better |
-| A non-zero radius | Measured against the typeface; Plex has square corners throughout |
+| A non-zero radius | Measured against the typeface; Plex has square corners throughout. If one is ever wanted the defensible value is the stem width — 80/1000em = **0.08em**, ~1.4px at 17px |
 | Dark mode in Figma | Costed and rejected — 74 unbound fills, a second copy of the palette, and you can already see dark on the built site |
 
 ---
@@ -407,114 +430,12 @@ Decided *against*, with the reason. Re-raising these costs someone a redo of rej
       claim is no longer there.
 
 ---
+Everything above is closed. The routing items that used to be listed here described a four-chat
+structure that no longer exists; they are in `git log` with the rest of the history.
 
-Everything below is closed. Full text, with the original instructions and their line numbers,
-is in the archive's ["Appendix — closed routing items"](docs/decisions-archive.md#appendix--closed-routing-items)
-— read it for how a drift happened, never to decide what to do next.
+---
 
-Two are worth reading if you hit something odd: **the serif body drift** (a spec written against
-a tree one commit stale) and **the muted values** (which carry the contrast reasoning behind the
-current palette).
-
-
-# Decision index
-
-92 decisions. Ids carry the prefix of the chat that made them, which is history now rather
-than a scheme. **⚠ means the entry is superseded or partly superseded — read it for
-history, never to decide what to do next.** Full text in
-[`docs/decisions-archive.md`](docs/decisions-archive.md).
-
-| ID | Decision | Status |
-|---|---|---|
-| [`CD-020`](docs/decisions-archive.md#cd-020) | Eyebrow returns as a discipline link; filtered views become real pages. | |
-| [`CD-019`](docs/decisions-archive.md#cd-019) | Keywords retired; the discipline is the filter vocabulary. | |
-| [`CD-018`](docs/decisions-archive.md#cd-018) | Six disciplines, one per project; a discipline names a practice. | |
-| [`CD-017`](docs/decisions-archive.md#cd-017) | The card label is the discipline, not a keyword. | |
-| [`CD-016`](docs/decisions-archive.md#cd-016) | Accent and focus rederived on hue 300; filter label merges with its count in light. | |
-| [`CD-015`](docs/decisions-archive.md#cd-015) | Card scopes may be Title Case capability lists. Bryan's call. | |
-| [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
-| [`DF-007`](docs/decisions-archive.md#df-007) | Handover: what this chat knew that no file held | |
-| [`CD-014`](docs/decisions-archive.md#cd-014) | 590 Madison Ave rewritten in first person. Bryan's brief. | |
-| [`CD-013`](docs/decisions-archive.md#cd-013) | copy-constraints deleted; copy written here, direction from outside. | |
-| [`CD-012`](docs/decisions-archive.md#cd-012) | No type-sync pipeline; nothing in Figma rules the code. Bryan's call. | |
-| [`CD-011`](docs/decisions-archive.md#cd-011) | Figma is a reference, not the spec; code is the source of truth. ⚠ | — Partly superseded |
-| [`CD-010`](docs/decisions-archive.md#cd-010) | Wordmark steps up; underlines step away; "Featured work" loses a word. | |
-| [`CD-009`](docs/decisions-archive.md#cd-009) | Every project dated to the month; three years were wrong. | |
-| [`CD-008`](docs/decisions-archive.md#cd-008) | Month refines the sort; month and completed guarded by a test. | |
-| [`CD-007`](docs/decisions-archive.md#cd-007) | Projects sort by date, newest first. Bryan's call. | |
-| [`CD-006`](docs/decisions-archive.md#cd-006) | The photography is Art too. Bryan's call. | |
-| [`CD-005`](docs/decisions-archive.md#cd-005) | Art replaces Fine Art, Exhibition returns, slugs lose the Cargo suffix. Bryan's call. | |
-| [`CD-004`](docs/decisions-archive.md#cd-004) | Links are undecorated; an underline is a state. Bryan's call. | |
-| [`CD-003`](docs/decisions-archive.md#cd-003) | Consolidated to one chat; DF-005 finished, DF-006 built, disciplines settled. | |
-| [`DF-006`](docs/decisions-archive.md#df-006) | The PLAY label moves below the image | |
-| [`CD-002`](docs/decisions-archive.md#cd-002) | Filter is the eyebrow tier; the charge is hover-only. Code and Deploy. | |
-| [`DF-005`](docs/decisions-archive.md#df-005) | Filter takes the eyebrow tier; the violet becomes hover-only | |
-| [`DF-004`](docs/decisions-archive.md#df-004) | Figma is build-ready; where it is 1:1 with code and where it is not | |
-| [`DF-003`](docs/decisions-archive.md#df-003) | One eyebrow, two contexts — the type is implemented twice | |
-| [`DF-002`](docs/decisions-archive.md#df-002) | Eyebrows are section headings only; eyebrow steps to SemiBold | |
-| [`DF-001`](docs/decisions-archive.md#df-001) | Discipline strings, and per-chat decision ids | |
-| [`D-065`](docs/decisions-archive.md#d-065) | Build budget is 1,000 credits a cycle, not 300. Code and Deploy. | |
-| [`D-064`](docs/decisions-archive.md#d-064) | Weights reverted; the eyebrow keeps its ink. Bryan's call. | |
-| [`D-063`](docs/decisions-archive.md#d-063) | A fourth chat for copy, which does not use this ledger. `src/content/` moves to it. | |
-| [`D-062`](docs/decisions-archive.md#d-062) | The WORK eyebrow above the project title is removed. Bryan's call. ⚠ | — Superseded by `CD-020` |
-| [`D-061`](docs/decisions-archive.md#d-061) | Bryan reweights the display ramp and the eyebrow. ⚠ | — Superseded |
-| [`D-060`](docs/decisions-archive.md#d-060) | Contact consolidates on About; header baseline locked; counts drop to the baseline. | |
-| [`D-059`](docs/decisions-archive.md#d-059) | The final six keywords, and a routed item that was destroyed and restored. | |
-| [`D-058`](docs/decisions-archive.md#d-058) | Shipped. First deploy ran, and the domain was cut over to Netlify. | |
-| [`D-057`](docs/decisions-archive.md#d-057) | Muted retuned and the nav gains a weight cue, in code. Code and Deploy. | |
-| [`D-056`](docs/decisions-archive.md#d-056) | Closing out Design and Figma's open list before launch. Three items, three … | |
-| [`D-055`](docs/decisions-archive.md#d-055) | Muted is retuned, and the current nav item gains a weight cue. Bryan's call… | |
-| [`D-054`](docs/decisions-archive.md#d-054) | Figma realigned to the rule token. Design and Figma confirms Code and Deplo… | |
-| [`D-053`](docs/decisions-archive.md#d-053) | `--color-line` is the rule token, and its value is derived, not picked. Bry… | |
-| [`D-052`](docs/decisions-archive.md#d-052) | The deploy gate was inverted and burned the whole billing cycle. Fixed. | |
-| [`D-051`](docs/decisions-archive.md#d-051) | The chrome rules are gone. Every remaining rule is ink. Bryan's call. Drawn… | |
-| [`D-050`](docs/decisions-archive.md#d-050) | The wordmark is serif, at body size. New `Wordmark` text style. Bryan's call. | |
-| [`D-049`](docs/decisions-archive.md#d-049) | Header reworked: full width, everything left, Contact moved up from the foo… | |
-| [`D-048`](docs/decisions-archive.md#d-048) | Hosting stays on Netlify. Bryan's call. Cloudflare question closed. | |
-| [`D-047`](docs/decisions-archive.md#d-047) | `/terms` and `/privacy` are approved as they stand. Bryan's call. | |
-| [`D-046`](docs/decisions-archive.md#d-046) | No synthesised faces, ever. Bryan's rule. | |
-| [`D-045`](docs/decisions-archive.md#d-045) | Rule hierarchy implemented in code. Code and Deploy. | |
-| [`D-044`](docs/decisions-archive.md#d-044) | Figma brought in line with the code's type decisions; Foundations repaired.… | |
-| [`D-043`](docs/decisions-archive.md#d-043) | The domain mailbox is not carried over. Bryan's call. | |
-| [`D-042`](docs/decisions-archive.md#d-042) | Cargo's image ORDER and caption pairing recovered from the archive. | |
-| [`D-041`](docs/decisions-archive.md#d-041) | `cover.<ext>` is a card-only image. Code decision. | |
-| [`D-040`](docs/decisions-archive.md#d-040) | Body text is Sans, not Serif. Bryan's call, made in Code and Deploy. | |
-| [`D-039`](docs/decisions-archive.md#d-039) | Design questions leave Design and Figma's list. Bryan's call. | |
-| [`D-038`](docs/decisions-archive.md#d-038) | Horizontal rules get a hierarchy. Bryan's call. Done in Figma. ⚠ | — Superseded |
-| [`D-037`](docs/decisions-archive.md#d-037) | Serif/sans pairing: IBM Plex Serif with IBM Plex Sans. Bryan's call. In Figma. ⚠ | — Partly superseded |
-| [`D-036`](docs/decisions-archive.md#d-036) | Video facade drawn. Ready to implement. | |
-| [`D-035`](docs/decisions-archive.md#d-035) | "Droplet" — a reserved shape motif. Named, not applied. | |
-| [`D-034`](docs/decisions-archive.md#d-034) | Radius stays 0, derived from the typeface. Measured, not defaulted. | |
-| [`D-033`](docs/decisions-archive.md#d-033) | Colour VALUES settled. Bryan's call. *(VALUES PARTLY SUPERSEDED — see "Curr… ⚠ | — Values superseded |
-| [`D-032`](docs/decisions-archive.md#d-032) | Keywords consolidated from eight to six. Bryan's call. Content change. ⚠ | — Partly superseded |
-| [`D-031`](docs/decisions-archive.md#d-031) | Keyword filter reverted to text links. Bryan's call. Drawn in Figma. | |
-| [`D-030`](docs/decisions-archive.md#d-030) | Open: the keyword set may be too granular for 14 projects. ⚠ | — Resolved |
-| [`D-029`](docs/decisions-archive.md#d-029) | Colour SYSTEM agreed. Values still open. Bryan's concept. ⚠ | — Accepted |
-| [`D-028`](docs/decisions-archive.md#d-028) | Video is embedded as a facade, not an iframe. Bryan's call (option B). | |
-| [`D-027`](docs/decisions-archive.md#d-027) | Figma file cleaned: no archives, no versioned duplicates. Bryan's call. | |
-| [`D-026`](docs/decisions-archive.md#d-026) | Typeface swap executed in Figma. Done, verified. | |
-| [`D-025`](docs/decisions-archive.md#d-025) | Typeface is IBM Plex Sans (Google Fonts), replacing New Frank. Bryan's call. ⚠ | — Accepted |
-| [`D-024`](docs/decisions-archive.md#d-024) | Legal copy approved as published. Bryan's call. | |
-| [`D-023`](docs/decisions-archive.md#d-023) | Design questions are optional, not required. Bryan's call. ⚠ | — Accepted |
-| [`D-022`](docs/decisions-archive.md#d-022) | Previous/Next project navigation removed. ⚠ | — Accepted |
-| [`D-021`](docs/decisions-archive.md#d-021) | Landing statement is `--size-xl`. Figma is right; the code should change. | |
-| [`D-020`](docs/decisions-archive.md#d-020) | Type ramp is bound to one variable. | |
-| [`D-019`](docs/decisions-archive.md#d-019) | Role is removed entirely. Bryan's call. | |
-| [`D-018`](docs/decisions-archive.md#d-018) | Keywords are seeded from the site's disciplines, not the three categories. ⚠ | — Superseded |
-| [`D-017`](docs/decisions-archive.md#d-017) | `discipline` is its own field, not `keywords[0]`. | |
-| [`D-016`](docs/decisions-archive.md#d-016) | `year` is a sort key; `completed` is what renders. | |
-| [`D-015`](docs/decisions-archive.md#d-015) | Hosting stays on Netlify. Bryan's call. | |
-| [`D-014`](docs/decisions-archive.md#d-014) | Deploy discipline. Enforced in netlify.toml. | |
-| [`D-013`](docs/decisions-archive.md#d-013) | Motion is not constrained by hosting. | |
-| [`D-012`](docs/decisions-archive.md#d-012) | Featured set stays at 4. Bryan's call. | |
-| [`D-011`](docs/decisions-archive.md#d-011) | ProjectCard direction. Decided. | |
-| [`D-010`](docs/decisions-archive.md#d-010) | Design question house style. Decided (style only). | |
-| [`D-009`](docs/decisions-archive.md#d-009) | Every project gets a project page. | |
-| [`D-008`](docs/decisions-archive.md#d-008) | Project pages come in two layouts. | |
-| [`D-007`](docs/decisions-archive.md#d-007) | Fact labels follow the live site's vocabulary. | |
-| [`D-006`](docs/decisions-archive.md#d-006) | Work index is filterable, not grouped. ⚠ | — Partly superseded |
-| [`D-005`](docs/decisions-archive.md#d-005) | Responsive display type. | |
-| [`D-004`](docs/decisions-archive.md#d-004) | Font weights, REVISED for New Frank: 600 becomes 700. SUPERSEDED — reverted… ⚠ | — Superseded |
-| [`D-003`](docs/decisions-archive.md#d-003) | Font weights. SUPERSEDED by the entry above — 600 does not exist in New Frank. ⚠ | — Superseded |
-| [`D-002`](docs/decisions-archive.md#d-002) | Active nav item gets a visual treatment. | |
-| [`D-001`](docs/decisions-archive.md#d-001) | Earlier | |
+*The decision index lived here — 92 rows pointing into `docs/decisions-archive.md`. Both were
+deleted together on 2026-09-08: the index was the map used to audit the archive, so it only became
+meaningless once its target was gone. `git log --grep <id>` replaces both, and
+`tests/ledger.test.ts` fails if an id we cite stops resolving.*
