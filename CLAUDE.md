@@ -55,9 +55,11 @@ card-and-poster only and is excluded from the gallery.
 
 ## Design rules that are load-bearing
 
-- **`tokens.css` mirrors Figma 1:1.** Each Figma variable names its CSS property
-  via `codeSyntax`. Ten CSS properties have no Figma variable **on purpose** —
-  don't "fix" that.
+- **The code is the source of truth. Figma is a reference.** `tokens.css` and the
+  built site are what ships. When the two disagree, **code wins and there is no
+  bug to file** — say Figma is behind and move on. Figma variables still name
+  their CSS property via `codeSyntax`, which is useful documentation, not a
+  contract. Ten CSS properties have no Figma variable **on purpose**.
 - **No rule may reference `--color-fg`.** That token means *the colour of text*.
   Rules point at `--color-line`, whose value is derived so a rule holds the same
   contrast against its ground in both modes. Derive future values; never eyeball one.
@@ -94,6 +96,19 @@ about the page list** — it reports one page however many exist. Use
   Nothing in a chat fixes this — Bryan authorizes Figma in his claude.ai
   connector settings, or works in an interactive terminal. Say which of the two
   it is before telling him anything is broken.
+
+**Figma is a sketchpad, not a spec — since 2026-09-08.** It was the channel between
+four chats that could not see each other; with one chat that job is gone, and the
+1:1 obligation it justified went with it. Design changes go straight to code.
+
+**Sync Figma on purpose, for a reason** — Bryan is about to draw in it, look at it,
+or show it — never continuously and never out of duty. Expect it to be behind.
+
+**The exception worth knowing:** Figma stays authoritative for anything it expresses
+*completely and natively*, which in practice means the type styles. It cannot express
+dark mode, layout derived from content, full-bleed chrome, the responsive continuum or
+generated counts — six things `DF-004` lists — and being authoritative for those is
+what made it wrong before.
 
 Nothing in the build depends on live Figma access. It was a day-one non-goal.
 

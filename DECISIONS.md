@@ -226,14 +226,23 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 
 ## Figma
 
+**A reference, not the spec — `CD-011`.** The code is the source of truth; where the two
+disagree the site is right and Figma is behind, which is expected rather than a defect. Figma stays
+authoritative only where it is *expressive*: the text styles, completely and natively. Not dark
+mode, derived layout, full-bleed chrome, the responsive continuum or generated counts.
+
 **Node ids, so nothing has to be hunted for:** `SiteHeader` `16:49` · `SiteFooter` `16:50` ·
 `ProjectCard` `15:23` · `Eyebrow` `17:50` · `FactPair` `17:52` · `FilterLink` `29:62` ·
 `VideoFacade` `100:2` · `Placeholder` `13:5`. Landing desktop `19:2` · work index desktop
 `30:130` (its `FilterBar` `30:138`) · About desktop `35:183` · work index mobile `38:35`
 (`FilterBar` `38:43`) · About mobile `41:159`.
 
-**How to check Figma is build-ready — four queries, all via `use_figma`.** Run these after any
-substantial change; each has caught a real defect that a screenshot did not:
+**How to check Figma is build-ready — four queries, all via `use_figma`. NO LONGER ROUTINE.**
+Retired as an after-every-change ritual in `CD-011`: the code is the source of truth now, so a
+drifted Figma file is expected rather than a defect. Run them when the file is about to be
+*used* — shown to someone, drawn in, or synced from. Each has caught a real defect a screenshot
+did not, **and one they cannot catch**: on 2026-09-08 all four passed while three `FilterLink`
+fills rendered pure black, because `boundVariables` reported them bound. Render the node too.
 
 1. **Text nodes with no `textStyleId`** — unstyled text drifts silently.
 2. **Solid fills or strokes with no `boundVariables.color`** — this found a `#000000` eyebrow
@@ -242,7 +251,7 @@ substantial change; each has caught a real defect that a screenshot did not:
    following a variable change.
 4. **Variables with no WEB `codeSyntax`** — those have no counterpart in `tokens.css`.
 
-Clean as of 2026-09-07: 0, 0, 0, 0 across all three pages — 8 components, 13 styles, 30
+Clean as of 2026-09-07, and unverified since: 0, 0, 0, 0 across all three pages — 8 components, 13 styles, 30
 variables, 9 desktop and 9 mobile frames.
 
 **Figma API traps that cost real time here:**
@@ -561,7 +570,7 @@ current palette).
 
 # Decision index
 
-82 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+83 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
@@ -569,6 +578,7 @@ history, never to decide what to do next.** Full text in
 |---|---|---|
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
 | [`DF-007`](docs/decisions-archive.md#df-007) | Handover: what this chat knew that no file held | |
+| [`CD-011`](docs/decisions-archive.md#cd-011) | Figma is a reference, not the spec; code is the source of truth. | |
 | [`CD-010`](docs/decisions-archive.md#cd-010) | Wordmark steps up; underlines step away; "Featured work" loses a word. | |
 | [`CD-009`](docs/decisions-archive.md#cd-009) | Every project dated to the month; three years were wrong. | |
 | [`CD-008`](docs/decisions-archive.md#cd-008) | Month refines the sort; month and completed guarded by a test. | |

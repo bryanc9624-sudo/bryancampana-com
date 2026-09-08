@@ -1,3 +1,58 @@
+<a id="cd-011"></a>
+### CD-011 · 2026-09-08 — Figma is a reference, not the spec. The code is the source of truth. **Bryan's call.**
+
+**Status:** Accepted
+
+Bryan noticed the last several changes went straight to code without touching Figma and asked
+whether that was correct, or an artifact of the four-chat era. **It was an artifact, and the
+changes were correct.**
+
+**Figma had three jobs. Consolidation killed one and exposed a second as fiction.**
+
+1. **The channel between chats — dead.** Design drew, Code read the drawing, and neither could
+   see the other's conversation. Figma *was* the message bus. One chat does both now, so drawing
+   first would be writing a spec for oneself.
+2. **Source of truth for values — largely fiction already.** `DF-004` itself lists six areas where
+   matching Figma would be the bug: dark mode, photography columns derived from image count,
+   full-bleed chrome, the responsive continuum, real imagery, generated counts. That is most of
+   the site, and `tokens.css` already holds every value.
+3. **Bryan's drawing surface — real, and untouched by any of this.**
+
+**What the 1:1 obligation cost, measured on one day.** Eight sync incidents on 2026-09-08, and the
+direction was mixed, which is the tell that neither file was reliably authoritative:
+
+| Figma right, code wrong | Code right, Figma wrong |
+|---|---|
+| Card keyword size, 13 vs 15px | Three `FilterLink` fills rendering black |
+| Card keyword leading | Wordmark, 17px vs 22px |
+| Video label size and leading | |
+| Eyebrow weight | |
+
+**And the audit passed while the file was visibly wrong.** All four `DF-004` queries returned
+clean while three fills rendered pure black, because `boundVariables` reported them bound. A check
+that cannot see the defect is reassurance, not protection.
+
+**What changes.** `CLAUDE.md` drops the 1:1 rule and states that code wins with no bug to file.
+The four-query audit is retired as an after-every-change ritual and kept as a technique for when
+the file is about to be *used*. Figma is synced on purpose — before drawing, showing or reading
+from it — never out of duty.
+
+**The Figma file now says so itself**, in the "How to use this file" panel on Foundations, which
+previously claimed every variable maps 1:1 and that changing a value there changes it in the code.
+**A file that lies about its own status is worse than one that admits it is behind** — the stale
+palette table, the stale keyword list and the stale handoff docs all bit for exactly that reason.
+
+**The rule this lands on, which is sharper than "demote Figma".** Figma is authoritative exactly
+where it is **expressive**, and nowhere else. A text style is family, size, weight, line height,
+letter spacing and case — Figma holds all six natively and loses nothing, so the type specimen can
+rule. Dark mode, derived layout, full-bleed chrome and generated counts it structurally cannot
+hold, and treating it as authoritative for those is what made it wrong. The failure was never
+Figma; it was asking Figma to be authoritative for things it cannot say.
+
+**One thing the specimen cannot know:** which font files the site loads. A style drawn in a weight
+the CSS has not imported renders as the nearest loaded face, silently — the `D-061` serif 500/700
+episode. Any pipeline from Figma type to CSS has to check that.
+
 <a id="cd-010"></a>
 ### CD-010 · 2026-09-08 — Wordmark steps up, underlines step away, "Featured work" loses a word. **Bryan's call.**
 
