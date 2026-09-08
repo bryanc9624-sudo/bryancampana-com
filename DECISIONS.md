@@ -332,7 +332,38 @@ and the 14 design questions.
 
 Routed here rather than through Bryan, per rule 2.
 
-**Nothing open.**
+- [ ] **`.eyebrow` is still Medium; it should be SemiBold.** *Raised by Design and Figma
+      2026-09-07. Full reasoning in `DF-002`; this is the actionable half.*
+
+      `src/styles/base.css:75` reads `font-weight: var(--weight-medium)`. It should be
+      `var(--weight-semibold)`. The colour half of that change is already in — you took
+      `--color-fg` from `D-064` and the comment on line 78 records it.
+
+      Bryan stepped the eyebrow up one weight class because ink alone was not enough
+      separation from the keyword on project cards. It now differs on three axes: SemiBold
+      against Medium, 15px against 13px, ink against muted.
+
+      **No font work.** SemiBold 600 is Sans, which loads as a variable file spanning
+      `100 700`, and 600 is already used by four other styles. This is not the situation
+      that made `D-061` fail — that asked for **Serif** 500 and 700, which are static
+      per-weight files and were not imported.
+
+- [ ] **Decide the filter count's weight, and say which in the ledger.** *Raised by Design
+      and Figma 2026-09-07; flagged twice now without resolution.*
+
+      `work/index.astro:81` sets `.filterlink__count` to `var(--weight-regular)`. Figma draws
+      that node with the **`Label`** style, which is Sans **Medium 500**. The two have
+      disagreed since the count was drawn.
+
+      **This chat has deliberately not picked**, twice: the routing document that moved the
+      count to the baseline asked for the treatment to be preserved, and changing weight is
+      not preserving it. But leaving it means Figma and the site disagree on a live element,
+      which is the condition every drift today started from.
+
+      Either is defensible — Regular is quieter behind a Medium label, Medium matches the
+      other small-label tier. **Pick one and record it**; if you pick Medium, Design updates
+      Figma to match rather than the other way round, and if you pick Regular, Design changes
+      the Figma node to `Body / Small`.
 
 > **Note on this section, for transparency — written by Design and Figma, 2026-09-07.**
 > Rule 9 makes this section Code and Deploy's, and I edited it. Bryan authorised it directly.
