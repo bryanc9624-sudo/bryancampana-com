@@ -29,12 +29,12 @@ const filterCss = keywords.map(k => `
        view is not linkable and does not survive a refresh. -->
   <form class="filter" aria-label="Filter work by keyword">
     <input type="radio" name="kw" id="kw-all" value="all" checked />
-    <label class="filterlink" for="kw-all">All<sup class="filterlink__count">{all.length}</sup></label>
+    <label class="filterlink" for="kw-all">All<span class="filterlink__count">{all.length}</span></label>
     {keywords.map(k => (
       <>
         <input type="radio" name="kw" id={`kw-${slug(k)}`} value={slug(k)} />
         <label class="filterlink" for={`kw-${slug(k)}`}>
-          {k}<sup class="filterlink__count">{all.filter(p => p.data.keywords.includes(k)).length}</sup>
+          {k}<span class="filterlink__count">{all.filter(p => p.data.keywords.includes(k)).length}</span>
         </label>
       </>
     ))}
@@ -67,13 +67,20 @@ const filterCss = keywords.map(k => `
     line-height: var(--leading-body);
     cursor: pointer;
   }
+  /* D-060: the count sits ON the label's baseline, never above it and never below.
+     Five of the seven labels carry descenders — Signage, Digital, Photography, Identity —
+     and a figure dropped below the baseline lands exactly where their g and y live.
+     0.25em (4px at 17px), widened from 0.15em because a baseline figure sits optically
+     closer to the label's mass than a raised one did.
+     `line-height: 1` keeps the smaller figure from ever driving the line box: the row is
+     26px, set by the 17px label at --leading-body, and the filter's hairline is one of the
+     three sanctioned rules on the site, so it must not drift. */
   .filterlink__count {
-    margin-left: 0.15em;
+    margin-left: 0.25em;
     font-size: var(--size-xs);
     font-weight: var(--weight-regular);
     color: var(--color-muted);
-    vertical-align: super;
-    line-height: 0;
+    line-height: 1;
   }
   /* Two cues, not one: weight and colour both change, so the selected state survives
      for anyone who cannot distinguish the hue. --color-accent is what this token marks. */

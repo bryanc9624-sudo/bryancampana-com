@@ -15,10 +15,9 @@ const path = Astro.url.pathname
           <a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}</a>
         </li>
       ))}
-      {/* Contact is an action, not a location, so it never takes aria-current and stays
-          muted on every page. Moved up from the footer 2026-09-07: people do not reach
-          the bottom of the page. */}
-      <li><a href="mailto:bryanc9624@gmail.com">Contact</a></li>
+      {/* No Contact here. D-060: it lived in three places — header, footer and About —
+          and now lives only on About. D-049's reasoning (people do not reach the bottom
+          of a page) still holds and is outweighed by having one place for contact. */}
     </ul>
   </nav>
 </header>
@@ -52,9 +51,10 @@ const path = Astro.url.pathname
      applied. 500 rather than FilterLink's 600 — the nav sits beside a 600 serif wordmark. */
   nav a[aria-current='page'] { color: var(--color-fg); font-weight: var(--weight-medium); }
 
-  /* At 390px there is 342px of content. Wordmark 133 + 64 gap + nav 194 overflows by
-     ~49px, and closing the gap puts the name against "Work" as one run of text. So it
-     stacks: name, then nav, both flush left. */
+  /* The stack stays even though Contact left the row. D-060 re-measured it: at 390px the
+     row is 307px against 342px of content, so it does fit there — but this query runs
+     0–639px, and at 320px there is only 272px of content. The row stops fitting below a
+     355px viewport, which is inside the range. So it stacks: name, then nav, flush left. */
   @media (max-width: 39.999rem) {
     .site-header { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
   }
