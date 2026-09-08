@@ -189,8 +189,13 @@ Nothing else. Routes, the filter, the sitemap and the landing page all follow.
 
 ## Publishing
 
-Local edits are not live. The site deploys to Netlify only when a commit message contains
-`[deploy]`, which keeps build credits from being spent on every change.
+Local edits are not live. The site deploys to Netlify only when a commit's **subject line starts
+with** `[deploy]`, which keeps build credits from being spent on every change.
+
+The tag belongs at the very start of the subject and nowhere else. An earlier version of the
+gate read whole messages and fired a build for every commit in a push, which burned a whole
+cycle. `.githooks/pre-push` refuses a push carrying the tag in a body, and a push that will
+genuinely build prints a notice with its credit cost.
 
 Ask Claude to commit and deploy — the git side is handled for you.
 
@@ -199,7 +204,7 @@ Ask Claude to commit and deploy — the git side is handled for you.
 ## Checks
 
 ```
-npm test    # content integrity — counts, keywords, disciplines, featured bodies
+npm test    # content integrity, nav, and the rules in CLAUDE.md that can be checked
 npm run build
 npm run todos   # what content is still missing
 ```

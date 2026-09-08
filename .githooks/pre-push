@@ -1,0 +1,56 @@
+#!/bin/sh
+#
+# Guards the Netlify build budget.
+#
+# A build runs only when a commit SUBJECT starts with [deploy]. Netlify Personal
+# gives ~65 builds a cycle at 15 credits each.
+#
+# The gate itself is netlify.toml's `ignore`, which reads --pretty=%s anchored at ^.
+# An earlier version read %B, matched commit bodies that discussed the rule, and
+# fired 19 builds — a whole cycle (D-052). This hook is the second layer: it catches
+# the intent error locally, before the push, instead of silently at build time, and
+# it still holds if the gate is ever loosened back.
+#
+# Installed via: git config core.hooksPath .githooks
+
+zero=$(git hash-object --stdin </dev/null | tr '[0-9a-f]' '0')
+status=0
+
+while read -r _local_ref local_sha _remote_ref remote_sha; do
+	[ "$local_sha" = "$zero" ] && continue
+
+	if [ "$remote_sha" = "$zero" ]; then
+		range=$(git rev-list "$local_sha" --not --remotes)
+	else
+		range=$(git rev-list "$remote_sha..$local_sha")
+	fi
+	[ -z "$range" ] && continue
+
+	for sha in $range; do
+		subject=$(git log -1 --pretty=%s "$sha")
+		body=$(git log -1 --pretty=%b "$sha")
+
+		case "$body" in
+		*'[deploy]'*)
+			echo "BLOCKED: [deploy] found in the BODY of $(git log -1 --pretty=%h "$sha")" >&2
+			echo "  $subject" >&2
+			echo "" >&2
+			echo "  The tag belongs at the start of a subject and nowhere else. A gate that" >&2
+			echo "  read whole messages once fired 19 builds and cost a whole cycle." >&2
+			echo "  Move the tag to the start of the subject, or take it out:" >&2
+			echo "    git rebase -i $(git log -1 --pretty=%h "$sha")~1   # reword" >&2
+			status=1
+			;;
+		esac
+
+		case "$subject" in
+		'[deploy]'*)
+			echo "BUILD: $(git log -1 --pretty=%h "$sha") will publish to bryancampana.com" >&2
+			echo "  $subject" >&2
+			echo "  ~15 of ~1000 credits this cycle." >&2
+			;;
+		esac
+	done
+done
+
+exit $status

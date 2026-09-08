@@ -35,8 +35,8 @@ a file that lies about its own process is the failure this ledger was restructur
    reached only in chat is gone when the chat ends.
 3. **Preview before pushing.** Build locally, show Bryan, push once he approves.
 4. **Builds need a `[deploy]` subject line.** A push only builds when the commit *subject starts
-   with* the tag — never put it in a body. Check first:
-   `git log -1 --pretty=%s | grep -q "^\[deploy\]" && echo BUILD || echo skip`
+   with* the tag. `netlify.toml` gates it and `.githooks/pre-push` catches the mistake before
+   the push lands, so this is enforced rather than remembered.
 5. **The archive is frozen history and "Current state" wins.** Entries are immutable and several
    contradict each other; supersede rather than edit. An entry being present says nothing about
    it still being true — check whether a later one overrode it.
@@ -310,9 +310,14 @@ spacing, sizes, radii; which elements exist on a page and in what order.
 - **A production build costs ~15 credits**, so a cycle buys roughly **65 builds**. Measured, not
   quoted: the first deploy took 15.2 credits including bandwidth and compute. **Builds are the
   entire cost** — bandwidth and compute together were 0.2.
-- **A build runs only when the commit SUBJECT STARTS WITH `[deploy]`.** Never put the tag in a
-  commit body. Check before pushing:
-  `git log -1 --pretty=%s | grep -q "^\[deploy\]" && echo BUILD || echo skip`
+- **A build runs only when the commit SUBJECT STARTS WITH `[deploy]`.** The gate is
+  `netlify.toml`'s `ignore`, which reads `%s` anchored at `^`. An earlier version read `%B` and
+  matched bodies discussing the rule — that is how `D-052` burned a cycle.
+- **`.githooks/pre-push` is the second layer, since 2026-09-08.** It refuses a push carrying the
+  tag in a body and announces an intentional build with its credit cost, catching the intent
+  error locally instead of silently at build time, and holding if the gate is ever loosened.
+  Wired through `git config core.hooksPath .githooks` so it is versioned, not stranded in
+  `.git/hooks`.
 - **Domain:** `bryancampana.com`, apex canonical, `www` 301s to it. DNS delegated to Netlify
   (`dns1..4.p04.nsone.net`). Let's Encrypt certificate issued 2026-09-07 23:34 UTC.
 - **During a DNS cutover a check by hostname proves nothing** — it says only that *something*

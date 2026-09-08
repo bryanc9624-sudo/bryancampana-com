@@ -33,10 +33,10 @@ is gone when the chat ends.
 **1. Publishing costs 15 credits. Nothing else does.**
 A build runs only when the commit **subject starts with** `[deploy]`. Netlify
 Personal gives 1,000 credits a cycle (~65 builds), cycle runs the 7th to the 6th.
-Never put `[deploy]` in a commit *body* — that once fired 19 builds and burned a
-whole cycle. Check before pushing:
-
-    git log -1 --pretty=%s | grep -q "^\[deploy\]" && echo BUILD || echo skip
+The gate in `netlify.toml` reads the subject only, anchored — the fix after a body-matching
+version fired 19 builds and burned a whole cycle. `.githooks/pre-push` is the second layer:
+it refuses a push carrying the tag in a body, and announces an intentional build with its
+cost. Nothing to check by hand.
 
 **Preview before pushing.** Build locally, show Bryan, push once he approves.
 
@@ -48,6 +48,7 @@ the content store and the site goes silently empty.
 **3. HTML comments in a markdown body ship to the page.**
 Astro passes them straight through — invisible in preview, visible in view-source.
 Use YAML `#` comments in frontmatter, and `{/* … */}` in `.astro` templates.
+`tests/rules.test.ts` fails on the mistake; only the alternatives above need remembering.
 
 **4. Measuring a baseline needs `overflow:hidden` on the probe.**
 The trick is a zero-size inline-block span appended to the element; its
@@ -64,7 +65,8 @@ is blocked; the permanent fix is `sudo xcode-select -s /Library/Developer/Comman
 which needs Bryan's password.
 
 **6. Images go under `src/`, never `public/`.**
-`public/` is copied through unoptimised. Export sRGB at 2400px. `cover.<ext>` is
+`public/` is copied through unoptimised — `tests/rules.test.ts` fails on an image
+there. What the test cannot check: export sRGB at 2400px, and `cover.<ext>` is
 card-and-poster only and is excluded from the gallery.
 
 ## Design rules that are load-bearing
