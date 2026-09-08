@@ -17,6 +17,53 @@ IDs are chronological: `D-001` is the oldest.
 
 ---
 
+<a id="d-064"></a>
+### D-064 · 2026-09-07 — Weights reverted; the eyebrow keeps its ink. **Bryan's call. Supersedes D-061.**
+
+**Status:** Accepted
+
+**⚠ CODE AND DEPLOY — the font imports requested in `D-061` are withdrawn. Do not add them.**
+If they are already added, they are harmless but dead weight and should come out.
+
+Bryan reverted the reweighting he had made earlier the same day, keeping only the colour change.
+
+| Style | Briefly was | Back to |
+|---|---|---|
+| `Display / 2XL` | Serif Bold 700 | **Serif SemiBold 600** |
+| `Display / XL` | Serif Medium 500 | **Serif SemiBold 600** |
+| `Eyebrow` | Sans Bold 700 | **Sans Medium 500** |
+
+Both styles also had the spaces removed from their names (`Display/2XL`); those are restored, so
+all twelve styles use the same ` / ` convention again.
+
+**Weights in use are back to SemiBold 600, Medium 500, Regular 400 and Serif Italic 400 — and
+every one of those is already loaded.** The Sans is the variable file at `100 700`; the Serif
+static files loaded are 400, 400-italic and 600. Nothing outstanding.
+
+**What is kept: the section eyebrow is `--color-fg`.** Bryan's reason — separating it from the
+keyword shown on project cards, which read as the same tier.
+
+Two notes on that, since the description and the file disagreed slightly:
+
+- **It is ink, not accent.** Bryan described it as "that purple text colour"; the bound variable
+  is `color/fg`, `#361A38`. It reads purple because the ink on this site *is* plum. That is the
+  better outcome — `--color-accent` is the charge and marks the selected filter link only, and
+  spending it on static section labels would have made it decorative rather than functional.
+- **The two were never the same style.** The card keyword is `Label` at 13px Medium; the section
+  eyebrow is `Eyebrow` at 15px Medium. Different styles and different sizes — but both were
+  uppercase, tracked and muted, so they read as one tier. Colour now separates them; size always
+  did, quietly.
+
+**Code and Deploy — one line.** `base.css` sets `.eyebrow { color: var(--color-muted) }`. It
+should be `var(--color-fg)`. Nothing else changes.
+
+**`docs/copy-constraints.md` re-measured**, which is the standing obligation after any text-style
+change and its first real test. The eyebrow weight moved the discipline figures: at Bold,
+`SIGNAGE & WAYFINDING, CODE SIGNAGE` measured **342px against 342px** of mobile width — no slack
+at all. At Medium it is **334px**, so it fits with 8px to spare. **A weight revert turned "wraps"
+into "just fits."** That is exactly why the file says re-measure rather than assume.
+
+
 <a id="d-063"></a>
 ### D-063 · 2026-09-07 — A fourth chat for copy, which does not use this ledger. `src/content/` moves to it. **Bryan's call.**
 
@@ -86,9 +133,9 @@ instead of the word `WORK`, mirroring the card on the work index and putting inf
 redundant nav link used to be. Bryan asked for removal, so that is what was drawn.
 
 <a id="d-061"></a>
-### D-061 · 2026-09-07 — Bryan reweights the display ramp and the eyebrow. **Bryan's edit, in Figma.**
+### D-061 · 2026-09-07 — Bryan reweights the display ramp and the eyebrow. **Bryan's edit, in Figma.** ⚠
 
-**Status:** Accepted — **but two font files must be imported before it ships. See below.**
+**Status:** Superseded by D-064 — the weights were reverted the same day. **The two font imports it asks for are NOT needed; do not add them.**
 
 Made directly in Figma between sessions and read back here rather than reported.
 
