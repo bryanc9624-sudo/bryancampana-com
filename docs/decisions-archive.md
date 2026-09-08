@@ -17,6 +17,76 @@ IDs are chronological: `D-001` is the oldest.
 
 ---
 
+<a id="d-062"></a>
+### D-062 · 2026-09-07 — The WORK eyebrow above the project title is removed. **Bryan's call.**
+
+**Status:** Accepted
+
+A project page carried **three** routes to the index: the header nav, a `WORK` eyebrow above the
+title, and `← All work` at the foot. The eyebrow goes.
+
+Removed from all six project frames — three desktop, three mobile. The `← All work` link **stays**:
+it is a different affordance, offered where the reading ends rather than competing with the title
+at the top.
+
+**Worth knowing, and it slightly complicates the reasoning.** On a project page the header's
+`Work` already carries `aria-current="page"`, because the route is `/work/<slug>` and the nav
+matches on `path.startsWith('/work')`. So the header link the removal relies on is styled as
+*"you are here"* rather than as a destination. That is defensible — section-level highlighting is
+normal and a project page is inside Work — and the foot link covers the explicit return. Flagged
+rather than changed.
+
+**Option not taken, offered for later:** the eyebrow slot could carry the project's **keyword**
+instead of the word `WORK`, mirroring the card on the work index and putting information where a
+redundant nav link used to be. Bryan asked for removal, so that is what was drawn.
+
+<a id="d-061"></a>
+### D-061 · 2026-09-07 — Bryan reweights the display ramp and the eyebrow. **Bryan's edit, in Figma.**
+
+**Status:** Accepted — **but two font files must be imported before it ships. See below.**
+
+Made directly in Figma between sessions and read back here rather than reported.
+
+| Style | Was | Now |
+|---|---|---|
+| `Display/2XL` | Serif SemiBold 600 | **Serif Bold 700** |
+| `Display/XL` | Serif SemiBold 600 | **Serif Medium 500** |
+| `Eyebrow` | Sans Medium 500 | **Sans Bold 700** |
+
+**The ramp is now non-monotonic, and that reads as deliberate.** Across 48 → 32 → 22 the weight
+runs 700 → 500 → 600, so the lightest of the three display styles sits in the middle. That fits
+what each does: 2XL is a page label (`Work`) and can carry weight; XL is the landing statement, a
+sentence you actually read, so lighter suits it; Title/Large needs weight back to hold at 22px.
+
+**⚠ CODE AND DEPLOY — two imports are required, or this renders wrong.**
+
+`base.css` loads Serif **400, 400-italic and 600 only**:
+
+```css
+@import '@fontsource/ibm-plex-serif/500.css';   /* Display/XL  — Medium */
+@import '@fontsource/ibm-plex-serif/700.css';   /* Display/2XL — Bold   */
+```
+
+The package already ships both (it ships 100–700 plus italics), so this is two lines and no
+install. **The Sans needs nothing** — it is the variable file, declared `font-weight: 100 700`, so
+Bold 700 for the Eyebrow is already covered. Verified by reading the `@font-face` range, not
+assumed.
+
+**What happens without them is worse than it looks.** The browser does not fail visibly — it
+matches the nearest loaded face. A request for Serif 500 resolves down to **400**, and Serif 700
+resolves down to **600**. So the landing statement and the work-index heading would both render a
+step lighter than drawn, with nothing in the console and no visual error to notice. Some engines
+additionally synthesise, which the settled rule **"No synthesised faces, ever"** forbids outright.
+
+A `--weight-bold: 700` token is also needed; `tokens.css` currently stops at `--weight-semibold`.
+
+**Naming, minor.** The two renamed styles dropped the spaces around their slash — `Display/2XL`
+and `Display/XL` against `Title / Large`, `Body / Strong`, `Body / Small`, `Body / Large`,
+`Body / Medium`. Figma groups on `/`, so the display pair now sits in a group named `Display`
+while the rest sit in `Title ` and `Body ` with trailing spaces. Harmless, but it is a
+half-migration: either finish it across all eight or revert the two. Design's to tidy, not urgent.
+
+
 <a id="d-061"></a>
 ### D-061 · 2026-09-07 — The build budget is 1,000 credits a cycle, not 300. **Code and Deploy.**
 

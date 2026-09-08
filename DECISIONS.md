@@ -119,12 +119,20 @@ mode Figma cannot show.
   (Eyebrow, Label). `--font-italic` is IBM Plex **Serif**: anything italic uses the serif,
   whatever surrounds it, because Plex Sans ships no italic file and the browser would otherwise
   synthesise a slant. **No synthesised faces, ever.**
-- **Self-hosted** through Fontsource, not Google's CDN. Weights in use: SemiBold 600, Medium 500,
-  Regular 400, Serif Italic 400. Nothing else.
+- **Self-hosted** through Fontsource, not Google's CDN. **Weights in use: Bold 700, SemiBold 600,
+  Medium 500, Regular 400, and Serif Italic 400.**
+- **Serif 500 and Serif 700 must be imported before this ships.** `base.css` currently loads only
+  Serif 400, 400-italic and 600. The Sans is the variable file at `100 700`, so it covers
+  everything; the Serif is static per-weight files and two are missing. See `D-061`.
 - **Style names have no space** — `SemiBold`, not Inter's `Semi Bold`. The mismatch silently
   drops text to Regular.
 - **Size ramp:** xs 13 · sm 15 · base 17 · lg 22 · xl 32 · 2xl 48. `xl` and `2xl` step to 24 and
   32 under 40rem — in Figma that is the `Mobile` variable mode.
+- **The display ramp does not run monotonically with size, deliberately.** Display/2XL is
+  **Bold 700**, Display/XL is **Medium 500**, Title/Large is **SemiBold 600**. The lightest of
+  the three sits in the middle: 2XL is a page label (`Work`) and can carry weight, XL is the
+  landing statement — a sentence you read, so it is set lighter — and Title/Large needs weight
+  back to hold at 22px. **Eyebrow is Bold 700**, uppercase at 8% tracking.
 - **`Wordmark`** is serif at body size. It is identity, not navigation, and shares a line with the
   nav, so it must not step up in size — weight separates it, not size.
 
@@ -151,6 +159,10 @@ mode Figma cannot show.
   row is 307px against 342px at 390px, so it fits there — but the query runs `0–639px`, and at
   **320px** there is only 272px of content width. The row stops fitting below a **355px**
   viewport. Six `SiteHeader` variants, not three.
+- **Project pages open on the title.** The `WORK` eyebrow that sat above it is removed — the
+  header already routes to the index, and on a project page it carries `aria-current`
+  because the path starts with `/work`. The `← All work` link at the foot of the page
+  stays: it is a different affordance, offered where the reading ends.
 - **Contact block, About page.** Desktop is three columns — portrait `1fr`, biography `2fr`,
   contact `1fr`, 64px gutters. Mobile stacks it after the biography. The block is a `CONTACT`
   eyebrow (the text style, **no rule** — it is a column element, not a break in a flow), then
