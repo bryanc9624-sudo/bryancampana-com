@@ -1203,7 +1203,11 @@ charge; in the file they are bg / fg / accent.
 <a id="d-032"></a>
 ### D-032 · 2026-09-07 — Keywords consolidated from eight to six. **Bryan's call. Content change.**
 
-**Status:** Accepted
+**Status:** Partly superseded by [`D-059`](#d-059) — the consolidation itself stands, but **the
+mapping table below is stale for `Fine Art`.** It gives Fine Art 1 project; the final set is
+**Fine Art 3**, because `represent-1` and `resemblance-1` gained the tag after this entry was
+written and `D-059` kept it. **Do not apply the table below.** The live set is in
+`DECISIONS.md` under "Content and schema".
 
 **Code and Deploy: this is the change to make in `src/content/projects/*.md`.**
 

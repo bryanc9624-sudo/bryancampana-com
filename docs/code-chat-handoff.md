@@ -45,12 +45,16 @@ written:
 
 - **The TLS certificate.** Netlify served HTTP 200 but Let's Encrypt had not issued. Verify with
   the IP-pinned check below, not by hostname.
-- **Cargo is still live and must stay live** until that certificate is verified. It holds the
-  only valid HTTPS on the domain for anyone resolving through a stale cache. Cancelling it early
-  takes down the whole zone, not just the old site.
+- **Cargo.** It held the only valid HTTPS on the domain while DNS was flapping, so cancelling it
+  early would have taken down the whole zone rather than just the old site.
 
-Everything else is closed: 14 projects with real images, 20 pages, 6/6 tests, no blocking content
-markers, zero actionable ledger items, WCAG AA in both colour schemes, zero external JavaScript.
+**Both closed 2026-09-07, later the same day.** The Let's Encrypt certificate issued at 23:34 UTC
+and was verified from Netlify's IP; all 19 sitemap routes serve 200 over HTTPS, `www` 301s to the
+apex. **Cargo is Bryan's** — he cancels it at his convenience and asked that it not be tracked here.
+
+Content is complete: 14 projects with real images, 20 pages, 6/6 tests, no blocking content
+markers, WCAG AA in both colour schemes, zero external JavaScript. For what is actually open,
+read `DECISIONS.md` — never this file.
 
 ---
 
@@ -168,5 +172,15 @@ npm test           # 6 tests
 npm run todos      # content report -> CONTENT-TODO.md
 ```
 
-*Last actions of this chat: shipped the site, moved DNS off Cargo, and left the TLS certificate
-provisioning. Read the ledger's most recent Settled entry before doing anything else.*
+*Last actions of the first chat: shipped the site, moved DNS off Cargo, and left the TLS
+certificate provisioning.*
+
+**The ledger has been restructured since this was written.** `DECISIONS.md` is now a short
+contract — "Current state" for what is true, plus the open lists — and the dated history moved to
+`docs/decisions-archive.md`, where each entry has a stable `D-NNN` id and a status. The "Settled
+log" this file used to point at no longer exists.
+
+**Read the contract first; the archive only for why.** An entry being present in the archive does
+not mean it is current — check its status, and check whether a later entry supersedes it. That is
+not hypothetical: `D-032` and `D-059` disagree about a keyword count, and reading the archive
+without the contract produced a wrong edit on 2026-09-07.

@@ -380,7 +380,7 @@ history, never to decide what to do next.** Full text in
 | [`D-035`](docs/decisions-archive.md#d-035) | "Droplet" — a reserved shape motif. Named, not applied. | |
 | [`D-034`](docs/decisions-archive.md#d-034) | Radius stays 0, derived from the typeface. Measured, not defaulted. | |
 | [`D-033`](docs/decisions-archive.md#d-033) | Colour VALUES settled. Bryan's call. *(VALUES PARTLY SUPERSEDED — see "Curr… ⚠ | — Values superseded |
-| [`D-032`](docs/decisions-archive.md#d-032) | Keywords consolidated from eight to six. Bryan's call. Content change. | |
+| [`D-032`](docs/decisions-archive.md#d-032) | Keywords consolidated from eight to six. Bryan's call. Content change. ⚠ | — Partly superseded |
 | [`D-031`](docs/decisions-archive.md#d-031) | Keyword filter reverted to text links. Bryan's call. Drawn in Figma. | |
 | [`D-030`](docs/decisions-archive.md#d-030) | Open: the keyword set may be too granular for 14 projects. ⚠ | — Resolved |
 | [`D-029`](docs/decisions-archive.md#d-029) | Colour SYSTEM agreed. Values still open. Bryan's concept. ⚠ | — Accepted |
