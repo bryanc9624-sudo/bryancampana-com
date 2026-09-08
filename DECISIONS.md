@@ -367,6 +367,38 @@ system exists, not of what the values are.
 
 ## Settled
 
+### 2026-09-07 — Shipped. First deploy ran, and the domain was cut over to Netlify.
+
+**The site is deployed.** `[deploy] Ship the rebuilt site` (`e275333`) published in 19s for 15
+credits — **exactly one build.** Every untagged commit behind it shows *Canceled* in the deploy
+log, which is the end-to-end proof the gate works that could not be had any other way. Earlier
+commits show *Skipped due to account credit usage exceeded*; that is the exhausted free cycle,
+not the gate.
+
+**DNS moved off Cargo.** `bryancampana.com` is delegated to Netlify DNS —
+`dns1..4.p04.nsone.net`, confirmed at the .com registry. The bare domain is canonical, which
+`astro.config.mjs`, the canonical tags and `robots.txt` already assumed, so no rebuild was
+needed. Netlify serves both apex and `www`.
+
+Pre-flight before the switch: the zone was queried directly on Netlify's nameservers and the
+site fetched by forcing resolution to their IPs. Both returned the shipped site, so the cutover
+was verified before the registrar was touched rather than after.
+
+**Still in progress at time of writing — the TLS certificate.** Netlify serves the site over
+HTTP (200) but HTTPS fails; Let's Encrypt has not issued yet. Google's resolver still holds
+Cargo's A record, which stalls domain validation. Expected, not a fault.
+
+**A correction worth recording, because it nearly closed the item early.** This chat reported
+HTTPS as working on the strength of a valid certificate for `bryancampana.com` — it was
+**Cargo's** certificate, dated August, served from Cargo's IP. The lesson generalises: during a
+cutover, a check against the hostname proves nothing about which server answered. Pin the IP
+(`curl --resolve`) and compare both.
+
+**Cargo must not be cancelled yet.** It currently holds the only valid HTTPS on the domain, so
+visitors resolving through stale DNS still get a working site. It stays until Netlify's
+certificate is issued and verified.
+
+
 ### 2026-09-07 — Muted retuned and the nav gains a weight cue, in code. **Code and Deploy.**
 
 Implements the routed item. Three edits, all verified in the browser in both schemes.
