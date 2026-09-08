@@ -5,7 +5,7 @@ month: 2
 completed: "February 2018"
 discipline: "New Media"
 keywords: ["New Media", "Art"]
-scope: Video work exploring the connection between body movement and sensory information.
+scope: Body Movement, Sensory Information
 designQuestion: null
 medium: "Video, Color, Sound, 03.25 min."
 prints: null

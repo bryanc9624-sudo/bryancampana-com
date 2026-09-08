@@ -1,3 +1,33 @@
+<a id="cd-015"></a>
+### CD-015 · 2026-09-08 — Card scopes may be Title Case capability lists. **Bryan's call.**
+
+**Status:** Accepted
+
+Bryan rewrote several scopes in his own pass and three came out as fragments rather than
+sentences, each inconsistent with itself — `Design Intent, Shop Drawings, and documentation
+standards`, `Body movement, Sensory information`. Asked which style he meant, he chose **Title
+Case with no terminal period**, deliberately setting a capability list apart from the eleven
+narrative scopes.
+
+So the card scope has **two registers**, and which one a project takes is editorial:
+
+| Register | Form | Example |
+|---|---|---|
+| Narrative | Sentence case, terminal period | `Identity and custom wordmark for a Brooklyn DJ collective.` |
+| Capability | Title Case, no period | `Design Intent, Shop Drawings, Documentation Standards` |
+
+**The rule that is not editorial:** be consistent *within* one scope. All three failures here were
+internal — Title Case running into lowercase mid-list. A scope mixing the two registers is a bug.
+
+**A colon forces YAML quotes** — `"Process Study: Modular Typography"`. They are syntax and are
+stripped before render; verified on the built page.
+
+**The 80-character limit did the work it was written for.** Bryan cut `oscuro` from 181 to 80 and
+two others from the low 80s to the mid 30s, without being asked to. It now sits exactly at the
+cap, so it has no headroom left.
+
+---
+
 <a id="cd-014"></a>
 ### CD-014 · 2026-09-08 — 590 Madison Ave rewritten in first person. **Bryan's brief; direction settled before writing.**
 

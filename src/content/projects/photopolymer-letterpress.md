@@ -5,7 +5,7 @@ month: 1
 completed: "January 2024"
 discipline: "Printmaking"
 keywords: ["Art"]
-scope: "Process study: typographic letterforms through photopolymer letterpress printing."
+scope: "Process Study: Modular Typography"
 designQuestion: null
 medium: null
 prints: null

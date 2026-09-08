@@ -209,6 +209,10 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 - **Slugs carry no `-1` suffix.** Three did, out of the Cargo export; they are renamed with `301`
   redirects in `netlify.toml`. A slug rename is TWO renames — the content file and the matching
   directory under `src/assets/projects/`, which is how images are keyed. `CD-005`.
+- **Card scope has two registers, and the choice is editorial.** Narrative is sentence case with a
+  terminal period; a capability list is Title Case with none. **Consistency within one scope is not
+  editorial** — Title Case running into lowercase mid-list is a bug. A scope containing a colon
+  needs YAML quotes, which are stripped before render. `CD-015`.
 - **Featured set is 4**; all 14 projects get a page. Design questions are optional and Bryan's.
 
 ## Figma
@@ -326,26 +330,20 @@ Decided *against*, with the reason. Re-raising these costs someone a redo of rej
 
 # Open
 
-- [ ] **How plainly to state the thin input on 590 Madison Ave.** *Raised by `CD-014`; Bryan's,
-      and deliberately left to him.*
+- [x] **CLOSED 2026-09-08 — overtaken by Bryan's rewrite.** Both items came out of `CD-014` and
+      neither has anything left to attach to.
 
-      The body reads: *"I worked from what the architects had shared: photographs of the
-      materials, floorplans, renderings, and a few pages of their discovery deck."* A flat
-      inventory with no framing word — no "only", no "all I had". The next sentence carries the
-      weight: the palette came out of those references.
+      **The thin input.** The paragraph that raised the question — the inventory of what the
+      architects had shared — is gone; Bryan cut it in his own pass. There is no sentence left to
+      move in either direction. The 590 body is now two paragraphs and about 60% shorter, and it
+      no longer describes the material-contrast hierarchy at all. That is his editorial call,
+      recorded here because the specificity was the page's strongest asset and its absence should
+      be a decision rather than an accident.
 
-      **Plainer is available** — naming it as four things makes the achievement harder to miss,
-      and it is his single most differentiating fact. **Pushed harder it reads as an excuse**, and
-      the reader is deciding whether to hire him. One sentence to move, either direction.
-
-- [ ] **`dura-architectural-signage.md` frames 590 Madison as team work.** *Raised by `CD-014`;
-      editing a second project file was outside that brief.*
-
-      It says *"Our team handled … donor recognition and corporate signage at 590 Madison
-      Avenue"*, while `590-madison-ave.md` now claims sole authorship of the amenity-floor system.
-      **These are compatible** — different scopes, and the Dura page is about the wider engagement
-      — but a reader hitting both in sequence may notice the shift. Leave it, or tune the Dura
-      wording so the scopes are explicit.
+      **Dura framing 590 as team work.** `dura-architectural-signage.md` now reads *"real estate
+      clients like 590 Madison Avenue"* instead of *"our team handled donor recognition and
+      corporate signage at 590 Madison Avenue"*. The passage that read against the sole-authorship
+      claim is no longer there.
 
 ---
 
@@ -360,13 +358,14 @@ current palette).
 
 # Decision index
 
-86 decisions. Ids carry the prefix of the chat that made them, which is history now rather
+87 decisions. Ids carry the prefix of the chat that made them, which is history now rather
 than a scheme. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
 | ID | Decision | Status |
 |---|---|---|
+| [`CD-015`](docs/decisions-archive.md#cd-015) | Card scopes may be Title Case capability lists. Bryan's call. | |
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
 | [`DF-007`](docs/decisions-archive.md#df-007) | Handover: what this chat knew that no file held | |
 | [`CD-014`](docs/decisions-archive.md#cd-014) | 590 Madison Ave rewritten in first person. Bryan's brief. | |
