@@ -5,7 +5,7 @@ month: 8
 completed: "August 2022"
 discipline: "Exhibition Design"
 keywords: ["Art", "Exhibition"]
-scope: Identity and open call campaign for a digital exhibition at New Media Artspace.
+scope: An exhibition about the definition of self
 designQuestion: null
 medium: null
 prints: null

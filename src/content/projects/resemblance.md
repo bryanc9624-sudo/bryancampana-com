@@ -5,7 +5,7 @@ month: 6
 completed: "June 2021"
 discipline: "Exhibition Design, New Media Art"
 keywords: ["Art", "Exhibition"]
-scope: A group exhibition about the appearance of reality.
+scope: An exhibition about the appearance of reality
 designQuestion: null
 medium: null
 prints: null

@@ -5,7 +5,7 @@ month: 10
 completed: "October 2019"
 discipline: "Photography"
 keywords: ["Photography", "Art"]
-scope: Each image balances black and white, embodying an abstract, metaphysical energy.
+scope: Each image balances black and white, embodying an abstract, metaphysical energy
 designQuestion: null
 medium: "Silver Gelatin prints on photographic paper, glossy finish. Shot on 35mm."
 prints: "Set of 6, Edition of 1"

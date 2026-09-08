@@ -63,8 +63,11 @@ const filterCss = keywords.map(k => `
      ink label, muted count. There is no value lighter than muted in the palette —
      placeholder is #F0F0F0, about 1.2:1 on white and unreadable as text — so the two
      tokens that exist do the work rather than a third being invented. */
+  /* Muted in light, ink in dark — see --color-filter-label. CD-016 merged label and count
+     into one colour in light mode, retiring the "separated by colour alone" half of CD-002;
+     the selected state carries the distinction now. */
   .filterlink {
-    color: var(--color-fg);
+    color: var(--color-filter-label);
     font-size: var(--size-sm);
     font-weight: var(--weight-semibold);
     line-height: var(--leading-eyebrow);

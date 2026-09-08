@@ -5,7 +5,7 @@ month: 9
 completed: "September 2024"
 discipline: "Brand Identity"
 keywords: ["Identity"]
-scope: Logo design for an established New York club.
+scope: Logo design for an established volleyball club
 designQuestion: null
 medium: null
 prints: null

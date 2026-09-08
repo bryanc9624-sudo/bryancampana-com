@@ -5,7 +5,7 @@ month: 10
 completed: "October 2021"
 discipline: "Photography"
 keywords: ["Photography", "Art"]
-scope: Landscapes and architecture through abstract, colorful compositions.
+scope: Landscapes and architecture through abstract, colorful compositions
 designQuestion: null
 medium: "35mm Film, Digital scans"
 prints: null

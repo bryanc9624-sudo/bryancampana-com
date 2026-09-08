@@ -5,7 +5,7 @@ month: 5
 completed: "May 2025"
 discipline: "Signage & Wayfinding"
 keywords: ["Signage"]
-scope: Signage system for an amenity space.
+scope: Signage system for an amenity space
 designQuestion: null
 medium: null
 prints: null

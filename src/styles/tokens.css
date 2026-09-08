@@ -13,10 +13,18 @@
      the dark block for the principle that sets its value there. */
   --color-line: #361a38;
   --color-placeholder: #f0f0f0;
-  --color-focus: #9600dd;
-  /* New in Figma 2026-09-07. Defined so it is available and stays in sync, but not yet
-     applied — Figma does not say what it marks. Design decides; see DECISIONS.md. */
-  --color-accent: #9600dd;
+  /* Focus and accent share one value deliberately — same colour, different states:
+     hover is for pointers, focus for keyboards. Move them together or the pair breaks.
+     Hue 300 in OKLCH, Bryan's call 2026-09-08. The old pair was picked per mode and
+     drifted apart — light sat at 308 and dark at 319, and that 11-degree gap is what
+     read as magenta in dark. Both modes now derive from ONE hue; light holds C 0.269
+     at L 0.526, dark takes the largest chroma sRGB allows at its lightness. */
+  --color-focus: #8817ea;
+  --color-accent: #8817ea;
+  /* The work filter at rest. Light merges it into --color-muted so label and count
+     read as one string; dark keeps it at ink, where a white label already recedes far
+     enough against the ground. CD-016. */
+  --color-filter-label: var(--color-muted);
 
   /* IBM Plex Sans, self-hosted via Fontsource. Linking Google's CDN would cost a DNS
      lookup and TLS handshake to fonts.gstatic.com before any text could render, and hand
@@ -123,8 +131,12 @@
        Derive any future value the same way rather than picking one by eye. */
     --color-line: #e5e5e5;
     --color-placeholder: #1e1c1f;
-    --color-focus: #dd51ff;
-    --color-accent: #dd51ff;
+    /* Hue 300, same as light. C is 0.192 — the ceiling sRGB allows at this lightness;
+       pushing further toward violet at the old 0.262 falls out of gamut and clips.
+       6.55:1 on this ground against light's 6.25:1 on white. */
+    --color-focus: #b07aff;
+    --color-accent: #b07aff;
+    --color-filter-label: var(--color-fg);
   }
 }
 

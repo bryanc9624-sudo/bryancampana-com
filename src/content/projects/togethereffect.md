@@ -5,7 +5,7 @@ month: 5
 completed: "May 2023"
 discipline: "Brand Identity"
 keywords: ["Identity"]
-scope: Identity and custom wordmark for a Brooklyn DJ collective.
+scope: Logo design for a DJ collective
 designQuestion: null
 medium: null
 prints: null

@@ -25,11 +25,11 @@ import Placeholder from '../components/Placeholder.astro'
       <p class="about__where">Based in New York</p>
       <ul class="about__links">
         {/* The address, not the word "Email". D-060: it is copyable, and it reads as an
-            invitation. Order is deliberate — résumé last, being a document rather than a
+            invitation. Order is deliberate — resume last, being a document rather than a
             channel, but kept in this block because splitting it out makes two thin ones. */}
         <li><a href="mailto:bryanc9624@gmail.com">bryanc9624@gmail.com</a></li>
         <li><a href="https://www.linkedin.com/in/bryancampana/" rel="me noopener">LinkedIn</a></li>
-        <li><a href="/resume.pdf" download>Download résumé (PDF)</a></li>
+        <li><a href="/resume.pdf" download>Download resume</a></li>
       </ul>
     </aside>
   </div>
@@ -39,7 +39,8 @@ import Placeholder from '../components/Placeholder.astro'
   .about { display: grid; gap: var(--space-5); margin-block: var(--space-6) var(--space-7); }
   /* Two columns first. The contact block stays stacked under the biography here: at 40rem
      a third column leaves roughly 118px a side once the two 64px gutters are taken, and
-     "Download résumé (PDF)" does not fit that. */
+     the longest link does not fit that. Measured against "Download résumé (PDF)"; the label
+     is shorter since, so the margin is wider than when this was set, not narrower. */
   @media (min-width: 40rem) { .about { grid-template-columns: 1fr 2fr; gap: var(--space-6); } }
   /* Three columns, 1fr 2fr 1fr with 64px gutters — 316 / 632 / 316 on the 1392px content
      width Figma draws. 64rem is where .grid--duo already splits, so the page has one

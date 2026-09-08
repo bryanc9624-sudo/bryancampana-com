@@ -1,3 +1,45 @@
+<a id="cd-016"></a>
+### CD-016 · 2026-09-08 — Accent and focus rederived on one hue; filter label merges with its count in light. **Bryan's call.**
+
+**Status:** Accepted
+
+**The complaint was that hover read too magenta.** Measuring it found the cause: accent and focus
+were picked separately per mode and had drifted apart in hue — light `#9600DD` at **308** in
+OKLCH, dark `#DD51FF` at **319**. Eleven degrees, and the dark one sat far enough round to read
+magenta rather than violet.
+
+**Both modes now derive from one hue, 300.** Bryan picked it from three candidates at 300, 302
+and 306, all generated at constant lightness and chroma from the existing values.
+
+| | Was | Now | Hue | Contrast |
+|---|---|---|---|---|
+| Light | `#9600DD` | `#8817EA` | 308 → 300 | 6.29 → 6.25:1 on white |
+| Dark | `#DD51FF` | `#B07AFF` | 319 → 300 | 6.20 → 6.55:1 on the dark ground |
+
+**Dark could not hold light's chroma.** At lightness 0.692, hue 300 clips outside sRGB above
+chroma 0.192 — the old 0.262 only fit because 319 is a wider part of the gamut. So dark takes the
+ceiling rather than matching light's number, which is the same shape as the rule already governing
+`--color-line`: derive per mode from a shared principle, never copy a value across.
+
+**Focus moved with accent, deliberately.** They share one value as a settled decision — hover for
+pointers, focus for keyboards — so changing accent alone would have silently broken the pair.
+
+**The filter label merges into its count in light mode.** Bryan asked for the labels in the same
+lighter purple the counts already carry, and was shown that this removes what separated them.
+He accepted the merge: at rest the whole row is `--color-muted`, one continuous string.
+
+**This retires half of `CD-002`.** That entry made label ink and count muted, "separated by colour
+alone". The separation is gone in light; the *selected* state now carries it — ink, Bold and
+underlined against quieter neighbours, which is a stronger signal than the old arrangement gave.
+`CD-002`'s other half stands: the count still never takes the selected emphasis.
+
+**Dark keeps the label at ink**, Bryan's instruction. A white label already recedes far enough
+against a near-black ground, and muted there is `#C9BFCD` — close enough to white to lose the row.
+Hence a new token, `--color-filter-label`, rather than a component-level dark override: dark-mode
+colour decisions belong in `tokens.css` where the palette table can guard them.
+
+---
+
 <a id="cd-015"></a>
 ### CD-015 · 2026-09-08 — Card scopes may be Title Case capability lists. **Bryan's call.**
 

@@ -5,7 +5,7 @@ month: 11
 completed: "November 2021"
 discipline: "Photography"
 keywords: ["Photography", "Art"]
-scope: A pen-pal exchange shot on shared film rolls during social distancing.
+scope: A pen-pal exchange shot on shared film rolls during social distancing
 designQuestion: null
 medium: "35mm Film, Digital Scans"
 prints: null

@@ -20,8 +20,8 @@ same wifi at the address the terminal prints.
 | A project's text, keywords, cover, order | `src/content/projects/<slug>.md` |
 | A project's photographs | `src/assets/projects/<slug>/` |
 | Colours, type sizes, spacing | `src/styles/tokens.css` |
-| Bio, résumé link | `src/pages/about.astro` |
-| Résumé PDF | `public/resume.pdf` |
+| Bio, resume link | `src/pages/about.astro` |
+| Resume PDF | `public/resume.pdf` |
 
 ---
 

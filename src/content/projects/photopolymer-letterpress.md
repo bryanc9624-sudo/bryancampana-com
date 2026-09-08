@@ -5,7 +5,7 @@ month: 1
 completed: "January 2024"
 discipline: "Printmaking"
 keywords: ["Art"]
-scope: "Process Study: Modular Typography"
+scope: "Modular typography / Process study"
 designQuestion: null
 medium: null
 prints: null

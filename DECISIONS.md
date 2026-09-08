@@ -48,14 +48,19 @@ lives only in this table and in `tokens.css`, so if those two disagree nothing c
 | `--color-muted` | `#75617A` | `#C9BFCD` | `color/muted` | Diluted ink. Dark is tinted deliberately — see the trap below |
 | `--color-line` | `#361A38` | `#E5E5E5` | `color/line` | Rules only, and the only token a rule may reference |
 | `--color-placeholder` | `#F0F0F0` | `#1E1C1F` | `color/placeholder` | Unworked paper |
-| `--color-focus` | `#9600DD` | `#DD51FF` | `color/focus` | Containment ring |
-| `--color-accent` | `#9600DD` | `#DD51FF` | `color/accent` | The charge. Same value as focus, deliberately |
+| `--color-focus` | `#8817EA` | `#B07AFF` | `color/focus` | Containment ring |
+| `--color-accent` | `#8817EA` | `#B07AFF` | `color/accent` | The charge. Same value as focus, deliberately |
+| `--color-filter-label` | `= muted` | `= fg` | — | Keyword filter at rest. `CD-016` |
 
-**Two principles that derive the dark values, so future ones are not picked by eye:**
+**Three principles that derive the dark values, so future ones are not picked by eye:**
 
 1. **A rule holds the same contrast ratio against its ground in both modes** — 15.42:1 light,
    15.44:1 dark. This is why `--color-line` is not simply `--color-fg` in dark.
-2. **Muted is tuned for equal *perceived* separation, not equal measured ratio** — gap to ink
+2. **Accent and focus derive from ONE hue — 300 in OKLCH.** Light holds chroma 0.269 at
+   lightness 0.526; dark takes the most chroma sRGB allows at its lightness, 0.192. The old pair
+   was picked per mode and drifted to 308 and 319 — an 11-degree gap that read as magenta in
+   dark. Contrast lands 6.25:1 light and 6.55:1 dark. `CD-016`.
+3. **Muted is tuned for equal *perceived* separation, not equal measured ratio** — gap to ink
    2.75 light, 1.78 dark. A dark surround exaggerates lightness differences, so equal perceived
    separation needs a smaller measured step in dark. Do not "fix" them to match.
 
@@ -358,13 +363,14 @@ current palette).
 
 # Decision index
 
-87 decisions. Ids carry the prefix of the chat that made them, which is history now rather
+88 decisions. Ids carry the prefix of the chat that made them, which is history now rather
 than a scheme. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
 | ID | Decision | Status |
 |---|---|---|
+| [`CD-016`](docs/decisions-archive.md#cd-016) | Accent and focus rederived on hue 300; filter label merges with its count in light. | |
 | [`CD-015`](docs/decisions-archive.md#cd-015) | Card scopes may be Title Case capability lists. Bryan's call. | |
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
 | [`DF-007`](docs/decisions-archive.md#df-007) | Handover: what this chat knew that no file held | |
