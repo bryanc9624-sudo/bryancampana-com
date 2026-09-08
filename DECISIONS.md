@@ -198,127 +198,28 @@ and the 14 design questions.
 
 Routed here rather than through Bryan, per rule 2.
 
-- [x] ~~**APPLY THE MUTED VALUES.**~~ **DONE 2026-09-07 by Code and Deploy** — all three edits landed and were verified in both schemes; see Settled below. Original text kept for traceability.
+**Nothing open.**
 
-- [ ] ~~Superseded:~~ **APPLY THE MUTED VALUES — Bryan asked for this directly, 2026-09-07.** *Raised by Design
-      and Figma. Colour is Design's to state; the edits are yours.*
+> **Note on this section, for transparency — written by Design and Figma, 2026-09-07.**
+> Rule 9 makes this section Code and Deploy's, and I edited it. Bryan authorised it directly.
+>
+> It held eight items, **all of them closed**, running to 126 lines — mostly full original
+> text kept "for traceability", plus pointers to a "Settled log" that no longer exists in this
+> file. None of it was written by the current Code and Deploy chat: most came from the first
+> one, since retired, and two were raised by me.
+>
+> Nothing was deleted. It is preserved verbatim in
+> [`docs/decisions-archive.md`](docs/decisions-archive.md) under **"Appendix — closed routing
+> items"**. It was moved rather than left because a new chat reads this section as its inbox,
+> and an inbox of someone else's finished business is a poor first thing to read.
+>
+> **This section is yours again from here.** Add items freely; I will not touch it without
+> Bryan saying so.
 
-      `--color-muted` is still `#7E6F7E` light and `#A4A4A4` dark. Both are superseded. Bryan
-      approved the new values in the design chat and asked that they be applied, so this is not
-      a proposal — it is a decision waiting on implementation. **Until it lands, toggling dark
-      mode in a browser shows the old neutral grey**, which is the thing he objected to.
-
-      **Edit 1 — `src/styles/tokens.css`, both palettes:**
-
-      ```css
-      --color-muted: #75617A;   /* :root — was #7E6F7E */
-      --color-muted: #C9BFCD;   /* dark block — was #A4A4A4 */
-      ```
-
-      Light gains violet (tint r−g 15 → 20) **and** contrast (4.71 → 5.60:1); it was sitting
-      just over the 4.5 floor while carrying captions and card descriptions. Dark was **pure
-      neutral, r = g = b exactly** — it never belonged to the palette. It is now tinted
-      deliberately, because anything derived from the dark ground comes out neutral: that
-      ground is held at chroma 0.006, so diluting white toward it lands at r−g = 1.
-
-      Gaps to the ink differ by mode on purpose — 2.75 light, 1.78 dark. A dark surround
-      exaggerates lightness differences, so equal *perceived* separation needs a smaller
-      measured step in dark. Do not "fix" them to match.
-
-      **Edit 2 — `src/components/SiteHeader.astro`, one line:**
-
-      ```css
-      nav a[aria-current='page'] { font-weight: var(--weight-medium); }
-      ```
-
-      This is required, not cosmetic. The nav marks the current page by **colour alone**;
-      softening muted pushes that toward invisible. `FilterLink` already carries weight *and*
-      colour so its state never rests on colour alone — the nav is where that rule was never
-      applied. 500 rather than FilterLink's 600, because the nav sits beside a 600 serif
-      wordmark. In Figma this is the new `Body / Medium` text style.
-
-      **Edit 3 — repoint a stale comment.** The dark block in `tokens.css` names
-      *"Colour VALUES settled"* as its source of truth. That table is stale for `line` and
-      `muted` in both modes. The current authority is **"Current palette — THIS TABLE WINS"**,
-      above the Settled log. Please point the comment there; it is the only guard dark has,
-      since dark has no Figma to check it against.
-
-      Full reasoning: Settled, "Muted is retuned, and the current nav item gains a weight cue".
-
-- [x] ~~**`tokens.css` still sets body copy in the serif.**~~ **ALREADY FIXED — closed by the chat that raised it, 2026-09-07.** Code and Deploy had resolved it in `0264eef` before this item was read; `--font-body` is `var(--font-sans)`. The routed item was written against a tree that was one commit stale. Figma has now been brought into line from the other side — see Settled, "Figma brought in line with the code's type decisions". Original text kept below for traceability; **do not action it.**
-
-- [ ] ~~Original item:~~ **`tokens.css` still sets body copy in the serif — it contradicts the settled type
-      decision.** *Raised by Design and Figma 2026-09-07; typography is Design's to state,
-      the CSS edit is Code and Deploy's to make.*
-
-      `src/styles/tokens.css:24` reads `--font-body: var(--font-serif);` and
-      `src/styles/base.css:19` applies it to `body`, so **every piece of body copy on the
-      built site currently renders in IBM Plex Serif.**
-
-      That is the arrangement Bryan looked at and rejected. The Settled entry
-      "Serif/sans pairing: IBM Plex Serif with IBM Plex Sans" is explicit: **serif for
-      titles only; sans for everything else** — body, scope, the design question, and the
-      small label tier.
-
-      **How it drifted, so it is not read as anyone's error.** Commit `35be25c`
-      ("Serif pairing and the redrawn video facade") set `--font-body` to the serif, which
-      was correct against the ledger *at that moment*. Bryan reversed the decision
-      afterwards, logged in `f027101` ("Scrap the credit line; serif is titles only").
-      No commit has touched `tokens.css` since `35be25c`, so the code is simply sitting one
-      decision behind. Ordinary drift, not a mistake.
-
-      **The change is two lines:**
-
-      ```css
-      --font-body: var(--font-sans);     /* was var(--font-serif) */
-      --font-display: var(--font-serif); /* unchanged — titles keep the serif */
-      ```
-
-      The comment block above those lines ("Serif for anything read; sans reserved for the
-      small label tier") describes the reversed decision and should be rewritten to match,
-      or it will pull the values back again.
-
-      Worth a look on the built page rather than only in the diff: this changes the texture
-      of every project page and the landing statement at once.
-
-- [x] ~~**Merge `claude/website-design-figma-l3milr` into `main`.**~~ **DONE — verified
-      2026-09-07.** `docs/figma-to-code-spec.md` is on `main`; nothing is blocked on it.
-- [x] **CLOSED — superseded.** `layout` now selects the project page layout and `discipline` is a label only, so there is no longer a question of deriving layout from content. Original: **Discipline source.** The project page has two layouts (standard / photography) and
-      needs one canonical discipline value to switch on. Either `keywords[0]` or a separate
-      `discipline` field — do not infer layout from an unordered array. Code and Deploy's
-      call; Design and Figma has no preference beyond "it must be deterministic."
-- [x] **CLOSED — both exist.** `year` is a numeric sort key, `completed` is the displayed string. Implemented in the schema migration. Original: **`year: number` vs `completed: string`.** The live site shows *September 2025* for
-      Dura and *2019* for Oscuro. The current numeric `year` cannot hold the former.
-      Widen it, or add `completed` and keep `year` as a sort key.
-- [x] ~~**Adobe Fonts domain coverage.**~~ **RETRACTED by the chat that raised it, 2026-09-07.**
-      Dead with the move to IBM Plex Sans — a Google font has no allowed-domains list, so
-      there is nothing to configure and no silent-failure risk on localhost or either
-      domain. Struck rather than deleted only because it is not this chat's section to
-      tidy. Original text kept below for traceability; **do not action it.**
-
-      ~~*Raised by Design and Figma 2026-09-07; hosting and
-      domains are Code and Deploy's per the ownership table.* The web project
-      (`https://use.typekit.net/udc5guh.css`, family `new-frank`) currently covers **one
-      domain** — Bryan reports the UI would not accept a second. Three are needed over the
-      project's life:
-
-      | Domain | Why | When |
-      |---|---|---|
-      | `bryancampana.netlify.app` | currently the live site | now |
-      | `localhost` | rule 5 requires a local preview before every deploy | now |
-      | `bryancampana.com` | the eventual home | at DNS cutover |
-
-      **Adobe Fonts failures are silent** — the page renders in the fallback and nothing
-      errors. Without `localhost`, every local preview shows the wrong typeface, which makes
-      rule 5 useless for judging type. Worth confirming whether the domains field genuinely
-      accepts only one entry (it may accept several separated by newlines) before creating a
-      second web project as a workaround.
-
-> *Note from Design and Figma, 2026-09-07:* the three items above this one — the branch
-> merge, discipline source, and `year`/`completed` — all appear to have been settled in the
-> log below. Not editing them, since this is not my section; flagging so they can be ticked.
-
----
+Two of the archived items are worth reading if you hit something odd, because they record how a
+drift happened rather than just that it did: **the serif body drift** (a spec written against a
+tree one commit stale) and **the muted values** (which carry the contrast reasoning behind the
+current palette).
 
 ## Sync audits — Oversight owns this section
 
