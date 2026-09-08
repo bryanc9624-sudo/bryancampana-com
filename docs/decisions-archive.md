@@ -18,6 +18,74 @@ IDs are chronological: `D-001` is the oldest.
 ---
 
 <a id="d-060"></a>
+### D-060 · 2026-09-07 — Contact consolidates on About; header baseline locked; keyword counts drop to the baseline
+
+**Status:** Accepted
+
+Three changes routed from Code and Deploy with the built state measured rather than remembered.
+Drawn across both breakpoints. **Supersedes D-049 §3 and §5.**
+
+**1. Contact leaves the chrome.** Header nav is **Work · About**; the footer is **Terms of Use ·
+Privacy Policy**. All contact lives on About. D-049 §3 moved Contact *into* the nav on the
+reasoning that people do not reach the bottom of a page — that reasoning still holds, and is now
+outweighed by wanting one place for contact rather than three.
+
+**The About block, as drawn.** Desktop gains a third column: portrait `1fr`, biography `2fr`,
+contact `1fr`, 64px gutters — so on a 1392px content width, 316 / 632 / 316. Mobile stacks it
+after the biography. Contents:
+
+- **`CONTACT`** in the Eyebrow text style — **not** the Eyebrow *component*, which carries a rule.
+  A fourth rule would need a reason and this is not one: the block is a distinct column element,
+  not a break in a flow of content. Space separates it.
+- **`Based in New York City`** in muted. Bryan's addition.
+- **`bryanc9624@gmail.com` · `LinkedIn` · `Download résumé (PDF)`**, in that order. Email renders
+  as the **address**, not the label "Email" — copyable, and it reads as an invitation. Résumé
+  stays and sits last: it is a document rather than a channel, but a recruiter landing on About
+  wants it, and splitting it out would make two undersized blocks.
+
+**Two things found while drawing.** Figma's About was missing the LinkedIn link the code has
+always had — added. And the portrait kept its old height when its column narrowed; its 4:5 ratio
+is restored at 316 × 395.
+
+**Flagged for Bryan, not decided:** the last biography paragraph ends *"Lives and works in Queens,
+New York."* and the new block says *"Based in New York City."* Those duplicate, and disagree on
+specificity. The biography is Bryan's copy, so this chat will not edit it — one of the two should
+go.
+
+**2. The mobile stack stays, and with it the `Breakpoint` axis.** The routing document measured
+306.9px against 342px at 390px and asked whether six `SiteHeader` variants could collapse to
+three. They cannot: the media query runs `0–639px`, and at **320px** there is 272px of content
+width against 307px of row. **The row stops fitting below a 355px viewport.** Keeping the stack.
+
+**3. Header baseline alignment is now a spec, not a coincidence.** Verified in Figma: all three
+Desktop variants are `counterAxisAlignItems: BASELINE`, as is the nav row inside them; the Mobile
+variants are `MIN`, which is correct for a vertical stack. So Figma and code already agreed, and
+agreed on purpose. Recorded in Current state with the reason — serif and sans share neither cap
+height nor x-height, so only baseline survives the wordmark changing size.
+
+**4. Keyword counts sit on the baseline.** `FilterLink` moves from `counterAxisAlignItems: MIN`
+(which is what raised the figure above the x-height) to `BASELINE`, gap `2px → 4px` — 0.25em at
+17px, widened because a baseline figure sits optically closer to the label's mass than a raised
+one did.
+
+**On the descender question, which drove the answer:** the count sits **at** the baseline, never
+below it. Five of seven labels carry descenders — `Signage`, `Digital`, `Photography`, `Identity`
+— and a numeral dropped below the baseline lands exactly in the space their `g` and `y` occupy.
+At the baseline it clears them completely while still reading as lowered against the old
+superscript. Checked on a `Signage` probe, not on `All`.
+
+**Row height is unchanged at 26px**, before and after — the constraint that mattered, since the
+filter's hairline is one of the three sanctioned rules on the site and must not drift.
+
+**Size stays `--size-xs`.** A count at full size beside a `--size-base` label reads as part of the
+label rather than an annotation of it.
+
+**One mismatch left for Code and Deploy to reconcile:** Figma draws the count at **Medium 500**;
+`work/index.astro` renders it at regular weight. Nobody has raised it, and the routing document
+asked for the treatment to be preserved, so this chat changed neither. Pick one and say which.
+
+
+<a id="d-060"></a>
 ### D-060 · 2026-09-07 — The build budget is 1,000 credits a cycle, not 300. **Code and Deploy.**
 
 **Status:** Accepted
@@ -588,9 +656,9 @@ No size rule needed — 17px is already the inherited `--size-base`. Do not reac
 
 
 <a id="d-049"></a>
-### D-049 · 2026-09-07 — Header reworked: full width, everything left, Contact moved up from the footer. **Bryan's call. Drawn in Figma.**
+### D-049 · 2026-09-07 — Header reworked: full width, everything left, Contact moved up from the footer. **Bryan's call. Drawn in Figma.** ⚠
 
-**Status:** Accepted
+**Status:** §3 and §5 superseded by D-060 — Contact left the chrome entirely and the footer lost LinkedIn. §1 (full bleed), §2 (flush left) and §4 (the mobile stack) all stand.
 
 **Code and Deploy: this is ready to implement, and one part of it is a code-only fix.**
 

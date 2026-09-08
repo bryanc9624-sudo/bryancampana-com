@@ -139,8 +139,23 @@ mode Figma cannot show.
   above the facts block, under the work-index filter.
 - **Rules reference `--color-line` and nothing else.** Never bind a rule to `--color-fg`: that
   token means *the colour of text*, and text and rules do not want the same value in every mode.
-- **Header contents:** wordmark, 64px gap, then Work · About · Contact, all flush left. Stacks
-  under 40rem — 383px of row does not fit 342px of content width.
+- **Header contents:** wordmark, 64px gap, then **Work · About**, all flush left. Contact is
+  not in the chrome — see the contact block below.
+- **The header row is baseline-aligned, not centred**, and this is a spec rather than an
+  accident. The wordmark is serif and the nav is sans, and the two families share neither a cap
+  height nor an x-height. Centring aligns their bounding boxes; baseline aligns the line the
+  letters actually stand on, which is what the eye reads. Today both are 17px so the two
+  approaches land identically — **the moment the wordmark steps up a size, only baseline stays
+  correct.**
+- **The header stacks under 40rem, and the `Breakpoint` axis stays.** With Contact removed the
+  row is 307px against 342px at 390px, so it fits there — but the query runs `0–639px`, and at
+  **320px** there is only 272px of content width. The row stops fitting below a **355px**
+  viewport. Six `SiteHeader` variants, not three.
+- **Contact block, About page.** Desktop is three columns — portrait `1fr`, biography `2fr`,
+  contact `1fr`, 64px gutters. Mobile stacks it after the biography. The block is a `CONTACT`
+  eyebrow (the text style, **no rule** — it is a column element, not a break in a flow), then
+  `Based in New York City` in muted, then **email · LinkedIn · résumé (PDF)**. Email renders as
+  the address, `bryanc9624@gmail.com`, not the label: it is copyable and reads as an invitation.
 - **Radius is 0** on both tokens, derived from Plex's square construction rather than left unset.
 
 ## Components
@@ -149,6 +164,11 @@ Figma page `04 — Components`: `ProjectCard`, `Placeholder`, `SiteHeader` (Curr
 six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 
 - **Card is image → keyword → title → description.** No year. No design question.
+- **`SiteFooter` is Terms of Use · Privacy Policy.** No Contact, no LinkedIn — both live
+  on About.
+- **`FilterLink`'s count sits on the label's baseline**, `--size-xs`, 0.25em to its right —
+  not raised above the x-height. It must not grow the line box: the filter's hairline is one
+  of the three sanctioned rules and its position is not free to drift.
 - **Every state carries two cues — weight *and* colour — never colour alone.** FilterLink selected
   is 600 + `--color-fg`; the current nav item is `Body / Medium` 500 + `--color-fg`.
 - **VideoFacade's ground is `--color-fg` (ink), not grey** — grey is this site's placeholder
