@@ -17,6 +17,75 @@ IDs are chronological: `D-001` is the oldest.
 
 ---
 
+<a id="df-004"></a>
+### DF-004 · 2026-09-07 — Figma audited and build-ready. Where it is 1:1 with the code, and where it must not be. **Design and Figma.**
+
+**Status:** Accepted
+
+Bryan asked Code and Deploy to unify the code with Figma, and asked this chat to confirm Figma is
+sound enough to build from. Audited rather than asserted.
+
+**Audit result — clean, after two fixes.**
+
+| Check | Result |
+|---|---|
+| Text nodes with no text style | **0** across all three pages |
+| Colours not bound to a variable | **0** across all three pages |
+| Text styles bound to `fontFamily` **and** `fontSize` | **12 of 12** |
+| Variables carrying a WEB `codeSyntax` | **30 of 30** |
+| Components | **8**, variants intact — `SiteHeader` 3×2, `FilterLink` 2, `Placeholder` 4 |
+| Frames | **9 desktop, 9 mobile** |
+
+**Two defects found and fixed, both introduced by this chat** when it built the About contact
+block programmatically:
+
+- The `contact` frame carried an **unbound white fill**. `figma.createAutoLayout()` adds one by
+  default. The 74-fill cleanup earlier the same day ran *before* this frame existed, so it slipped
+  straight back in behind the fix.
+- The `CONTACT` eyebrow's fill was **unbound `#000000`** — a colour that is not in the palette at
+  all. `createText()` defaults to black, and applying a text style sets type but never colour, so
+  it was never bound. **It read as plausibly-dark in every screenshot**, which is why review by eye
+  did not catch it and an audit did.
+
+Both are now `--color-fg` and no fill, on both breakpoints.
+
+---
+
+## The 1:1 question, which is the part that could mislead
+
+**Figma and the code are 1:1 on values and structure. They are deliberately not 1:1 on
+behaviour, and "unifying" those would be a regression.**
+
+**1:1 — a mismatch is a bug:** the 30 variables against the CSS custom properties named in their
+`codeSyntax`; the 12 text styles against the type rules; the 8 components against their Astro
+counterparts; spacing, sizes, radii; which elements exist on a page and in what order.
+
+**Not 1:1 — matching Figma would be the bug:**
+
+1. **Dark mode is not in Figma and cannot be.** The collection's two modes are Desktop and
+   Mobile, a breakpoint axis. The palette table in `DECISIONS.md` owns dark and has no second
+   check — this was costed and rejected in the same session.
+2. **Photography column counts.** The code derives them from image count — ≤2 → one column full
+   width, 4 → two-up, otherwise three-up — overridable per project by `columns`. Figma draws
+   two-up, which is now only the four-image case. **The layout is a rule; a frame is one instance
+   of it, and will always trail.**
+3. **Full-bleed chrome.** Header and footer span the viewport. Figma's widest frame is 1600, so
+   full bleed and `page--wide` look identical there. The spec is written down, not drawn.
+4. **The responsive continuum.** Figma has three widths; the code has one 40rem breakpoint across
+   a continuum. The header stacks from 0–639px, and Figma shows only the 390 case.
+5. **Imagery.** Figma holds `Placeholder` blocks; the site renders real photographs.
+6. **Filter labels and counts** are generated from content at build. Figma shows a snapshot that
+   is correct on the day it was drawn.
+
+**One live item that is a genuine mismatch, not a legitimate divergence:** the eyebrow type is
+implemented twice in CSS while Figma has one text style — `DF-003`, already in Code and Deploy's
+list.
+
+**How to tell the two apart:** if Figma *could* express it and doesn't match, it is a bug. If
+Figma *structurally cannot* express it — because it has fixed widths, no theme axis, and no
+content pipeline — the code is the source of truth and the drawing is a reference.
+
+
 <a id="df-003"></a>
 ### DF-003 · 2026-09-07 — There is one eyebrow, in two contexts. **Design and Figma.**
 

@@ -220,6 +220,24 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 
 ## Figma
 
+**Figma and the code are 1:1 on VALUES and STRUCTURE, and deliberately not on BEHAVIOUR.**
+Read this before "fixing" code to match a drawing — `DF-004` has the full reasoning.
+
+*1:1, and a mismatch here is a bug:* the 30 variables → the CSS custom properties they name in
+`codeSyntax`; the 12 text styles → the type rules; the 8 components → their Astro counterparts;
+spacing, sizes, radii; which elements exist on a page and in what order.
+
+*NOT 1:1, and matching Figma here would be the bug:*
+
+| Figma shows | The code does | Why Figma cannot |
+|---|---|---|
+| Light mode only | Both palettes | The collection's modes are Desktop/Mobile — a breakpoint axis |
+| Photography two-up | Columns derived from image count (≤2 → 1, 4 → 2, else 3), `columns` overrides | The layout is a rule; a frame is one instance of it |
+| Chrome to 1600 | Chrome spans the viewport | 1600 is the widest frame in the file |
+| 1440 / 1600 / 390 | A continuum with one 40rem breakpoint | Frames are fixed widths |
+| `Placeholder` blocks | Real photographs | The file holds no imagery |
+| A snapshot of filter labels and counts | Generated from content | Counts are computed at build |
+
 - File `IeY23kkW263ZvuyJqiV2kD`. Pages: `0:1` Foundations, `1:29` Desktop, `1:30` Mobile,
   `12:2` Components.
 - Professional. **One collection, modes `Desktop` / `Mobile` — a breakpoint axis, not a theme.**
@@ -426,12 +444,13 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 # Decision index
 
-68 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+69 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
 | ID | Decision | Status |
 |---|---|---|
+| [`DF-004`](docs/decisions-archive.md#df-004) | Figma is build-ready; where it is 1:1 with code and where it is not | |
 | [`DF-003`](docs/decisions-archive.md#df-003) | One eyebrow, two contexts — the type is implemented twice | |
 | [`DF-002`](docs/decisions-archive.md#df-002) | Eyebrows are section headings only; eyebrow steps to SemiBold | |
 | [`DF-001`](docs/decisions-archive.md#df-001) | Discipline strings, and per-chat decision ids | |
