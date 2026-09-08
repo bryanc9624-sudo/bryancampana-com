@@ -106,6 +106,75 @@ poster or the ink block) then `Label`, 8px apart. The facade grew from 558px to 
 drawn width.
 
 
+<a id="cd-002"></a>
+### CD-002 · 2026-09-07 — The filter is the eyebrow tier; the charge is hover-only. **Code and Deploy.**
+
+**Status:** Accepted
+
+Implements `DF-005`. Both routed items done, with three corrections to the routing — all found
+by reading the files and the Figma component rather than the item's line numbers.
+
+**The filter, measured against the drawing:**
+
+| | Built | Figma |
+|---|---|---|
+| Label | 15px SemiBold, uppercase, 1.2px tracking, `--color-fg` | `Eyebrow`, same |
+| Count | same size and weight, `--color-muted`, 6px gap | `Eyebrow`, gap 6, BASELINE |
+| Selected label | Bold 700 + underline, `--color-fg` | `Eyebrow / Selected` |
+| Row height | 19.5px | 19 |
+| Row width | **815px**, one desktop line | 813px measured in `DF-005` |
+| At 390px | **three rows**, no overflow | three |
+
+815 against 813 is independent agreement to within a rounding step, from two different tools.
+
+`--weight-bold: 700` is back in `tokens.css`. It was removed by `D-064` for the opposite reason
+— that change wanted 700 on the **serif**, which ships as static per-weight files and had none
+loaded. This one is **sans**, the variable file declaring `100 700`, so the face exists. The
+token now carries a warning not to use it on the serif.
+
+**Correction 1 — the violet was never on the card keyword.** The routed item lists three files
+where `--color-accent` should become `--color-muted`, citing `.card__keyword` and the two project
+labels, and says it renders "violet fourteen times on `/work`". Those line numbers point at
+`.card__draft`, `.case__draft` and `.photo__draft`, not at the keyword or the labels.
+`.card__keyword` has been `--color-muted` all along — measured at `#75617A` light and `#C9BFCD`
+dark before and after this change.
+
+The three draft rules are **dev-only**: `showDraftFlag` is `import.meta.env.DEV`, so the markup
+never renders in a build, and no project carries `draft: true` in any case. **Left as accent
+deliberately** — a build-time warning is meant to be loud, and muting it would make it worse at
+the only job it has. Flagged rather than changed; say the word if the rule should be absolute.
+
+So the only resting accent that ever shipped was the selected filter link, which `DF-005`
+correctly identified as the genuine contradiction. That one is fixed.
+
+**Correction 2 — the selected count follows the drawing, not the CSS in the routing.** The
+snippet gives the count `font-weight: inherit`, which makes it Bold and underlined when selected.
+Figma's `State=Selected` variant keeps its Count node on the plain `Eyebrow` style — SemiBold, no
+underline — and puts `Eyebrow / Selected` on the Label alone. The drawing is the more considered
+of the two: the count annotates the label rather than being part of it. Built to the drawing.
+
+`display: inline-block` on the count is load-bearing rather than cosmetic. `text-decoration`
+propagates from the parent and paints through descendants, and `text-decoration: none` on the
+child does **not** lift it — only a new inline formatting context stops the line.
+
+**Correction 3 — three unbound `#000000` fills in the `FilterLink` component.** `State=Default`
+Label and Count, and `State=Selected` Count, are all raw black rather than a variable. `DF-005`'s
+text says label `--color-fg` and count `--color-muted`, and the build follows the text. This is
+the same defect `DF-004` found twice and fixed — `createText()` defaults to black and applying a
+text style sets type but never colour — and it is back in a component drawn since. **Design and
+Figma: please bind those three.** It reads as plausibly-dark on screen, which is why it survives
+review by eye.
+
+**Hover is one rule, not several.** `a:hover { color: var(--color-accent) }` in `base.css` covers
+every link on the site, so it cannot drift per component the way the resting accent did.
+`.filterlink:hover` matches it for the label, which is not an anchor. The count keeps its muted
+colour under hover because it sets its own; that looked deliberate rather than broken in the
+built page, and is confirmed working. `--color-focus` is untouched: same value, different token,
+different state.
+
+**Contrast, both schemes.** Label 15.42:1 light and 19.45:1 dark; count 5.60:1 and 10.94:1;
+accent on the dark ground 6.2:1. All above the 4.5 floor.
+
 <a id="df-005"></a>
 ### DF-005 · 2026-09-07 — The keyword filter takes the eyebrow tier. The violet becomes hover-only. **Bryan's call.**
 

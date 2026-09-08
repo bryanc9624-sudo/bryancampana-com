@@ -57,38 +57,52 @@ const filterCss = keywords.map(k => `
   }
   .filter input { position: absolute; opacity: 0; pointer-events: none; }
 
-  /* FilterLink, per Figma 2026-09-07. Chips are gone: border, padding and radius
-     removed. They were the only rectangles on the site and read as heavy chrome
-     against a design that is otherwise hairlines and type. */
+  /* FilterLink is the Eyebrow tier — DF-005. Uppercase, 15px, SemiBold, 8% tracking, the
+     same type as a section eyebrow rather than body copy. Chips are long gone.
+     Label and count are now the SAME size and weight and are separated by colour alone:
+     ink label, muted count. There is no value lighter than muted in the palette —
+     placeholder is #F0F0F0, about 1.2:1 on white and unreadable as text — so the two
+     tokens that exist do the work rather than a third being invented. */
   .filterlink {
-    color: var(--color-muted);
-    font-size: var(--size-base);
-    font-weight: var(--weight-regular);
-    line-height: var(--leading-body);
+    color: var(--color-fg);
+    font-size: var(--size-sm);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-eyebrow);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
     cursor: pointer;
   }
-  /* D-060: the count sits ON the label's baseline, never above it and never below.
-     Five of the seven labels carry descenders — Signage, Digital, Photography, Identity —
-     and a figure dropped below the baseline lands exactly where their g and y live.
-     0.25em (4px at 17px), widened from 0.15em because a baseline figure sits optically
-     closer to the label's mass than a raised one did.
-     `line-height: 1` keeps the smaller figure from ever driving the line box: the row is
-     26px, set by the 17px label at --leading-body, and the filter's hairline is one of the
-     three sanctioned rules on the site, so it must not drift. */
+  /* 6px, matching the component's auto-layout gap. No line-height or vertical-align of its
+     own any more: it is the same size as the label now, so it cannot grow the line box and
+     needs none of the protection the raised-then-baselined figure did. */
   .filterlink__count {
-    margin-left: 0.25em;
-    font-size: var(--size-xs);
-    font-weight: var(--weight-regular);
+    margin-left: 6px;
+    font-size: inherit;
+    font-weight: inherit;
     color: var(--color-muted);
-    line-height: 1;
   }
-  /* Two cues, not one: weight and colour both change, so the selected state survives
-     for anyone who cannot distinguish the hue. --color-accent is what this token marks. */
+  /* Selected is Bold plus an underline — the `Eyebrow / Selected` style. Still two cues,
+     but neither is the accent: DF-005 restored the settled rule that the charge appears on
+     hover and never at rest, so a permanently-violet control would make it decorative.
+     Underline is the device the colour system already reserves for text links. */
   .filter input:checked + .filterlink {
-    color: var(--color-accent);
-    font-weight: var(--weight-semibold);
+    color: var(--color-fg);
+    font-weight: var(--weight-bold);
+    text-decoration: underline;
   }
-  .filter input:checked + .filterlink .filterlink__count { color: var(--color-accent); }
+  /* The count does not take the selected emphasis. Figma's Selected variant keeps its Count
+     node on the plain `Eyebrow` style — SemiBold, no underline — while only the Label takes
+     `Eyebrow / Selected`. The count is an annotation of the label, not part of it.
+     `display: inline-block` is load-bearing, not decoration: text-decoration propagates from
+     the parent and paints straight through a child, and setting `text-decoration: none` on
+     the child does NOT lift it. Only a new inline formatting context stops the line. */
+  .filter input:checked + .filterlink .filterlink__count {
+    font-weight: var(--weight-semibold);
+    display: inline-block;
+  }
+  /* The charge, on hover only. The count keeps its muted colour — it is set explicitly, so
+     it does not inherit this. */
+  .filterlink:hover { color: var(--color-accent); }
   .filter input:focus-visible + .filterlink { outline: 2px solid var(--color-focus); outline-offset: 3px; }
 </style>
 

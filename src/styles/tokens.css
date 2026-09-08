@@ -50,9 +50,14 @@
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
-  /* No --weight-bold. D-061 added one and D-064 reverted the reweighting, so nothing uses
-     700 and the serif face for it is no longer loaded. A token left here would be a trap:
-     used on the serif it would silently render 600. */
+  /* Sans only. DF-005 needs 700 for `Eyebrow / Selected`, the selected filter link, and the
+     sans is the variable file declaring `font-weight: 100 700`, so the face genuinely
+     exists. This token was added for D-061 and removed again by D-064 for the opposite
+     reason: that change wanted 700 on the SERIF, which ships as static per-weight files and
+     had none loaded. **Do not use this on --font-display or --font-serif** — there is no
+     serif 700 imported, and font-synthesis:none means it would quietly render 600 instead
+     of failing. */
+  --weight-bold: 700;
 
   --tracking-wide: 0.08em;
 

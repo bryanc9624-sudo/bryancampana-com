@@ -44,6 +44,12 @@ body { font-weight: var(--weight-regular); }
 p { margin: 0 0 var(--space-3); max-width: var(--measure-prose); }
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }
+/* The charge, on hover and nowhere else — DF-005. The settled colour system has always read
+   "ink at rest, charge on hover"; the code had drifted to the opposite on several static
+   elements. One rule for every link, so it cannot drift per component again.
+   --color-focus keeps the same value but is a different token for a different state: hover
+   is for pointers, focus for keyboards, and the system requires them to stay distinguishable. */
+a:hover { color: var(--color-accent); }
 /* Markdown `*emphasis*` in a project body lands here. Serif so the italic is drawn
    rather than synthesised — see --font-italic. */
 em, i, cite { font-family: var(--font-italic); }

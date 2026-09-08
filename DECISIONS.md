@@ -211,9 +211,17 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 - **Card is image → keyword → title → description.** No year. No design question.
 - **`SiteFooter` is Terms of Use · Privacy Policy.** No Contact, no LinkedIn — both live
   on About.
-- **`FilterLink`'s count sits on the label's baseline**, `--size-xs`, 0.25em to its right —
-  not raised above the x-height. It must not grow the line box: the filter's hairline is one
-  of the three sanctioned rules and its position is not free to drift.
+- **`FilterLink` is the Eyebrow tier** — uppercase, 15px, SemiBold, 8% tracking, `--color-fg`.
+  The count is the **same size and weight**, separated by colour alone (`--color-muted`), 6px to the
+  right on the shared baseline. Selected is `Eyebrow / Selected` — Bold plus an underline, still ink.
+  The count does not take the selected emphasis. `CD-002`.
+- **`--color-accent` is hover-only, everywhere.** One rule, `a:hover` in `base.css`, plus
+  `.filterlink:hover` for the label, which is not an anchor. Nothing static carries the charge;
+  a permanent accent makes it decorative and it stops signalling. `--color-focus` is the same
+  value but a different token for a different state — pointers versus keyboards.
+- **The keyword set is FULL at seven links.** The eyebrow tier cost +17% row width, leaving 80px
+  of headroom against ~122px for an average keyword. Renaming inside 14 characters is free; an
+  eighth link goes to four mobile rows. See `docs/copy-constraints.md`.
 - **The count is `--weight-regular`, not Medium** — `CD-001`. It annotates the label rather
   than belonging to it, and every property on that element is chosen to keep it inside the 26px
   row the label sets, because the filter hairline sits on that row. Figma's node is to be
@@ -424,7 +432,13 @@ Bryan's, not this chat's: the 14 design questions.
 
 Routed here rather than through Bryan, per rule 2.
 
-- [ ] **The violet is on four static things and should be on none of them. `DF-005`.**
+- [x] **DONE — `CD-002`, with a correction.** Only ONE of the four ever shipped: the selected
+      filter link, now ink + Bold + underline. The other three line numbers point at `.card__draft`,
+      `.case__draft` and `.photo__draft`, which are dev-only (`showDraftFlag` is
+      `import.meta.env.DEV`) — `.card__keyword` has been `--color-muted` all along. Draft flags
+      left loud on purpose; say so if the rule should be absolute. Hover added as one global
+      `a:hover` rule plus `.filterlink:hover`.
+      Original: **The violet is on four static things and should be on none of them. `DF-005`.**
       *Raised by Design and Figma 2026-09-07. Three of the four are drift against Figma, not a
       new decision — Figma has said `muted` all along.*
 
@@ -447,7 +461,10 @@ Routed here rather than through Bryan, per rule 2.
       same value, different token, different state. Hover is for pointers and focus is for
       keyboards, and the settled system requires them to stay distinguishable.
 
-- [ ] **Restyle the keyword filter to the eyebrow tier. `DF-005`.** *Design and Figma; drawn on
+- [x] **DONE — `CD-002`.** Built and measured against the component: 815px row against the 813px
+      in `DF-005`, 19.5px rows, three rows at 390px. The selected count follows the DRAWING rather
+      than the snippet — SemiBold and undecorated, as Figma's Selected variant has it.
+      Original: **Restyle the keyword filter to the eyebrow tier. `DF-005`.** *Design and Figma; drawn on
       both work-index frames.*
 
       Label and count now share one tier and are separated by **colour alone**:
@@ -593,7 +610,7 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 # Decision index
 
-72 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+74 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
@@ -602,6 +619,7 @@ history, never to decide what to do next.** Full text in
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
 | [`DF-007`](docs/decisions-archive.md#df-007) | Handover: what this chat knew that no file held | |
 | [`DF-006`](docs/decisions-archive.md#df-006) | The PLAY label moves below the image | |
+| [`CD-002`](docs/decisions-archive.md#cd-002) | Filter is the eyebrow tier; the charge is hover-only. Code and Deploy. | |
 | [`DF-005`](docs/decisions-archive.md#df-005) | Filter takes the eyebrow tier; the violet becomes hover-only | |
 | [`DF-004`](docs/decisions-archive.md#df-004) | Figma is build-ready; where it is 1:1 with code and where it is not | |
 | [`DF-003`](docs/decisions-archive.md#df-003) | One eyebrow, two contexts — the type is implemented twice | |
