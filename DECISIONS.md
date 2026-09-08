@@ -351,8 +351,31 @@ Decided *against*, with the reason. Re-raising these costs someone a redo of rej
       longer can — `D-063` moved `src/content/**` to Content and Copy the same day. The edits go
       to Bryan, who takes them to that chat.
 
-Bryan's, not this chat's: video poster stills (the ink ground is a deliberate state, not a gap)
-and the 14 design questions.
+- [ ] **The video facade's ink ground never renders any more, and the PLAY label was coloured
+      for it.** *Raised by Code and Deploy 2026-09-07 from the built output; the call is
+      Design's.*
+
+      `VideoFacade` has two states: a poster still, or `--color-fg` ink where no still exists.
+      **All three video projects now have posters** — `memory-strip`, `transmute` and
+      `the-city-that-slept` — so `.video__ground` is never painted on the live site. Bryan
+      supplied the stills at some point; the ledger still describes two of three as having none.
+
+      The consequence is the label. `PLAY` is `--color-bg`, chosen against the ink ground, where
+      it is 15.42:1 light and 19.45:1 dark. Over a photograph it has no guaranteed contrast at
+      all — it is near-black on an image in dark mode and white on an image in light, and the
+      image decides. Nothing measured this because there was always assumed to be a flat ground
+      underneath.
+
+      Not a regression and not urgent: it has been this way since posters were added. But it is
+      the one place on the site where a contrast figure cannot be derived, and the site is
+      otherwise WCAG AA throughout by construction.
+
+      **Design's to answer** — a scrim, a fixed dark-on-light treatment regardless of scheme, or
+      a considered "the stills are all dark enough, leave it". Code and Deploy will build
+      whichever. `.video__ground` stays either way: it is the fallback if a project ever ships
+      without a still.
+
+Bryan's, not this chat's: the 14 design questions.
 
 ## Open decisions — Code and Deploy owns these
 
@@ -418,7 +441,10 @@ Routed here rather than through Bryan, per rule 2.
       Figma to match rather than the other way round, and if you pick Regular, Design changes
       the Figma node to `Body / Small`.
 
-- [ ] **`.video__label` does not match the `Label` style it is bound to.** *Raised by Code and
+- [x] **DONE 2026-09-07.** `--size-xs` and `--leading-label`; computes 13px / 500 / 18.2px /
+      1.04px, matching the `Label` style exactly. Every Label-tier element in the codebase now
+      uses that pairing, and `--leading-eyebrow` is used by the eyebrow alone.
+      Original: **`.video__label` does not match the `Label` style it is bound to.** *Raised by Code and
       Deploy 2026-09-07 while doing `CD-001`; flagged rather than changed because it is a
       visible size change outside the routed scope.*
 

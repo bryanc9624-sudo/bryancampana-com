@@ -67,13 +67,17 @@ const src = video.provider === 'youtube'
     background: var(--color-fg);
   }
 
-  /* Sans, because this is the label tier. No icon: the design has no icon language
-     anywhere and three videos do not justify inventing one. */
+  /* The Label text style — 13px Medium, 140% — which is what Figma binds this node to.
+     No icon: the design has no icon language anywhere and three videos do not justify
+     inventing one. CD-001: this used --size-sm and --leading-eyebrow, the Eyebrow style's
+     values. The two leading tokens exist to keep those styles apart and reaching for the
+     wrong one is silent, so pair --size-xs with --leading-label here and nowhere else
+     borrow across. */
   .video__label {
     position: absolute; left: var(--space-3); bottom: var(--space-3);
     font-family: var(--font-sans);
-    font-size: var(--size-sm); font-weight: var(--weight-medium);
-    line-height: var(--leading-eyebrow);
+    font-size: var(--size-xs); font-weight: var(--weight-medium);
+    line-height: var(--leading-label);
     color: var(--color-bg);
     text-transform: uppercase; letter-spacing: var(--tracking-wide);
   }
