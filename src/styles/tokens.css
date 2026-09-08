@@ -50,6 +50,9 @@
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
+  /* D-061. Display/2XL and the Eyebrow are Bold. The serif face is loaded in base.css;
+     the sans is variable and declares 100–700, so it needs nothing. */
+  --weight-bold: 700;
 
   --tracking-wide: 0.08em;
 
