@@ -34,7 +34,7 @@ const photos = imagesFor(project.id)
 const poster = photos[0] ?? coverFor(project.id, d.cover)
 
 // Layout is chosen by its own field, never inferred from content. `discipline` is a
-// label, `keywords` are an unordered set — neither should be able to change how a page
+// label and the filter vocabulary — it should not be able to change how a page
 // is built.
 const imageFirst = d.layout === 'image-first'
 const Layout = imageFirst ? ProjectPhotography : ProjectStandard

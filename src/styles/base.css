@@ -110,9 +110,9 @@ em, i, cite { font-family: var(--font-italic); }
   font-family: var(--font-sans); font-weight: var(--weight-semibold);
   font-size: var(--size-sm); line-height: var(--leading-eyebrow);
   text-transform: uppercase; letter-spacing: var(--tracking-wide);
-  /* Ink, not muted. D-064: the section eyebrow and the keyword on a project card were both
+  /* Ink, not muted. D-064: the section eyebrow and the card's label were both
      uppercase, tracked and muted, so they read as one tier. Colour separates them now, and
-     since DF-002 so does weight — SemiBold against the keyword's Medium. It is --color-fg
+     since DF-002 so does weight — SemiBold against the card label's Medium. It is --color-fg
      and deliberately not --color-accent: the accent is the charge and marks the selected
      filter link only, so spending it on a static label would make it decorative. It reads
      purple because the ink on this site is plum. */

@@ -50,7 +50,7 @@ lives only in this table and in `tokens.css`, so if those two disagree nothing c
 | `--color-placeholder` | `#F0F0F0` | `#1E1C1F` | `color/placeholder` | Unworked paper |
 | `--color-focus` | `#8817EA` | `#B07AFF` | `color/focus` | Containment ring |
 | `--color-accent` | `#8817EA` | `#B07AFF` | `color/accent` | The charge. Same value as focus, deliberately |
-| `--color-filter-label` | `= muted` | `= fg` | — | Keyword filter at rest. `CD-016` |
+| `--color-filter-label` | `= muted` | `= fg` | — | Work filter at rest. `CD-016` |
 
 **Three principles that derive the dark values, so future ones are not picked by eye:**
 
@@ -93,7 +93,7 @@ mode Figma cannot show.
   style* is type only, the `Eyebrow` *component* is that style plus the rule. Any second
   implementation of the type is a bug, not a variant.
 - **The section eyebrow is `Eyebrow` — Sans SemiBold 15px, `--color-fg`.** It separates from the card
-  keyword on **three** axes now — weight, size and colour — against `Label`, Sans Medium 13px
+  discipline on **three** axes now — weight, size and colour — against `Label`, Sans Medium 13px
   muted. The two were never the same style, but they read as one tier until this changed. **It is not `--color-accent`** — accent is the
   charge and marks the selected filter link only; spending it on static labels would make it
   decorative and stop it meaning anything.
@@ -132,15 +132,19 @@ mode Figma cannot show.
   row is 307px against 342px at 390px, so it fits there — but the query runs `0–639px`, and at
   **320px** there is only 272px of content width. The row stops fitting below a **355px**
   viewport. Six `SiteHeader` variants, not three.
-- **Project pages open on the title, and the slot above it stays empty.** The `WORK` eyebrow is
-  removed and nothing replaces it — putting `discipline` there was considered and dropped
-  (`DF-002`). **Eyebrows are for section headings only**: `FEATURED` on the landing page and
-  `CONTACT` on About. They do not appear on project pages. The `← All work` link at the foot
-  stays — a different affordance, offered where the reading ends.
+- **A project page opens on its discipline, as a link to that discipline's page.** `CD-020`.
+  **Two routes out, each with one job:** the header nav goes to everything, the discipline goes to
+  the sibling set. `← All work` is gone — it went where the nav already goes. The discipline
+  appears at the top *and* the foot because those are two moments, not two destinations: nothing
+  on this site is sticky below 64rem and a photography page runs to seven images.
+- **An eyebrow is the label above a block of content** — a section heading on the landing page, a
+  column label on About, a classification on a project page. `DF-002` said "section headings only"
+  and `CD-020` widened it; that is one job described more broadly, not two jobs. The project
+  eyebrow takes **no hairline** — a fourth rule would break "one rule type, one meaning".
 - **Contact block, About page.** Desktop is three columns — portrait `1fr`, biography `2fr`,
   contact `1fr`, 64px gutters. Mobile stacks it after the biography. The block is a `CONTACT`
   eyebrow (the text style, **no rule** — it is a column element, not a break in a flow), then
-  `Based in New York City` in muted, then **email · LinkedIn · résumé (PDF)**. Email renders as
+  `Based in New York City` in muted, then **email · LinkedIn · resume**. The link reads `Download resume` — no accents, no file type in the label, Bryan's call 2026-09-08. Email renders as
   the address, `bryanc9624@gmail.com`, not the label: it is copyable and reads as an invitation.
 - **Radius is 0** on both tokens, derived from Plex's square construction rather than left unset.
 
@@ -149,11 +153,15 @@ mode Figma cannot show.
 Figma page `04 — Components`: `ProjectCard`, `Placeholder`, `SiteHeader` (Current × Breakpoint,
 six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 
-- **Card is image → keyword → title → description.** No year. No design question.
+- **Card is image → discipline → title → scope.** No year. No design question. The label was the
+  first keyword until `CD-017`: a keyword is a filter facet and a project carries several, so the
+  card showed an arbitrary one. The discipline names the practice and there is exactly one.
 - **`SiteFooter` is Terms of Use · Privacy Policy.** No Contact, no LinkedIn — both live
   on About.
-- **`FilterLink` is the Eyebrow tier** — uppercase, 15px, SemiBold, 8% tracking, `--color-fg`.
-  Not separated by size or a raised position, which is what label and count used before.
+- **`FilterLink` is the Eyebrow tier** — uppercase, 15px, SemiBold, 8% tracking. At rest it takes
+  `--color-filter-label`: muted in light, ink in dark. **In light, label and count are now the
+  same colour** — `CD-016` retired the "separated by colour alone" half of `CD-002`, and the
+  selected state carries the distinction instead. Never separated by size or a raised position.
   The count is the **same size and weight**, separated by colour alone (`--color-muted`), 6px to the
   right on the shared baseline. Selected is `Eyebrow / Selected` — Bold plus an underline, still ink.
   The count does not take the selected emphasis. `CD-002`.
@@ -198,17 +206,32 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
   - **Project title ≤ 26 characters** for one line. `Dura Architectural Signage` is the tested
     ceiling at 291px of 342px.
   - **Mobile is binding for all of them.** 342px card, 342px content. Desktop always has slack.
-- **Seven keywords** — Art 10 · Photography 4 · New Media 3 · Exhibition 2 · Identity 2 ·
-  Signage 2. `Fine Art` and `Digital` are retired. **`Art` is a second axis, not a medium** —
-  it covers everything made as art rather than commissioned as design, so a project can carry
-  it alongside `Photography` or `New Media`. The four excluded are the client work. The filter
-  row measures 814px, one desktop line, three rows at 390px. `CD-005`, `CD-006`.
+- **The discipline IS the filter vocabulary — keywords are retired.** `CD-019`. One taxonomy,
+  used in three places that now agree: the card label, the `/work` filter, and the project page's
+  `Discipline` fact. Keywords were the discipline set plus `Art`, which sat on **10 of 14** and so
+  barely filtered; maintaining a second vocabulary for one extra facet was not worth a visitor
+  reading `Photography` on a card and `Art` in the filter.
+- **Each view of the work index is a real page** — `/work/` for everything,
+  `/work/discipline/<slug>/` for one. `CD-020`. Nested under `discipline/` because
+  `[slug].astro` claims every single segment below `/work/`, so a project slugged
+  `photography` would otherwise collide; the extra segment makes that impossible rather than
+  merely unlikely. The filter is ordinary links now — still no JavaScript, and a filtered view
+  finally has an address it can be linked, shared, bookmarked and refreshed at.
+- **The filter row runs to two lines on desktop, and that is accepted.** Discipline names are
+  longer than keywords were — an estimated 1159px against the 814px the keyword row measured, on a
+  ~894px budget. The single-line row was a *measurement*, never a goal. Shortening the labels to
+  fit was rejected: it left 7px of headroom and put the card and the filter back on different
+  words, which is the split retiring keywords was meant to close. Mobile already ran three rows.
+- **`tests/content.test.ts` pins the set of six.** A misspelled discipline would otherwise become
+  its own filter link matching one project, silently. Adding a seventh means editing that test,
+  which is the point — it makes admitting one a decision rather than a typo.
 - **Projects sort by `year` then `month`, both descending; `order` is the last tiebreak.** The
   filter hides cards rather than reordering them, so every filtered view inherits this one order —
   a date sort is the only one that stays true of every subset. No `year` sorts last overall; no
   `month` sorts last within its year. **`month` sorts, `completed` renders, and a test asserts they
   agree.** `CD-007`, `CD-008`.
-- `discipline` selects the project page layout; `keywords` is an unordered set. `year` sorts,
+- **`layout` selects the project page layout — `discipline` does not**, and never has; the field
+  is a label. `keywords` is an unordered set. `year` sorts,
   `completed` renders. `columns` overrides the photography grid, else it is derived from image
   count (≤2 → one column, 4 → two-up, otherwise three-up). `cover.<ext>` is a card-only image.
 - **Slugs carry no `-1` suffix.** Three did, out of the Cargo export; they are renamed with `301`
@@ -218,6 +241,11 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
   terminal period; a capability list is Title Case with none. **Consistency within one scope is not
   editorial** — Title Case running into lowercase mid-list is a bug. A scope containing a colon
   needs YAML quotes, which are stripped before render. `CD-015`.
+- **Six disciplines, exactly one per project.** Photography 4 · New Media 3 · Brand Identity 2 ·
+  Signage & Wayfinding 2 · Exhibition Design 2 · Printmaking 1. **Every one names a practice**, which
+  is the test for admitting a new one — `Visual Communications` named a *field* and was retired for
+  the second time, `New Media Art` on `re:semblance` named the exhibition's *subject* rather than
+  Bryan's work. Longest is `Signage & Wayfinding` at 20 characters. `CD-018`.
 - **Featured set is 4**; all 14 projects get a page. Design questions are optional and Bryan's.
 
 ## Figma
@@ -363,13 +391,17 @@ current palette).
 
 # Decision index
 
-88 decisions. Ids carry the prefix of the chat that made them, which is history now rather
+92 decisions. Ids carry the prefix of the chat that made them, which is history now rather
 than a scheme. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
 | ID | Decision | Status |
 |---|---|---|
+| [`CD-020`](docs/decisions-archive.md#cd-020) | Eyebrow returns as a discipline link; filtered views become real pages. | |
+| [`CD-019`](docs/decisions-archive.md#cd-019) | Keywords retired; the discipline is the filter vocabulary. | |
+| [`CD-018`](docs/decisions-archive.md#cd-018) | Six disciplines, one per project; a discipline names a practice. | |
+| [`CD-017`](docs/decisions-archive.md#cd-017) | The card label is the discipline, not a keyword. | |
 | [`CD-016`](docs/decisions-archive.md#cd-016) | Accent and focus rederived on hue 300; filter label merges with its count in light. | |
 | [`CD-015`](docs/decisions-archive.md#cd-015) | Card scopes may be Title Case capability lists. Bryan's call. | |
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
@@ -396,7 +428,7 @@ history, never to decide what to do next.** Full text in
 | [`D-065`](docs/decisions-archive.md#d-065) | Build budget is 1,000 credits a cycle, not 300. Code and Deploy. | |
 | [`D-064`](docs/decisions-archive.md#d-064) | Weights reverted; the eyebrow keeps its ink. Bryan's call. | |
 | [`D-063`](docs/decisions-archive.md#d-063) | A fourth chat for copy, which does not use this ledger. `src/content/` moves to it. | |
-| [`D-062`](docs/decisions-archive.md#d-062) | The WORK eyebrow above the project title is removed. Bryan's call. | |
+| [`D-062`](docs/decisions-archive.md#d-062) | The WORK eyebrow above the project title is removed. Bryan's call. ⚠ | — Superseded by `CD-020` |
 | [`D-061`](docs/decisions-archive.md#d-061) | Bryan reweights the display ramp and the eyebrow. ⚠ | — Superseded |
 | [`D-060`](docs/decisions-archive.md#d-060) | Contact consolidates on About; header baseline locked; counts drop to the baseline. | |
 | [`D-059`](docs/decisions-archive.md#d-059) | The final six keywords, and a routed item that was destroyed and restored. | |

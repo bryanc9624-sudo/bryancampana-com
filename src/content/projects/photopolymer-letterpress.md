@@ -4,7 +4,6 @@ year: 2024
 month: 1
 completed: "January 2024"
 discipline: "Printmaking"
-keywords: ["Art"]
 scope: "Modular typography / Process study"
 designQuestion: null
 medium: null

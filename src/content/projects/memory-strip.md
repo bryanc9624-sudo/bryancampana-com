@@ -4,7 +4,6 @@ year: 2018
 month: 2
 completed: "February 2018"
 discipline: "New Media"
-keywords: ["New Media", "Art"]
 scope: Body Movement, Sensory Information
 designQuestion: null
 medium: "Video, Color, Sound, 03.25 min."

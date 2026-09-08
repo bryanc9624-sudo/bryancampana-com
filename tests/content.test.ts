@@ -33,15 +33,20 @@ describe('project content', () => {
     }
   })
 
-  it('gives every project at least one keyword', () => {
-    for (const f of files()) {
-      expect(frontmatter(f).keywords, `${f} keywords`).toMatch(/\[.+\]/)
-    }
-  })
-
   it('gives every project a discipline', () => {
     for (const f of files()) {
       expect(frontmatter(f).discipline, `${f} discipline`).not.toBe('null')
+    }
+  })
+
+  // The discipline is the whole filter vocabulary since CD-019, so a typo in one file
+  // silently creates a seventh filter link matching a single project. Pinning the set
+  // makes that fail here instead of shipping.
+  it('draws every discipline from the settled set of six', () => {
+    const SET = ['Brand Identity', 'Exhibition Design', 'New Media',
+                 'Photography', 'Printmaking', 'Signage & Wayfinding']
+    for (const f of files()) {
+      expect(SET, `${f} discipline`).toContain(frontmatter(f).discipline.replace(/^"|"$/g, ''))
     }
   })
 

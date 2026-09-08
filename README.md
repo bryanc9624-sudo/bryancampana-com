@@ -17,7 +17,7 @@ same wifi at the address the terminal prints.
 
 | I want to change… | Edit |
 |---|---|
-| A project's text, keywords, cover, order | `src/content/projects/<slug>.md` |
+| A project's text, discipline, cover, order | `src/content/projects/<slug>.md` |
 | A project's photographs | `src/assets/projects/<slug>/` |
 | Colours, type sizes, spacing | `src/styles/tokens.css` |
 | Bio, resume link | `src/pages/about.astro` |
@@ -35,9 +35,8 @@ below is the case-study prose.
 title: Dura Architectural Signage
 year: 2025                        # sort order only, never displayed
 completed: "September 2025"       # what actually shows under Completed
-discipline: "Visual Communications"  # a label; does NOT pick the layout
+discipline: "Signage & Wayfinding"   # the card label AND the /work filter
 layout: standard                  # standard | image-first
-keywords: ["Signage"]
 scope: One line describing the project. Shows on the card.
 designQuestion: null              # optional; set it and it appears
 medium: null                      # photography/video projects use these
@@ -59,29 +58,36 @@ Prose goes here.
 
 - Quote any value containing a colon: `"Print: 8 × 10 in."`
 - Use `null` for "nothing", not `""` and not a deleted line
-- Keep the quotes and brackets on `keywords`
 
 If you break it, the browser shows a red error naming the file and line. Fix, save, gone.
 
 ---
 
-## Keywords
+## Disciplines
 
 ```yaml
-keywords: ["Photography", "Film"]
+discipline: "Photography"
 ```
 
-**Adding a keyword to any project adds it to the `/work` filter automatically** — the links
-and their filtering rules are both generated from the content. No code change. A project
-with several keywords appears under each of them.
+**The discipline does three jobs**: it is the small purple label on the project's card, it is the
+`/work` filter, and it is the link at the top and foot of the project's own page — the way a
+reader gets from one project to its siblings. Give a project a discipline and it gets a filter
+link and its own page at `/work/discipline/<name>/` automatically. No code change.
 
-Current set: Photography, Identity, New Media, Signage, Digital, Fine Art.
+**One per project, from a settled set of six:**
 
-Keep them few. A keyword matching one project does little for a visitor, and long labels
-crowd the filter on a phone.
+Photography · New Media · Brand Identity · Signage & Wayfinding · Exhibition Design · Printmaking
 
-`discipline` is **not** the same thing. It is a label that appears in the facts list. It
-does not affect the layout or the filter.
+**A discipline names a practice — something you did.** Not a field you work in, and not what the
+work is *about*. `Visual Communications` names a field; `New Media Art` on an exhibition named its
+subject. Both were removed for that reason.
+
+Adding a seventh is a real decision, not a typo: `npm test` fails on any value outside the six, so
+a misspelling cannot quietly become its own filter link matching one project. Change the list in
+`tests/content.test.ts` when you genuinely mean to add one.
+
+Keywords used to be a second, separate vocabulary. They were retired — they were the discipline
+set plus `Art`, which sat on 10 of 14 projects and so barely filtered anything.
 
 ---
 
@@ -92,7 +98,7 @@ draft: true
 ```
 
 A draft is **completely absent from the built site** — no page, not on `/work`, not on the
-landing page, not in the sitemap, and its keyword counts drop accordingly. Nobody can reach
+landing page, not in the sitemap, and its discipline count drops accordingly. Nobody can reach
 it even by guessing the URL.
 
 Locally it still renders, marked **Draft — hidden when built** in accent purple, so you can

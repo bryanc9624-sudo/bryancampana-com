@@ -4,7 +4,6 @@ year: 2024
 month: 9
 completed: "September 2024"
 discipline: "Brand Identity"
-keywords: ["Identity"]
 scope: Logo design for an established volleyball club
 designQuestion: null
 medium: null

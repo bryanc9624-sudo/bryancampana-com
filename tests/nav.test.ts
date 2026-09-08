@@ -16,6 +16,14 @@ describe('nav current-page rule', () => {
     }
   })
 
+  // CD-020 added a second level under /work/. Same regression, one segment deeper: a
+  // discipline page is not the work index either.
+  it('does not mark the work index current on a discipline page', () => {
+    for (const d of ['photography', 'signage-wayfinding', 'brand-identity']) {
+      expect(isCurrentPage(`/work/discipline/${d}/`, '/work'), d).toBe(false)
+    }
+  })
+
   it('marks nothing on a page that is not in the nav', () => {
     for (const path of ['/', '/privacy/', '/terms/', '/404']) {
       for (const l of navLinks) {

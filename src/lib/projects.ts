@@ -13,7 +13,7 @@ import type { CollectionEntry } from 'astro:content'
  * only to the year sorts after the dated ones within that year — it is less precise, so it
  * cannot claim to be more recent.
  *
- * **Why date and not a hand-picked sequence.** The keyword filter hides cards rather than
+ * **Why date and not a hand-picked sequence.** The discipline filter hides cards rather than
  * reordering them, so every filtered view inherits this one order. A hand-set order tuned
  * for the unfiltered page — client work first, then printmaking, video, photography — left
  * the seven filtered views reading as the leftovers of a grouping: under `Art` the years ran
@@ -45,3 +45,26 @@ export async function visibleProjects(): Promise<CollectionEntry<'projects'>[]> 
 
 /** True when a draft badge should be shown — dev only, never in a build. */
 export const showDraftFlag = import.meta.env.DEV
+
+/**
+ * A discipline as a URL segment. One definition, called by the filter bar, the route
+ * generator and both project layouts — the same reason `visibleProjects` is single.
+ */
+export const disciplineSlug = (d: string) => d.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+
+/**
+ * Every discipline in use, with its project count, sorted by name.
+ *
+ * Derived from content, never hardcoded: give a project a new discipline and it gets a
+ * filter link and a page. `tests/content.test.ts` pins the vocabulary to six, so a typo
+ * fails there rather than quietly minting a seventh page matching one project.
+ */
+export async function disciplines(): Promise<{ name: string; slug: string; count: number }[]> {
+  const all = await visibleProjects()
+  const names = [...new Set(all.map(p => p.data.discipline).filter((d): d is string => !!d))]
+  return names.sort().map(name => ({
+    name,
+    slug: disciplineSlug(name),
+    count: all.filter(p => p.data.discipline === name).length,
+  }))
+}

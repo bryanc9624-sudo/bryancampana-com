@@ -1,0 +1,38 @@
+---
+// The work index, in whatever state. /work/ renders it with everything; each
+// /work/discipline/<slug>/ page renders it filtered to one.
+//
+// It is ONE component because both pages draw the same thing — heading, filter row, grid.
+// Splitting the markup across two files would put the h1's size and rhythm in two places,
+// and this project has been bitten by exactly that: the eyebrow type was implemented twice
+// and drifted (CD-001), and the h1 rule was lost entirely when this page was first split
+// for CD-020, shrinking the title and closing the gap above the filter.
+import type { CollectionEntry } from 'astro:content'
+import ProjectCard from './ProjectCard.astro'
+import FilterBar from './FilterBar.astro'
+
+interface Props {
+  projects: CollectionEntry<'projects'>[]
+  /** Slug of the discipline being shown, or null on /work/ where everything is. */
+  current?: string | null
+  /** Count for the All link — the full set, not the filtered one. */
+  total: number
+}
+const { projects, current = null, total } = Astro.props
+---
+<h1>Work</h1>
+
+<FilterBar current={current} total={total} />
+
+<ul class="grid work-grid">
+  {projects.map(p => (
+    <li><ProjectCard project={p} level={2} /></li>
+  ))}
+</ul>
+
+<style>
+  /* 64px above, 24px below. The gap below is what separates the title from the filter row;
+     losing it once made the two read as one block. Size is 2xl here rather than from
+     base.css, which sets no h1 size — the ramp is applied per page. */
+  h1 { font-size: var(--size-2xl); margin-block: var(--space-6) var(--space-4); }
+</style>

@@ -36,10 +36,6 @@ const projects = defineCollection({
     // A value outside 1-4 fails the build rather than rendering a broken grid.
     columns: z.number().int().min(1).max(4).nullable().default(null),
 
-    // Many per project. Drives the /work filter. Seeded from the disciplines shown on
-    // the Cargo site; Bryan adds real keywords later without a schema change.
-    keywords: z.array(z.string()).default([]),
-
     scope: z.string(),
     designQuestion: z.string().nullable().default(null),
 
@@ -59,7 +55,7 @@ const projects = defineCollection({
     featured: z.boolean().default(false),
     // Tiebreak only. Projects sort by `year` descending; `order` decides the sequence
     // WITHIN a year, where two projects share one. It stopped being the primary sort in
-    // CD-007 — a hand-set sequence read as noise under the keyword filter, which hides
+    // CD-007 — a hand-set sequence read as noise under the discipline filter, which hides
     // cards rather than reordering them, so every filtered view inherited it.
     order: z.number().default(0),
     aspect: z.string().default('3/2'),

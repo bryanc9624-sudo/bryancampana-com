@@ -4,7 +4,6 @@ year: 2023
 month: 5
 completed: "May 2023"
 discipline: "Brand Identity"
-keywords: ["Identity"]
 scope: Logo design for a DJ collective
 designQuestion: null
 medium: null

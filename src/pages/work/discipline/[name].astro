@@ -1,0 +1,27 @@
+---
+// One page per discipline — CD-020. Nested under /work/discipline/ rather than sitting at
+// /work/<slug>/ because `[slug].astro` already claims every single segment under /work/,
+// and a project slugged "photography" would collide with the filter. The extra segment
+// makes that impossible by construction rather than by convention.
+import { visibleProjects, disciplines } from '../../../lib/projects'
+import Base from '../../../layouts/Base.astro'
+import WorkIndex from '../../../components/WorkIndex.astro'
+
+export async function getStaticPaths() {
+  const [all, list] = [await visibleProjects(), await disciplines()]
+  return list.map(d => ({
+    params: { name: d.slug },
+    props: {
+      name: d.name,
+      slug: d.slug,
+      projects: all.filter(p => p.data.discipline === d.name),
+      total: all.length,
+    },
+  }))
+}
+
+const { name, slug, projects, total } = Astro.props
+---
+<Base title={`${name} — Bryan Campana`} description={`${name} projects by Bryan Campana.`}>
+  <WorkIndex projects={projects} current={slug} total={total} />
+</Base>

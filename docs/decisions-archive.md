@@ -1,3 +1,156 @@
+<a id="cd-020"></a>
+### CD-020 · 2026-09-08 — The eyebrow returns as a link to its discipline; `← All work` goes; filtered views become real pages. **Bryan's call, reached by grilling.**
+
+**Status:** Accepted. Supersedes `D-062` and widens `DF-002`.
+
+Bryan asked to restore the project-page eyebrow "now that we have refined the card text", then
+proposed it *link* to the work index filtered to that discipline. That second half turned a
+fifteen-minute change into a structural one.
+
+**The blocker was in the code's own comment:** *"filter state cannot live in the URL, so a
+filtered view is not linkable."* The filter was radio inputs and `:has()` — instant, no
+JavaScript, and with no address to link to. The link had nowhere to point.
+
+**Three ways to make it linkable were weighed.** `:target` (`/work/#photography`) keeps one page
+but makes the browser jump to the anchor, scrolling past the `h1`, and a fragment is a weak
+shareable URL. Linking unfiltered was cheap and lost the point. **Real pages won**: a filtered view
+becomes a *location* rather than a UI state, which is what a link means.
+
+**URL shape: `/work/discipline/<slug>/`, not `/work/<slug>/`.** `[slug].astro` already claims
+every single segment under `/work/`, so a project slugged `photography` would collide with the
+filter. The extra segment makes the collision impossible by construction. 20 pages became 26, and
+the sitemap picked them up with no change.
+
+**`D-062` is upheld in its reasoning and inverted in its conclusion.** It removed the `WORK`
+eyebrow because a project page carried *three* routes to the index — nav, eyebrow, foot link — and
+kept the foot link as "a different affordance, offered where the reading ends". The count still
+lands at two. What changed is which two: the eyebrow now goes somewhere the nav does not, and
+`← All work` went where the nav already went. Bryan's framing: this consolidates the pathways.
+
+**The foot did not become empty, and the reason is measured.** Nothing on this site is sticky
+below 64rem — `.case__rail` is sticky only on desktop standard pages, and the photography layout
+has no sticky rail by design. `oscuro` and `re:present` are six images; `590 Madison Ave` is seven.
+A reader finishing a photography page on a phone would have had the footer's Terms and Privacy and
+nothing else. So the foot carries the same discipline link, reading *"More Photography"*. Top and
+foot are one pathway offered at two moments, not two pathways.
+
+**`DF-002` is widened, not quietly violated.** It said eyebrows are section headings only, on the
+reasoning that a component used for one thing is easier to reason about than one used for two.
+The replacement definition keeps that virtue: **an eyebrow is the label above a block of content**.
+Its practical objection had already expired — it capped the discipline near 32 characters and named
+`SIGNAGE & WAYFINDING, CODE SIGNAGE` as at the edge; `CD-018` left the longest at 20.
+
+**The link looks like a link on hover only**, using the card-title pattern — undecorated at rest,
+underline plus accent on hover. Consistent with "links carry no decoration at rest; an underline
+means a STATE". No hover exists on touch, which Bryan accepted after looking at mobile.
+
+**Guards.** `tests/nav.test.ts` gained the discipline URLs: `/work/discipline/photography/` must
+not mark the header's Work link current. That is the same regression `isCurrentPage` was written
+for, one segment deeper.
+
+---
+
+<a id="cd-019"></a>
+### CD-019 · 2026-09-08 — Keywords retired; the discipline is the filter. **Bryan asked whether they were still needed.**
+
+**Status:** Accepted
+
+**They were two names for nearly one thing.** Strip `Art` from the keyword set and it *is* the
+discipline set:
+
+| Keywords (was) | Disciplines (now) |
+|---|---|
+| Art 10 · Photography 4 · New Media 3 · Signage 2 · Identity 2 · Exhibition 2 | Photography 4 · New Media 3 · Brand Identity 2 · Signage & Wayfinding 2 · Exhibition Design 2 · Printmaking 1 |
+
+`Art` sat on **10 of 14**. A filter matching 71% of the set is not filtering. So the second
+vocabulary bought one facet that barely worked, and cost a visitor reading `Photography` on a card
+next to a filter offering `Art` — two systems to reconcile across fourteen projects.
+
+**One vocabulary now spans all three places it appears:** the card label (`CD-017`), the `/work`
+filter, and the project page's `Discipline` fact.
+
+**The cost, accepted with eyes open: the filter row wraps to two lines on desktop.** Estimated
+1159px against the ~894px budget, calibrated from the 814px the keyword row measured in `DF-005` —
+an estimate, not a device measurement. Shortening labels to `Signage` and `Identity` would fit at
+887px, and was **rejected**: 7px of headroom is not a margin, and it would put the card and the
+filter back on different words, which is the exact split this change closes. The one-line row was
+a finding from measuring, never a stated goal, and mobile already ran three rows.
+
+**What changed in code.** `keywords` is gone from the schema and all 14 content files. The filter
+derives from `discipline` instead, and the mechanism is untouched — still radio inputs and sibling
+selectors, no JavaScript. `data-keywords` became `data-discipline`; `~=` is kept although `=`
+would now do, because it costs nothing and survives the field ever becoming a list again.
+
+**A new guard, verified to fail.** `tests/content.test.ts` pins the set of six, because with one
+vocabulary a typo would silently mint a seventh filter link matching one project. Confirmed by
+misspelling `Photography` in `oscuro.md` and watching the suite go red naming the file.
+
+---
+
+<a id="cd-018"></a>
+### CD-018 · 2026-09-08 — Six disciplines, one per project. **Bryan asked; judgement delegated.**
+
+**Status:** Accepted
+
+`CD-017` put the discipline on the card, which exposed two problems the field had while it was
+buried in a facts list.
+
+**`re:semblance` carried two** — `Exhibition Design, New Media Art` — the only project that did,
+and at 32 characters the longest string by a wide margin. Reading the body settles it: Bryan
+*"collaborated in curating and designing social media graphics"* for an open call. That is
+Exhibition Design. "New Media Art" describes what the show was **about**, not what he did — and
+its sequel `re:present`, the same job, was already Exhibition Design alone.
+
+**`dura` was `Visual Communications`**, which names a *field* where every other value names a
+practice. `DF-001` had already retired it once and recommended `Signage & Wayfinding`; it came back
+in a later edit. Restored, and now it matches `590-madison-ave`, which is the same practice.
+
+**The resulting set, and the test for admitting another:**
+
+| Discipline | Projects |
+|---|---|
+| Photography | 4 |
+| New Media | 3 |
+| Brand Identity | 2 |
+| Signage & Wayfinding | 2 |
+| Exhibition Design | 2 |
+| Printmaking | 1 |
+
+**A discipline names a practice — something Bryan did.** Not a field he works in, not the subject
+of the work. Both values removed here failed that test in different directions, which is why the
+rule is worth writing down rather than just the list.
+
+---
+
+<a id="cd-017"></a>
+### CD-017 · 2026-09-08 — The card label is the discipline, not a keyword. **Bryan's call.**
+
+**Status:** Accepted
+
+The small uppercase line above a card title rendered `d.keywords[0]` — the *first* keyword, by
+array order. A project carries several and the array is explicitly unordered, so which one
+appeared was arbitrary: three projects showed `Art` where `Printmaking` or `Exhibition Design`
+described the work far better.
+
+**The discipline is the right field for this slot.** There is exactly one per project, it names
+the practice rather than a filter facet, and it is already what the project page shows under
+`Discipline` — so the card and the page it opens now agree.
+
+**Style unchanged** — `Label` tier, 13px Medium uppercase, `--color-muted`, 8% tracking. Only the
+source of the string changed. The class is renamed `.card__discipline`, since `.card__keyword`
+would have been a lie.
+
+**It is nullable, so the guard stays.** `discipline: z.string().nullable().default(null)` in the
+schema; all 14 projects set one today, but the card still renders nothing rather than an empty
+line if one does not.
+
+**Watch the length.** The longest keyword was `Photography` at 11 characters; the longest
+discipline is `Exhibition Design, New Media Art` at **32**, nearly three times that. Mobile is the
+binding case at 342px, as it is for every other card limit. Not measured on device at the time of
+writing — flagged for Bryan rather than claimed as safe.
+
+---
+
 <a id="cd-016"></a>
 ### CD-016 · 2026-09-08 — Accent and focus rederived on one hue; filter label merges with its count in light. **Bryan's call.**
 

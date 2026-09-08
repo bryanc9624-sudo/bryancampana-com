@@ -4,7 +4,6 @@ year: 2022
 month: 8
 completed: "August 2022"
 discipline: "Exhibition Design"
-keywords: ["Art", "Exhibition"]
 scope: An exhibition about the definition of self
 designQuestion: null
 medium: null

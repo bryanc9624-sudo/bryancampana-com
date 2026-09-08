@@ -4,7 +4,6 @@ year: 2020
 month: 5
 completed: "May 2020"
 discipline: "New Media"
-keywords: ["New Media", "Art"]
 scope: Video artwork on disorientation during the pandemic
 designQuestion: "Thrown into an endless loop, the only semblance of time is waking up and going to sleep."
 medium: "Video, Color, 06:38 min."

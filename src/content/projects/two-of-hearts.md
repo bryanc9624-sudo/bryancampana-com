@@ -4,7 +4,6 @@ year: 2021
 month: 9
 completed: "September 2021"
 discipline: "Photography"
-keywords: ["Photography", "Art"]
 scope: The balance between human presence and the built environment
 designQuestion: null
 medium: "35mm Film, Digital Scans"

@@ -1,0 +1,74 @@
+---
+// The /work filter. Since CD-020 each view is a real page — /work/ for everything,
+// /work/discipline/<slug>/ for one — so these are ordinary links, not radio inputs.
+//
+// The radio-and-:has() machinery this replaced filtered instantly with no JavaScript, but
+// a filtered view had no URL: it could not be linked, shared, bookmarked or refreshed.
+// That was the blocker when the project-page eyebrow became a link to "more work like
+// this one". Real pages cost a navigation per click and buy an address for every view.
+import { disciplines } from '../lib/projects'
+
+interface Props {
+  /** Slug of the discipline being shown, or null on /work/ where everything is. */
+  current?: string | null
+  /** Project count for the All link — passed in so the caller's own list is the source. */
+  total: number
+}
+const { current = null, total } = Astro.props
+const list = await disciplines()
+---
+<nav class="filter" aria-label="Filter work by discipline">
+  <a class="filterlink" href="/work/" aria-current={current === null ? 'page' : undefined}
+    >All<span class="filterlink__count">{total}</span></a>
+  {list.map(d => (
+    <a class="filterlink" href={`/work/discipline/${d.slug}/`}
+       aria-current={current === d.slug ? 'page' : undefined}
+      >{d.name}<span class="filterlink__count">{d.count}</span></a>
+  ))}
+</nav>
+
+<style>
+  /* Wraps to two lines on desktop since CD-019 — discipline names are longer than the
+     keywords they replaced. Accepted deliberately: the single-line row was a measurement,
+     never a goal, and mobile already ran three rows. */
+  .filter {
+    display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-5); padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-line);
+  }
+  /* FilterLink is the Eyebrow tier — DF-005. Uppercase, 15px, SemiBold, 8% tracking.
+     Muted in light, ink in dark — see --color-filter-label. CD-016 merged label and count
+     into one colour in light mode; the selected state carries the distinction now. */
+  .filterlink {
+    color: var(--color-filter-label);
+    font-size: var(--size-sm);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-eyebrow);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+  }
+  /* 6px, matching the component's auto-layout gap. Same size and weight as the label, so
+     it cannot grow the line box and needs none of the protection a raised figure did. */
+  .filterlink__count { margin-left: 6px; font-size: inherit; font-weight: inherit; color: var(--color-muted); }
+  /* Selected is Bold plus an underline — the `Eyebrow / Selected` style. Two cues, and
+     neither is the accent: DF-005 settled that the charge appears on hover and never at
+     rest. `aria-current` rather than a class, so the state is announced as well as drawn. */
+  .filterlink[aria-current='page'] {
+    color: var(--color-fg);
+    font-weight: var(--weight-bold);
+    text-decoration: underline;
+    text-underline-offset: var(--underline-offset);
+  }
+  /* The count does not take the selected emphasis — Figma's Selected variant keeps its
+     Count node on the plain Eyebrow style. `display: inline-block` is load-bearing:
+     text-decoration propagates from the parent and paints through a child, and setting
+     `text-decoration: none` on the child does NOT lift it. Only a new inline formatting
+     context stops the line. */
+  .filterlink[aria-current='page'] .filterlink__count {
+    font-weight: var(--weight-semibold);
+    display: inline-block;
+  }
+  /* The charge, on hover only. The count keeps its muted colour — set explicitly, so it
+     does not inherit this. */
+  .filterlink:hover { color: var(--color-accent); }
+</style>
