@@ -5,9 +5,10 @@ Live at bryancampana.com on Netlify.
 
 ## How this project is run
 
-**One chat does the work — design and code together.** It was split across four
-chats until 2026-09-07; that cost more in coordination than it returned. Extra
-chats are fine as long as they only *read* and advise. Only one chat writes.
+**One session does the work — design and code together.** It was split across four
+chats until 2026-09-07; that cost more in coordination than it returned. Git is
+what keeps concurrent sessions honest now, not a rule about who may write: read
+`git status` before starting and anything unexpected in the tree is visible.
 
 You own design decisions as well as code. There is nobody to route them to.
 When something is genuinely Bryan's call — a colour, a word, an editorial choice

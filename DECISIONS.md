@@ -3,27 +3,11 @@
 The contract for bryancampana.com. **"Current state" is what is true; "Do not reopen" is what
 was rejected and why.** Dated reasoning lives in [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
-**One chat writes; read-only advisory chats are fine.** Until 2026-09-07 this was split across
-four, and most of the machinery below existed only to keep them from overwriting each other.
-
-## ⚠ The chat structure is being consolidated — 2026-09-07
-
-Bryan is folding the separate chats into one. **Most of this file's coordination machinery exists
-only because several chats wrote to it concurrently**, and with one writer it is dead weight that
-will mislead rather than help. What survives and what does not:
-
-**Still worth keeping with one chat:**
-- **Current state** — this is the contract, and its value does not depend on how many chats exist.
-- **Do not reopen** — the record of what was rejected and why. The most expensive thing to lose.
-- **A decision is two writes** (rule 11): the archive entry *and* the Current state update.
-  This is what stopped the file becoming 1,863 lines of unresolvable history.
-- **Archive entries are immutable; supersede rather than edit** (rule 11a).
-- **Re-read a section at write time** (rule 9a) — the cause of the worst error made here.
-
-**Dead weight once there is one chat:** the ownership table, rule 2 routing, rule 9 section
-ownership, the per-chat id prefixes of rule 11b, and both "Open decisions" sections as separate
-inboxes. Collapse them rather than leaving them to describe a structure that no longer exists —
-a file that lies about its own process is the failure this ledger was restructured to fix.
+**One chat does the work.** Until 2026-09-07 this was split across four, and most of this file's
+machinery existed only to keep them from overwriting each other. That machinery is gone: the
+ownership table, the routing rules, the per-chat id prefixes and the separate inboxes. What
+survived is what does not depend on how many chats exist — the contract below, the record of what
+was rejected, and the discipline that a decision is two writes.
 
 ## The rules
 
@@ -164,13 +148,15 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 - **`SiteFooter` is Terms of Use · Privacy Policy.** No Contact, no LinkedIn — both live
   on About.
 - **`FilterLink` is the Eyebrow tier** — uppercase, 15px, SemiBold, 8% tracking, `--color-fg`.
+  Not separated by size or a raised position, which is what label and count used before.
   The count is the **same size and weight**, separated by colour alone (`--color-muted`), 6px to the
   right on the shared baseline. Selected is `Eyebrow / Selected` — Bold plus an underline, still ink.
   The count does not take the selected emphasis. `CD-002`.
-- **`--color-accent` is hover-only, everywhere.** One rule, `a:hover` in `base.css`, plus
-  `.filterlink:hover` for the label, which is not an anchor. Nothing static carries the charge;
-  a permanent accent makes it decorative and it stops signalling. `--color-focus` is the same
-  value but a different token for a different state — pointers versus keyboards.
+- **`--color-accent` is hover-only, everywhere.** Not a resting state, not a selected state, not
+  a label colour. One rule, `a:hover` in `base.css`, plus `.filterlink:hover` for the label, which
+  is not an anchor. Nothing static carries the charge; a permanent accent makes it decorative and
+  it stops signalling. `--color-focus` is the same value but a different token for a different
+  state — pointers versus keyboards — and the two must stay distinguishable.
 - **The keyword set is full at seven links.** 814px against ~122px for an average keyword; an
   eighth goes to four mobile rows. Renaming inside 14 characters is free. **The count is part of
   the link** — `ART` grew 10px when its count reached double digits, with no character changing.
@@ -181,13 +167,6 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 - **Every state carries two cues — never colour alone.** The current nav item is `Body / Medium`
   500 + `--color-fg`. The selected filter is `Eyebrow / Selected` — Bold **plus an underline** —
   because both filter states are ink, so weight alone would be one cue.
-- **`--color-accent` is HOVER ONLY.** It marks a link under the pointer and nothing else. It is
-  not a resting state, not a selected state, and not a label colour. `--color-focus` shares its
-  value but is a different token for a different state and stays — hover is for pointers, focus
-  is for keyboards, and the two must remain distinguishable.
-- **The keyword filter is the Eyebrow tier**: uppercase, 15px, 8% tracking. **Label and count are
-  the same size and weight and are separated by colour alone** — label `--color-fg`, count
-  `--color-muted`. Not by size or a raised position, which is what they used before.
 - **VideoFacade is image-then-label, not label-over-image.** The `PLAY` label sits **below** the
   ground in `--color-fg`, `--color-accent` on hover, no underline — the whole facade is the
   target, the same reasoning as card titles. Text over a photograph has no derivable contrast;
@@ -368,251 +347,19 @@ Decided *against*, with the reason. Re-raising these costs someone a redo of rej
 
 ---
 
-Everything below is closed, kept for traceability; older items are in the archive's
-"Appendix — closed routing items".
+Everything below is closed. Full text, with the original instructions and their line numbers,
+is in the archive's ["Appendix — closed routing items"](docs/decisions-archive.md#appendix--closed-routing-items)
+— read it for how a drift happened, never to decide what to do next.
 
-- [x] **RESOLVED 2026-09-08 — deferred to Figma. See `CD-013`.** `.card__scope` is `--size-sm`,
-      matching the `Body / Small` the node has been bound to since the component was drawn. Cards
-      over two lines went from four to one; the survivor is a 181-character scope, which is a copy
-      problem rather than a type one.
-
-- [x] **RESOLVED 2026-09-07 — Design names the final six. See `D-059`.** Two content edits,
-      no code change, and one question that is Bryan's rather than mine.
-
-      **`Art` becomes `Fine Art`** — the settled name stands. `Art` sitting beside `Photography`
-      and `New Media` is a category error, since those are also art; `Fine Art` names a
-      medium-specific practice instead of a superset. Rename only — the three projects carrying
-      it keep it.
-
-      **`Visual Communications` is removed** from `dura-architectural-signage`, which keeps
-      `Signage` alone. It was explicitly consolidated into Signage, it matches one project, and
-      at 192px it is the longest label in the set — the exact string that wrapped the mobile
-      filter to five rows and caused the consolidation in the first place.
-
-      **Resulting six:** Photography 4 · Identity 4 · New Media 3 · **Fine Art 3** · Signage 2 ·
-      Digital 1. Better than the consolidation predicted, which expected Fine Art at 1.
-
-      **`Digital` stays a singleton, deliberately.** It is on `represent-1` only, but it is seven
-      characters, so it causes none of the wrapping the long labels did, and it names a real axis
-      Bryan has more work in. Revisit only if it is still alone when the next projects land.
-
-      **Not my call — flagged for Bryan.** `represent-1` and `resemblance-1` carry `Fine Art`
-      alongside `Identity`. The consolidation mapped both to Identity from *Exhibition Design*,
-      so the `Art` on them was added afterwards. If that was deliberate, it stands and is
-      arguably a better description of New Media Artspace work than Identity is. If it was
-      accidental, say so and it comes off. **Which projects carry which keyword is editorial;
-      only the vocabulary was mine to settle.**
-
-      **Note for Code and Deploy before you edit:** your working tree currently has uncommitted
-      changes to `dura-architectural-signage.md`, `photopolymer-letterpress.md`, `represent-1.md`
-      and `resemblance-1.md` — exactly the four files this touches. The values above were read
-      from `HEAD`, not from your tree. Check you are not already mid-fix before applying.
-
-> **Restored 2026-09-07 after Design and Figma deleted it by accident.** The ledger
-> restructure rebuilt this section from a hardcoded "Nothing open" based on an audit taken
-> before Code and Deploy raised the item above, so a live routed question was overwritten and
-> then reported as closed. Recovered verbatim from `29a3b72`. The mistake is recorded rather
-> than quietly repaired because it is the exact failure the restructure was meant to prevent —
-> acting on a value copied from a source that had since moved on.
-
-- [x] **RESOLVED 2026-09-07 — both strings change. See `DF-001`.** The rule, not the words:
-      **`discipline` is a prose description of the practice, and it may coincide with a keyword
-      where the practice genuinely has that name — but it must never carry a string the keyword
-      vocabulary has retired.** Seven of fourteen disciplines already equal their keyword
-      (`Photography`, `New Media`), and that is fine. A *retired* string is different: to a reader
-      who has just used the filter, it reads as the site contradicting itself.
-
-      So `Art` and `Visual Communications` both go. What replaces them is **copy, not vocabulary**,
-      and `src/content/**` belongs to Content and Copy as of `D-063` — so this is theirs to write,
-      not Code and Deploy's to edit. My recommendations, to accept or improve:
-
-      | Project | Now | Suggested | Why |
-      |---|---|---|---|
-      | `photopolymer-letterpress` | `Art` | **`Printmaking`** | Names the actual practice. More informative than either `Art` or `Fine Art`, and it is what the work is |
-      | `dura-architectural-signage` | `Visual Communications` | **`Signage & Wayfinding`** | Matches the register of `590 Madison Ave`, and describes the work the scope line already describes |
-
-      **Not a naming problem in one case.** `Art` is also the category error `D-059` names — beside
-      `Photography` and `New Media`, which are themselves art, it claims a superset. That reasoning
-      applies to any field it appears in, not just the filter.
-
-      **Correction to the routing:** the item says "Code and Deploy will make the edits". They no
-      longer can — `D-063` moved `src/content/**` to Content and Copy the same day. The edits go
-      to Bryan, who takes them to that chat.
-
-- [x] **RESOLVED 2026-09-07 — the label moves below the image. See `DF-006`.** Drawn on the
-      `VideoFacade` component, so every instance follows.
-
-Bryan's, not this chat's: the 14 design questions.
-
-
-- [x] **DONE — `CD-002`, with a correction.** Only ONE of the four ever shipped: the selected
-      filter link, now ink + Bold + underline. The other three line numbers point at `.card__draft`,
-      `.case__draft` and `.photo__draft`, which are dev-only (`showDraftFlag` is
-      `import.meta.env.DEV`) — `.card__keyword` has been `--color-muted` all along. Draft flags
-      left loud on purpose; say so if the rule should be absolute. Hover added as one global
-      `a:hover` rule plus `.filterlink:hover`.
-      Original: **The violet is on four static things and should be on none of them. `DF-005`.**
-      *Raised by Design and Figma 2026-09-07. Three of the four are drift against Figma, not a
-      new decision — Figma has said `muted` all along.*
-
-      `--color-accent` is **hover only**. The settled colour system has always said so — *"drawn
-      charge"* at rest, *"full charge"* on hover — and the code has it on four resting elements
-      and one hover.
-
-      | File | Now | Should be |
-      |---|---|---|
-      | `ProjectCard.astro:69` `.card__keyword` | `--color-accent` | `--color-muted` |
-      | `ProjectStandard.astro:91` | `--color-accent` | `--color-muted` |
-      | `ProjectPhotography.astro:114` | `--color-accent` | `--color-muted` |
-      | `work/index.astro:88,91` selected filter + count | `--color-accent` | see below |
-
-      The card keyword is the loud one — it renders violet **fourteen times on `/work`** and four
-      more on the landing page. That is what Bryan was reacting to.
-
-      **Add hover instead**, which currently exists only on `VideoFacade`: a filter label and any
-      inline text link take `--color-accent` on `:hover`. **`--color-focus` does not change** —
-      same value, different token, different state. Hover is for pointers and focus is for
-      keyboards, and the settled system requires them to stay distinguishable.
-
-- [x] **DONE — `CD-002`.** Built and measured against the component: 815px row against the 813px
-      in `DF-005`, 19.5px rows, three rows at 390px. The selected count follows the DRAWING rather
-      than the snippet — SemiBold and undecorated, as Figma's Selected variant has it.
-      Original: **Restyle the keyword filter to the eyebrow tier. `DF-005`.** *Design and Figma; drawn on
-      both work-index frames.*
-
-      Label and count now share one tier and are separated by **colour alone**:
-
-      ```css
-      .filterlink {
-        font-size: var(--size-sm); font-weight: var(--weight-semibold);
-        text-transform: uppercase; letter-spacing: var(--tracking-wide);
-        color: var(--color-fg);
-      }
-      .filterlink__count {           /* same size and weight — only the colour differs */
-        margin-left: 6px; font-size: inherit; font-weight: inherit;
-        color: var(--color-muted);
-      }
-      .filter input:checked + .filterlink {
-        font-weight: var(--weight-bold); text-decoration: underline;
-        color: var(--color-fg);      /* NOT accent */
-      }
-      .filterlink:hover { color: var(--color-accent); }
-      ```
-
-      **`--weight-bold: 700` is needed** and `tokens.css` stops at semibold. No font work: Sans
-      is the variable file spanning `100 700`.
-
-      **Why selected gains an underline.** Both states are ink now, so weight alone would be a
-      single cue. Underline is the second, and it is the device the colour system already
-      reserves for text links.
-
-      **Drop `line-height: 0` and the baseline offset on the count** — it is the same size as the
-      label now, so it cannot grow the line box and needs no protection.
-
-      **Measured, so the row is known-good:** 696px → 813px, +17%. One line on desktop, three rows
-      at 390px, unchanged. Headroom fell from ~197px to 80px, so **the keyword set is now full at
-      seven links** — recorded in Current state; the constraints file has since been deleted.
-
-- [x] **DONE — `CD-001`.** `.eyebrow` is SemiBold and is now the single definition of that type;
-      `.eyebrow--section` adds the hairline, and `about.astro` declares no eyebrow type of its own.
-      Original: **`.eyebrow` is still Medium; it should be SemiBold.** *Raised by Design and Figma
-      2026-09-07. Full reasoning in `DF-002`; this is the actionable half.*
-
-      `src/styles/base.css:75` reads `font-weight: var(--weight-medium)`. It should be
-      `var(--weight-semibold)`. The colour half of that change is already in — you took
-      `--color-fg` from `D-064` and the comment on line 78 records it.
-
-      Bryan stepped the eyebrow up one weight class because ink alone was not enough
-      separation from the keyword on project cards. It now differs on three axes: SemiBold
-      against Medium, 15px against 13px, ink against muted.
-
-      **No font work.** SemiBold 600 is Sans, which loads as a variable file spanning
-      `100 700`, and 600 is already used by four other styles. This is not the situation
-      that made `D-061` fail — that asked for **Serif** 500 and 700, which are static
-      per-weight files and were not imported.
-
-      **⚠ Do this in one place, not two — read before you edit.** There are currently *two*
-      eyebrow implementations, and changing only `.eyebrow` splits them:
-
-      | | Where | Carries |
-      |---|---|---|
-      | `.eyebrow` | `base.css:75` | type + the hairline + margins |
-      | `.about__label` | `about.astro:56` | the same seven type declarations, no rule |
-
-      Both set sans / medium / `--size-sm` / `--leading-eyebrow` / uppercase /
-      `--tracking-wide` / `--color-fg`. Identical type, written twice. Change one and the
-      landing's `FEATURED` goes SemiBold while About's `CONTACT` stays Medium — two things
-      drawn from a single Figma text style, no longer matching.
-
-      **Design's statement of what this is:** there is **one** eyebrow. It appears in two
-      contexts — as a section heading above a grid, where it takes a hairline, and as a
-      column label, where it does not. Figma already models it that way: the `Eyebrow` *text
-      style* is type only, and the `Eyebrow` *component* is that style plus the rule. The CSS
-      should mirror it — type on one shared selector, the rule added by the section-heading
-      case only. Structure is yours; the fact that it is one thing and not two is mine.
-
-      Your `<h2>` with a CSS-uppercased accessible name is a better call than the styled
-      paragraph this chat drew, and nothing above asks you to undo it.
-
-- [x] **DECIDED — Regular, recorded in `CD-001`.** Design and Figma: please rebind the Figma node
-      from `Label` to `Body / Small`. Original: **Decide the filter count's weight, and say which in
-      the ledger.** *Raised by Design
-      and Figma 2026-09-07; flagged twice now without resolution.*
-
-      `work/index.astro:81` sets `.filterlink__count` to `var(--weight-regular)`. Figma draws
-      that node with the **`Label`** style, which is Sans **Medium 500**. The two have
-      disagreed since the count was drawn.
-
-      **This chat has deliberately not picked**, twice: the routing document that moved the
-      count to the baseline asked for the treatment to be preserved, and changing weight is
-      not preserving it. But leaving it means Figma and the site disagree on a live element,
-      which is the condition every drift today started from.
-
-      Either is defensible — Regular is quieter behind a Medium label, Medium matches the
-      other small-label tier. **Pick one and record it**; if you pick Medium, Design updates
-      Figma to match rather than the other way round, and if you pick Regular, Design changes
-      the Figma node to `Body / Small`.
-
-- [x] **DONE 2026-09-07.** `--size-xs` and `--leading-label`; computes 13px / 500 / 18.2px /
-      1.04px, matching the `Label` style exactly. Every Label-tier element in the codebase now
-      uses that pairing, and `--leading-eyebrow` is used by the eyebrow alone.
-      Original: **`.video__label` does not match the `Label` style it is bound to.** *Raised by Code and
-      Deploy 2026-09-07 while doing `CD-001`; flagged rather than changed because it is a
-      visible size change outside the routed scope.*
-
-      `VideoFacade`'s label node uses the `Label` text style — 13px Medium, 140%.
-      `src/components/VideoFacade.astro` sets `--size-sm` (15px) and `--leading-eyebrow` (1.3).
-      Both are wrong; `--size-xs` and `--leading-label` are correct and are what `ProjectFacts`
-      already uses.
-
-      `.card__keyword` had the same leading error and is fixed in `CD-001`, so this is the last
-      one. It is a one-line change and Code and Deploy will make it — confirming first only
-      because it shrinks the PLAY label on every video facade, which is Bryan's to see.
-
-> **Note on this section, for transparency — written by Design and Figma, 2026-09-07.**
-> Rule 9 makes this section Code and Deploy's, and I edited it. Bryan authorised it directly.
->
-> It held eight items, **all of them closed**, running to 126 lines — mostly full original
-> text kept "for traceability", plus pointers to a "Settled log" that no longer exists in this
-> file. None of it was written by the current Code and Deploy chat: most came from the first
-> one, since retired, and two were raised by me.
->
-> Nothing was deleted. It is preserved verbatim in
-> [`docs/decisions-archive.md`](docs/decisions-archive.md) under **"Appendix — closed routing
-> items"**. It was moved rather than left because a new chat reads this section as its inbox,
-> and an inbox of someone else's finished business is a poor first thing to read.
->
-> **This section is yours again from here.** Add items freely; I will not touch it without
-> Bryan saying so.
-
-Two of the archived items are worth reading if you hit something odd, because they record how a
-drift happened rather than just that it did: **the serif body drift** (a spec written against a
-tree one commit stale) and **the muted values** (which carry the contrast reasoning behind the
+Two are worth reading if you hit something odd: **the serif body drift** (a spec written against
+a tree one commit stale) and **the muted values** (which carry the contrast reasoning behind the
 current palette).
+
 
 # Decision index
 
-86 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+86 decisions. Ids carry the prefix of the chat that made them, which is history now rather
+than a scheme. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 

@@ -43,9 +43,10 @@ const lines = [
   '  A project shows one only when `designQuestion` is set; leave it `null` and nothing',
   '  renders. Draft in `DESIGN-QUESTIONS.md`, then set the value.',
   '',
-  '## Still needed',
+  missing.length ? '## Still needed' : '## Images',
   '',
-  '- [ ] Real images — ' + withImages.length + ' of ' + slugs.length + ' projects have photographs.',
+  (missing.length ? '- [ ] ' : '- [x] ') + 'Photographs — ' + withImages.length + ' of ' +
+    slugs.length + ' projects have them.',
   missing.length ? '      Missing: ' + missing.join(', ') : '',
   '',
 ].filter(l => l !== '')

@@ -5,5 +5,5 @@ _No placeholder markers left in source._
 - Design questions: 14 of 14 projects have none.
   A project shows one only when `designQuestion` is set; leave it `null` and nothing
   renders. Draft in `DESIGN-QUESTIONS.md`, then set the value.
-## Still needed
-- [ ] Real images — 14 of 14 projects have photographs.
+## Images
+- [x] Photographs — 14 of 14 projects have them.
