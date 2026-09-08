@@ -68,8 +68,13 @@ const cover = coverFor(project.id, d.cover)
     font-weight: var(--weight-medium); letter-spacing: var(--tracking-wide);
     text-transform: uppercase; color: var(--color-accent);
   }
+  /* The Label text style, 13px — not Eyebrow's 15px. Figma has said Label since the
+     component was drawn; the code had --size-sm and the two tiers were identical in size,
+     weight, case, tracking and colour. D-064 gave the section eyebrow the ink on the
+     reasoning that "size always did" separate them, which was true in Figma and not here.
+     Now it is true in both. */
   .card__keyword {
-    margin: 0; color: var(--color-muted); font-size: var(--size-sm);
+    margin: 0; color: var(--color-muted); font-size: var(--size-xs);
     font-family: var(--font-sans);
     font-weight: var(--weight-medium); line-height: var(--leading-eyebrow);
     text-transform: uppercase; letter-spacing: var(--tracking-wide);
