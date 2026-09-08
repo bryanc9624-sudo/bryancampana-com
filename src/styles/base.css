@@ -71,17 +71,37 @@ em, i, cite { font-family: var(--font-italic); }
    landing page's four featured projects), where a third column strands one item. */
 @media (min-width: 64rem) { .grid--duo { grid-template-columns: repeat(2, 1fr); } }
 
-/* Shared: small uppercase section heading above a grid. */
-.eyebrow { font-family: var(--font-sans); font-weight: var(--weight-medium); line-height: var(--leading-eyebrow);
-  font-size: var(--size-sm); text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
+/* THE eyebrow — the only definition of this type anywhere. DF-003: there is one eyebrow in
+   two contexts, so this selector carries the type and `.eyebrow--section` adds the rule.
+   It mirrors Figma exactly: the `Eyebrow` *text style* is type only; the `Eyebrow`
+   *component* is that style plus the hairline.
+
+   Do not write these declarations again in a scoped block. They were written twice once —
+   here and as About's `.about__label` — and the copies were identical right up until the
+   weight changed, at which point the landing page and About would have stopped matching
+   while both claimed to come from one Figma style. On this project duplicated values do
+   not stay equal, and the duplication is invisible until one side moves.
+
+   `margin: 0` so the type is the same on any element; the section context re-adds it. */
+.eyebrow {
+  font-family: var(--font-sans); font-weight: var(--weight-semibold);
+  font-size: var(--size-sm); line-height: var(--leading-eyebrow);
+  text-transform: uppercase; letter-spacing: var(--tracking-wide);
   /* Ink, not muted. D-064: the section eyebrow and the keyword on a project card were both
-     uppercase, tracked and muted, so they read as one tier. Colour separates them now. It
-     is --color-fg and deliberately not --color-accent: the accent is the charge and marks
-     the selected filter link only, so spending it on a static label would make it
-     decorative. It reads purple because the ink on this site is plum. */
-  color: var(--color-fg); padding-bottom: var(--space-2);
-  border-bottom: 1px solid var(--color-line); margin-bottom: var(--space-5);
+     uppercase, tracked and muted, so they read as one tier. Colour separates them now, and
+     since DF-002 so does weight — SemiBold against the keyword's Medium. It is --color-fg
+     and deliberately not --color-accent: the accent is the charge and marks the selected
+     filter link only, so spending it on a static label would make it decorative. It reads
+     purple because the ink on this site is plum. */
+  color: var(--color-fg); margin: 0;
+}
+/* Context 1: a section heading above a grid. This is a break within content, so it takes
+   one of the site's three sanctioned rules. Context 2 is a column label — About's CONTACT
+   — which uses `.eyebrow` alone, because a column element is not a break in a flow. */
+.eyebrow--section {
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-line);
+  margin-bottom: var(--space-5);
 }
 
 /* Shared: narrow measure for text-only pages. */

@@ -17,6 +17,59 @@ IDs are chronological: `D-001` is the oldest.
 
 ---
 
+<a id="cd-001"></a>
+### CD-001 · 2026-09-07 — The filter count stays Regular. One eyebrow, one definition. **Code and Deploy.**
+
+**Status:** Accepted
+
+Answers both items routed in `DF-002` and `DF-003`, and settles a weight question left open
+twice.
+
+**1. The filter count stays `--weight-regular`. Figma changes, not the code.** Design asked for a
+pick and offered to move whichever side lost. The count is `--size-xs` beside a `--size-base`
+label, and its job is to annotate the label rather than belong to it — Regular at 13px reads as
+an annotation, Medium pulls it back toward being part of the word. It is also the only weight
+that has been live, through two deploys, and nobody looking at the page has objected to it.
+
+The reason it matters more than a weight usually would: the count must never grow the line box.
+The filter's hairline is one of three sanctioned rules on the site, and its position is derived
+from the 26px row the 17px label sets. Every property on that element is chosen to stay inside
+that row. **Design and Figma: please rebind the count node from `Label` to `Body / Small`.**
+
+**2. `.eyebrow` is SemiBold, and it is now the only definition of that type.** `DF-003` is right
+that a second implementation is a bug rather than a variant, and the weight change is what would
+have exposed it: applied to `.eyebrow` alone, the landing page's `FEATURED` would have gone
+SemiBold while About's `CONTACT` stayed Medium, both claiming to come from one Figma text style.
+
+The structure mirrors Figma, since Figma already had it right:
+
+| | Figma | CSS |
+|---|---|---|
+| Type only | `Eyebrow` **text style** | `.eyebrow` |
+| Type plus the rule | `Eyebrow` **component** | `.eyebrow` + `.eyebrow--section` |
+
+`about.astro` now uses `.eyebrow` with no modifier and declares no type of its own; the seven
+duplicated declarations are deleted rather than updated. The `<h2>` with a CSS-uppercased
+accessible name stays.
+
+**3. Found while doing it — two `Label` nodes whose CSS did not match the style.** `DF-004`
+audited that every Figma node is bound to a text style, which is true, but not that the CSS
+matches the style it is bound to. Both of these are bound to `Label` — 13px Medium, 140%:
+
+| Element | Should be | Was |
+|---|---|---|
+| `.card__keyword` | `--size-xs` · `--leading-label` | `--size-xs` · `--leading-eyebrow` |
+| `.video__label` | `--size-xs` · `--leading-label` | `--size-sm` · `--leading-eyebrow` |
+
+`ProjectFacts` already uses `--size-xs` with `--leading-label`, so the correct pairing was in the
+codebase all along and these two drifted from it. The card keyword is corrected here, completing
+the size fix made earlier today. **`.video__label` is left alone and flagged** — it is a visible
+size change on a different component and was not in the routed scope.
+
+**The `--leading-eyebrow` / `--leading-label` split is the tell.** Two tokens, 1.3 and 1.4, exist
+precisely to distinguish the Eyebrow style from the Label style. Reaching for the wrong one is
+silent: both are plausible small-label leadings and neither errors.
+
 <a id="df-004"></a>
 ### DF-004 · 2026-09-07 — Figma audited and build-ready. Where it is 1:1 with the code, and where it must not be. **Design and Figma.**
 

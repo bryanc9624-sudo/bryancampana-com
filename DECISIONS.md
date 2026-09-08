@@ -195,6 +195,10 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 - **`FilterLink`'s count sits on the label's baseline**, `--size-xs`, 0.25em to its right —
   not raised above the x-height. It must not grow the line box: the filter's hairline is one
   of the three sanctioned rules and its position is not free to drift.
+- **The count is `--weight-regular`, not Medium** — `CD-001`. It annotates the label rather
+  than belonging to it, and every property on that element is chosen to keep it inside the 26px
+  row the label sets, because the filter hairline sits on that row. Figma's node is to be
+  rebound from `Label` to `Body / Small`.
 - **Every state carries two cues — weight *and* colour — never colour alone.** FilterLink selected
   is 600 + `--color-fg`; the current nav item is `Body / Medium` 500 + `--color-fg`.
 - **VideoFacade's ground is `--color-fg` (ink), not grey** — grey is this site's placeholder
@@ -354,7 +358,9 @@ and the 14 design questions.
 
 Routed here rather than through Bryan, per rule 2.
 
-- [ ] **`.eyebrow` is still Medium; it should be SemiBold.** *Raised by Design and Figma
+- [x] **DONE — `CD-001`.** `.eyebrow` is SemiBold and is now the single definition of that type;
+      `.eyebrow--section` adds the hairline, and `about.astro` declares no eyebrow type of its own.
+      Original: **`.eyebrow` is still Medium; it should be SemiBold.** *Raised by Design and Figma
       2026-09-07. Full reasoning in `DF-002`; this is the actionable half.*
 
       `src/styles/base.css:75` reads `font-weight: var(--weight-medium)`. It should be
@@ -393,7 +399,9 @@ Routed here rather than through Bryan, per rule 2.
       Your `<h2>` with a CSS-uppercased accessible name is a better call than the styled
       paragraph this chat drew, and nothing above asks you to undo it.
 
-- [ ] **Decide the filter count's weight, and say which in the ledger.** *Raised by Design
+- [x] **DECIDED — Regular, recorded in `CD-001`.** Design and Figma: please rebind the Figma node
+      from `Label` to `Body / Small`. Original: **Decide the filter count's weight, and say which in
+      the ledger.** *Raised by Design
       and Figma 2026-09-07; flagged twice now without resolution.*
 
       `work/index.astro:81` sets `.filterlink__count` to `var(--weight-regular)`. Figma draws
@@ -409,6 +417,19 @@ Routed here rather than through Bryan, per rule 2.
       other small-label tier. **Pick one and record it**; if you pick Medium, Design updates
       Figma to match rather than the other way round, and if you pick Regular, Design changes
       the Figma node to `Body / Small`.
+
+- [ ] **`.video__label` does not match the `Label` style it is bound to.** *Raised by Code and
+      Deploy 2026-09-07 while doing `CD-001`; flagged rather than changed because it is a
+      visible size change outside the routed scope.*
+
+      `VideoFacade`'s label node uses the `Label` text style — 13px Medium, 140%.
+      `src/components/VideoFacade.astro` sets `--size-sm` (15px) and `--leading-eyebrow` (1.3).
+      Both are wrong; `--size-xs` and `--leading-label` are correct and are what `ProjectFacts`
+      already uses.
+
+      `.card__keyword` had the same leading error and is fixed in `CD-001`, so this is the last
+      one. It is a one-line change and Code and Deploy will make it — confirming first only
+      because it shrinks the PLAY label on every video facade, which is Bryan's to see.
 
 > **Note on this section, for transparency — written by Design and Figma, 2026-09-07.**
 > Rule 9 makes this section Code and Deploy's, and I edited it. Bryan authorised it directly.
@@ -444,12 +465,13 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 # Decision index
 
-69 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+70 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
 | ID | Decision | Status |
 |---|---|---|
+| [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
 | [`DF-004`](docs/decisions-archive.md#df-004) | Figma is build-ready; where it is 1:1 with code and where it is not | |
 | [`DF-003`](docs/decisions-archive.md#df-003) | One eyebrow, two contexts — the type is implemented twice | |
 | [`DF-002`](docs/decisions-archive.md#df-002) | Eyebrows are section headings only; eyebrow steps to SemiBold | |

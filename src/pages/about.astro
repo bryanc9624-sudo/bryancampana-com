@@ -21,7 +21,7 @@ import Placeholder from '../components/Placeholder.astro'
         is reachable in the document outline; "Contact" is uppercased by CSS so the
         accessible name stays a word rather than an acronym. */}
     <aside class="about__contact">
-      <h2 class="about__label">Contact</h2>
+      <h2 class="eyebrow">Contact</h2>
       <p class="about__where">Based in New York City</p>
       <ul class="about__links">
         {/* The address, not the word "Email". D-060: it is copyable, and it reads as an
@@ -48,16 +48,10 @@ import Placeholder from '../components/Placeholder.astro'
 
   .about h1 { font-size: var(--size-2xl); margin-bottom: var(--space-4); }
 
-  /* The Eyebrow TEXT STYLE, not the Eyebrow component — deliberately no rule. D-060: the
-     block is a column element, not a break in a flow of content, and a fourth rule on the
-     site would need a reason. Space separates it instead. Overrides the serif h2 default,
-     since this is a label tier rather than a title. */
-  .about__label {
-    font-family: var(--font-sans); font-weight: var(--weight-medium);
-    font-size: var(--size-sm); line-height: var(--leading-eyebrow);
-    text-transform: uppercase; letter-spacing: var(--tracking-wide);
-    color: var(--color-fg); margin: 0;
-  }
+  /* CONTACT uses `.eyebrow` from base.css with no `--section` modifier: the Eyebrow text
+     style without the rule. DF-003 — one eyebrow, two contexts, and this is the column
+     label. The type used to be spelled out again here; it is not, deliberately. D-060: a
+     column element is not a break in a flow of content, so no fourth rule on the site. */
   /* Mirrors the drawn structure: the block itself spaces its parts by 16, and the links
      carry a further 24 of their own padding. So label→location is 16 and location→links
      is 40 — the channels are set apart from the label pair rather than listed with it. */
