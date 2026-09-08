@@ -17,6 +17,44 @@ IDs are chronological: `D-001` is the oldest.
 
 ---
 
+<a id="df-003"></a>
+### DF-003 · 2026-09-07 — There is one eyebrow, in two contexts. **Design and Figma.**
+
+**Status:** Accepted
+
+Caught while surveying state, before it drifted rather than after — which is the first time
+today that has happened in this class of problem.
+
+**The eyebrow type is implemented twice in the code.** `.eyebrow` in `base.css` and
+`.about__label` in `about.astro` both set sans, medium, `--size-sm`, `--leading-eyebrow`,
+uppercase, `--tracking-wide` and `--color-fg`. Seven identical declarations, written out twice,
+with nothing connecting them. The only real difference is that one carries the hairline.
+
+**Why it matters right now:** a weight change from Medium to SemiBold is sitting in Code and
+Deploy's open list. Applied to `.eyebrow` alone it splits the two — the landing's `FEATURED`
+goes SemiBold while About's `CONTACT` stays Medium, and two elements drawn from a single Figma
+text style stop matching on the built site.
+
+**The design fact, which is this chat's to state:** there is **one** eyebrow. It appears in two
+contexts — a section heading above a grid, which takes a hairline, and a column label, which
+does not. Figma already models exactly that: the `Eyebrow` **text style** is type only; the
+`Eyebrow` **component** is that style plus the rule. **A second implementation of the type is a
+bug, not a variant.** How the CSS expresses it is Code and Deploy's call.
+
+**Not a criticism of the implementation that caused it.** Code and Deploy built the About label
+as an `<h2>` with the word uppercased in CSS, so the block sits in the document outline and the
+accessible name stays a word rather than an acronym. That is better than the styled paragraph
+this chat drew in Figma, and nothing here asks them to undo it — an `<h2>` can share a type
+selector as easily as a `<p>` can.
+
+**This is the third instance today of one decision living in two places with no link between
+them** — after the Foundations swatch hexes, which showed pre-plum greys while the variables
+underneath were correct, and the colour table that `tokens.css` named as its source of truth
+while four of its values had moved. The pattern is consistent enough to be worth naming: **on
+this project, duplicated values do not stay equal, and the duplication is always invisible until
+one side changes.**
+
+
 <a id="df-002"></a>
 ### DF-002 · 2026-09-07 — Eyebrows are section headings only. Discipline stays in the facts. Eyebrow steps to SemiBold. **Bryan's call.**
 

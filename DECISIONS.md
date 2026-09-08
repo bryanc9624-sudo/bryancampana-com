@@ -137,6 +137,10 @@ mode Figma cannot show.
   32 under 40rem — in Figma that is the `Mobile` variable mode.
 - **The display ramp is uniform: Display/2XL, Display/XL and Title/Large are all SemiBold
   600.** A Bold/Medium split was tried on 2026-09-07 and reverted — see `D-064`.
+- **There is ONE eyebrow, in two contexts.** As a section heading above a grid it takes a
+  hairline; as a column label it does not. Figma models this exactly: the `Eyebrow` *text
+  style* is type only, the `Eyebrow` *component* is that style plus the rule. Any second
+  implementation of the type is a bug, not a variant.
 - **The section eyebrow is `Eyebrow` — Sans SemiBold 15px, `--color-fg`.** It separates from the card
   keyword on **three** axes now — weight, size and colour — against `Label`, Sans Medium 13px
   muted. The two were never the same style, but they read as one tier until this changed. **It is not `--color-accent`** — accent is the
@@ -348,6 +352,29 @@ Routed here rather than through Bryan, per rule 2.
       that made `D-061` fail — that asked for **Serif** 500 and 700, which are static
       per-weight files and were not imported.
 
+      **⚠ Do this in one place, not two — read before you edit.** There are currently *two*
+      eyebrow implementations, and changing only `.eyebrow` splits them:
+
+      | | Where | Carries |
+      |---|---|---|
+      | `.eyebrow` | `base.css:75` | type + the hairline + margins |
+      | `.about__label` | `about.astro:56` | the same seven type declarations, no rule |
+
+      Both set sans / medium / `--size-sm` / `--leading-eyebrow` / uppercase /
+      `--tracking-wide` / `--color-fg`. Identical type, written twice. Change one and the
+      landing's `FEATURED` goes SemiBold while About's `CONTACT` stays Medium — two things
+      drawn from a single Figma text style, no longer matching.
+
+      **Design's statement of what this is:** there is **one** eyebrow. It appears in two
+      contexts — as a section heading above a grid, where it takes a hairline, and as a
+      column label, where it does not. Figma already models it that way: the `Eyebrow` *text
+      style* is type only, and the `Eyebrow` *component* is that style plus the rule. The CSS
+      should mirror it — type on one shared selector, the rule added by the section-heading
+      case only. Structure is yours; the fact that it is one thing and not two is mine.
+
+      Your `<h2>` with a CSS-uppercased accessible name is a better call than the styled
+      paragraph this chat drew, and nothing above asks you to undo it.
+
 - [ ] **Decide the filter count's weight, and say which in the ledger.** *Raised by Design
       and Figma 2026-09-07; flagged twice now without resolution.*
 
@@ -399,12 +426,13 @@ when something needs the other chats' attention; a clean audit is not recorded h
 
 # Decision index
 
-67 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+68 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
 | ID | Decision | Status |
 |---|---|---|
+| [`DF-003`](docs/decisions-archive.md#df-003) | One eyebrow, two contexts — the type is implemented twice | |
 | [`DF-002`](docs/decisions-archive.md#df-002) | Eyebrows are section headings only; eyebrow steps to SemiBold | |
 | [`DF-001`](docs/decisions-archive.md#df-001) | Discipline strings, and per-chat decision ids | |
 | [`D-065`](docs/decisions-archive.md#d-065) | Build budget is 1,000 credits a cycle, not 300. Code and Deploy. | |
