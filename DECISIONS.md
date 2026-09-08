@@ -52,6 +52,11 @@ That removes the worst failure mode but not all of them, so:
     Skipping (b) is how this file previously grew to 1,863 lines of history nobody could
     resolve into an answer.
 
+9a. **When you rewrite a section, re-read it at write time.** Never rebuild one from an
+    earlier reading, however recent — a clean `git pull` does not make your notes current.
+    Design and Figma destroyed a live routed item this way during the 2026-09-07 restructure
+    and then reported the file as having no open items. See `D-059`.
+
 11a. **Archive entries are immutable.** To change a decision, write a new one and set the
     old entry's status to `Superseded by D-NNN`. Never edit an accepted entry's contents —
     that is how "Colour VALUES settled" ended up half true. Adapted from Architecture
@@ -151,7 +156,9 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 ## Content and schema
 
 - **Copy is Bryan's**, verbatim from `archive/content/`. Neither chat writes portfolio copy.
-- **Six keywords** — Photography 4, Identity 4, New Media 3, Signage 2, Digital 1, Fine Art 1.
+- **Six keywords** — Photography 4 · Identity 4 · New Media 3 · Fine Art 3 · Signage 2 · Digital 1.
+  `Art` is not a keyword: the name is **Fine Art**. `Visual Communications` was retired into
+  Signage. See `D-059`.
 - `discipline` selects the project page layout; `keywords` is an unordered set. `year` sorts,
   `completed` renders. `columns` overrides the photography grid, else it is derived from image
   count (≤2 → one column, 4 → two-up, otherwise three-up). `cover.<ext>` is a card-only image.
@@ -189,7 +196,44 @@ Decided *against*, with the reason. Re-raising these costs someone a redo of rej
 
 # Open decisions — Design and Figma owns these
 
-**Nothing open.** Closed out 2026-09-07 ahead of the first deploy — see `D-056`.
+- [x] **RESOLVED 2026-09-07 — Design names the final six. See `D-059`.** Two content edits,
+      no code change, and one question that is Bryan's rather than mine.
+
+      **`Art` becomes `Fine Art`** — the settled name stands. `Art` sitting beside `Photography`
+      and `New Media` is a category error, since those are also art; `Fine Art` names a
+      medium-specific practice instead of a superset. Rename only — the three projects carrying
+      it keep it.
+
+      **`Visual Communications` is removed** from `dura-architectural-signage`, which keeps
+      `Signage` alone. It was explicitly consolidated into Signage, it matches one project, and
+      at 192px it is the longest label in the set — the exact string that wrapped the mobile
+      filter to five rows and caused the consolidation in the first place.
+
+      **Resulting six:** Photography 4 · Identity 4 · New Media 3 · **Fine Art 3** · Signage 2 ·
+      Digital 1. Better than the consolidation predicted, which expected Fine Art at 1.
+
+      **`Digital` stays a singleton, deliberately.** It is on `represent-1` only, but it is seven
+      characters, so it causes none of the wrapping the long labels did, and it names a real axis
+      Bryan has more work in. Revisit only if it is still alone when the next projects land.
+
+      **Not my call — flagged for Bryan.** `represent-1` and `resemblance-1` carry `Fine Art`
+      alongside `Identity`. The consolidation mapped both to Identity from *Exhibition Design*,
+      so the `Art` on them was added afterwards. If that was deliberate, it stands and is
+      arguably a better description of New Media Artspace work than Identity is. If it was
+      accidental, say so and it comes off. **Which projects carry which keyword is editorial;
+      only the vocabulary was mine to settle.**
+
+      **Note for Code and Deploy before you edit:** your working tree currently has uncommitted
+      changes to `dura-architectural-signage.md`, `photopolymer-letterpress.md`, `represent-1.md`
+      and `resemblance-1.md` — exactly the four files this touches. The values above were read
+      from `HEAD`, not from your tree. Check you are not already mid-fix before applying.
+
+> **Restored 2026-09-07 after Design and Figma deleted it by accident.** The ledger
+> restructure rebuilt this section from a hardcoded "Nothing open" based on an audit taken
+> before Code and Deploy raised the item above, so a live routed question was overwritten and
+> then reported as closed. Recovered verbatim from `29a3b72`. The mistake is recorded rather
+> than quietly repaired because it is the exact failure the restructure was meant to prevent —
+> acting on a value copied from a source that had since moved on.
 
 Bryan's, not this chat's: video poster stills (the ink ground is a deliberate state, not a gap)
 and the 14 design questions.

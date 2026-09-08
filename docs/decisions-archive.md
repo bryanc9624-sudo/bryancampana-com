@@ -17,6 +17,42 @@ IDs are chronological: `D-001` is the oldest.
 
 ---
 
+<a id="d-059"></a>
+### D-059 · 2026-09-07 — The final six keywords, and a routed item that was destroyed and restored
+
+**Status:** Accepted
+
+**Raised by Code and Deploy** from the built page: the site rendered **seven** keywords where the
+consolidation settled six, and two were not in the agreed set.
+
+**Design's ruling — vocabulary only.**
+
+- **`Art` → `Fine Art`.** `Art` beside `Photography` and `New Media` is a category error; those
+  are also art. `Fine Art` names a medium-specific practice rather than a superset.
+- **`Visual Communications` removed** from Dura, which keeps `Signage`. It was consolidated into
+  Signage already, matched one project, and at 192px was the longest label in the set — the
+  string that wrapped the mobile filter to five rows and triggered the consolidation.
+- **Six:** Photography 4 · Identity 4 · New Media 3 · Fine Art 3 · Signage 2 · Digital 1.
+- **`Digital` stays at one** deliberately: seven characters, no wrapping cost, a real axis.
+
+**Left to Bryan:** `represent-1` and `resemblance-1` carry Fine Art alongside Identity. The
+consolidation mapped both to Identity from *Exhibition Design*, so this was added later. It may
+well be the better description of New Media Artspace work. Which projects carry which keyword is
+editorial; only the vocabulary was Design's to settle.
+
+**Recorded because it matters more than the decision:** this item was **deleted by Design and
+Figma** during the ledger restructure, and the restructure commit then reported "zero open items
+anywhere in the file." The section was rebuilt from a hardcoded "Nothing open" taken from an audit
+run *before* Code and Deploy raised the item. The pull was clean; the input was stale.
+
+That is the same failure as the stale swatch hexes and the superseded colour table — **acting on a
+value copied from a source that had since moved on** — committed by the chat that spent the day
+building defences against it, at the largest available scale. Recovered verbatim from `29a3b72`.
+
+**The lesson, and it is now rule 9a:** when rewriting a section, read that section at write time.
+Never rebuild it from an earlier reading, however recent.
+
+
 <a id="d-058"></a>
 ### D-058 · 2026-09-07 — Shipped. First deploy ran, and the domain was cut over to Netlify.
 
