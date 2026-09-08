@@ -171,9 +171,9 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
   `.filterlink:hover` for the label, which is not an anchor. Nothing static carries the charge;
   a permanent accent makes it decorative and it stops signalling. `--color-focus` is the same
   value but a different token for a different state — pointers versus keyboards.
-- **The keyword set is full at seven links.** 804px against ~122px for an average keyword; an
-  eighth goes to four mobile rows. Renaming inside 14 characters is free. See
-  `docs/copy-constraints.md`.
+- **The keyword set is full at seven links.** 814px against ~122px for an average keyword; an
+  eighth goes to four mobile rows. Renaming inside 14 characters is free. **The count is part of
+  the link** — `ART` grew 10px when its count reached double digits, with no character changing.
 - **The count is `--weight-regular`, not Medium** — `CD-001`. It annotates the label rather
   than belonging to it, and every property on that element is chosen to keep it inside the 26px
   row the label sets, because the filter hairline sits on that row. Figma's node is to be
@@ -200,12 +200,18 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 
 - **Copy is Bryan's**, verbatim from `archive/content/`. No chat writes portfolio prose in his
   voice; Content and Copy edits, cuts and advises.
-- **`src/content/**` belongs to Content and Copy.** Design and Code both keep out. Content
-  changes either chat needs go to Bryan.
-- **Copy works inside measured limits, not by asking.** `docs/copy-constraints.md` carries
-  them — keyword label ≤ 14 characters, filter set ≤ 7 links, card scope ≤ 100 characters,
-  project title ≤ 30 for one line, discipline ≤ 32. **Design owns that file and re-measures
-  it after any text-style change**, since size, weight, family and tracking all move it.
+- **Copy is written here, direction comes from outside.** Bryan's adviser sets voice and angle;
+  this chat writes the words, because length is checkable against the built page and voice is not.
+  Assign each to whoever can verify it. `docs/copy-constraints.md` is deleted — `CD-013`.
+- **The four limits that actually bite.** Round numbers on purpose: precision is the part that
+  goes stale, and the file that carried it to two decimal places was 30% wrong within a day.
+  Measure the page when it matters.
+  - **Keyword label ≤ 14 characters**, and the set is full at seven links.
+  - **Card scope ≤ 80 characters** — the card is drawn for two lines; a third makes it taller
+    than its neighbours and the ragged edge shows across fourteen.
+  - **Project title ≤ 26 characters** for one line. `Dura Architectural Signage` is the tested
+    ceiling at 291px of 342px.
+  - **Mobile is binding for all of them.** 342px card, 342px content. Desktop always has slack.
 - **Seven keywords** — Art 10 · Photography 4 · New Media 3 · Exhibition 2 · Identity 2 ·
   Signage 2. `Fine Art` and `Digital` are retired. **`Art` is a second axis, not a medium** —
   it covers everything made as art rather than commissioned as design, so a project can carry
@@ -332,26 +338,10 @@ Decided *against*, with the reason. Re-raising these costs someone a redo of rej
 
 # Open
 
-- [ ] **The card scope line renders at 17px where Figma says 15px, and four cards overflow.**
-      *Raised 2026-09-08 while re-measuring `docs/copy-constraints.md`. Bryan's call — it is a
-      visible type change across fourteen cards either way.*
-
-      `.card__scope` sets no `font-size`, so it inherits the body's 17px. Figma binds that node to
-      `Body / Small`, 15px. **Nobody chose 17px** — it is an omission, not a decision, which is
-      why this is not simply "code wins" under `CD-011`.
-
-      The cost is real: at 17px a character is **9.66px** and the 342px mobile card fits **35 per
-      line**, so the two-line ceiling is about **70 characters**, not the 100 the constraints file
-      claimed. **Four of fourteen cards run to three lines or more** — one to five — and a taller
-      card is immediately visible in a grid.
-
-      Two ways out. **Set `--size-sm`** and characters-per-line goes to about 45, putting most
-      cards inside two lines without touching a word. **Or cut the copy** to 70 characters, which
-      means editing four projects. The first is one line of CSS; the second preserves the current
-      type size.
-
-      No recommendation yet — it turns on whether the 17px scope reads better than the 15px it was
-      drawn at, which is a look question rather than a measurement.
+- [x] **RESOLVED 2026-09-08 — deferred to Figma. See `CD-013`.** `.card__scope` is `--size-sm`,
+      matching the `Body / Small` the node has been bound to since the component was drawn. Cards
+      over two lines went from four to one; the survivor is a 181-character scope, which is a copy
+      problem rather than a type one.
 
 **Nothing else open.** Recently closed items are kept below for traceability; older ones are in
 the archive's "Appendix — closed routing items".
@@ -491,7 +481,7 @@ Bryan's, not this chat's: the 14 design questions.
 
       **Measured, so the row is known-good:** 696px → 813px, +17%. One line on desktop, three rows
       at 390px, unchanged. Headroom fell from ~197px to 80px, so **the keyword set is now full at
-      seven links** — `docs/copy-constraints.md` is updated.
+      seven links** — recorded in Current state; the constraints file has since been deleted.
 
 - [x] **DONE — `CD-001`.** `.eyebrow` is SemiBold and is now the single definition of that type;
       `.eyebrow--section` adds the hairline, and `about.astro` declares no eyebrow type of its own.
@@ -592,7 +582,7 @@ current palette).
 
 # Decision index
 
-84 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+85 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
@@ -600,6 +590,7 @@ history, never to decide what to do next.** Full text in
 |---|---|---|
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
 | [`DF-007`](docs/decisions-archive.md#df-007) | Handover: what this chat knew that no file held | |
+| [`CD-013`](docs/decisions-archive.md#cd-013) | copy-constraints deleted; copy written here, direction from outside. | |
 | [`CD-012`](docs/decisions-archive.md#cd-012) | No type-sync pipeline; nothing in Figma rules the code. Bryan's call. | |
 | [`CD-011`](docs/decisions-archive.md#cd-011) | Figma is a reference, not the spec; code is the source of truth. ⚠ | — Partly superseded |
 | [`CD-010`](docs/decisions-archive.md#cd-010) | Wordmark steps up; underlines step away; "Featured work" loses a word. | |

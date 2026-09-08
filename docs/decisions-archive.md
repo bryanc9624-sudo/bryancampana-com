@@ -1,3 +1,58 @@
+<a id="cd-013"></a>
+### CD-013 · 2026-09-08 — `copy-constraints.md` deleted. Copy is written here; direction comes from outside. **Bryan's call.**
+
+**Status:** Accepted
+
+**The split.** Bryan's adviser sets voice and angle; this chat writes the words. The test that
+makes it the right division: **length is checkable against the built page and voice is not.**
+Assign each to whoever can verify it — a card can be measured at 342px, a sentence sounding like
+Bryan cannot. It is the same rule `CD-011` landed on for Figma, applied to people rather than
+tools.
+
+**The file goes because its reader does.** `docs/copy-constraints.md` existed so a separate Content
+and Copy chat could work without asking Design — a contract across a boundary that no longer
+exists. Under the new split the only reader is this chat, which would rather measure than read.
+
+**And it had earned deletion on its own.** Re-measured hours earlier it was **30% wrong on its
+headline constraint**, wrong on the longest keyword width, and contradicted itself two paragraphs
+apart. It had been wrong for a day with nobody noticing, which is the clearest evidence it was not
+load-bearing. 171 lines, 13 of them precise pixel figures — and the precision was the defect, not
+the length: `9.66px per character` is unusable while writing and is the only part that can be
+wrong. `about 70 characters` survives a 2px type change.
+
+**Nothing unique died.** The eight-keyword episode, the 700px overflow and the 342px binding width
+are all recorded independently in this archive. The four limits move into "Current state" as round
+numbers.
+
+**Third instance of one pattern today.** The four-chat ledger machinery, the Figma type pipeline
+and this file were all mechanisms for carrying a decision between people who could not see each
+other's work. Remove the boundary and the mechanism becomes maintenance with no beneficiary. The
+test worth reusing: **who is on the other side of this?** If the answer is "nobody, any more", it
+goes.
+
+---
+
+**Deferred to Figma on the card scope, and this is not a reversal of `CD-011`.**
+
+`.card__scope` set no `font-size` and inherited the body's 17px. Figma has bound that node to
+`Body / Small`, 15px, since the component was drawn. **Code wins over a Figma decision; it does not
+win over a Figma value the code never had an opinion about.** 17px was an omission, so there was
+nothing to defend.
+
+Verified after the change — 15px, line height 23.25px, which is the style's 155% exactly. The
+effect on the constraint:
+
+| | 17px, before | 15px, now |
+|---|---|---|
+| Per character | 9.66px | **8.52px** |
+| Characters per line at 342px | 35 | **40** |
+| Two-line ceiling | ~70 chars | **~80 chars** |
+| Cards over two lines | **4 of 14** | **1 of 14** |
+
+The survivor is a **181-character** scope on `Oscuro`, still four lines. That is a copy problem
+rather than a type one — no plausible size fixes 181 characters in a two-line slot — and copy is
+now this chat's to write, on direction. Flagged for Bryan rather than rewritten unasked.
+
 <a id="cd-012"></a>
 ### CD-012 · 2026-09-08 — No type-sync pipeline. Nothing in Figma rules the code. **Bryan's call.**
 

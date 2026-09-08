@@ -61,7 +61,12 @@ const cover = coverFor(project.id, d.cover)
   .card__title { font-size: var(--size-lg); margin-top: var(--space-2); }
   /* Undecorated at rest via the base `a` rule; the underline here is a hover STATE. */
   .card__title a:hover { text-decoration: underline; text-underline-offset: var(--underline-offset); }
-  .card__scope { margin: 0; }
+  /* `Body / Small`, 15px — deferring to Figma, which has bound this node to that style
+     since the component was drawn. The 17px it rendered at was never chosen: the rule set
+     no font-size and inherited the body. That is why this is not `CD-011`'s "code wins" —
+     code wins over a Figma DECISION, not over a Figma value the code never had an opinion
+     about. Line height comes from --leading-body, 155%, matching the style. */
+  .card__scope { margin: 0; font-size: var(--size-sm); }
   /* Dev only. Never present in a production build, because a draft has no page there. */
   .card__draft {
     margin: 0; font-family: var(--font-sans); font-size: var(--size-xs);
