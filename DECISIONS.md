@@ -332,7 +332,28 @@ Decided *against*, with the reason. Re-raising these costs someone a redo of rej
 
 # Open
 
-**Nothing open.** Recently closed items are kept below for traceability; older ones are in
+- [ ] **The card scope line renders at 17px where Figma says 15px, and four cards overflow.**
+      *Raised 2026-09-08 while re-measuring `docs/copy-constraints.md`. Bryan's call — it is a
+      visible type change across fourteen cards either way.*
+
+      `.card__scope` sets no `font-size`, so it inherits the body's 17px. Figma binds that node to
+      `Body / Small`, 15px. **Nobody chose 17px** — it is an omission, not a decision, which is
+      why this is not simply "code wins" under `CD-011`.
+
+      The cost is real: at 17px a character is **9.66px** and the 342px mobile card fits **35 per
+      line**, so the two-line ceiling is about **70 characters**, not the 100 the constraints file
+      claimed. **Four of fourteen cards run to three lines or more** — one to five — and a taller
+      card is immediately visible in a grid.
+
+      Two ways out. **Set `--size-sm`** and characters-per-line goes to about 45, putting most
+      cards inside two lines without touching a word. **Or cut the copy** to 70 characters, which
+      means editing four projects. The first is one line of CSS; the second preserves the current
+      type size.
+
+      No recommendation yet — it turns on whether the 17px scope reads better than the 15px it was
+      drawn at, which is a look question rather than a measurement.
+
+**Nothing else open.** Recently closed items are kept below for traceability; older ones are in
 the archive's "Appendix — closed routing items".
 
 - [x] **RESOLVED 2026-09-07 — Design names the final six. See `D-059`.** Two content edits,
