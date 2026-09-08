@@ -9,6 +9,29 @@ ownership table, the routing rules, the per-chat id prefixes and the separate in
 survived is what does not depend on how many chats exist — the contract below, the record of what
 was rejected, and the discipline that a decision is two writes.
 
+## Compacting this ledger — in progress, 2026-09-08
+
+**The plan: `git log` becomes the *why* layer and `docs/decisions-archive.md` goes.** An archive is
+a cache of a lookup git already performs, and a cache earns its load only when the lookup is
+expensive. What survives is this file's **Current state** and **Do not reopen**, plus `CLAUDE.md`
+for what the environment cannot confess.
+
+**Done:** `docs/retired/` deleted, three facts extracted from it first. `git tag ledger-full`
+marks `6401470`, the last commit holding everything — `git show ledger-full:<path>` returns any
+of it.
+
+**Not done: the archive audit.** 3,682 lines to read, each entry marked live, superseded or
+historical, and anything live moved into Current state before deletion.
+
+**Two rules learned doing the first half, both the hard way:**
+
+1. **Extract before deleting, and do not trust a plan that says "no reading required."** The plan
+   called `docs/retired/` a free win. This file pointed *into* it for the `get_metadata` detail,
+   and two more facts lived nowhere else.
+2. **The decision index goes LAST, with the archive, not before it.** The index is the map used to
+   audit the archive — `⚠` already marks the superseded entries. Deleting it first means auditing
+   3,682 lines blind. It only becomes meaningless once its target is gone.
+
 ## The rules
 
 1. **Read "Current state" and "Do not reopen" before proposing anything.** The answer is
@@ -237,10 +260,11 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
 - **Slugs carry no `-1` suffix.** Three did, out of the Cargo export; they are renamed with `301`
   redirects in `netlify.toml`. A slug rename is TWO renames — the content file and the matching
   directory under `src/assets/projects/`, which is how images are keyed. `CD-005`.
-- **Card scope has two registers, and the choice is editorial.** Narrative is sentence case with a
-  terminal period; a capability list is Title Case with none. **Consistency within one scope is not
-  editorial** — Title Case running into lowercase mid-list is a bug. A scope containing a colon
-  needs YAML quotes, which are stripped before render. `CD-015`.
+- **No card scope carries a terminal period** — all 14, checked. Register is still editorial:
+  narrative reads as a sentence, a capability list as Title Case. **Consistency within one scope is
+  not editorial** — Title Case running into lowercase mid-list is a bug. A scope containing a colon
+  needs YAML quotes, which are stripped before render. `CD-015`, corrected by `CD-021`: that entry
+  recorded narrative scopes as keeping a period, and Bryan removed every one shortly after.
 - **Six disciplines, exactly one per project.** Photography 4 · New Media 3 · Brand Identity 2 ·
   Signage & Wayfinding 2 · Exhibition Design 2 · Printmaking 1. **Every one names a practice**, which
   is the test for admitting a new one — `Visual Communications` named a *field* and was retired for

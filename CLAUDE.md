@@ -59,13 +59,24 @@ misalignment that is not there. A measurement that disagrees with *itself* — b
 and baseline being identical is impossible — indicts the instrument, not the site.
 Check that a number could physically be what it claims before acting on it.
 
-**5. `git` can stop working after an Xcode update.**
+**5. `grep -c` counts LINES, not matches — it will lie about anything on one line.**
+Built HTML is often a single line, so `curl … | grep -c 'class="card"'` returns `1` for
+fourteen cards. It cost two wrong counts in one session, both reported before being caught.
+Use `grep -o … | wc -l` whenever the answer is a quantity.
+
+**6. Rewriting an `.astro` page wholesale silently drops its scoped `<style>`.**
+Splitting `/work/` into two pages lost `h1 { font-size: var(--size-2xl); margin-block: … }`,
+which lived only in that file. The title shrank and the gap above the filter closed — visible
+to Bryan, invisible to the build and the tests. When a page's markup moves, move its style
+block with it, and prefer extracting a shared component over pasting the rule into both.
+
+**7. `git` can stop working after an Xcode update.**
 macOS gates it behind a licence prompt and every git command fails with the same
 message. `/Library/Developer/CommandLineTools/usr/bin/git` works without it, so nothing
 is blocked; the permanent fix is `sudo xcode-select -s /Library/Developer/CommandLineTools`,
 which needs Bryan's password.
 
-**6. Images go under `src/`, never `public/`.**
+**8. Images go under `src/`, never `public/`.**
 `public/` is copied through unoptimised — `tests/rules.test.ts` fails on an image
 there. What the test cannot check: export sRGB at 2400px, and `cover.<ext>` is
 card-and-poster only and is excluded from the gallery.
