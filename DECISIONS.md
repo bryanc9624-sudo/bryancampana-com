@@ -206,10 +206,11 @@ six variants), `SiteFooter`, `Eyebrow`, `FactPair`, `FilterLink`, `VideoFacade`.
   it covers everything made as art rather than commissioned as design, so a project can carry
   it alongside `Photography` or `New Media`. The four excluded are the client work. The filter
   row measures 814px, one desktop line, three rows at 390px. `CD-005`, `CD-006`.
-- **Projects sort by `year` descending, `order` breaking ties inside a year.** The filter hides
-  cards rather than reordering them, so every filtered view inherits this one order — a date sort
-  is the only one that stays true of every subset. A project with no `year` sorts last.
-  `CD-007`.
+- **Projects sort by `year` then `month`, both descending; `order` is the last tiebreak.** The
+  filter hides cards rather than reordering them, so every filtered view inherits this one order —
+  a date sort is the only one that stays true of every subset. No `year` sorts last overall; no
+  `month` sorts last within its year. **`month` sorts, `completed` renders, and a test asserts they
+  agree.** `CD-007`, `CD-008`.
 - `discipline` selects the project page layout; `keywords` is an unordered set. `year` sorts,
   `completed` renders. `columns` overrides the photography grid, else it is derived from image
   count (≤2 → one column, 4 → two-up, otherwise three-up). `cover.<ext>` is a card-only image.
@@ -555,7 +556,7 @@ current palette).
 
 # Decision index
 
-79 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
+80 decisions, and ids are now per chat — see rule 11b. **⚠ means the entry is superseded or partly superseded — read it for
 history, never to decide what to do next.** Full text in
 [`docs/decisions-archive.md`](docs/decisions-archive.md).
 
@@ -563,6 +564,7 @@ history, never to decide what to do next.** Full text in
 |---|---|---|
 | [`CD-001`](docs/decisions-archive.md#cd-001) | Filter count stays Regular; one eyebrow, one definition. Code and Deploy. | |
 | [`DF-007`](docs/decisions-archive.md#df-007) | Handover: what this chat knew that no file held | |
+| [`CD-008`](docs/decisions-archive.md#cd-008) | Month refines the sort; month and completed guarded by a test. | |
 | [`CD-007`](docs/decisions-archive.md#cd-007) | Projects sort by date, newest first. Bryan's call. | |
 | [`CD-006`](docs/decisions-archive.md#cd-006) | The photography is Art too. Bryan's call. | |
 | [`CD-005`](docs/decisions-archive.md#cd-005) | Art replaces Fine Art, Exhibition returns, slugs lose the Cargo suffix. Bryan's call. | |

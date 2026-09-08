@@ -1,6 +1,7 @@
 ---
 title: TogetherEffect
 year: 2023
+month: 5
 completed: "May 2023"
 discipline: "Brand Identity"
 keywords: ["Identity"]

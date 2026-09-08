@@ -1,6 +1,7 @@
 ---
 title: Big City Volleyball Club
 year: 2024
+month: 9
 completed: "September 2024"
 discipline: "Brand Identity"
 keywords: ["Identity"]

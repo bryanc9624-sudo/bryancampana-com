@@ -4,9 +4,14 @@ import type { CollectionEntry } from 'astro:content'
 /**
  * Every project that should be visible, newest first.
  *
- * Sorted by `year` descending, with `order` breaking ties inside a year. This is the field
- * `year` was separated from `completed` for — `completed` is the string that renders
- * ("September 2025"), `year` is the number that sorts.
+ * Sorted by `year` descending, then `month` descending, with `order` breaking what is left.
+ * These are the fields `year` was separated from `completed` for — `completed` is the string
+ * that renders ("September 2025"), the numbers sort.
+ *
+ * `month` matters more than it looks: four projects are 2021 and three are 2019, so without
+ * it half the list falls through to `order` and has to be sequenced by hand. A project dated
+ * only to the year sorts after the dated ones within that year — it is less precise, so it
+ * cannot claim to be more recent.
  *
  * **Why date and not a hand-picked sequence.** The keyword filter hides cards rather than
  * reordering them, so every filtered view inherits this one order. A hand-set order tuned
@@ -31,6 +36,9 @@ export async function visibleProjects(): Promise<CollectionEntry<'projects'>[]> 
     const ay = a.data.year ?? -Infinity
     const by = b.data.year ?? -Infinity
     if (ay !== by) return by - ay
+    const am = a.data.month ?? -Infinity
+    const bm = b.data.month ?? -Infinity
+    if (am !== bm) return bm - am
     return a.data.order - b.data.order
   })
 }

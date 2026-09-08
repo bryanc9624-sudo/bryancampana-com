@@ -1,3 +1,46 @@
+<a id="cd-008"></a>
+### CD-008 · 2026-09-08 — Month refines the sort. `month` and `completed` are guarded by a test. **Bryan's dates.**
+
+**Status:** Accepted
+
+Bryan dated the three 2021 photography projects: Double Exposed November, Shapes and Colors
+October, Two of Hearts September. **They were rendering in exactly the wrong order** — the
+within-year tiebreak fell to `order`, which had them 11, 12, 13, so the sequence read September,
+October, November. Oldest first, inside a list that says newest first.
+
+**Why `month` rather than renumbering `order`.** Half the list is affected: four projects are 2021
+and three are 2019, so seven of fourteen were being sequenced by a hand-maintained integer whose
+value carried no meaning at a glance. `resemblance` would have had to move from 6 to past 13 to
+sit correctly among the 2021 projects — a number nobody reading the file could justify. `month`
+states the fact instead of encoding a consequence of it.
+
+Nine projects have a month; five are dated only to the year. **A year-only project sorts after the
+dated ones in that year** — it is less precise, so it cannot claim to be more recent than something
+that names its month.
+
+**The duplication, and the guard.** `month` sorts and `completed` renders, which makes them two
+statements of one fact. On this project that has failed every time it has occurred — the eyebrow
+type, the palette table, the keyword list and the card keyword all diverged from their copies
+before anyone noticed, and each was found by accident. So this one gets a test:
+`month` must equal the month named in `completed`, and a project cannot carry a month without a
+year.
+
+**The test was verified by breaking it**, not by watching it pass. Setting Double Exposed to
+`month: 4` against `completed: "November 2021"` fails with
+`double-exposed.md: completed says "November 2021": expected 4 to be 11`. A guard nobody has seen
+fail is not known to be a guard.
+
+**The result, all views newest-first:**
+
+| View | Order |
+|---|---|
+| All | Sep 2025 · May 2025 · Sep 2024 · May 2023 · Aug 2022 · **Nov 2021 · Oct 2021 · Sep 2021** · Jun 2021 · 2019 ×3 · 2018 · undated |
+| Art | re:present · **Double Exposed · Shapes and Colors · Two of Hearts** · re:semblance · … |
+| Photography | **Double Exposed · Shapes and Colors · Two of Hearts** · Oscuro |
+
+`order` survives as the last tiebreak and is now needed by nothing — no two projects share both a
+year and a month. It stays because a future pair might.
+
 <a id="cd-007"></a>
 ### CD-007 · 2026-09-08 — Projects sort by date, newest first. **Bryan's call.**
 

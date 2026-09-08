@@ -6,9 +6,16 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
 
-    // `year` is a sort key only. `completed` is what renders — the live site says
-    // "September 2025" for Dura and "2019" for Oscuro, which a number cannot hold.
+    // `year` and `month` are sort keys only. `completed` is what renders — the live site
+    // says "September 2025" for Dura and "2019" for Oscuro, which a number cannot hold.
+    // `month` refines the sort inside a year: four projects are 2021 and three are 2019,
+    // so without it their sequence falls to `order`, which has to be maintained by hand.
+    // Null means "this project is only dated to the year", and it sorts after the dated
+    // ones within that year — less precise, so later.
+    // A test asserts `month` agrees with the month named in `completed`; they are two
+    // statements of one fact and on this project duplicated values do not stay equal.
     year: z.number().nullable().default(null),
+    month: z.number().int().min(1).max(12).nullable().default(null),
     completed: z.string().nullable().default(null),
 
     // A label only. Appears in the facts list as "Discipline". It does NOT select the

@@ -1,7 +1,8 @@
 ---
 title: Shapes and Colors
 year: 2021
-completed: "2021"
+month: 10
+completed: "October 2021"
 discipline: "Photography"
 keywords: ["Photography", "Art"]
 scope: Landscapes and architecture through abstract, colorful compositions.

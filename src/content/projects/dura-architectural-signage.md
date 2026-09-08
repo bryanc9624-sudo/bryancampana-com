@@ -1,6 +1,7 @@
 ---
 title: Dura Architectural Signage
 year: 2025
+month: 9
 completed: "September 2025"
 discipline: "Signage & Wayfinding"
 keywords: ["Signage"]

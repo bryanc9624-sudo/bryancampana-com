@@ -1,6 +1,7 @@
 ---
 title: "re:present"
 year: 2022
+month: 8
 completed: "August 2022"
 discipline: "Exhibition Design"
 keywords: ["Art", "Exhibition"]

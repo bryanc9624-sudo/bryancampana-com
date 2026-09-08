@@ -45,6 +45,34 @@ describe('project content', () => {
     }
   })
 
+  // `month` sorts and `completed` renders — two statements of one fact, so they can drift.
+  // On this project duplicated values reliably do: the eyebrow type, the palette table and
+  // the keyword list all diverged from their copies before anyone noticed. This is the
+  // cheapest guard, and unlike the others it fires before the drift ships.
+  const MONTHS = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December']
+
+  it('keeps `month` in step with the month named in `completed`', () => {
+    for (const f of files()) {
+      const { month, completed } = frontmatter(f)
+      const named = MONTHS.findIndex(m => new RegExp(`^"?${m}\\b`).test(completed ?? '')) + 1
+      if (named) {
+        expect(Number(month), `${f}: completed says ${completed}`).toBe(named)
+      } else {
+        expect(month ?? 'null', `${f}: completed (${completed}) names no month`).toBe('null')
+      }
+    }
+  })
+
+  it('gives a month only to a project that has a year', () => {
+    for (const f of files()) {
+      const { month, year } = frontmatter(f)
+      if (month && month !== 'null') {
+        expect(year, `${f} month without year`).not.toBe('null')
+      }
+    }
+  })
+
   it('gives every featured project a body', () => {
     for (const f of files()) {
       if (frontmatter(f).featured !== 'true') continue
