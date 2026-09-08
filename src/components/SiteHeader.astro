@@ -1,9 +1,6 @@
 ---
 // src/components/SiteHeader.astro
-const links = [
-  { href: '/work', label: 'Work' },
-  { href: '/about', label: 'About' },
-]
+import { navLinks as links, isCurrentPage } from '../lib/nav'
 const path = Astro.url.pathname
 ---
 <header class="site-header">
@@ -12,7 +9,7 @@ const path = Astro.url.pathname
     <ul>
       {links.map(l => (
         <li>
-          <a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}</a>
+          <a href={l.href} aria-current={isCurrentPage(path, l.href) ? 'page' : undefined}>{l.label}</a>
         </li>
       ))}
       {/* No Contact here. D-060: it lived in three places — header, footer and About —
