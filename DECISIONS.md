@@ -24,8 +24,6 @@ been dangling in this file for a day, and a live billing obligation sat unread a
   file and `CLAUDE.md` had recorded the safe failure mode instead. Now `tests/rules.test.ts`.
 - Six generalising laws, into `CLAUDE.md` → "How a decision is made here".
 - Six site-level rules, into Current state below.
-- One dated obligation that no file should hold: the Netlify plan reverts to Free before it
-  renews on **2026-10-07**. Bryan holds this in his calendar, not in the repo.
 
 **Three rules the audit itself produced, worth keeping:**
 
